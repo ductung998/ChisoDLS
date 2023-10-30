@@ -12,6 +12,7 @@ namespace Chisoyhoc_API
         public string Password { get; set; }
         public string Fullname { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDead { get; set; }
     }
     #endregion
 
