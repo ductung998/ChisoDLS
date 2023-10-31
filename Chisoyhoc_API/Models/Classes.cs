@@ -16,7 +16,7 @@ namespace Chisoyhoc_API
     }
     #endregion
 
-    #region Chỉ số y học
+    #region Chỉ số y học parent
     public class Chisoyhoc
     {
         protected int IDChiso { get; set; }
@@ -34,39 +34,53 @@ namespace Chisoyhoc_API
         }
     }
 
+
+    public class Congthuc : Chisoyhoc
+    {
+        public Congthuc()
+        {
+
+        }
+    }
+
     public class Thangdiem : Chisoyhoc
     {
         public Thangdiem()
         {
 
         }
+    }
+    #endregion
 
-        public Thangdiem(List<bien> _bien)
+    #region Chỉ số y học chi tiết - Công thức
+    public class IBW : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double chieucao { get; set; }
+        public IBW()
         {
 
         }
-
-        protected class bien
+        public IBW(string _gioitinh, double _chieucao)
         {
-            public bien()
+            gioitinh = _gioitinh;
+            chieucao = _chieucao;
+        }
+        public double kqIBW()
+        {
+            double ibwkq;
+            if (gioitinh == "Nam")
             {
-
+                ibwkq = 50 + (0.91 * (chieucao - 152.4));
             }
-
-            public bien(string _tenbien, List<string> _giatri)
+            else
             {
-
+                ibwkq = 45.4 + (0.91 * (chieucao - 152.4));
             }
-
-            protected class giatribien
-            {
-                public giatribien(string _giatribien)
-                {
-
-                }
-            }
+            return ibwkq;
         }
     }
+
 
     #endregion
 }
