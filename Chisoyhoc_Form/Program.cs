@@ -16,7 +16,7 @@ namespace Chisoyhoc_Form
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestChiso());
+            Application.Run(new TestChiso1_10());
         }
     }
 }
