@@ -9,19 +9,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Chisoyhoc_API;
 
-namespace Chisoyhoc_Form
+namespace Chisoyhoc_Form.TestChiso
 {
-    public partial class TestChiso : Form
+    public partial class TestChiso31_40 : Form
     {
-        public TestChiso()
+        public TestChiso31_40()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            
+
+
+        }
+
+        private void TestChiso31_40_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
