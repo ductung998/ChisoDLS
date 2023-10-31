@@ -23,5 +23,15 @@ namespace Chisoyhoc_Form
 
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            string a = txtGioiTinh.Text;
+            double b = double.Parse(txtChieuCao.Text);
+            IBW testibw = new IBW(a, b);
+            double c = testibw.kqIBW();
+            MessageBox.Show(c.ToString());
+
+        }
     }
 }
