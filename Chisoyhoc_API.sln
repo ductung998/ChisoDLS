@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chisoyhoc_API", "Chisoyhoc_API\Chisoyhoc_API.csproj", "{CD06F0E4-D02B-45AC-9C0D-15ED25754982}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chisoyhoc_Form", "Chisoyhoc_Form\Chisoyhoc_Form.csproj", "{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CD06F0E4-D02B-45AC-9C0D-15ED25754982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD06F0E4-D02B-45AC-9C0D-15ED25754982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD06F0E4-D02B-45AC-9C0D-15ED25754982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
