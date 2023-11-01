@@ -69,7 +69,7 @@ namespace Chisoyhoc_API
         public double kqIBW()
         {
             double ibwkq;
-            if (gioitinh == "Nam"|| gioitinh == "nam")
+            if (gioitinh == "Nam")
             {
                 ibwkq = 50 + (0.91 * (chieucao - 152.4));
             }
