@@ -53,6 +53,7 @@ namespace Chisoyhoc_API
     #endregion
 
     #region Chỉ số y học chi tiết - Công thức
+    #region IBW
     public class IBW : Congthuc
     {
         public string gioitinh { get; set; }
@@ -80,7 +81,36 @@ namespace Chisoyhoc_API
             return ibwkq;
         }
     }
+    #endregion
+    #region ABW
+    public class ABW : IBW
+    {
+        public double cannang { get; set; }
+        public ABW()
+        {
 
+        }
+        public ABW(string _gioitinh, double _chieucao,double _cannang)
+        {
+            gioitinh = _gioitinh;
+            chieucao = _chieucao;
+            cannang = _cannang;
+        }
+        public double kqABW()
+        {
+            double ABWkq;
+            ABWkq = kqIBW() + 0.4 * (cannang - kqIBW());
+            return ABWkq;
+        }
+
+    }
+    
+
+
+
+
+
+    #endregion
 
     #endregion
 }
