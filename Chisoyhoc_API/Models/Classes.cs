@@ -29,6 +29,7 @@ namespace Chisoyhoc_API
         public double thannhiet { get; set; }
         public int HATThu { get; set; }
         public int HATTruong { get; set; }
+        public bool hutthuoc { get; set; }
         public bool THA { get; set; }
         public bool DTD { get; set; }
         public bool suytim { get; set; }
@@ -42,7 +43,7 @@ namespace Chisoyhoc_API
 
         }
         public Nguoibenh(string _idnb, string _hoten, string _gioitinh, DateTime _ngaysinh, double _chieucao, double _cannang,
-                     int _nhiptim, double _thannhiet, int _hatThu, int _hatTruong, bool _tha, bool _dtd, bool _suytim,
+                     int _nhiptim, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
                      bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
         {
             IDNB = _idnb;
@@ -56,6 +57,7 @@ namespace Chisoyhoc_API
             thannhiet = _thannhiet;
             HATThu = _hatThu;
             HATTruong = _hatTruong;
+            hutthuoc = _hutthuoc;
             THA = _tha;
             DTD = _dtd;
             suytim = _suytim;
@@ -299,9 +301,9 @@ namespace Chisoyhoc_API
             cannang = NB.cannang;
         }
 
-        public double CalculateBMI()
+        public double kqBMI()
         {
-            double kqBMI = cannang / (chieucao * chieucao);
+            double kqBMI = cannang / (chieucao * chieucao / 10000);
             return kqBMI;
         }
     }
@@ -388,7 +390,6 @@ namespace Chisoyhoc_API
     {
         public double chieucao { get; set; }
         public double cannang { get; set; }
-        public double BSA { get; set; }
 
         public BSA()
         {
@@ -408,11 +409,11 @@ namespace Chisoyhoc_API
 
         public double kqBSA_Mos()
         {
-            return BSA = Math.Sqrt(chieucao * cannang) / 3600;
+            return Math.Sqrt(chieucao * cannang) / 3600;
         }
         public double kqBSA_Dub()
         {
-            return BSA = 0.007184 * Math.Pow(chieucao, 0.725) * Math.Pow(cannang, 0.425);
+            return 0.007184 * Math.Pow(chieucao, 0.725) * Math.Pow(cannang, 0.425);
         }
     }
     public class eGFR_CKD : Congthuc
@@ -448,7 +449,7 @@ namespace Chisoyhoc_API
         private void SetCoefficients()
         {
             hesogioitinh_CKD = (gioitinh == "nam") ? 1.0 : 1.012;
-            alpha_CKD = (gioitinh == "nam") ? -0.241 : -0.302;
+            alpha_CKD = (gioitinh == "nam") ? -0.302 : -0.241;
             kappa_CKD = (gioitinh == "nam") ? 0.9 : 0.7;
         }
 
@@ -504,7 +505,6 @@ namespace Chisoyhoc_API
         public double cannang { get; set; }
         public double CreatininSerum { get; set; }
         public string gioitinh { get; set; }
-        public double eCrCl { get; set; }
 
         public eCrCl()
         {
@@ -529,8 +529,8 @@ namespace Chisoyhoc_API
         public double kqeCrCl()
         {
             double gioitinhCoefficient = (gioitinh == "nam") ? 1.0 : 0.85;
-            eCrCl = (140 - tuoi) * cannang / (72 * CreatininSerum) * gioitinhCoefficient;
-            return eCrCl;
+            double kq = (140 - tuoi) * cannang / (72 * CreatininSerum) * gioitinhCoefficient;
+            return kq;
         }
     }
     public class KtVDaugirdas : Congthuc
@@ -1030,6 +1030,269 @@ namespace Chisoyhoc_API
         {
             kqWBCCFS_Adj = WBC_CFS - ((WBC * RBC_CFS) / (RBC * 1000000));
             return kqWBCCFS_Adj;
+        }
+    }
+    #endregion
+    #region Chỉ số y học chi tiết - Thang điểm
+    public class SCORE2_DM : Thangdiem
+    {
+        public string gioitinh { get; set; }
+        public int nhomtuoi { get; set; }
+        public int nhomDM_Age { get; set; }
+        public int nhomSmoking { get; set; }
+        public int nhomHATT { get; set; }
+        public int nhomTotalCholesterol { get; set; }
+        public int nhomHDL { get; set; }
+        public int nhomHbA1C { get; set; }
+        public int nhomEGFR { get; set; }
+        public int nhomvungnguyco { get; set; }
+        public int[] diemNam { get; set; }
+        public int[] diemNu { get; set; }
+        public int[] nguycoNam { get; set; }
+        public int[] nguycoNu { get; set; }
+        public string[] PLnguycoNam { get; set; }
+        public string[] PLnguycoNu { get; set; }
+        public int diem_start_index { get; set; }
+        public int nguyco_start_index { get; set; }
+        public SCORE2_DM()
+        {
+            init_SCORE2_DM();
+        }
+        public SCORE2_DM(Nguoibenh NB, Xetnghiem XN)
+        {
+            init_SCORE2_DM();
+            checktuoi(NB.tuoi);
+            checkSmoking(NB.hutthuoc);
+            checkHATT(NB.HATThu);
+            checkTotalCholesterol(XN.totalCholesterol);
+            checkHDL(XN.HDL);
+            checkEGFR(NB.gioitinh, XN.creatininSerum, NB.tuoi);
+        }
+        public SCORE2_DM(string _gioitinh, double _tuoi, double _namDM, bool _smoking, double _HATT, double _TotalCholesterol,
+            double _HDL, double _HbA1C, double _creatininSerum, string _vungnguyco)
+        {
+            init_SCORE2_DM();
+            gioitinh = _gioitinh;
+            checktuoi(_tuoi);
+            double DM_Age = _tuoi - (DateTime.Now.Year - _namDM);
+            checkDM_Age(DM_Age);
+            checkSmoking(_smoking);
+            checkHATT(_HATT);
+            checkTotalCholesterol(_TotalCholesterol);
+            checkHDL(_HDL);
+            checkHbA1C(_HbA1C);
+            checkEGFR(_gioitinh, _creatininSerum, _tuoi);
+            checkvungnguyco(_vungnguyco);
+        }
+        private void init_SCORE2_DM()
+        {
+            int[] _diemNam = {3, 2, 1, 0, 0, 0, 0, 0, -9, -2, -1, 1, 3, 6, -4, -3, -1, 1, 3, 2, 0, -1, 1, 2, 4, 5, 7, 8, 4, 1, -1, 3, 2, 1, 0, 0, 0, 0, 0, -5, 2, -1, 1, 3, 5, -4, -2, -1, 1, 3, 1, 0, -1, 1, 2, 3, 5, 6, 7, 4, 1, -1, 3, 2, 1, 0, 0, 0, 0, 0, 0, 6, -1, 1, 3, 4, -3, -2, -1, 1, 2, 1, 0, -1, 0, 2, 3, 4, 5, 6, 3, 1, -1, 3, 2, 1, 0, 0, -1, 0, 0, 4, 9, -1, 1, 2, 4, -3, -2, -1, 1, 2, 1, 0, -1, 0, 2, 3, 4, 5, 6, 3, 1, 0, 3, 2, 1, 0, 0, -1, -2, 0, 9, 13, -1, 1, 2, 3, -3, -2, -1, 1, 2, 1, 0, -1, 0, 1, 2, 3, 4, 5, 3, 1, 0, 3, 2, 1, 0, 0, -1, -2, -3, 13, 17, 0, 0, 1, 2, -2, -1, 0, 0, 1, 1, 0, -1, 0, 1, 2, 3, 4, 4, 2, 1, 0};
+            diemNam = _diemNam;
+            int[] _diemNu = { 4, 3, 2, 0, 0, 0, 0, 0, -11, -1, -1, 1, 3, 5, -5, -3, -1, 1, 3, 2, 0, -2, 1, 3, 5, 7, 9, 9, 5, 2, -1, 4, 3, 2, 1, 0, 0, 0, 0, -6, 3, -1, 1, 3, 5, -4, -2, -1, 1, 3, 2, 0, -2, 1, 2, 4, 6, 8, 8, 5, 1, -1, 4, 3, 2, 1, -1, 0, 0, 0, 0, 8, -1, 1, 3, 4, -4, -2, -1, 1, 3, 2, 0, -2, 1, 2, 4, 5, 7, 7, 4, 1, -1, 4, 3, 2, 1, -1, -2, 0, 0, 5, 12, -1, 1, 2, 4, -3, -2, -1, 1, 2, 2, 0, -1, 1, 2, 3, 5, 6, 6, 3, 1, 0, 4, 3, 2, 1, -1, -2, -3, 0, 11, 16, -1, 1, 2, 3, -3, -2, -1, 1, 2, 2, 0, -1, 0, 2, 3, 4, 5, 5, 3, 1, 0, 4, 3, 2, 1, -1, -2, -3, -4, 16, 21, -1, 1, 2, 3, -2, -1, 0, 0, 1, 1, 0, -1, 0, 1, 2, 3, 4, 4, 2, 1, 0 };
+            diemNu = _diemNu;
+            //Nguy co nam: -15++ (tổng 49)
+            int[] _nguycoNam = { 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 9, 10, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 30, 32, 34, 36, 38, 41, 43, 45, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 9, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 24, 26, 28, 30, 32, 34, 36, 38, 41, 43, 46, 49, 51, 54, 57, 60, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 6, 7, 7, 8, 9, 9, 10, 11, 12, 13, 15, 16, 17, 19, 21, 22, 24, 26, 28, 31, 33, 36, 39, 41, 44, 48, 51, 54, 57, 61, 64, 68, 71, 74, 78, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 9, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 23, 25, 27, 29, 31, 33, 35, 38, 40, 43, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 80, 83, 85 };
+            nguycoNam = _nguycoNam;
+            //Nguy co nu: -14++ (tổng 53)
+            int[] _nguycoNu = { 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 8, 9, 9, 10, 10, 11, 12, 13, 14, 15, 15, 17, 18, 19, 20, 21, 23, 24, 26, 27, 29, 31, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 25, 27, 29, 31, 33, 35, 37, 39, 42, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 6, 7, 7, 8, 9, 9, 10, 11, 12, 13, 15, 16, 17, 19, 20, 22, 24, 26, 28, 31, 33, 36, 38, 41, 44, 47, 50, 54, 57, 61, 64, 67, 71, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 8, 9, 10, 10, 11, 12, 13, 14, 15, 16, 18, 19, 21, 22, 24, 26, 28, 30, 32, 34, 36, 39, 41, 44, 47, 50, 52, 55, 58, 61, 65, 68, 71, 74, 76, 79, 82, 84 };
+            nguycoNu = _nguycoNu;
+            //PL Nguy co nam: -15++ (tổng 49)
+            string[] _PLnguycoNam = {"T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC"};
+            PLnguycoNam = _PLnguycoNam;
+            //PL Nguy co nu: -14++ (tổng 53)
+            string[] _PLnguycoNu = {"T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC", "RC"};
+            PLnguycoNu = _PLnguycoNu;
+        }
+        private void checktuoi(double _tuoi)
+        {
+            //Nhom tuoi
+            if (_tuoi < 45)
+                nhomtuoi = 0;
+            else if (_tuoi < 50)
+                nhomtuoi = 1;
+            else if (_tuoi < 55)
+                nhomtuoi = 2;
+            else if (_tuoi < 60)
+                nhomtuoi = 3;
+            else if (_tuoi < 65)
+                nhomtuoi = 4;
+            else
+                nhomtuoi = 5;
+        }
+        private void checkDM_Age(double DM_Age)
+        {
+            //DM_age
+            if (DM_Age < 35)
+                nhomDM_Age = 0;
+            else if (DM_Age < 40)
+                nhomDM_Age = 1;
+            else if (DM_Age < 45)
+                nhomDM_Age = 2;
+            else if (DM_Age < 50)
+                nhomDM_Age = 3;
+            else if (DM_Age < 55)
+                nhomDM_Age = 4;
+            else if (DM_Age < 60)
+                nhomDM_Age = 5;
+            else if (DM_Age < 65)
+                nhomDM_Age = 6;
+            else
+                nhomDM_Age = 7;
+        }
+        private void checkSmoking(bool _smoking)
+        {
+            //Smoking
+            if (_smoking)
+                nhomSmoking = 1;
+            else
+                nhomSmoking = 0;
+        }
+        private void checkHATT(double _HATT)
+        {
+            //HATT
+            if (_HATT < 120)
+                nhomHATT = 0;
+            else if (_HATT < 140)
+                nhomHATT = 1;
+            else if (_HATT < 160)
+                nhomHATT = 2;
+            else
+                nhomHATT = 3;
+        }
+        private void checkTotalCholesterol(double _TotalCholesterol)
+        {
+            //TCho
+            if (_TotalCholesterol < 4)
+                nhomTotalCholesterol = 0;
+            else if (_TotalCholesterol < 5)
+                nhomTotalCholesterol = 1;
+            else if (_TotalCholesterol < 6)
+                nhomTotalCholesterol = 2;
+            else if (_TotalCholesterol < 7)
+                nhomTotalCholesterol = 3;
+            else
+                nhomTotalCholesterol = 4;
+        }
+        private void checkHDL(double _HDL)
+        {
+            //HDL
+            if (_HDL < 1)
+                nhomHDL = 0;
+            else if (_HDL < 1.5)
+                nhomHDL = 1;
+            else
+                nhomHDL = 2;
+        }
+        private void checkHbA1C(double _HbA1C)
+        {
+            //HbA1C
+            if (_HbA1C < 40)
+                nhomHbA1C = 0;
+            else if (_HbA1C < 50)
+                nhomHbA1C = 1;
+            else if (_HbA1C < 60)
+                nhomHbA1C = 2;
+            else if (_HbA1C < 70)
+                nhomHbA1C = 3;
+            else
+                nhomHbA1C = 4;
+        }
+        private void checkEGFR(string _gioitinh, double _creatininSerum, double _tuoi)
+        {
+            //eGFR
+            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_gioitinh, _creatininSerum, _tuoi);
+            double kqeGFR = eGFR_CKD_temp.kqeGFR_CKD();
+            if (kqeGFR < 45)
+                nhomEGFR = 0;
+            else if (kqeGFR < 60)
+                nhomEGFR = 1;
+            else if (kqeGFR < 90)
+                nhomEGFR = 2;
+            else
+                nhomEGFR = 3;
+        }
+        private void checkvungnguyco(string _vungnguyco)
+        {
+            //Vùng nguy cơ
+            if (_vungnguyco == "Thấp")
+                nhomvungnguyco = 0;
+            else if (_vungnguyco == "Trung bình")
+                nhomvungnguyco = 1;
+            else if (_vungnguyco == "Cao")
+                nhomvungnguyco = 2;
+            else
+                nhomvungnguyco = 3;
+        }
+        public int kqSCORE2_DM()
+        {
+            //Mỗi nhóm tuổi có 31 giá trị cho 7 biến: DM_Age (8); Smoking (2); HATT (4); TotalCho (5)
+            //HDL (3); HbA1C (5); eGFR (4)
+            //Dữ liệu ở init_SCORE2_DM();
+            diem_start_index = 31 * nhomtuoi;
+            int kq;
+            if (gioitinh == "Nam")
+            {
+                kq = diemNam[diem_start_index + nhomDM_Age] +
+                    diemNam[diem_start_index + 8 + nhomSmoking] +
+                    diemNam[diem_start_index + 8 + 2 + nhomHATT] +
+                    diemNam[diem_start_index + 8 + 2 + 4 + nhomTotalCholesterol] +
+                    diemNam[diem_start_index + 8 + 2 + 4 + 5 + nhomHDL] +
+                    diemNam[diem_start_index + 8 + 2 + 4 + 5 + 3 + nhomHbA1C] +
+                    diemNam[diem_start_index + 8 + 2 + 4 + 5 + 3 + 5 + nhomEGFR];
+            }
+            else
+            {
+                kq = diemNu[diem_start_index + nhomDM_Age] +
+                    diemNu[diem_start_index + 8 + nhomSmoking] +
+                    diemNu[diem_start_index + 8 + 2 + nhomHATT] +
+                    diemNu[diem_start_index + 8 + 2 + 4 + nhomTotalCholesterol] +
+                    diemNu[diem_start_index + 8 + 2 + 4 + 5 + nhomHDL] +
+                    diemNu[diem_start_index + 8 + 2 + 4 + 5 + 3 + nhomHbA1C] +
+                    diemNu[diem_start_index + 8 + 2 + 4 + 5 + 3 + 5 + nhomEGFR];
+            }
+            return kq;
+        }
+        public int kqNguycoSCORE2_DM()
+        {
+            int diem = kqSCORE2_DM();
+            int kq;
+
+            if (gioitinh == "Nam")
+            {
+                nguyco_start_index = 49 * nhomvungnguyco;
+                kq = nguycoNam[nguyco_start_index + diem + 15];
+            }
+            else
+            {
+                nguyco_start_index = 53 * nhomvungnguyco;
+                kq = nguycoNu[nguyco_start_index + diem + 14];
+            }
+            return kq;
+        }
+        public string kqPLNguycoSCORE2_DM()
+        {
+            int diem = kqSCORE2_DM();
+            string kq;
+
+            if (gioitinh == "Nam")
+            {
+                nguyco_start_index = 49 * nhomvungnguyco;
+                kq = PLnguycoNam[nguyco_start_index + diem + 15];
+            }
+            else
+            {
+                nguyco_start_index = 53 * nhomvungnguyco;
+                kq = PLnguycoNu[nguyco_start_index + diem + 14];
+            }
+            if (kq == "T")
+                kq = "Thấp";
+            else if (kq == "TB")
+                kq = "Trung bình";
+            else if (kq == "C")
+                kq = "Cao";
+            else
+                kq = "Rất cao";
+            return kq;
         }
     }
     #endregion

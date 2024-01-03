@@ -11,6 +11,22 @@
     <AssemblyName>Chisoyhoc_Form</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Admin\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +46,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>2DF796DA70F0BE7D40D9964344AC25C04EB73515</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Chisoyhoc_Form_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,6 +83,12 @@
     </Compile>
     <Compile Include="GiaodienMau\FormIBW.Designer.cs">
       <DependentUpon>FormIBW.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaodienMau\Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GiaodienMau\Test.Designer.cs">
+      <DependentUpon>Test.cs</DependentUpon>
     </Compile>
     <Compile Include="TestChiso\TestChiso101_110.cs">
       <SubType>Form</SubType>
@@ -154,6 +188,9 @@
     <EmbeddedResource Include="GiaodienMau\FormIBW.resx">
       <DependentUpon>FormIBW.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GiaodienMau\Test.resx">
+      <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestChiso\TestChiso101_110.resx">
       <DependentUpon>TestChiso101_110.cs</DependentUpon>
     </EmbeddedResource>
@@ -208,6 +245,7 @@
     <EmbeddedResource Include="TestChiso\TestChiso91_100.resx">
       <DependentUpon>TestChiso91_100.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Chisoyhoc_Form_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -226,6 +264,23 @@
       <Project>{cd06f0e4-d02b-45ac-9c0d-15ed25754982}</Project>
       <Name>Chisoyhoc_API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -23,5 +23,10 @@ namespace Chisoyhoc_Form
 
 
         }
+
+        private void FormAPACHEII_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

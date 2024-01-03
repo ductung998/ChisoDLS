@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(1534, 833);
             this.Name = "FormAPACHEII";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.FormAPACHEII_Load);
             this.ResumeLayout(false);
 
         }
