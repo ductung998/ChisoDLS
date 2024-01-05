@@ -198,5 +198,27 @@ namespace Chisoyhoc_Form.GiaodienMau
                 e.Handled = true;
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string gioitinh = "";
+            double tuoi = double.Parse(textBox1.Text);
+            bool hutthuoc = checkBox1.Checked;
+            int DM_Nam = int.Parse(textBox2.Text);
+            double HATT = double.Parse(textBox3.Text);
+            double TCho = double.Parse(textBox4.Text);
+            double HDL = double.Parse(textBox5.Text);
+            double HbA1C = double.Parse(textBox6.Text);
+            double creatininSer = double.Parse(textBox7.Text);
+            string vungnguyco = comboBox1.Text;
+
+            if (radioButton1.Checked)
+                gioitinh = "Nam";
+            else
+                gioitinh = "Nữ";
+
+            SCORE2 SCORE2_Cal = new SCORE2(gioitinh, tuoi, hutthuoc, HATT, TCho, HDL, vungnguyco);
+            label16.Text = "Điểm SCORE2/SCORE2OP: " + SCORE2_Cal.kqSCORE2().ToString();
+        }
     }
 }
