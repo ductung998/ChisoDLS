@@ -65,6 +65,11 @@ namespace Chisoyhoc_Form.GiaodienMau
             List<string> datacb = new List<string>() { "Thấp", "Trung bình", "Cao", "Rất cao" };
             comboBox1.DataSource = datacb;
 
+            textBoxGT.Text = "Mục đích\r\nĐánh giá nguy cơ mắc biến cố tim mạch gây tử vong (fatal) hoặc không (non-fatal) trong 10 năm theo khuyến cáo về phòng ngừa tim mạch của Hội Tim mạch châu Âu (ESC)." +
+                "\r\nỨng dụng\r\nTheo dõi và đánh giá nguy cơ mắc biến cố tim mạch, đánh giá các yếu tố nguy cơ để lựa chọn phương án điều trị và dự phòng phù hợp.";
+            textBoxPP.Text = "Căn cứ vào tuổi (năm), giới tính, hút thuốc lá, non-HDL cholesterol (mmol/L), huyết áp tâm thu (mmHg) và nguy cơ tim mạch trong dân số (4 nhóm)." +
+                "\r\nnon-HDL cholesterol = Cholesterol toàn phần - HDL";
+
             textBox1.Text = "55";
             textBox2.Text = "1990";
             textBox3.Text = "140";
