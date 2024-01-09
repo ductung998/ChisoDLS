@@ -18,23 +18,24 @@ namespace Chisoyhoc_Form
             InitializeComponent();
         }
 
+        #region IBW
         private void button1_Click(object sender, EventArgs e)
         {
 
         }
-        #region IBW
+        
         private void button1_Click_1(object sender, EventArgs e)
         {
             int chieucaoIBW = int.Parse(txtChieuCao.Text);
             if (radNam.Checked)
             {
                 IBW dtIBW = new IBW("nam", chieucaoIBW);
-                lblKetQua.Text = dtIBW.kqIBW().ToString(); 
+                lblKetQua.Text = dtIBW.kqIBW().ToString() + "kg";  
             }
             else
             {
                 IBW dtIBW = new IBW("nữ", chieucaoIBW);
-                lblKetQua.Text = dtIBW.kqIBW().ToString(); 
+                lblKetQua.Text = dtIBW.kqIBW().ToString() + "kg"; 
             }
         }
 
@@ -341,12 +342,12 @@ namespace Chisoyhoc_Form
             if (radNamAdj.Checked)
             {
                 AdjBW dtAdjBW = new AdjBW("nam", chieucaoAdjBW, cannangAdjBW);
-                lblKetQuaAdjBW.Text = dtAdjBW.kqAdjBW().ToString();
+                lblKetQuaAdjBW.Text = dtAdjBW.kqAdjBW().ToString() + "kg";
             }
             else
             {
                 AdjBW dtAdjBW = new AdjBW("nữ", chieucaoAdjBW, cannangAdjBW);
-                lblKetQuaAdjBW.Text = dtAdjBW.kqAdjBW().ToString();
+                lblKetQuaAdjBW.Text = dtAdjBW.kqAdjBW().ToString() + "kg";
             }
         }
         private void button14_Click(object sender, EventArgs e)
@@ -385,6 +386,101 @@ namespace Chisoyhoc_Form
         }
         #endregion
 
+        #region BMI
+        private void button23_Click(object sender, EventArgs e)
+        {
+            double chieucaoBMI = double.Parse(txtChieuCaoBMI.Text);
+            double cannangBMI = double.Parse(txtCanNangBMI.Text);
+            BMI dtBMI = new BMI(chieucaoBMI, cannangBMI);
+            lblKetQuaBMI.Text = dtBMI.kqBMI().ToString() + "kg/m^2"; ;
+        }
 
+        private void button24_Click(object sender, EventArgs e)
+        {
+            txtChieuCaoBMI.Text = "";
+            txtCanNangBMI.Text = "";
+            lblKetQuaBMI.Text = "";
+            lblBMI.Text = "";
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            lblBMI.Text = "Tính toán chỉ số khối cơ thể, đánh giá mức độ thừa cân/béo phì/gầy dựa trên BMI";
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            lblBMI.Text = "Xác định nguyên nhân và đánh giá tình trạng thiếu oxy ở người bệnh";
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            lblBMI.Text = "Dựa trên cân nặng (kg) và chiều cao (cm) theo công thức:"
+            + "\nBMI = cân nặng /(chiều cao^2)"
+            + "\nĐơn vị tính: kg/m^2";
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            lblBMI.Text = "1. National Institutes of Health (NIH), National Heart, Lung, and Blood Institute (NHLBI). The practical guide: Identification, evaluation, and treatment of overweight and obesity in adults, NIH publication 00-4084, National Institutes of Health, Bethesda 2000.";
+        }
+        #endregion
+
+        #region eGFR (CKD)
+        private void button31_Click(object sender, EventArgs e)
+        {
+            double crclCKD = double.Parse(txtCrClCKD.Text);
+            double tuoiCKD = double.Parse(txtTuoiCKD.Text);
+            if (radNamCKD.Checked)
+            {
+                eGFR_CKD dtCKD = new eGFR_CKD("nam", crclCKD, tuoiCKD);
+                lblKetQuaCKD.Text = dtCKD.kqeGFR_CKD().ToString() + "ml/phút/1,73m^2";
+            }
+            else
+            {
+                eGFR_CKD dtCKD = new eGFR_CKD("nữ", crclCKD, tuoiCKD);
+                lblKetQuaCKD.Text = dtCKD.kqeGFR_CKD().ToString() + "ml/phút/1,73m^2";
+            }
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            lblCKD.Text = "Ước lượng độ lọc cầu thận dựa trên một số thông số và xét nghiệm.";
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            lblCKD.Text = "Xác định chức năng thận trong chẩn đoán, điều trị và sử dụng thuốc, công thức được đánh giá phản ánh tốt hơn về GFR so với Cockcroft–Gault và phù hợp với người có BMI cao.";
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            lblCKD.Text = "Tính toán từ tuổi, giới tính và creatinin huyết thanh đo được (mg/dL) theo công thức:"
++ "\neGFR = 142 × min(creatinin huyết thanh/kappa,1)^alpha × max(creatinin huyết thanh/kappa, 1)^(-1,2) × 0,9938^(Tuổi) × Hệ số giới tính"
++ "\nTrong đó:"
++ "\nGiới tính và các hệ số:"
++ "\n        Hệ số giới tính               Kappa                 Apha"
++ "\nNữ:        1,012                           0,7                  -0,241"
++ "\nNam:         1                              0,9                  -0,302"
++ "\nmin/max là giá trị nhỏ nhất/lớn nhất giữa 2 trị số creatinin huyết thanh/kappa so với 1"
++ "\nĐơn vị tính: mL/phút/1.73m^2";
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            lblCKD.Text = "1. Inker LA, Eneanya ND, Coresh J, et al. Chronic Kidney Disease Epidemiology Collaboration. New Creatinine- and Cystatin C-Based Equations to Estimate GFR without Race. N Engl J Med 2021; 385:1737."
++ "\n2. Levey AS, Bosch JP, Lewis JB, Greene T, Rogers N, Roth D. A more accurate method to estimate glomerular filtration rate from serum creatinine: a new prediction equation. Modification of Diet in Renal Disease Study Group. Ann Intern Med. 1999;130(6):461-70."
++ "\n3. Kidney Disease: Improving Global Outcomes (KDIGO) Anemia Work Group. KDIGO clinical practice guideline for anemia in chronic kidney disease. Kidney Int Suppl. 2012;2(4):279–335.";
+        }
+        private void button32_Click(object sender, EventArgs e)
+        {
+            radNamCKD.Checked = false;
+            radNuCKD.Checked = false;
+            txtCrClCKD.Text = "";
+            txtTuoiCKD.Text = "";
+            lblKetQuaCKD.Text = "";
+            lblCKD.Text = "";
+        }
+        #endregion
     }
 }
