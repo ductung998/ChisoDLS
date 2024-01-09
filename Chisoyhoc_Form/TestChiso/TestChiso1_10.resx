@@ -117,10 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblNoidungABW.Text" xml:space="preserve">
-    <value>Cân nặng hiệu chỉnh (ABW) tính toán cân nặng hiệu chỉnh dựa vào:
-- Các thông số đầu vào: Giới tính, chiều cao, cân nặng thực tế (m, cm, kg).
-- Thông số đầu ra: Cân nặng hiệu chỉnh (kg).
-Nguồn tham khảo: Uptodate.</value>
-  </data>
 </root>
