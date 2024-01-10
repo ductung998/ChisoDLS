@@ -553,6 +553,60 @@ namespace Chisoyhoc_Form
         }
         #endregion
 
+        #region CrCl
+        private void button47_Click(object sender, EventArgs e)
+        {
+            double tuoiCrCl = double.Parse(txtTuoiCrCl.Text);
+            double cannangCrCl= double.Parse(txtCanNangCrCl.Text);
+            double crclCrCl = double.Parse(txtCreCrCl.Text);
+            if (radNamCrCl.Checked)
+            {
+                eCrCl dteCrCl = new eCrCl(tuoiCrCl, cannangCrCl, crclCrCl, "nam");
+                lblKetQuaCrCl.Text = dteCrCl.kqeCrCl().ToString() + "mL/phút/1.73m^2";
+            }
+            else
+            {
+                eCrCl dteCrCl = new eCrCl(tuoiCrCl, cannangCrCl, crclCrCl, "nữ");
+                lblKetQuaCrCl.Text = dteCrCl.kqeCrCl().ToString() + "mL/phút/1.73m^2";
+            }
+
+        }
+
+        private void button48_Click(object sender, EventArgs e)
+        {
+            txtTuoiCrCl.Text = "";
+            txtCanNangCrCl.Text = "";
+            txtCreCrCl.Text = "";
+            radNamCrCl.Checked = false;
+            radNuCrCl.Checked = false;
+            lblKetQuaCrCl.Text = "";
+            lblCrCl.Text = "";
+        }
+
+        private void button46_Click(object sender, EventArgs e)
+        {
+            lblCrCl.Text = "Tính toán độ thanh thải creatinin để ước lượng độ lọc cầu thận, đánh giá chức năng thận";
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            lblCrCl.Text = "Đánh giá chức năng thận trong chẩn đoán, điều trị và sử dụng thuốc";
+        }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            lblCrCl.Text = "Tính toán từ tuổi, cân nặng, giới tính và creatinin huyết thanh đo được theo công thức:"
++ "\nĐộ thanh thải Creatinin = (140 − tuổi) × cân nặng × (0,85 đối với nữ)/(72 × creatinin huyết thanh)"
++ "\nĐơn vị tính: mL/phút/1.73m2";
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            lblCrCl.Text = "1. Cockcroft DW, Gault MH. Prediction of creatinine clearance from serum creatinine. Nephron 1976; 16:31."
++ "\n2.National Institute of Diabetes and Digestive and Kidney Diseases. CKD & drug dosing: Information for providers - estimation of kidney function for prescription medication dosage in adults.";
+        }
+        #endregion
+
 
     }
 }
