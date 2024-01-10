@@ -607,6 +607,87 @@ namespace Chisoyhoc_Form
         }
         #endregion
 
+        #region Na huyết
+        private void button55_Click(object sender, EventArgs e)
+        {
+            double natriNa = double.Parse(txtNatriNa.Text);
+            double glucoseNa = double.Parse(txtGlucoseNa.Text);
+            NatriSerum_Adj dtNatri = new NatriSerum_Adj(natriNa, glucoseNa);
+            lblKetQuaNa.Text = dtNatri.kqNatriSerum_Adj().ToString() + "mEq/L";
+        }
+
+        private void button56_Click(object sender, EventArgs e)
+        {
+            txtNatriNa.Text = "";
+            txtGlucoseNa.Text = "";
+            lblKetQuaNa.Text = "";
+            lblNa.Text = "";
+        }
+
+        private void button54_Click(object sender, EventArgs e)
+        {
+            lblNa.Text = "Nồng độ natri huyết tương hiệu chỉnh đối với tăng đường huyết";
+        }
+
+        private void button53_Click(object sender, EventArgs e)
+        {
+            lblNa.Text = "Tăng đường huyết gây giảm nồng độ natri huyết tương đo được, cần hiệu chỉnh để đánh giá chính xác tình trạng thiếu hụt/dư natri";
+        }
+
+        private void button52_Click(object sender, EventArgs e)
+        {
+            lblNa.Text = "Chẩn đoán, điều trị tăng/giảm natri cho người bệnh đái tháo đường.";
+        }
+
+        private void button51_Click(object sender, EventArgs e)
+        {
+            lblNa.Text = "1. Emmett M. Case 6: Diabetes and acidosis. In: NephSAP: Nephrology Self-Assessment Program: Fluid, Electrolyte, and Acid-Base Disturbances, Sterns RH, Emmett M (Eds), American Society of Nephrology 2013. Vol 12, p.191.";
+        }
+        #endregion
+
+        #region LDL-C (Friedewald)
+        private void button63_Click(object sender, EventArgs e)
+        {
+            double cholesterol = double.Parse(txtCholesLDL.Text);
+            double hdl = double.Parse(txtHDLLDL.Text);
+            double triglycerid = double.Parse(txtTriglyLDL.Text);
+            LDL dtLDL = new LDL(cholesterol, hdl, triglycerid);
+            lblKetQuaLDL.Text = dtLDL.kqLDL().ToString() + "mg/dL";
+        }
+
+        private void button64_Click(object sender, EventArgs e)
+        {
+            txtCholesLDL.Text = "";
+            txtHDLLDL.Text = "";
+            txtTriglyLDL.Text = "";
+            lblKetQuaLDL.Text = "";
+            lblLDL.Text = "";
+        }
+
+        private void button62_Click(object sender, EventArgs e)
+        {
+            lblLDL.Text = "Tính toán nồng độ LCL-C trong máu, không phù hợp khi Triglycerid tăng quá 400 mg/dL (4,5 mmol/L)";
+        }
+
+        private void button61_Click(object sender, EventArgs e)
+        {
+            lblLDL.Text = "Đánh giá tình trạng tăng lipid huyết ở người bệnh.";
+        }
+
+        private void button60_Click(object sender, EventArgs e)
+        {
+            lblLDL.Text = "Căn cứ xét nghiệm huyết học, tính toán dựa trên nồng độ cholesterol toàn phần (mg/dL), HDL-C (mg/dL) và Triglyceride (mg/dL) theo công thức:"
++ "\nLDL-C = cholesterol toàn phần - Triglyceride/5 - HDL-C"
++ "\nĐơn vị tính: mg/dL";
+        }
+
+        private void button59_Click(object sender, EventArgs e)
+        {
+            lblLDL.Text = "1. Friedewald WT, Levy RI, Fredrickson DS. Estimation of the concentration of low-density lipoprotein cholesterol in plasma, without use of the preparative ultracentrifuge. Clin Chem 1972; 18:499.";
+        }
+        #endregion
+
+
 
     }
 }
