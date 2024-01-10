@@ -482,5 +482,77 @@ namespace Chisoyhoc_Form
             lblCKD.Text = "";
         }
         #endregion
+
+        #region eGFR (MDRD)
+        private void button39_Click(object sender, EventArgs e)
+        {
+            double crclMDRD = double.Parse(txtCrClMDRD.Text);
+            double tuoiMDRD = double.Parse(txtTuoiMDRD.Text);
+            if (radNamMDRD.Checked)
+            {
+                if (radDaDenMDRD.Checked)
+                {
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "người da đen", "nam");
+                    lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
+                }
+                else
+                {
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "khác", "nam");
+                    lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
+                }
+            }
+            else
+            {
+                if (radDaDenMDRD.Checked)
+                {
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "người da đen", "nữ");
+                    lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
+                }
+                else
+                {
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "khác", "nữ");
+                    lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
+                }
+            }
+        }
+
+        private void button40_Click(object sender, EventArgs e)
+        {
+            txtCrClMDRD.Text = "";
+            txtTuoiMDRD.Text = "";
+            radDaDenMDRD.Checked = false;
+            radKhacMDRD.Checked = false;
+            radNamMDRD.Checked = false;
+            radNuMDRD.Checked = false;
+            lblKetQuaMDRD.Text = "";
+            lblMDRD.Text = "";
+        }
+
+        private void button38_Click(object sender, EventArgs e)
+        {
+            lblMDRD.Text = "Ước lượng độ lọc cầu thận dựa trên một số thông số và xét nghiệm.";
+        }
+
+        private void button37_Click(object sender, EventArgs e)
+        {
+            lblMDRD.Text = "Xác định chức năng thận trong chẩn đoán, điều trị và sử dụng thuốc, công thức được đánh giá phản ánh tốt hơn về GFR so với Cockcroft–Gault và phù hợp với người có BMI cao.";
+        }
+
+        private void button36_Click(object sender, EventArgs e)
+        {
+            lblMDRD.Text = "Tính toán từ tuổi, giới tính, chủng tộc và creatinin huyết thanh đo được (mg/dL) theo công thức:"
++ "\neGFR = 175 × creatinin huyết thanh^(-1,154) × Tuổi^(-0,203) × 1,212 (đối với người da đen) × 0,742 (đối với nữ)"
++ "\nĐơn vị tính: mL/phút/1.73m^2";
+        }
+
+        private void button35_Click(object sender, EventArgs e)
+        {
+            lblMDRD.Text = "1. Inker LA, Eneanya ND, Coresh J, et al. Chronic Kidney Disease Epidemiology Collaboration. New Creatinine- and Cystatin C-Based Equations to Estimate GFR without Race. N Engl J Med 2021; 385:1737."
++ "\n2. Levey AS, Bosch JP, Lewis JB, Greene T, Rogers N, Roth D. A more accurate method to estimate glomerular filtration rate from serum creatinine: a new prediction equation. Modification of Diet in Renal Disease Study Group. Ann Intern Med. 1999;130(6):461-70."
++ "\n3. Kidney Disease: Improving Global Outcomes (KDIGO) Anemia Work Group. KDIGO clinical practice guideline for anemia in chronic kidney disease. Kidney Int Suppl. 2012;2(4):279–335.";
+        }
+        #endregion
+
+
     }
 }

@@ -83,13 +83,6 @@
             this.lblKetQuaAdjBW = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.button17 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -114,6 +107,7 @@
             this.txtChieuCaoBMI = new System.Windows.Forms.TextBox();
             this.lblKetQuaBMI = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel10 = new System.Windows.Forms.Panel();
             this.button25 = new System.Windows.Forms.Button();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -127,6 +121,8 @@
             this.button29 = new System.Windows.Forms.Button();
             this.button30 = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.txtTuoiCKD = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
@@ -138,8 +134,43 @@
             this.txtCrClCKD = new System.Windows.Forms.TextBox();
             this.lblKetQuaCKD = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.txtTuoiCKD = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.button33 = new System.Windows.Forms.Button();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.button34 = new System.Windows.Forms.Button();
+            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.label20 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.lblMDRD = new System.Windows.Forms.Label();
+            this.button35 = new System.Windows.Forms.Button();
+            this.button36 = new System.Windows.Forms.Button();
+            this.button37 = new System.Windows.Forms.Button();
+            this.button38 = new System.Windows.Forms.Button();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.txtTuoiMDRD = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.button39 = new System.Windows.Forms.Button();
+            this.button40 = new System.Windows.Forms.Button();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.radNuMDRD = new System.Windows.Forms.RadioButton();
+            this.label35 = new System.Windows.Forms.Label();
+            this.radNamMDRD = new System.Windows.Forms.RadioButton();
+            this.txtCrClMDRD = new System.Windows.Forms.TextBox();
+            this.lblKetQuaMDRD = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.radKhacMDRD = new System.Windows.Forms.RadioButton();
+            this.radDaDenMDRD = new System.Windows.Forms.RadioButton();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.panel17 = new System.Windows.Forms.Panel();
             this.IBW.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -152,15 +183,22 @@
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.panel11.SuspendLayout();
             this.panel12.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.panel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            this.panel14.SuspendLayout();
+            this.panel15.SuspendLayout();
+            this.panel16.SuspendLayout();
+            this.panel17.SuspendLayout();
             this.SuspendLayout();
             // 
             // IBW
@@ -806,87 +844,6 @@
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.panel10);
-            this.tabPage4.Controls.Add(this.panel11);
-            this.tabPage4.Controls.Add(this.panel12);
-            this.tabPage4.Controls.Add(this.label29);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage4.TabIndex = 2;
-            this.tabPage4.Text = "eGFR (CKD-EPI)";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage5.TabIndex = 3;
-            this.tabPage5.Text = "eGFR (MDRD)";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage6.TabIndex = 4;
-            this.tabPage6.Text = "CrCl";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
-            // 
-            // tabPage7
-            // 
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage7.TabIndex = 5;
-            this.tabPage7.Text = "[Na huyết]";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            this.tabPage7.Click += new System.EventHandler(this.tabPage7_Click);
-            // 
-            // tabPage8
-            // 
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage8.TabIndex = 6;
-            this.tabPage8.Text = "LDL-C";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            this.tabPage8.Click += new System.EventHandler(this.tabPage8_Click);
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage9.TabIndex = 7;
-            this.tabPage9.Text = "FIB-4";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            this.tabPage9.Click += new System.EventHandler(this.tabPage9_Click);
-            // 
-            // tabPage10
-            // 
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage10.TabIndex = 8;
-            this.tabPage10.Text = "TSAT";
-            this.tabPage10.UseVisualStyleBackColor = true;
-            this.tabPage10.Click += new System.EventHandler(this.tabPage10_Click);
-            // 
             // panel7
             // 
             this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1144,6 +1101,21 @@
             this.label24.TabIndex = 40;
             this.label24.Text = "Chỉ số khối cơ thể (BMI)";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.panel10);
+            this.tabPage4.Controls.Add(this.panel11);
+            this.tabPage4.Controls.Add(this.panel12);
+            this.tabPage4.Controls.Add(this.label29);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage4.TabIndex = 2;
+            this.tabPage4.Text = "eGFR (CKD-EPI)";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            // 
             // panel10
             // 
             this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1291,6 +1263,24 @@
             this.panel12.Size = new System.Drawing.Size(1280, 319);
             this.panel12.TabIndex = 37;
             // 
+            // txtTuoiCKD
+            // 
+            this.txtTuoiCKD.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTuoiCKD.Location = new System.Drawing.Point(261, 71);
+            this.txtTuoiCKD.Name = "txtTuoiCKD";
+            this.txtTuoiCKD.Size = new System.Drawing.Size(181, 26);
+            this.txtTuoiCKD.TabIndex = 35;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(3, 72);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(46, 22);
+            this.label30.TabIndex = 34;
+            this.label30.Text = "Tuổi";
+            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -1385,6 +1375,7 @@
             this.txtCrClCKD.Name = "txtCrClCKD";
             this.txtCrClCKD.Size = new System.Drawing.Size(181, 26);
             this.txtCrClCKD.TabIndex = 20;
+            this.txtCrClCKD.Text = "0";
             // 
             // lblKetQuaCKD
             // 
@@ -1409,23 +1400,411 @@
             this.label29.TabIndex = 36;
             this.label29.Text = "Độ lọc cầu thận ước lượng (eGFR) theo công thức CKD-EPI";
             // 
-            // label30
+            // tabPage5
             // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(3, 72);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(46, 22);
-            this.label30.TabIndex = 34;
-            this.label30.Text = "Tuổi";
+            this.tabPage5.Controls.Add(this.panel13);
+            this.tabPage5.Controls.Add(this.panel14);
+            this.tabPage5.Controls.Add(this.panel15);
+            this.tabPage5.Controls.Add(this.label37);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage5.TabIndex = 3;
+            this.tabPage5.Text = "eGFR (MDRD)";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
             // 
-            // txtTuoiCKD
+            // tabPage6
             // 
-            this.txtTuoiCKD.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTuoiCKD.Location = new System.Drawing.Point(261, 71);
-            this.txtTuoiCKD.Name = "txtTuoiCKD";
-            this.txtTuoiCKD.Size = new System.Drawing.Size(181, 26);
-            this.txtTuoiCKD.TabIndex = 35;
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage6.TabIndex = 4;
+            this.tabPage6.Text = "CrCl";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage7.TabIndex = 5;
+            this.tabPage7.Text = "[Na huyết]";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            this.tabPage7.Click += new System.EventHandler(this.tabPage7_Click);
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage8.TabIndex = 6;
+            this.tabPage8.Text = "LDL-C";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            this.tabPage8.Click += new System.EventHandler(this.tabPage8_Click);
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage9.TabIndex = 7;
+            this.tabPage9.Text = "FIB-4";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            this.tabPage9.Click += new System.EventHandler(this.tabPage9_Click);
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage10.TabIndex = 8;
+            this.tabPage10.Text = "TSAT";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            this.tabPage10.Click += new System.EventHandler(this.tabPage10_Click);
+            // 
+            // panel13
+            // 
+            this.panel13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel13.Controls.Add(this.button33);
+            this.panel13.Controls.Add(this.textBox5);
+            this.panel13.Controls.Add(this.button34);
+            this.panel13.Controls.Add(this.dataGridView5);
+            this.panel13.Controls.Add(this.label20);
+            this.panel13.Location = new System.Drawing.Point(700, 73);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(622, 264);
+            this.panel13.TabIndex = 43;
+            // 
+            // button33
+            // 
+            this.button33.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button33.Location = new System.Drawing.Point(417, 2);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(187, 32);
+            this.button33.TabIndex = 36;
+            this.button33.Text = "Tìm kiếm";
+            this.button33.UseVisualStyleBackColor = true;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox5.Location = new System.Drawing.Point(211, 5);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(200, 26);
+            this.textBox5.TabIndex = 35;
+            // 
+            // button34
+            // 
+            this.button34.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button34.Location = new System.Drawing.Point(175, 226);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(272, 32);
+            this.button34.TabIndex = 34;
+            this.button34.Text = "Sử dụng dữ liệu người bệnh";
+            this.button34.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView5
+            // 
+            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView5.Location = new System.Drawing.Point(0, 37);
+            this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.Size = new System.Drawing.Size(622, 178);
+            this.dataGridView5.TabIndex = 19;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(3, 7);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(192, 22);
+            this.label20.TabIndex = 18;
+            this.label20.Text = "Danh sách người bệnh";
+            // 
+            // panel14
+            // 
+            this.panel14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel14.BackColor = System.Drawing.Color.Transparent;
+            this.panel14.Controls.Add(this.lblMDRD);
+            this.panel14.Controls.Add(this.button35);
+            this.panel14.Controls.Add(this.button36);
+            this.panel14.Controls.Add(this.button37);
+            this.panel14.Controls.Add(this.button38);
+            this.panel14.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel14.Location = new System.Drawing.Point(42, 73);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(622, 264);
+            this.panel14.TabIndex = 42;
+            // 
+            // lblMDRD
+            // 
+            this.lblMDRD.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.lblMDRD.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMDRD.Location = new System.Drawing.Point(0, 37);
+            this.lblMDRD.Name = "lblMDRD";
+            this.lblMDRD.Size = new System.Drawing.Size(622, 227);
+            this.lblMDRD.TabIndex = 35;
+            // 
+            // button35
+            // 
+            this.button35.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button35.Location = new System.Drawing.Point(471, 0);
+            this.button35.Name = "button35";
+            this.button35.Size = new System.Drawing.Size(150, 34);
+            this.button35.TabIndex = 34;
+            this.button35.Text = "TLTK";
+            this.button35.UseVisualStyleBackColor = true;
+            this.button35.Click += new System.EventHandler(this.button35_Click);
+            // 
+            // button36
+            // 
+            this.button36.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button36.Location = new System.Drawing.Point(314, 0);
+            this.button36.Name = "button36";
+            this.button36.Size = new System.Drawing.Size(150, 34);
+            this.button36.TabIndex = 33;
+            this.button36.Text = "Phương pháp";
+            this.button36.UseVisualStyleBackColor = true;
+            this.button36.Click += new System.EventHandler(this.button36_Click);
+            // 
+            // button37
+            // 
+            this.button37.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button37.Location = new System.Drawing.Point(156, 0);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(150, 34);
+            this.button37.TabIndex = 32;
+            this.button37.Text = "Ứng dụng";
+            this.button37.UseVisualStyleBackColor = true;
+            this.button37.Click += new System.EventHandler(this.button37_Click);
+            // 
+            // button38
+            // 
+            this.button38.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button38.Location = new System.Drawing.Point(0, 0);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(150, 34);
+            this.button38.TabIndex = 31;
+            this.button38.Text = "Mục đích";
+            this.button38.UseVisualStyleBackColor = true;
+            this.button38.Click += new System.EventHandler(this.button38_Click);
+            // 
+            // panel15
+            // 
+            this.panel15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel15.Controls.Add(this.panel17);
+            this.panel15.Controls.Add(this.panel16);
+            this.panel15.Controls.Add(this.label38);
+            this.panel15.Controls.Add(this.txtTuoiMDRD);
+            this.panel15.Controls.Add(this.label31);
+            this.panel15.Controls.Add(this.label32);
+            this.panel15.Controls.Add(this.button39);
+            this.panel15.Controls.Add(this.button40);
+            this.panel15.Controls.Add(this.label33);
+            this.panel15.Controls.Add(this.label34);
+            this.panel15.Controls.Add(this.label35);
+            this.panel15.Controls.Add(this.txtCrClMDRD);
+            this.panel15.Controls.Add(this.lblKetQuaMDRD);
+            this.panel15.Location = new System.Drawing.Point(42, 339);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(1280, 334);
+            this.panel15.TabIndex = 41;
+            // 
+            // txtTuoiMDRD
+            // 
+            this.txtTuoiMDRD.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTuoiMDRD.Location = new System.Drawing.Point(274, 75);
+            this.txtTuoiMDRD.Name = "txtTuoiMDRD";
+            this.txtTuoiMDRD.Size = new System.Drawing.Size(181, 26);
+            this.txtTuoiMDRD.TabIndex = 35;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(16, 76);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(46, 22);
+            this.label31.TabIndex = 34;
+            this.label31.Text = "Tuổi";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(461, 22);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(62, 22);
+            this.label32.TabIndex = 33;
+            this.label32.Text = "mg/dL";
+            // 
+            // button39
+            // 
+            this.button39.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button39.Location = new System.Drawing.Point(965, 113);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(75, 25);
+            this.button39.TabIndex = 21;
+            this.button39.Text = "OK";
+            this.button39.UseVisualStyleBackColor = true;
+            this.button39.Click += new System.EventHandler(this.button39_Click);
+            // 
+            // button40
+            // 
+            this.button40.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button40.Location = new System.Drawing.Point(965, 143);
+            this.button40.Name = "button40";
+            this.button40.Size = new System.Drawing.Size(75, 25);
+            this.button40.TabIndex = 32;
+            this.button40.Text = "RESET";
+            this.button40.UseVisualStyleBackColor = true;
+            this.button40.Click += new System.EventHandler(this.button40_Click);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(654, 77);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(82, 22);
+            this.label33.TabIndex = 17;
+            this.label33.Text = "Giới tính";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(16, 23);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(187, 22);
+            this.label34.TabIndex = 19;
+            this.label34.Text = "Creatinin huyết thanh";
+            // 
+            // radNuMDRD
+            // 
+            this.radNuMDRD.AutoSize = true;
+            this.radNuMDRD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radNuMDRD.Location = new System.Drawing.Point(150, 1);
+            this.radNuMDRD.Name = "radNuMDRD";
+            this.radNuMDRD.Size = new System.Drawing.Size(53, 26);
+            this.radNuMDRD.TabIndex = 30;
+            this.radNuMDRD.TabStop = true;
+            this.radNuMDRD.Text = "Nữ";
+            this.radNuMDRD.UseVisualStyleBackColor = true;
+            // 
+            // label35
+            // 
+            this.label35.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label35.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label35.Location = new System.Drawing.Point(11, 159);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(100, 24);
+            this.label35.TabIndex = 18;
+            this.label35.Text = "KẾT QUẢ";
+            // 
+            // radNamMDRD
+            // 
+            this.radNamMDRD.AutoSize = true;
+            this.radNamMDRD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radNamMDRD.Location = new System.Drawing.Point(10, 3);
+            this.radNamMDRD.Name = "radNamMDRD";
+            this.radNamMDRD.Size = new System.Drawing.Size(67, 26);
+            this.radNamMDRD.TabIndex = 29;
+            this.radNamMDRD.TabStop = true;
+            this.radNamMDRD.Text = "Nam";
+            this.radNamMDRD.UseVisualStyleBackColor = true;
+            // 
+            // txtCrClMDRD
+            // 
+            this.txtCrClMDRD.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCrClMDRD.Location = new System.Drawing.Point(274, 20);
+            this.txtCrClMDRD.Name = "txtCrClMDRD";
+            this.txtCrClMDRD.Size = new System.Drawing.Size(181, 26);
+            this.txtCrClMDRD.TabIndex = 20;
+            // 
+            // lblKetQuaMDRD
+            // 
+            this.lblKetQuaMDRD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblKetQuaMDRD.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblKetQuaMDRD.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKetQuaMDRD.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblKetQuaMDRD.Location = new System.Drawing.Point(11, 185);
+            this.lblKetQuaMDRD.Name = "lblKetQuaMDRD";
+            this.lblKetQuaMDRD.Size = new System.Drawing.Size(1264, 128);
+            this.lblKetQuaMDRD.TabIndex = 24;
+            this.lblKetQuaMDRD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label37
+            // 
+            this.label37.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.Location = new System.Drawing.Point(373, 30);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(599, 52);
+            this.label37.TabIndex = 40;
+            this.label37.Text = "Độ lọc cầu thận ước lượng (eGFR) theo công thức MDRD\r\n\r\n";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.Location = new System.Drawing.Point(654, 22);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(94, 22);
+            this.label38.TabIndex = 36;
+            this.label38.Text = "Chủng tộc";
+            // 
+            // radKhacMDRD
+            // 
+            this.radKhacMDRD.AutoSize = true;
+            this.radKhacMDRD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radKhacMDRD.Location = new System.Drawing.Point(150, 5);
+            this.radKhacMDRD.Name = "radKhacMDRD";
+            this.radKhacMDRD.Size = new System.Drawing.Size(71, 26);
+            this.radKhacMDRD.TabIndex = 38;
+            this.radKhacMDRD.TabStop = true;
+            this.radKhacMDRD.Text = "Khác";
+            this.radKhacMDRD.UseVisualStyleBackColor = true;
+            // 
+            // radDaDenMDRD
+            // 
+            this.radDaDenMDRD.AutoSize = true;
+            this.radDaDenMDRD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radDaDenMDRD.Location = new System.Drawing.Point(10, 5);
+            this.radDaDenMDRD.Name = "radDaDenMDRD";
+            this.radDaDenMDRD.Size = new System.Drawing.Size(138, 26);
+            this.radDaDenMDRD.TabIndex = 37;
+            this.radDaDenMDRD.TabStop = true;
+            this.radDaDenMDRD.Text = "Người da đen";
+            this.radDaDenMDRD.UseVisualStyleBackColor = true;
+            // 
+            // panel16
+            // 
+            this.panel16.Controls.Add(this.radKhacMDRD);
+            this.panel16.Controls.Add(this.radDaDenMDRD);
+            this.panel16.Location = new System.Drawing.Point(888, 16);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(229, 34);
+            this.panel16.TabIndex = 39;
+            // 
+            // panel17
+            // 
+            this.panel17.Controls.Add(this.radNamMDRD);
+            this.panel17.Controls.Add(this.radNuMDRD);
+            this.panel17.Location = new System.Drawing.Point(888, 71);
+            this.panel17.Name = "panel17";
+            this.panel17.Size = new System.Drawing.Size(229, 34);
+            this.panel17.TabIndex = 40;
             // 
             // TestChiso1_10
             // 
@@ -1456,20 +1835,32 @@
             this.panel6.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            this.panel14.ResumeLayout(false);
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
+            this.panel17.ResumeLayout(false);
+            this.panel17.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1588,6 +1979,37 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox txtTuoiCKD;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Button button33;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button button34;
+        private System.Windows.Forms.DataGridView dataGridView5;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Label lblMDRD;
+        private System.Windows.Forms.Button button35;
+        private System.Windows.Forms.Button button36;
+        private System.Windows.Forms.Button button37;
+        private System.Windows.Forms.Button button38;
+        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.TextBox txtTuoiMDRD;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button button39;
+        private System.Windows.Forms.Button button40;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.RadioButton radNuMDRD;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.RadioButton radNamMDRD;
+        private System.Windows.Forms.TextBox txtCrClMDRD;
+        private System.Windows.Forms.Label lblKetQuaMDRD;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.RadioButton radKhacMDRD;
+        private System.Windows.Forms.RadioButton radDaDenMDRD;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.Panel panel16;
 
     }
 }
