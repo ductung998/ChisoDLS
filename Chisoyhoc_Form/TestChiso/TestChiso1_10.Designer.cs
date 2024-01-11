@@ -251,21 +251,9 @@
             this.button62 = new System.Windows.Forms.Button();
             this.label61 = new System.Windows.Forms.Label();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.panel29 = new System.Windows.Forms.Panel();
-            this.button67 = new System.Windows.Forms.Button();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.button68 = new System.Windows.Forms.Button();
-            this.dataGridView9 = new System.Windows.Forms.DataGridView();
-            this.label70 = new System.Windows.Forms.Label();
-            this.panel30 = new System.Windows.Forms.Panel();
-            this.lblFib = new System.Windows.Forms.Label();
-            this.button69 = new System.Windows.Forms.Button();
-            this.button70 = new System.Windows.Forms.Button();
-            this.button71 = new System.Windows.Forms.Button();
-            this.button72 = new System.Windows.Forms.Button();
-            this.label72 = new System.Windows.Forms.Label();
             this.panel28 = new System.Windows.Forms.Panel();
+            this.label73 = new System.Windows.Forms.Label();
+            this.txtALTFib = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.label63 = new System.Windows.Forms.Label();
             this.label64 = new System.Windows.Forms.Label();
@@ -279,8 +267,20 @@
             this.label68 = new System.Windows.Forms.Label();
             this.txtTuoiFib = new System.Windows.Forms.TextBox();
             this.lblKetQuaFib = new System.Windows.Forms.Label();
-            this.txtALTFib = new System.Windows.Forms.TextBox();
-            this.label73 = new System.Windows.Forms.Label();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.button67 = new System.Windows.Forms.Button();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.button68 = new System.Windows.Forms.Button();
+            this.dataGridView9 = new System.Windows.Forms.DataGridView();
+            this.label70 = new System.Windows.Forms.Label();
+            this.panel30 = new System.Windows.Forms.Panel();
+            this.lblFib = new System.Windows.Forms.Label();
+            this.button69 = new System.Windows.Forms.Button();
+            this.button70 = new System.Windows.Forms.Button();
+            this.button71 = new System.Windows.Forms.Button();
+            this.button72 = new System.Windows.Forms.Button();
+            this.label72 = new System.Windows.Forms.Label();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
             this.IBW.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -326,10 +326,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView8)).BeginInit();
             this.panel26.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            this.panel28.SuspendLayout();
             this.panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
             this.panel30.SuspendLayout();
-            this.panel28.SuspendLayout();
             this.SuspendLayout();
             // 
             // IBW
@@ -2808,16 +2808,175 @@
             this.tabPage9.UseVisualStyleBackColor = true;
             this.tabPage9.Click += new System.EventHandler(this.tabPage9_Click);
             // 
-            // tabPage10
+            // panel28
             // 
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(1364, 723);
-            this.tabPage10.TabIndex = 8;
-            this.tabPage10.Text = "TSAT";
-            this.tabPage10.UseVisualStyleBackColor = true;
-            this.tabPage10.Click += new System.EventHandler(this.tabPage10_Click);
+            this.panel28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel28.Controls.Add(this.label73);
+            this.panel28.Controls.Add(this.txtALTFib);
+            this.panel28.Controls.Add(this.label45);
+            this.panel28.Controls.Add(this.label63);
+            this.panel28.Controls.Add(this.label64);
+            this.panel28.Controls.Add(this.txtTieucauFib);
+            this.panel28.Controls.Add(this.txtASTFib);
+            this.panel28.Controls.Add(this.label65);
+            this.panel28.Controls.Add(this.button65);
+            this.panel28.Controls.Add(this.button66);
+            this.panel28.Controls.Add(this.label66);
+            this.panel28.Controls.Add(this.label67);
+            this.panel28.Controls.Add(this.label68);
+            this.panel28.Controls.Add(this.txtTuoiFib);
+            this.panel28.Controls.Add(this.lblKetQuaFib);
+            this.panel28.Location = new System.Drawing.Point(42, 339);
+            this.panel28.Name = "panel28";
+            this.panel28.Size = new System.Drawing.Size(1280, 334);
+            this.panel28.TabIndex = 60;
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label73.Location = new System.Drawing.Point(1097, 77);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(40, 22);
+            this.label73.TabIndex = 47;
+            this.label73.Text = "U/L";
+            // 
+            // txtALTFib
+            // 
+            this.txtALTFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtALTFib.Location = new System.Drawing.Point(888, 75);
+            this.txtALTFib.Name = "txtALTFib";
+            this.txtALTFib.Size = new System.Drawing.Size(181, 26);
+            this.txtALTFib.TabIndex = 46;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.Location = new System.Drawing.Point(467, 77);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(40, 22);
+            this.label45.TabIndex = 45;
+            this.label45.Text = "U/L";
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label63.Location = new System.Drawing.Point(1097, 22);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(128, 22);
+            this.label63.TabIndex = 43;
+            this.label63.Text = "tế bào/microlit";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label64.Location = new System.Drawing.Point(652, 22);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(81, 22);
+            this.label64.TabIndex = 41;
+            this.label64.Text = "Tiểu cầu";
+            // 
+            // txtTieucauFib
+            // 
+            this.txtTieucauFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTieucauFib.Location = new System.Drawing.Point(888, 20);
+            this.txtTieucauFib.Name = "txtTieucauFib";
+            this.txtTieucauFib.Size = new System.Drawing.Size(181, 26);
+            this.txtTieucauFib.TabIndex = 42;
+            // 
+            // txtASTFib
+            // 
+            this.txtASTFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtASTFib.Location = new System.Drawing.Point(274, 75);
+            this.txtASTFib.Name = "txtASTFib";
+            this.txtASTFib.Size = new System.Drawing.Size(181, 26);
+            this.txtASTFib.TabIndex = 35;
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label65.Location = new System.Drawing.Point(16, 76);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(47, 22);
+            this.label65.TabIndex = 34;
+            this.label65.Text = "AST";
+            // 
+            // button65
+            // 
+            this.button65.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button65.Location = new System.Drawing.Point(941, 113);
+            this.button65.Name = "button65";
+            this.button65.Size = new System.Drawing.Size(75, 25);
+            this.button65.TabIndex = 21;
+            this.button65.Text = "OK";
+            this.button65.UseVisualStyleBackColor = true;
+            this.button65.Click += new System.EventHandler(this.button65_Click);
+            // 
+            // button66
+            // 
+            this.button66.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button66.Location = new System.Drawing.Point(941, 143);
+            this.button66.Name = "button66";
+            this.button66.Size = new System.Drawing.Size(75, 25);
+            this.button66.TabIndex = 32;
+            this.button66.Text = "RESET";
+            this.button66.UseVisualStyleBackColor = true;
+            this.button66.Click += new System.EventHandler(this.button66_Click);
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label66.Location = new System.Drawing.Point(654, 77);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(46, 22);
+            this.label66.TabIndex = 17;
+            this.label66.Text = "ALT";
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label67.Location = new System.Drawing.Point(16, 23);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(46, 22);
+            this.label67.TabIndex = 19;
+            this.label67.Text = "Tuổi";
+            // 
+            // label68
+            // 
+            this.label68.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label68.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label68.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label68.Location = new System.Drawing.Point(11, 159);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(100, 24);
+            this.label68.TabIndex = 18;
+            this.label68.Text = "KẾT QUẢ";
+            // 
+            // txtTuoiFib
+            // 
+            this.txtTuoiFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTuoiFib.Location = new System.Drawing.Point(274, 20);
+            this.txtTuoiFib.Name = "txtTuoiFib";
+            this.txtTuoiFib.Size = new System.Drawing.Size(181, 26);
+            this.txtTuoiFib.TabIndex = 20;
+            // 
+            // lblKetQuaFib
+            // 
+            this.lblKetQuaFib.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblKetQuaFib.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblKetQuaFib.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKetQuaFib.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblKetQuaFib.Location = new System.Drawing.Point(11, 185);
+            this.lblKetQuaFib.Name = "lblKetQuaFib";
+            this.lblKetQuaFib.Size = new System.Drawing.Size(1264, 128);
+            this.lblKetQuaFib.TabIndex = 24;
+            this.lblKetQuaFib.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel29
             // 
@@ -2957,175 +3116,16 @@
             this.label72.TabIndex = 57;
             this.label72.Text = "Chỉ số FIB-4, chỉ dấu gián tiếp cho xơ hóa gan";
             // 
-            // panel28
+            // tabPage10
             // 
-            this.panel28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel28.Controls.Add(this.label73);
-            this.panel28.Controls.Add(this.txtALTFib);
-            this.panel28.Controls.Add(this.label45);
-            this.panel28.Controls.Add(this.label63);
-            this.panel28.Controls.Add(this.label64);
-            this.panel28.Controls.Add(this.txtTieucauFib);
-            this.panel28.Controls.Add(this.txtASTFib);
-            this.panel28.Controls.Add(this.label65);
-            this.panel28.Controls.Add(this.button65);
-            this.panel28.Controls.Add(this.button66);
-            this.panel28.Controls.Add(this.label66);
-            this.panel28.Controls.Add(this.label67);
-            this.panel28.Controls.Add(this.label68);
-            this.panel28.Controls.Add(this.txtTuoiFib);
-            this.panel28.Controls.Add(this.lblKetQuaFib);
-            this.panel28.Location = new System.Drawing.Point(42, 339);
-            this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(1280, 334);
-            this.panel28.TabIndex = 60;
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.Location = new System.Drawing.Point(467, 77);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(40, 22);
-            this.label45.TabIndex = 45;
-            this.label45.Text = "U/L";
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label63.Location = new System.Drawing.Point(1097, 22);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(128, 22);
-            this.label63.TabIndex = 43;
-            this.label63.Text = "tế bào/microlit";
-            // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label64.Location = new System.Drawing.Point(652, 22);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(81, 22);
-            this.label64.TabIndex = 41;
-            this.label64.Text = "Tiểu cầu";
-            // 
-            // txtTieucauFib
-            // 
-            this.txtTieucauFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTieucauFib.Location = new System.Drawing.Point(888, 20);
-            this.txtTieucauFib.Name = "txtTieucauFib";
-            this.txtTieucauFib.Size = new System.Drawing.Size(181, 26);
-            this.txtTieucauFib.TabIndex = 42;
-            // 
-            // txtASTFib
-            // 
-            this.txtASTFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtASTFib.Location = new System.Drawing.Point(274, 75);
-            this.txtASTFib.Name = "txtASTFib";
-            this.txtASTFib.Size = new System.Drawing.Size(181, 26);
-            this.txtASTFib.TabIndex = 35;
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label65.Location = new System.Drawing.Point(16, 76);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(47, 22);
-            this.label65.TabIndex = 34;
-            this.label65.Text = "AST";
-            // 
-            // button65
-            // 
-            this.button65.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button65.Location = new System.Drawing.Point(941, 113);
-            this.button65.Name = "button65";
-            this.button65.Size = new System.Drawing.Size(75, 25);
-            this.button65.TabIndex = 21;
-            this.button65.Text = "OK";
-            this.button65.UseVisualStyleBackColor = true;
-            this.button65.Click += new System.EventHandler(this.button65_Click);
-            // 
-            // button66
-            // 
-            this.button66.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button66.Location = new System.Drawing.Point(941, 143);
-            this.button66.Name = "button66";
-            this.button66.Size = new System.Drawing.Size(75, 25);
-            this.button66.TabIndex = 32;
-            this.button66.Text = "RESET";
-            this.button66.UseVisualStyleBackColor = true;
-            this.button66.Click += new System.EventHandler(this.button66_Click);
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label66.Location = new System.Drawing.Point(654, 77);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(46, 22);
-            this.label66.TabIndex = 17;
-            this.label66.Text = "ALT";
-            // 
-            // label67
-            // 
-            this.label67.AutoSize = true;
-            this.label67.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label67.Location = new System.Drawing.Point(16, 23);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(46, 22);
-            this.label67.TabIndex = 19;
-            this.label67.Text = "Tuổi";
-            // 
-            // label68
-            // 
-            this.label68.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.label68.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label68.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label68.Location = new System.Drawing.Point(11, 159);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(100, 24);
-            this.label68.TabIndex = 18;
-            this.label68.Text = "KẾT QUẢ";
-            // 
-            // txtTuoiFib
-            // 
-            this.txtTuoiFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTuoiFib.Location = new System.Drawing.Point(274, 20);
-            this.txtTuoiFib.Name = "txtTuoiFib";
-            this.txtTuoiFib.Size = new System.Drawing.Size(181, 26);
-            this.txtTuoiFib.TabIndex = 20;
-            // 
-            // lblKetQuaFib
-            // 
-            this.lblKetQuaFib.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblKetQuaFib.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.lblKetQuaFib.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKetQuaFib.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblKetQuaFib.Location = new System.Drawing.Point(11, 185);
-            this.lblKetQuaFib.Name = "lblKetQuaFib";
-            this.lblKetQuaFib.Size = new System.Drawing.Size(1264, 128);
-            this.lblKetQuaFib.TabIndex = 24;
-            this.lblKetQuaFib.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // txtALTFib
-            // 
-            this.txtALTFib.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtALTFib.Location = new System.Drawing.Point(888, 75);
-            this.txtALTFib.Name = "txtALTFib";
-            this.txtALTFib.Size = new System.Drawing.Size(181, 26);
-            this.txtALTFib.TabIndex = 46;
-            // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label73.Location = new System.Drawing.Point(1097, 77);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(40, 22);
-            this.label73.TabIndex = 47;
-            this.label73.Text = "U/L";
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(1364, 723);
+            this.tabPage10.TabIndex = 8;
+            this.tabPage10.Text = "TSAT";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            this.tabPage10.Click += new System.EventHandler(this.tabPage10_Click);
             // 
             // TestChiso1_10
             // 
@@ -3210,12 +3210,12 @@
             this.panel26.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
+            this.panel28.ResumeLayout(false);
+            this.panel28.PerformLayout();
             this.panel29.ResumeLayout(false);
             this.panel29.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).EndInit();
             this.panel30.ResumeLayout(false);
-            this.panel28.ResumeLayout(false);
-            this.panel28.PerformLayout();
             this.ResumeLayout(false);
 
         }
