@@ -687,6 +687,49 @@ namespace Chisoyhoc_Form
         }
         #endregion
 
+        #region FIB-4
+        private void button65_Click(object sender, EventArgs e)
+        {
+            double tuoiFib = double.Parse(txtTuoiFib.Text);
+            double astFib = double.Parse(txtASTFib.Text);
+            double tieucauFib = double.Parse(txtTieucauFib.Text);
+            double altFib = double.Parse(txtALTFib.Text);
+            FIB4 dtFib = new FIB4(tuoiFib, astFib, tieucauFib, altFib);
+            lblKetQuaFib.Text = dtFib.kqFIB4().ToString();
+        }
+
+        private void button66_Click(object sender, EventArgs e)
+        {
+            txtTuoiFib.Text = "";
+            txtASTFib.Text = "";
+            txtTieucauFib.Text = "";
+            txtALTFib.Text = "";
+            lblKetQuaFib.Text = "";
+            lblFib.Text = "";
+        }
+
+        private void button72_Click(object sender, EventArgs e)
+        {
+            lblFib.Text = "Đánh giá mức độ xơ gan ở người bệnh từ kết quả xét nghiệm huyết học.";
+        }
+
+        private void button71_Click(object sender, EventArgs e)
+        {
+            lblFib.Text = "Sử dụng trong người bệnh mắc các bệnh gan, biểu hiện lâm sàng liên quan tới xơ gan, người nhiễm virus viêm gan…";
+        }
+
+        private void button70_Click(object sender, EventArgs e)
+        {
+            lblFib.Text = "Căn cứ xét nghiệm huyết học, tính toán dựa trên các chỉ số AST (U/L), ALT (U/L), số lượng tiểu cầu (số lượng/microL) và tuổi (năm) theo công thức:"
++ "FIB-4 = Tuổi × AST/(0,001 × số lượng tiểu cầu × √ALT";
+        }
+
+        private void button69_Click(object sender, EventArgs e)
+        {
+            lblFib.Text = "1. Udell JA, Wang CS, Tinmouth J, et al. Does this patient with liver disease have cirrhosis? JAMA 2012; 307:832."
++ "2. Vallet-Pichard A, Mallet V, Nalpas B, et al. FIB-4: an inexpensive and accurate marker of fibrosis in HCV infection. comparison with liver biopsy and fibrotest. Hepatology 2007; 46:32.";
+        }
+        #endregion
 
 
     }
