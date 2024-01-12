@@ -731,6 +731,39 @@ namespace Chisoyhoc_Form
         }
         #endregion
 
+        #region TSAT (chưa code xong)
+        private void button73_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button74_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button80_Click(object sender, EventArgs e)
+        {
+            lblTSAT.Text = "Tính toán độ bão hòa transferrin - protein liên kết với sắt trong máu";
+        }
+
+        private void button79_Click(object sender, EventArgs e)
+        {
+            lblTSAT.Text = "Đánh giá tình trạng thiếu/thừa sắt ở người bệnh thiếu máu liên quan tới thiếu sắt.";
+        }
+
+        private void button78_Click(object sender, EventArgs e)
+        {
+            lblTSAT.Text = "Từ xét nghiệm huyết học, tính toán dựa trên nồng độ sắt huyết thanh (mcg/dL) và tổng lượng sắt có khả năng gắn kết với các protein trong máu (TIBC, mcg/dL) theo công thức:"
++ "\nTSAT = (nồng độ sắt huyết thanh / TIBC) × 100"
++ "\nĐơn vị tính: %";
+        }
+
+        private void button77_Click(object sender, EventArgs e)
+        {
+            lblTSAT.Text = "1. Cook JD. Clinical evaluation of iron deficiency. Semin Hematol 1982; 19:6.";
+        }
+        #endregion
 
     }
 }

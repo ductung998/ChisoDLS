@@ -151,7 +151,7 @@
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.label38 = new System.Windows.Forms.Label();
-            this.lblAdjBW = new System.Windows.Forms.Label();
+            this.lblECG = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -160,20 +160,9 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtCannangAdjBW = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.radNuAdj = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
-            this.radNamAdj = new System.Windows.Forms.RadioButton();
-            this.txtChieucaoAdjBW = new System.Windows.Forms.TextBox();
-            this.lblKetQuaAdjBW = new System.Windows.Forms.Label();
-            this.lblBMI = new System.Windows.Forms.Label();
+            this.lblKetQuaECG = new System.Windows.Forms.Label();
+            this.lblqSOFA = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.button19 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
@@ -188,16 +177,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtCanNangBMI = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
-            this.button24 = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.txtChieuCaoBMI = new System.Windows.Forms.TextBox();
-            this.lblKetQuaBMI = new System.Windows.Forms.Label();
+            this.lblKetQuaqSOFA = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -284,6 +265,27 @@
             this.label35 = new System.Windows.Forms.Label();
             this.txtCrClMDRD = new System.Windows.Forms.TextBox();
             this.lblKetQuaMDRD = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtNhiptimECG = new System.Windows.Forms.TextBox();
+            this.txtKhoangrRRECG = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtKhoangQTECG = new System.Windows.Forms.TextBox();
+            this.label75 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtNhipthoqSOFA = new System.Windows.Forms.TextBox();
+            this.txtHATTqSOFA = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.button23 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
+            this.label76 = new System.Windows.Forms.Label();
+            this.txtGlasgowqSOFA = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tabPage7.SuspendLayout();
             this.panel22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
@@ -1639,14 +1641,14 @@
             this.label38.TabIndex = 36;
             this.label38.Text = "Chủng tộc";
             // 
-            // lblAdjBW
+            // lblECG
             // 
-            this.lblAdjBW.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.lblAdjBW.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAdjBW.Location = new System.Drawing.Point(0, 37);
-            this.lblAdjBW.Name = "lblAdjBW";
-            this.lblAdjBW.Size = new System.Drawing.Size(622, 227);
-            this.lblAdjBW.TabIndex = 35;
+            this.lblECG.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.lblECG.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblECG.Location = new System.Drawing.Point(0, 37);
+            this.lblECG.Name = "lblECG";
+            this.lblECG.Size = new System.Drawing.Size(622, 227);
+            this.lblECG.TabIndex = 35;
             // 
             // button6
             // 
@@ -1717,113 +1719,23 @@
             // panel6
             // 
             this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel6.Controls.Add(this.label16);
-            this.panel6.Controls.Add(this.txtCannangAdjBW);
-            this.panel6.Controls.Add(this.label15);
+            this.panel6.Controls.Add(this.label75);
             this.panel6.Controls.Add(this.label7);
-            this.panel6.Controls.Add(this.button15);
-            this.panel6.Controls.Add(this.button16);
             this.panel6.Controls.Add(this.label8);
             this.panel6.Controls.Add(this.label9);
-            this.panel6.Controls.Add(this.radNuAdj);
+            this.panel6.Controls.Add(this.txtNhiptimECG);
+            this.panel6.Controls.Add(this.txtKhoangrRRECG);
+            this.panel6.Controls.Add(this.label15);
+            this.panel6.Controls.Add(this.button15);
+            this.panel6.Controls.Add(this.button16);
+            this.panel6.Controls.Add(this.label16);
+            this.panel6.Controls.Add(this.txtKhoangQTECG);
             this.panel6.Controls.Add(this.label12);
-            this.panel6.Controls.Add(this.radNamAdj);
-            this.panel6.Controls.Add(this.txtChieucaoAdjBW);
-            this.panel6.Controls.Add(this.lblKetQuaAdjBW);
+            this.panel6.Controls.Add(this.lblKetQuaECG);
             this.panel6.Location = new System.Drawing.Point(42, 352);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(1280, 331);
             this.panel6.TabIndex = 37;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(450, 70);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(31, 22);
-            this.label16.TabIndex = 36;
-            this.label16.Text = "kg";
-            // 
-            // txtCannangAdjBW
-            // 
-            this.txtCannangAdjBW.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCannangAdjBW.Location = new System.Drawing.Point(261, 68);
-            this.txtCannangAdjBW.Name = "txtCannangAdjBW";
-            this.txtCannangAdjBW.Size = new System.Drawing.Size(181, 26);
-            this.txtCannangAdjBW.TabIndex = 35;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(3, 70);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(89, 22);
-            this.label15.TabIndex = 34;
-            this.label15.Text = "Cân nặng";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(448, 36);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 22);
-            this.label7.TabIndex = 33;
-            this.label7.Text = "cm";
-            // 
-            // button15
-            // 
-            this.button15.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button15.Location = new System.Drawing.Point(314, 108);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(75, 25);
-            this.button15.TabIndex = 21;
-            this.button15.Text = "OK";
-            this.button15.UseVisualStyleBackColor = true;
-            // 
-            // button16
-            // 
-            this.button16.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button16.Location = new System.Drawing.Point(314, 138);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(75, 25);
-            this.button16.TabIndex = 32;
-            this.button16.Text = "RESET";
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(3, 3);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(82, 22);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Giới tính";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(3, 37);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(92, 22);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "Chiều cao";
-            // 
-            // radNuAdj
-            // 
-            this.radNuAdj.AutoSize = true;
-            this.radNuAdj.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radNuAdj.Location = new System.Drawing.Point(389, 3);
-            this.radNuAdj.Name = "radNuAdj";
-            this.radNuAdj.Size = new System.Drawing.Size(53, 26);
-            this.radNuAdj.TabIndex = 30;
-            this.radNuAdj.TabStop = true;
-            this.radNuAdj.Text = "Nữ";
-            this.radNuAdj.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -1836,52 +1748,32 @@
             this.label12.TabIndex = 18;
             this.label12.Text = "KẾT QUẢ";
             // 
-            // radNamAdj
+            // lblKetQuaECG
             // 
-            this.radNamAdj.AutoSize = true;
-            this.radNamAdj.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radNamAdj.Location = new System.Drawing.Point(261, 3);
-            this.radNamAdj.Name = "radNamAdj";
-            this.radNamAdj.Size = new System.Drawing.Size(67, 26);
-            this.radNamAdj.TabIndex = 29;
-            this.radNamAdj.TabStop = true;
-            this.radNamAdj.Text = "Nam";
-            this.radNamAdj.UseVisualStyleBackColor = true;
+            this.lblKetQuaECG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblKetQuaECG.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblKetQuaECG.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKetQuaECG.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblKetQuaECG.Location = new System.Drawing.Point(11, 185);
+            this.lblKetQuaECG.Name = "lblKetQuaECG";
+            this.lblKetQuaECG.Size = new System.Drawing.Size(1264, 128);
+            this.lblKetQuaECG.TabIndex = 24;
+            this.lblKetQuaECG.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtChieucaoAdjBW
+            // lblqSOFA
             // 
-            this.txtChieucaoAdjBW.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtChieucaoAdjBW.Location = new System.Drawing.Point(261, 34);
-            this.txtChieucaoAdjBW.Name = "txtChieucaoAdjBW";
-            this.txtChieucaoAdjBW.Size = new System.Drawing.Size(181, 26);
-            this.txtChieucaoAdjBW.TabIndex = 20;
-            // 
-            // lblKetQuaAdjBW
-            // 
-            this.lblKetQuaAdjBW.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblKetQuaAdjBW.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.lblKetQuaAdjBW.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKetQuaAdjBW.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblKetQuaAdjBW.Location = new System.Drawing.Point(11, 185);
-            this.lblKetQuaAdjBW.Name = "lblKetQuaAdjBW";
-            this.lblKetQuaAdjBW.Size = new System.Drawing.Size(1264, 128);
-            this.lblKetQuaAdjBW.TabIndex = 24;
-            this.lblKetQuaAdjBW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblBMI
-            // 
-            this.lblBMI.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.lblBMI.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBMI.Location = new System.Drawing.Point(0, 37);
-            this.lblBMI.Name = "lblBMI";
-            this.lblBMI.Size = new System.Drawing.Size(622, 227);
-            this.lblBMI.TabIndex = 35;
+            this.lblqSOFA.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.lblqSOFA.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblqSOFA.Location = new System.Drawing.Point(0, 37);
+            this.lblqSOFA.Name = "lblqSOFA";
+            this.lblqSOFA.Size = new System.Drawing.Size(622, 227);
+            this.lblqSOFA.TabIndex = 35;
             // 
             // panel8
             // 
             this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel8.BackColor = System.Drawing.Color.Transparent;
-            this.panel8.Controls.Add(this.lblBMI);
+            this.panel8.Controls.Add(this.lblqSOFA);
             this.panel8.Controls.Add(this.button19);
             this.panel8.Controls.Add(this.button20);
             this.panel8.Controls.Add(this.button21);
@@ -2012,94 +1904,28 @@
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1364, 723);
             this.tabPage3.TabIndex = 1;
-            this.tabPage3.Text = "qSOFA";
+            this.tabPage3.Text = "qSOFA (chưa code)";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // panel9
             // 
             this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel9.Controls.Add(this.label17);
-            this.panel9.Controls.Add(this.txtCanNangBMI);
             this.panel9.Controls.Add(this.label18);
             this.panel9.Controls.Add(this.label19);
+            this.panel9.Controls.Add(this.txtNhipthoqSOFA);
+            this.panel9.Controls.Add(this.txtHATTqSOFA);
+            this.panel9.Controls.Add(this.label21);
             this.panel9.Controls.Add(this.button23);
             this.panel9.Controls.Add(this.button24);
-            this.panel9.Controls.Add(this.label21);
+            this.panel9.Controls.Add(this.label76);
+            this.panel9.Controls.Add(this.txtGlasgowqSOFA);
             this.panel9.Controls.Add(this.label22);
-            this.panel9.Controls.Add(this.txtChieuCaoBMI);
-            this.panel9.Controls.Add(this.lblKetQuaBMI);
+            this.panel9.Controls.Add(this.lblKetQuaqSOFA);
             this.panel9.Location = new System.Drawing.Point(42, 352);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(1280, 331);
             this.panel9.TabIndex = 41;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(450, 59);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(31, 22);
-            this.label17.TabIndex = 36;
-            this.label17.Text = "kg";
-            // 
-            // txtCanNangBMI
-            // 
-            this.txtCanNangBMI.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCanNangBMI.Location = new System.Drawing.Point(261, 57);
-            this.txtCanNangBMI.Name = "txtCanNangBMI";
-            this.txtCanNangBMI.Size = new System.Drawing.Size(181, 26);
-            this.txtCanNangBMI.TabIndex = 35;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(3, 59);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(89, 22);
-            this.label18.TabIndex = 34;
-            this.label18.Text = "Cân nặng";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(448, 16);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(34, 22);
-            this.label19.TabIndex = 33;
-            this.label19.Text = "cm";
-            // 
-            // button23
-            // 
-            this.button23.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button23.Location = new System.Drawing.Point(314, 93);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(75, 25);
-            this.button23.TabIndex = 21;
-            this.button23.Text = "OK";
-            this.button23.UseVisualStyleBackColor = true;
-            // 
-            // button24
-            // 
-            this.button24.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button24.Location = new System.Drawing.Point(314, 123);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(75, 25);
-            this.button24.TabIndex = 32;
-            this.button24.Text = "RESET";
-            this.button24.UseVisualStyleBackColor = true;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(3, 17);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(92, 22);
-            this.label21.TabIndex = 19;
-            this.label21.Text = "Chiều cao";
             // 
             // label22
             // 
@@ -2112,47 +1938,39 @@
             this.label22.TabIndex = 18;
             this.label22.Text = "KẾT QUẢ";
             // 
-            // txtChieuCaoBMI
+            // lblKetQuaqSOFA
             // 
-            this.txtChieuCaoBMI.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtChieuCaoBMI.Location = new System.Drawing.Point(261, 14);
-            this.txtChieuCaoBMI.Name = "txtChieuCaoBMI";
-            this.txtChieuCaoBMI.Size = new System.Drawing.Size(181, 26);
-            this.txtChieuCaoBMI.TabIndex = 20;
-            // 
-            // lblKetQuaBMI
-            // 
-            this.lblKetQuaBMI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblKetQuaBMI.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.lblKetQuaBMI.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKetQuaBMI.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblKetQuaBMI.Location = new System.Drawing.Point(11, 185);
-            this.lblKetQuaBMI.Name = "lblKetQuaBMI";
-            this.lblKetQuaBMI.Size = new System.Drawing.Size(1264, 128);
-            this.lblKetQuaBMI.TabIndex = 24;
-            this.lblKetQuaBMI.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblKetQuaqSOFA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblKetQuaqSOFA.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblKetQuaqSOFA.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKetQuaqSOFA.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblKetQuaqSOFA.Location = new System.Drawing.Point(11, 185);
+            this.lblKetQuaqSOFA.Name = "lblKetQuaqSOFA";
+            this.lblKetQuaqSOFA.Size = new System.Drawing.Size(1264, 128);
+            this.lblKetQuaqSOFA.TabIndex = 24;
+            this.lblKetQuaqSOFA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label24
             // 
             this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(554, 30);
+            this.label24.Location = new System.Drawing.Point(264, 30);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(265, 26);
+            this.label24.Size = new System.Drawing.Size(845, 26);
             this.label24.TabIndex = 40;
-            this.label24.Text = "Chỉ số khối cơ thể (BMI)";
+            this.label24.Text = "Thang điểm qSOFA đánh giá nhanh suy đa tạng liên quan đến nhiễm khuẩn huyết";
             // 
             // label14
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(525, 30);
+            this.label14.Location = new System.Drawing.Point(527, 30);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(322, 26);
+            this.label14.Size = new System.Drawing.Size(319, 26);
             this.label14.TabIndex = 36;
-            this.label14.Text = "Cân nặng hiệu chỉnh (AdjBW)";
+            this.label14.Text = "Khoảng QT hiệu chỉnh (ECG)";
             // 
             // label5
             // 
@@ -2500,7 +2318,7 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(1364, 723);
             this.tabPage2.TabIndex = 0;
-            this.tabPage2.Text = "ECG";
+            this.tabPage2.Text = "ECG (chưa code)";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel4
@@ -2520,7 +2338,7 @@
             // 
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.Transparent;
-            this.panel5.Controls.Add(this.lblAdjBW);
+            this.panel5.Controls.Add(this.lblECG);
             this.panel5.Controls.Add(this.button8);
             this.panel5.Controls.Add(this.button9);
             this.panel5.Controls.Add(this.button10);
@@ -3079,6 +2897,204 @@
             this.lblKetQuaMDRD.TabIndex = 24;
             this.lblKetQuaMDRD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(467, 31);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(79, 22);
+            this.label7.TabIndex = 56;
+            this.label7.Text = "mili giây";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(467, 86);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 22);
+            this.label8.TabIndex = 55;
+            this.label8.Text = "mili giây";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(652, 31);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(80, 22);
+            this.label9.TabIndex = 53;
+            this.label9.Text = "Nhịp tim";
+            // 
+            // txtNhiptimECG
+            // 
+            this.txtNhiptimECG.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNhiptimECG.Location = new System.Drawing.Point(888, 29);
+            this.txtNhiptimECG.Name = "txtNhiptimECG";
+            this.txtNhiptimECG.Size = new System.Drawing.Size(181, 26);
+            this.txtNhiptimECG.TabIndex = 54;
+            // 
+            // txtKhoangrRRECG
+            // 
+            this.txtKhoangrRRECG.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtKhoangrRRECG.Location = new System.Drawing.Point(274, 84);
+            this.txtKhoangrRRECG.Name = "txtKhoangrRRECG";
+            this.txtKhoangrRRECG.Size = new System.Drawing.Size(181, 26);
+            this.txtKhoangrRRECG.TabIndex = 52;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(16, 85);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(107, 22);
+            this.label15.TabIndex = 51;
+            this.label15.Text = "Khoảng RR";
+            // 
+            // button15
+            // 
+            this.button15.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button15.Location = new System.Drawing.Point(941, 85);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(75, 25);
+            this.button15.TabIndex = 49;
+            this.button15.Text = "OK";
+            this.button15.UseVisualStyleBackColor = true;
+            // 
+            // button16
+            // 
+            this.button16.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button16.Location = new System.Drawing.Point(941, 116);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 25);
+            this.button16.TabIndex = 50;
+            this.button16.Text = "RESET";
+            this.button16.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(16, 31);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(107, 22);
+            this.label16.TabIndex = 47;
+            this.label16.Text = "Khoảng QT";
+            // 
+            // txtKhoangQTECG
+            // 
+            this.txtKhoangQTECG.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtKhoangQTECG.Location = new System.Drawing.Point(274, 29);
+            this.txtKhoangQTECG.Name = "txtKhoangQTECG";
+            this.txtKhoangQTECG.Size = new System.Drawing.Size(181, 26);
+            this.txtKhoangQTECG.TabIndex = 48;
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label75.Location = new System.Drawing.Point(1092, 31);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(86, 22);
+            this.label75.TabIndex = 57;
+            this.label75.Text = "nhịp/phút";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(467, 79);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(64, 22);
+            this.label18.TabIndex = 65;
+            this.label18.Text = "mmHg";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(652, 24);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(81, 22);
+            this.label19.TabIndex = 63;
+            this.label19.Text = "Nhịp thở";
+            // 
+            // txtNhipthoqSOFA
+            // 
+            this.txtNhipthoqSOFA.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNhipthoqSOFA.Location = new System.Drawing.Point(888, 22);
+            this.txtNhipthoqSOFA.Name = "txtNhipthoqSOFA";
+            this.txtNhipthoqSOFA.Size = new System.Drawing.Size(181, 26);
+            this.txtNhipthoqSOFA.TabIndex = 64;
+            // 
+            // txtHATTqSOFA
+            // 
+            this.txtHATTqSOFA.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtHATTqSOFA.Location = new System.Drawing.Point(274, 77);
+            this.txtHATTqSOFA.Name = "txtHATTqSOFA";
+            this.txtHATTqSOFA.Size = new System.Drawing.Size(181, 26);
+            this.txtHATTqSOFA.TabIndex = 62;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(16, 78);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(150, 22);
+            this.label21.TabIndex = 61;
+            this.label21.Text = "Huyết áp tâm thu";
+            // 
+            // button23
+            // 
+            this.button23.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button23.Location = new System.Drawing.Point(941, 78);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(75, 25);
+            this.button23.TabIndex = 59;
+            this.button23.Text = "OK";
+            this.button23.UseVisualStyleBackColor = true;
+            // 
+            // button24
+            // 
+            this.button24.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button24.Location = new System.Drawing.Point(941, 109);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(75, 25);
+            this.button24.TabIndex = 60;
+            this.button24.Text = "RESET";
+            this.button24.UseVisualStyleBackColor = true;
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label76.Location = new System.Drawing.Point(16, 24);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(194, 22);
+            this.label76.TabIndex = 57;
+            this.label76.Text = "Điểm hôn mê Glasgow";
+            // 
+            // txtGlasgowqSOFA
+            // 
+            this.txtGlasgowqSOFA.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGlasgowqSOFA.Location = new System.Drawing.Point(274, 22);
+            this.txtGlasgowqSOFA.Name = "txtGlasgowqSOFA";
+            this.txtGlasgowqSOFA.Size = new System.Drawing.Size(181, 26);
+            this.txtGlasgowqSOFA.TabIndex = 58;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(1097, 24);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(86, 22);
+            this.label17.TabIndex = 66;
+            this.label17.Text = "nhịp/phút";
+            // 
             // TestChiso11_20
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3297,7 +3313,7 @@
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Label lblAdjBW;
+        private System.Windows.Forms.Label lblECG;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button7;
@@ -3306,20 +3322,9 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtCannangAdjBW;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.RadioButton radNuAdj;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.RadioButton radNamAdj;
-        private System.Windows.Forms.TextBox txtChieucaoAdjBW;
-        private System.Windows.Forms.Label lblKetQuaAdjBW;
-        private System.Windows.Forms.Label lblBMI;
+        private System.Windows.Forms.Label lblKetQuaECG;
+        private System.Windows.Forms.Label lblqSOFA;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button20;
@@ -3334,16 +3339,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtCanNangBMI;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Button button24;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txtChieuCaoBMI;
-        private System.Windows.Forms.Label lblKetQuaBMI;
+        private System.Windows.Forms.Label lblKetQuaqSOFA;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label5;
@@ -3430,6 +3427,27 @@
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.TextBox txtASTAPRI;
         private System.Windows.Forms.Label lblKetQuaAPRI;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtNhiptimECG;
+        private System.Windows.Forms.TextBox txtKhoangrRRECG;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtKhoangQTECG;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtNhipthoqSOFA;
+        private System.Windows.Forms.TextBox txtHATTqSOFA;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Label label76;
+        private System.Windows.Forms.TextBox txtGlasgowqSOFA;
+        private System.Windows.Forms.Label label17;
 
 
     }
