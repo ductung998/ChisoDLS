@@ -223,7 +223,8 @@ namespace Chisoyhoc_Form.GiaodienMau
                 gioitinh = "Nữ";
 
             SCORE2 SCORE2_Cal = new SCORE2(gioitinh, tuoi, hutthuoc, HATT, TCho, HDL, vungnguyco);
-            label16.Text = "Điểm SCORE2/SCORE2OP: " + SCORE2_Cal.kqSCORE2().ToString();
+            label16.Text = "Nguy cơ biến cố tim mạch 10 năm: " + SCORE2_Cal.kqSCORE2().ToString() + "%";
+            labelnguyco.Text = "Phân nhóm nguy cơ: " + SCORE2_Cal.kqPLNguycoSCORE2();
         }
     }
 }
