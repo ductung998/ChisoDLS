@@ -384,7 +384,6 @@
             this.IBW.SelectedIndex = 0;
             this.IBW.Size = new System.Drawing.Size(1372, 749);
             this.IBW.TabIndex = 0;
-            this.IBW.SelectedIndexChanged += new System.EventHandler(this.IBW_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -400,7 +399,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "IBW";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // panel3
             // 
@@ -414,7 +412,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(622, 264);
             this.panel3.TabIndex = 35;
-            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // button13
             // 
@@ -425,7 +422,6 @@
             this.button13.TabIndex = 36;
             this.button13.Text = "Tìm kiếm";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // textBox1
             // 
@@ -434,7 +430,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(200, 26);
             this.textBox1.TabIndex = 35;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button12
             // 
@@ -445,7 +440,6 @@
             this.button12.TabIndex = 34;
             this.button12.Text = "Sử dụng dữ liệu người bệnh";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // dataGridView1
             // 
@@ -454,7 +448,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(622, 178);
             this.dataGridView1.TabIndex = 19;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label11
             // 
@@ -465,7 +458,6 @@
             this.label11.Size = new System.Drawing.Size(192, 22);
             this.label11.TabIndex = 18;
             this.label11.Text = "Danh sách người bệnh";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // panel2
             // 
@@ -481,7 +473,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(622, 264);
             this.panel2.TabIndex = 34;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // lblIBW
             // 
@@ -491,7 +482,6 @@
             this.lblIBW.Name = "lblIBW";
             this.lblIBW.Size = new System.Drawing.Size(622, 227);
             this.lblIBW.TabIndex = 35;
-            this.lblIBW.Click += new System.EventHandler(this.label10_Click);
             // 
             // button11
             // 
@@ -554,7 +544,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1280, 319);
             this.panel1.TabIndex = 33;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label10
             // 
@@ -597,7 +586,6 @@
             this.label1.Size = new System.Drawing.Size(82, 22);
             this.label1.TabIndex = 17;
             this.label1.Text = "Giới tính";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -608,7 +596,6 @@
             this.label2.Size = new System.Drawing.Size(92, 22);
             this.label2.TabIndex = 19;
             this.label2.Text = "Chiều cao";
-            this.label2.Click += new System.EventHandler(this.label2_Click_1);
             // 
             // radNu
             // 
@@ -621,7 +608,6 @@
             this.radNu.TabStop = true;
             this.radNu.Text = "Nữ";
             this.radNu.UseVisualStyleBackColor = true;
-            this.radNu.CheckedChanged += new System.EventHandler(this.radNu_CheckedChanged);
             // 
             // label4
             // 
@@ -633,7 +619,6 @@
             this.label4.Size = new System.Drawing.Size(100, 24);
             this.label4.TabIndex = 18;
             this.label4.Text = "KẾT QUẢ";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // radNam
             // 
@@ -646,7 +631,6 @@
             this.radNam.TabStop = true;
             this.radNam.Text = "Nam";
             this.radNam.UseVisualStyleBackColor = true;
-            this.radNam.CheckedChanged += new System.EventHandler(this.radNam_CheckedChanged);
             // 
             // txtChieuCao
             // 
@@ -655,7 +639,6 @@
             this.txtChieuCao.Name = "txtChieuCao";
             this.txtChieuCao.Size = new System.Drawing.Size(181, 26);
             this.txtChieuCao.TabIndex = 20;
-            this.txtChieuCao.TextChanged += new System.EventHandler(this.txtChieuCao_TextChanged);
             // 
             // lblKetQua
             // 
@@ -668,7 +651,6 @@
             this.lblKetQua.Size = new System.Drawing.Size(1264, 128);
             this.lblKetQua.TabIndex = 24;
             this.lblKetQua.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblKetQua.Click += new System.EventHandler(this.lblKetQua_Click);
             // 
             // label3
             // 
@@ -680,7 +662,6 @@
             this.label3.Size = new System.Drawing.Size(271, 26);
             this.label3.TabIndex = 23;
             this.label3.Text = "Cân nặng lý tưởng (IBW)";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // tabPage2
             // 
@@ -695,7 +676,6 @@
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "ABW";
             this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // panel4
             // 
@@ -1004,7 +984,6 @@
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "BMI";
             this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // panel7
             // 
@@ -1276,7 +1255,6 @@
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "eGFR (CKD-EPI)";
             this.tabPage4.UseVisualStyleBackColor = true;
-            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
             // 
             // panel10
             // 
@@ -1574,7 +1552,6 @@
             this.tabPage5.TabIndex = 3;
             this.tabPage5.Text = "eGFR (MDRD)";
             this.tabPage5.UseVisualStyleBackColor = true;
-            this.tabPage5.Click += new System.EventHandler(this.tabPage5_Click);
             // 
             // panel13
             // 
@@ -1925,7 +1902,6 @@
             this.tabPage6.TabIndex = 4;
             this.tabPage6.Text = "CrCl";
             this.tabPage6.UseVisualStyleBackColor = true;
-            this.tabPage6.Click += new System.EventHandler(this.tabPage6_Click);
             // 
             // panel18
             // 
@@ -2262,7 +2238,6 @@
             this.tabPage7.TabIndex = 5;
             this.tabPage7.Text = "[Na huyết]";
             this.tabPage7.UseVisualStyleBackColor = true;
-            this.tabPage7.Click += new System.EventHandler(this.tabPage7_Click);
             // 
             // panel22
             // 
@@ -2534,7 +2509,6 @@
             this.tabPage8.TabIndex = 6;
             this.tabPage8.Text = "LDL-C";
             this.tabPage8.UseVisualStyleBackColor = true;
-            this.tabPage8.Click += new System.EventHandler(this.tabPage8_Click);
             // 
             // panel27
             // 
@@ -2837,7 +2811,6 @@
             this.tabPage9.TabIndex = 7;
             this.tabPage9.Text = "FIB-4";
             this.tabPage9.UseVisualStyleBackColor = true;
-            this.tabPage9.Click += new System.EventHandler(this.tabPage9_Click);
             // 
             // panel28
             // 
@@ -3160,7 +3133,6 @@
             this.tabPage10.TabIndex = 8;
             this.tabPage10.Text = "TSAT (Chưa code)";
             this.tabPage10.UseVisualStyleBackColor = true;
-            this.tabPage10.Click += new System.EventHandler(this.tabPage10_Click);
             // 
             // panel31
             // 
@@ -3229,7 +3201,6 @@
             this.button73.TabIndex = 50;
             this.button73.Text = "OK";
             this.button73.UseVisualStyleBackColor = true;
-            this.button73.Click += new System.EventHandler(this.button73_Click);
             // 
             // button74
             // 
@@ -3240,7 +3211,6 @@
             this.button74.TabIndex = 51;
             this.button74.Text = "RESET";
             this.button74.UseVisualStyleBackColor = true;
-            this.button74.Click += new System.EventHandler(this.button74_Click);
             // 
             // label77
             // 
@@ -3555,19 +3525,9 @@
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.RadioButton radNu;
-        private System.Windows.Forms.RadioButton radNam;
-        private System.Windows.Forms.Label lblKetQua;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtChieuCao;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
@@ -3578,7 +3538,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox2;
@@ -3823,6 +3782,17 @@
         private System.Windows.Forms.Button button74;
         private System.Windows.Forms.Label label77;
         private System.Windows.Forms.TextBox txtNongdoFETSAT;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton radNu;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton radNam;
+        private System.Windows.Forms.TextBox txtChieuCao;
+        private System.Windows.Forms.Label lblKetQua;
 
     }
 }

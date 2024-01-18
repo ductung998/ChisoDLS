@@ -18,12 +18,7 @@ namespace Chisoyhoc_Form
             InitializeComponent();
         }
 
-        #region IBW
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-        
+        #region IBW     
         private void button1_Click_1(object sender, EventArgs e)
         {
             int chieucaoIBW = int.Parse(txtChieuCao.Text);
@@ -39,26 +34,6 @@ namespace Chisoyhoc_Form
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-        
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-        
-        }
-
         private void button5_Click_1(object sender, EventArgs e)
         {
             lblIBW.Text = "";
@@ -67,61 +42,9 @@ namespace Chisoyhoc_Form
             radNam.Checked = false;
             radNu.Checked = false;
         }
-        
-
-        
-        private void button6_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-        }
         private void button4_Click_1(object sender, EventArgs e)
         {
             lblIBW.Text = "Tính toán cân nặng lý tưởng của người bệnh";
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-      
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-      
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-        
-        }
-        
-
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void IBW_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -141,196 +64,6 @@ namespace Chisoyhoc_Form
         private void button2_Click_2(object sender, EventArgs e)
         {
             lblIBW.Text = "Hỗ trợ xác định liều lượng một số thuốc sử dụng liên quan cân nặng, người béo phì và một số ước tính về chức năng thận.";
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radNu_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radNam_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtChieuCao_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbdonviIBW_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblKetQua_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblNoidungABW_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblTieudeABW_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblKqABW_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtCanNangABW_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbABW_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtChieuCaoABW_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radNuABW_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radNamABW_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-
         }
         #endregion
 
@@ -732,16 +465,6 @@ namespace Chisoyhoc_Form
         #endregion
 
         #region TSAT (chưa code xong)
-        private void button73_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button74_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button80_Click(object sender, EventArgs e)
         {
             lblTSAT.Text = "Tính toán độ bão hòa transferrin - protein liên kết với sắt trong máu";
@@ -764,6 +487,7 @@ namespace Chisoyhoc_Form
             lblTSAT.Text = "1. Cook JD. Clinical evaluation of iron deficiency. Semin Hematol 1982; 19:6.";
         }
         #endregion
+
 
     }
 }
