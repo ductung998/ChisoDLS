@@ -59,6 +59,10 @@ namespace Chisoyhoc_Form.TestChiso
             lblAPRI.Text = "1. Loaeza-del-Castillo A, Paz-Pineda F, Oviedo-Cardenas E, et al. AST to platelet ratio index (APRI) for the noninvasive evaluation of liver fibrosis. Ann Hepatol 2008; 7:350."
 + "Lin ZH, Xin YN, Dong QJ, et al. Performance of the aspartate aminotransferase-to-platelet ratio index for the staging of hepatitis C-related fibrosis: an updated meta-analysis. Hepatology 2011; 53:726.";
         }
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
     }
 }
