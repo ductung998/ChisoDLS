@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Chisoyhoc_API;
 
+
 namespace Chisoyhoc_Form.TestChiso
 {
     public partial class TestChiso11_20 : Form
@@ -19,22 +20,6 @@ namespace Chisoyhoc_Form.TestChiso
         }
 
         #region Chuyển AST sang APRI
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void TestChiso11_20_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click_2(object sender, EventArgs e)
         {
             double astAPRI = double.Parse(txtASTAPRI.Text);
@@ -73,6 +58,10 @@ namespace Chisoyhoc_Form.TestChiso
         {
             lblAPRI.Text = "1. Loaeza-del-Castillo A, Paz-Pineda F, Oviedo-Cardenas E, et al. AST to platelet ratio index (APRI) for the noninvasive evaluation of liver fibrosis. Ann Hepatol 2008; 7:350."
 + "Lin ZH, Xin YN, Dong QJ, et al. Performance of the aspartate aminotransferase-to-platelet ratio index for the staging of hepatitis C-related fibrosis: an updated meta-analysis. Hepatology 2011; 53:726.";
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
