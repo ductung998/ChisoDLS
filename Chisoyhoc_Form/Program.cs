@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Chisoyhoc_Form.TestChiso;
 
 namespace Chisoyhoc_Form
 {
@@ -16,7 +17,7 @@ namespace Chisoyhoc_Form
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestChiso1_10());
+            Application.Run(new TestChiso11_20());
         }
     }
 }

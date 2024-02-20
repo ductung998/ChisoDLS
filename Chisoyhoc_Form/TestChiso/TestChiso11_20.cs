@@ -75,5 +75,10 @@ namespace Chisoyhoc_Form.TestChiso
 + "Lin ZH, Xin YN, Dong QJ, et al. Performance of the aspartate aminotransferase-to-platelet ratio index for the staging of hepatitis C-related fibrosis: an updated meta-analysis. Hepatology 2011; 53:726.";
         }
         #endregion
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

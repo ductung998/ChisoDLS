@@ -22,7 +22,6 @@ namespace Chisoyhoc_API
         public string hoten { get; set; }
         public string gioitinh { get; set; }
         public DateTime ngaysinh { get; set; }
-        public double tuoi { get; set; }
         public double chieucao { get; set; }
         public double cannang { get; set; }
         public int nhiptim { get; set; }
@@ -50,7 +49,7 @@ namespace Chisoyhoc_API
             hoten = _hoten;
             gioitinh = _gioitinh.ToLower();
             ngaysinh = _ngaysinh;
-            tinhtuoi();
+            tinhtuoi_nam();
             chieucao = _chieucao;
             cannang = _cannang;
             nhiptim = _nhiptim;
@@ -66,15 +65,53 @@ namespace Chisoyhoc_API
             dotquytim = _dotquytim;
             thieumaunao = _thieumaunao;
         }
-        public void tinhtuoi()
+        public void capnhat(string _hoten, string _gioitinh, DateTime _ngaysinh, double _chieucao, double _cannang,
+             int _nhiptim, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
+             bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
+        {
+            hoten = _hoten;
+            gioitinh = _gioitinh.ToLower();
+            ngaysinh = _ngaysinh;
+            tinhtuoi_nam();
+            chieucao = _chieucao;
+            cannang = _cannang;
+            nhiptim = _nhiptim;
+            thannhiet = _thannhiet;
+            HATThu = _hatThu;
+            HATTruong = _hatTruong;
+            hutthuoc = _hutthuoc;
+            THA = _tha;
+            DTD = _dtd;
+            suytim = _suytim;
+            ungthu = _ungthu;
+            NMCT = _nmct;
+            dotquytim = _dotquytim;
+            thieumaunao = _thieumaunao;
+        }
+        public double tinhtuoi_nam()
         {
             DateTime currentDate = DateTime.Now;
-            int tuoi = currentDate.Year - ngaysinh.Year;
+            int tuoithuc = currentDate.Year - ngaysinh.Year;
 
             if (currentDate.Month < ngaysinh.Month || (currentDate.Month == ngaysinh.Month && currentDate.Day < ngaysinh.Day))
             {
-                tuoi--;
+                tuoithuc--;
             }
+            return tuoithuc;
+        }
+        public double tinhtuoi_thang()
+        {
+            DateTime currentDate = DateTime.Now;
+
+            int years = currentDate.Year - ngaysinh.Year;
+            int months = currentDate.Month - ngaysinh.Month;
+
+            if (currentDate.Day < ngaysinh.Day)
+            {
+                months--;
+            }
+
+            return years * 12 + months;
         }
     }
     #endregion
@@ -102,22 +139,35 @@ namespace Chisoyhoc_API
         public double WBC_NEU { get; set; }
         public double WBC_MONO { get; set; }
         public double WBC_LYMPHO { get; set; }
+        public double WBC_EOS_tyle { get; set; }
+        public double WBC_BAS_tyle { get; set; }
+        public double WBC_NEU_tyle { get; set; }
+        public double WBC_MONO_tyle { get; set; }
+        public double WBC_LYMPHO_tyle { get; set; }
         public double natriSerum { get; set; }
         public double kaliSerum { get; set; }
         public double calciSerum { get; set; }
         public double cloSerum { get; set; }
         public double HCO3Serum { get; set; }
         public double pHSerum { get; set; }
+        public double glucoseSerum { get; set; }
+        public double natriUrine { get; set; }
+        public double kaliUrine { get; set; }
+        public double cloUrine { get; set; }
+        public double ureUrine { get; set; }
+        public double glucoseUrine { get; set; }
         public Xetnghiem()
         {
 
         }
         public Xetnghiem(string _idxn, double _creatininSerum, double _creatininUrine, double _ast, double _alt,
-                     double _bun, double _bilirubin, double _totalCholesterol, double _triglyceride, double _ldl,
-                     double _hdl, double _rbc, double _hb, double _hct, double _platelet, double _wbc,
-                     double _wbcEos, double _wbcBas, double _wbcNeu, double _wbcMono, double _wbcLympho,
-                     double _natriSerum, double _kaliSerum, double _canxiSerum, double _cloSerum,
-                     double _hco3Serum, double _phSerum)
+            double _bun, double _bilirubin, double _totalCholesterol, double _triglyceride, double _ldl,
+            double _hdl, double _rbc, double _hb, double _hct, double _platelet, double _wbc,
+            double _wbcEos, double _wbcBas, double _wbcNeu, double _wbcMono, double _wbcLympho,
+            double _wbcEos_tyle, double _wbcBas_tyle, double _wbcNeu_tyle, double _wbcMono_tyle, double _wbcLympho_tyle,
+            double _natriSerum, double _kaliSerum, double _canxiSerum, double _cloSerum,
+            double _hco3Serum, double _phSerum, double _glucoseSerum, double _natriUrine,
+            double _kaliUrine, double _cloUrine, double _ureUrine, double _glucoseUrine)
         {
             IDXN = _idxn;
             creatininSerum = _creatininSerum;
@@ -140,12 +190,23 @@ namespace Chisoyhoc_API
             WBC_NEU = _wbcNeu;
             WBC_MONO = _wbcMono;
             WBC_LYMPHO = _wbcLympho;
+            WBC_EOS_tyle = _wbcEos_tyle;
+            WBC_BAS_tyle = _wbcBas_tyle;
+            WBC_NEU_tyle = _wbcNeu_tyle;
+            WBC_MONO_tyle = _wbcMono_tyle;
+            WBC_LYMPHO_tyle = _wbcLympho_tyle;
             natriSerum = _natriSerum;
             kaliSerum = _kaliSerum;
             calciSerum = _canxiSerum;
             cloSerum = _cloSerum;
             HCO3Serum = _hco3Serum;
             pHSerum = _phSerum;
+            glucoseSerum = _glucoseSerum;
+            natriUrine = _natriUrine;
+            kaliUrine = _kaliUrine;
+            cloUrine = _cloUrine;
+            ureUrine = _ureUrine;
+            glucoseUrine = _glucoseUrine;
         }
     }
     #endregion
@@ -194,6 +255,14 @@ namespace Chisoyhoc_API
             diengiai = _Diengiai;
             ghichu = _Ghichu;
             TLTK = _TLTK;
+        }
+
+        public double z_score(double X, double L, double M, double S)
+        {
+            double Z = (L == 0) ?
+                (Math.Pow((X / M), L) - 1) / (L * S) :
+                (Math.Log(X / M) / S);
+            return Z;
         }
     }
 
@@ -278,7 +347,104 @@ namespace Chisoyhoc_API
             return kqAdjBW;
         }
     }
+    public class LBW : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double cannang { get; set; }
+        public double chieucao { get; set; }
 
+        public LBW()
+        {
+
+        }
+        public LBW(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            cannang = nb.cannang;
+            chieucao = nb.chieucao;
+        }
+        public LBW(string _gioitinh, double _cannang, double _chieucao)
+        {
+            gioitinh = _gioitinh;
+            cannang = _cannang;
+            chieucao = _chieucao;
+        }
+
+        public double KqLBW()
+        {
+            double lbw = (gioitinh == "nam")
+                ? (0.32810 * cannang) + (0.33929 * chieucao) - 29.5336
+                : (0.29569 * cannang) + (0.41813 * chieucao) - 43.2933;
+
+            return lbw;
+        }
+    }
+    public class AlcoholSerum : Congthuc
+    {
+        public double AlcoholVolume { get; set; }
+        public double AlcoholConcentration { get; set; }
+        public double cannang { get; set; }
+
+        public AlcoholSerum()
+        {
+
+        }
+        public AlcoholSerum(Nguoibenh nb)
+        {
+            cannang = nb.cannang;
+        }
+        public AlcoholSerum(double _AlcoholVolume, double _AlcoholConcentration, double _cannang)
+        {
+            AlcoholVolume = _AlcoholVolume;
+            AlcoholConcentration = _AlcoholConcentration;
+            cannang = _cannang;
+        }
+
+        public double kqAlcoholSerum()
+        {
+            double kq = ((AlcoholVolume * AlcoholConcentration) * 0.8) / (cannang * 0.6);
+            return kq;
+        }
+    }
+    public class Budichbong : Congthuc
+    {
+        public double cannang { get; set; }
+        public double Tylebong { get; set; }
+
+        public Budichbong()
+        {
+            // Empty constructor
+        }
+        public Budichbong(Nguoibenh nb)
+        {
+            cannang = nb.cannang;
+        }
+        public Budichbong(double _cannang, double _Tylebong)
+        {
+            cannang = _cannang;
+            Tylebong = _Tylebong;
+        }
+
+        public double kqVdich24h()
+        {
+            double kq = 4 * cannang * Tylebong;
+            return kq;
+        }
+
+        public double kqtocdotruyen8h()
+        {
+            double Vdich24h = kqVdich24h();
+            double kq = Vdich24h / 16;
+            return kq;
+        }
+
+        public double kqtocdotruyen16h()
+        {
+            double Vdich24h = kqVdich24h();
+            double kq = Vdich24h / 32;
+            return kq;
+        }
+    }
     public class BMI : Congthuc
     {
         public double cannang { get; set; }
@@ -323,7 +489,7 @@ namespace Chisoyhoc_API
         }
         public AaG(Nguoibenh NB)
         {
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
             thannhiet = NB.thannhiet;
             FiO2 = 0;
             docaouoctinh = 0;
@@ -356,7 +522,7 @@ namespace Chisoyhoc_API
             double AaGnormal = 2.5 + (0.21 * tuoi);
             return AaGnormal;
         }
-    }
+    }   
     public class CalciSerum_Adj : Congthuc
     {
         public double albuminSerumNorm { get; set; }
@@ -416,6 +582,155 @@ namespace Chisoyhoc_API
             return 0.007184 * Math.Pow(chieucao, 0.725) * Math.Pow(cannang, 0.425);
         }
     }
+    public class SAG : Congthuc
+    {
+        public double NatriSerum { get; set; }
+        public double KaliSerum { get; set; }
+        public double CloSerum { get; set; }
+        public double HCO3Serum { get; set; }
+
+        public SAG()
+        {
+
+        }
+        public SAG(Xetnghiem XN)
+        {
+            NatriSerum = XN.natriSerum;
+            KaliSerum = XN.kaliSerum;
+            CloSerum = XN.cloSerum;
+            HCO3Serum = XN.HCO3Serum;
+        }
+        public SAG(double _NatriSerum, double _KaliSerum, double _CloSerum, double _HCO3Serum)
+        {
+            NatriSerum = _NatriSerum;
+            KaliSerum = _KaliSerum;
+            CloSerum = _CloSerum;
+            HCO3Serum = _HCO3Serum;
+        }
+
+        public double kqSAG()
+        {
+            double kq = NatriSerum + KaliSerum - CloSerum - HCO3Serum;
+            return kq;
+        }
+    }
+    public class SOG : Congthuc
+    {
+        public double OsmSerum { get; set; }
+        public double NatriSerum { get; set; }
+        public double BUN { get; set; }
+        public double GlucoseSerum { get; set; }
+
+        public SOG()
+        {
+
+        }
+        public SOG(Xetnghiem XN)
+        {
+            NatriSerum = XN.natriSerum;
+            BUN = XN.BUN;
+            GlucoseSerum = XN.glucoseSerum;
+        }
+        public SOG(double _OsmSerum, double _NatriSerum, double _BUN, double _GlucoseSerum)
+        {
+            OsmSerum = _OsmSerum;
+            NatriSerum = _NatriSerum;
+            BUN = _BUN;
+            GlucoseSerum = _GlucoseSerum;
+        }
+
+        public double kqSOG()
+        {
+            double kq = OsmSerum - (2 * NatriSerum + BUN + GlucoseSerum);
+            return kq;
+        }
+    }
+    public class StOG : Congthuc
+    {
+        public double OsmStool { get; set; }
+        public double NatriStool { get; set; }
+        public double KaliStool { get; set; }
+
+        public StOG()
+        {
+
+        }
+        public StOG(double _OsmStool, double _NatriStool, double _KaliStool)
+        {
+            OsmStool = _OsmStool;
+            NatriStool = _NatriStool;
+            KaliStool = _KaliStool;
+        }
+
+        public double kqStOG()
+        {
+            double kq = OsmStool - 2 * (NatriStool + KaliStool);
+            return kq;
+        }
+    }
+    public class UAG : Congthuc
+    {
+        public double NatriUrine { get; set; }
+        public double KaliUrine { get; set; }
+        public double CloUrine { get; set; }
+
+        public UAG()
+        {
+
+        }
+        public UAG(Xetnghiem XN)
+        {
+            NatriUrine = XN.natriUrine;
+            KaliUrine = XN.kaliUrine;
+            CloUrine = XN.cloUrine;
+        }
+        public UAG(double _NatriUrine, double _KaliUrine, double _CloUrine)
+        {
+            NatriUrine = _NatriUrine;
+            KaliUrine = _KaliUrine;
+            CloUrine = _CloUrine;
+        }
+
+        public double kqUAG()
+        {
+            double kq = NatriUrine + KaliUrine - CloUrine;
+            return kq;
+        }
+    }
+    public class UOG : Congthuc
+    {
+        public double OsmUrine { get; set; }
+        public double NatriUrine { get; set; }
+        public double KaliUrine { get; set; }
+        public double UreUrine { get; set; }
+        public double GlucoseUrine { get; set; }
+
+        public UOG()
+        {
+            // Empty constructor
+        }
+        public UOG(Xetnghiem XN)
+        {
+            NatriUrine = XN.natriUrine;
+            KaliUrine = XN.kaliUrine;
+            UreUrine = XN.ureUrine;
+            GlucoseUrine = XN.glucoseUrine;
+        }
+        public UOG(double _OsmUrine, double _NatriUrine, double _KaliUrine, double _UreUrine, double _GlucoseUrine)
+        {
+            OsmUrine = _OsmUrine;
+            NatriUrine = _NatriUrine;
+            KaliUrine = _KaliUrine;
+            UreUrine = _UreUrine;
+            GlucoseUrine = _GlucoseUrine;
+        }
+
+        public double kqUOG()
+        {
+            double kq = OsmUrine - (2 * NatriUrine + 2 * KaliUrine + UreUrine + GlucoseUrine);
+            return kq;
+        }
+    }
     public class eGFR_CKD : Congthuc
     {
         public string gioitinh { get; set; }
@@ -434,7 +749,7 @@ namespace Chisoyhoc_API
         {
             gioitinh = NB.gioitinh;
             CreatininSerum = XN.creatininSerum;
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
             SetCoefficients();
         }
 
@@ -477,7 +792,7 @@ namespace Chisoyhoc_API
         public eGFR_MDRD(Nguoibenh NB, Xetnghiem XN)
         {
             CreatininSerum = XN.creatininSerum;
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
             gioitinh = NB.gioitinh;
             chungtoc = "người châu á";
         }
@@ -512,7 +827,7 @@ namespace Chisoyhoc_API
         }
         public eCrCl(Nguoibenh NB, Xetnghiem XN)
         {
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
             cannang = NB.cannang;
             CreatininSerum = XN.creatininSerum;
             gioitinh = NB.gioitinh;
@@ -530,6 +845,68 @@ namespace Chisoyhoc_API
         {
             double gioitinhCoefficient = (gioitinh == "nam") ? 1.0 : 0.85;
             double kq = (140 - tuoi) * cannang / (72 * CreatininSerum) * gioitinhCoefficient;
+            return kq;
+        }
+    }
+    public class FEMg : Congthuc
+    {
+        public double MagieUrine { get; set; }
+        public double CreatininSerum { get; set; }
+        public double MagieSerum { get; set; }
+        public double CreatininUrine { get; set; }
+
+        public FEMg()
+        {
+
+        }
+        public FEMg(Xetnghiem XN)
+        {
+            CreatininSerum = XN.creatininSerum;
+            CreatininUrine = XN.creatininUrine;
+        }
+        public FEMg(double _MagieUrine, double _CreatininSerum, double _MagieSerum, double _CreatininUrine)
+        {
+            MagieUrine = _MagieUrine;
+            CreatininSerum = _CreatininSerum;
+            MagieSerum = _MagieSerum;
+            CreatininUrine = _CreatininUrine;
+        }
+
+        public double kqFEMg()
+        {
+            double kq = (MagieUrine * CreatininSerum) / (MagieSerum * CreatininUrine);
+            return kq;
+        }
+    }
+    public class FENa : Congthuc
+    {
+        public double NatriUrine { get; set; }
+        public double CreatininSerum { get; set; }
+        public double NatriSerum { get; set; }
+        public double CreatininUrine { get; set; }
+
+        public FENa()
+        {
+
+        }
+        public FENa(Xetnghiem XN)
+        {
+            NatriUrine = XN.natriUrine;
+            CreatininSerum = XN.creatininSerum;
+            NatriSerum = XN.natriSerum;
+            CreatininUrine = XN.creatininUrine;
+        }
+        public FENa(double _NatriUrine, double _CreatininSerum, double _NatriSerum, double _CreatininUrine)
+        {
+            NatriUrine = _NatriUrine;
+            CreatininSerum = _CreatininSerum;
+            NatriSerum = _NatriSerum;
+            CreatininUrine = _CreatininUrine;
+        }
+
+        public double kqFENatri()
+        {
+            double kq = (NatriUrine * CreatininSerum) / (NatriSerum * CreatininUrine);
             return kq;
         }
     }
@@ -591,6 +968,56 @@ namespace Chisoyhoc_API
             return RRF_KruResult;
         }
     }
+    public class ACR : Congthuc
+    {
+        public double AlbuminUrine { get; set; }
+        public double CreatininUrine { get; set; }
+
+        public ACR()
+        {
+
+        }
+        public ACR(Xetnghiem XN)
+        {
+            CreatininUrine = XN.creatininUrine;
+        }
+        public ACR(double _AlbuminUrine, double _CreatininUrine)
+        {
+            AlbuminUrine = _AlbuminUrine;
+            CreatininUrine = _CreatininUrine;
+        }
+
+        public double kqACR()
+        {
+            double kq = AlbuminUrine / CreatininUrine;
+            return kq;
+        }
+    }
+    public class PCR : Congthuc
+    {
+        public double ProteinUrine { get; set; }
+        public double CreatininUrine { get; set; }
+
+        public PCR()
+        {
+
+        }
+        public PCR(Xetnghiem XN)
+        {
+            CreatininUrine = XN.creatininUrine;
+        }
+        public PCR(double _ProteinUrine, double _CreatininUrine)
+        {
+            ProteinUrine = _ProteinUrine;
+            CreatininUrine = _CreatininUrine;
+        }
+
+        public double kqPCR()
+        {
+            double kq = ProteinUrine / CreatininUrine;
+            return kq;
+        }
+    }
     public class eAER : Congthuc
     {
         public double AlbuminUrine { get; set; }
@@ -610,7 +1037,7 @@ namespace Chisoyhoc_API
             CreatininUrine = XN.creatininUrine;
             gioitinh = NB.gioitinh;
             chungtoc = "người châu á";
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
         }
         public eAER(double _AlbuminUrine, double _CreatininUrine, string _gioitinh, string _chungtoc, double _tuoi)
         {
@@ -652,6 +1079,58 @@ namespace Chisoyhoc_API
             return eAERResult;
         }
     }
+    public class TocDoTruyen : Congthuc
+    {
+        public double VdichTruyen { get; set; }
+        public double HesoGiot { get; set; }
+        public double ThoiGianTruyen { get; set; }
+
+        public TocDoTruyen()
+        {
+
+        }
+
+        public TocDoTruyen(double _VdichTruyen, double _HesoGiot, double _ThoiGianTruyen)
+        {
+            VdichTruyen = _VdichTruyen;
+            HesoGiot = _HesoGiot;
+            ThoiGianTruyen = _ThoiGianTruyen;
+        }
+
+        public double kqTocDoTruyen()
+        {
+            double kq = VdichTruyen * HesoGiot / ThoiGianTruyen;
+            return kq;
+        }
+    }
+    public class CrCl24h : Congthuc
+    {
+        public double CreatininUrine { get; set; }
+        public double VUrine24h { get; set; }
+        public double CreatininSerum { get; set; }
+
+        public CrCl24h()
+        {
+
+        }
+        public CrCl24h(Xetnghiem XN)
+        {
+            CreatininUrine = XN.creatininUrine;
+            CreatininSerum = XN.creatininSerum;
+        }
+        public CrCl24h(double _CreatininUrine, double _VUrine24h, double _CreatininSerum)
+        {
+            CreatininUrine = _CreatininUrine;
+            VUrine24h = _VUrine24h;
+            CreatininSerum = _CreatininSerum;
+        }
+
+        public double kqCrCl24h()
+        {
+            double kq = CreatininUrine * VUrine24h / CreatininSerum / 1440;
+            return kq;
+        }
+    }
     public class eGFR_Schwartz : Congthuc
     {
         public string loaiXNcreatinin { get; set; }
@@ -671,7 +1150,7 @@ namespace Chisoyhoc_API
         {
             loaiXNcreatinin = "jaffe";
             benhthanman = false;
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
             sinhnon = false;
             gioitinh = NB.gioitinh;
             chieucao = NB.chieucao;
@@ -711,6 +1190,1270 @@ namespace Chisoyhoc_API
 
             eGFR_SchwartzResult = factor * chieucao / CreatininSerum;
             return eGFR_SchwartzResult;
+        }
+    }
+    public class MPM0 : Congthuc
+    {
+        public int tuoi { get; set; }
+        public double honmeF { get; set; }
+        public double nhiptimF { get; set; }
+        public double sbpF { get; set; }
+        public double suythanmanF { get; set; }
+        public double xoganF { get; set; }
+        public double ungthuF { get; set; }
+        public double suythancapF { get; set; }
+        public double loannhipF { get; set; }
+        public double strokenaoF { get; set; }
+        public double xhthF { get; set; }
+        public double khoinoisoF { get; set; }
+        public double hoisuctimF { get; set; }
+        public double thongkhicohocF { get; set; }
+        public double yeucauphauthuatF { get; set; }
+        public double fullcodeF { get; set; }
+
+        public MPM0(int _tuoi, bool _honme, int _glasgowcoma, int _nhiptim, int _sbp, bool _suythanman, bool _xogan,
+                    bool _ungthudican, bool _suythancap, bool _loannhip, bool _strokebrain,
+                    bool _xuathuyettieuhoa, bool _khoinoiso, bool _hoisuctim, bool _thongkhicohoc,
+                    bool _yeucauphauthuat, bool _capcuutimphoi)
+        {
+            tuoi = _tuoi;
+            honmeF = (_honme || _glasgowcoma < 5) ? 2.050514 : 0;
+            nhiptimF = (_nhiptim >= 150) ? 0.433188 : 0;
+            sbpF = (_sbp <= 90) ? 1.451005 : 0;
+            suythanmanF = (_suythanman) ? 0.5395209 : 0;
+            xoganF = (_xogan) ? 2.070695 : 0;
+            ungthuF = (_ungthudican) ? 3.204902 : 0;
+            suythancapF = (_suythancap) ? 0.8412274 : 0;
+            loannhipF = (_loannhip) ? 0.8219612 : 0;
+            strokenaoF = (_strokebrain) ? 0.4107686 : 0;
+            xhthF = (_xuathuyettieuhoa) ? -0.165253 : 0;
+            khoinoisoF = (_khoinoiso) ? 1.855276 : 0;
+            hoisuctimF = (_hoisuctim) ? 1.497258 : 0;
+            thongkhicohocF = (_thongkhicohoc) ? 0.821648 : 0;
+            yeucauphauthuatF = (_yeucauphauthuat) ? 0.9097936 : 0;
+
+            if (honmeF + nhiptimF + sbpF + suythanmanF + xoganF + ungthuF + suythancapF + loannhipF +
+                             strokenaoF + xhthF + khoinoisoF + hoisuctimF + thongkhicohocF + yeucauphauthuatF == 0)
+            {
+                fullcodeF = (_capcuutimphoi) ? -0.7969783 : 0;
+            }
+        }
+
+        public double kqMPM0()
+        {
+            double MPM0_F1 = 0;
+            if (fullcodeF == 0)
+                MPM0_F1 = honmeF + nhiptimF + sbpF + suythanmanF + xoganF + ungthuF + suythancapF + loannhipF +
+                             strokenaoF + xhthF + khoinoisoF + hoisuctimF + thongkhicohocF + yeucauphauthuatF;
+            else
+                MPM0_F1 = -0.4243604;
+
+            double MPM0_F2 = MPM0_F1 + (tuoi * 0.0385582) + fullcodeF - (honmeF * tuoi * 0.0075284) -
+                             (sbpF * tuoi * 0.0085197) - (xoganF * tuoi * 0.022433) - (ungthuF * tuoi * 0.0330237) -
+                             (loannhipF * tuoi * 0.0101286) - (khoinoisoF * tuoi * 0.0169215) -
+                             (hoisuctimF * tuoi * 0.011214) - 5.36283;
+
+            double mortality_MPM0 = 100 * Math.Exp(MPM0_F1) / (1 + Math.Exp(MPM0_F2));
+
+            return mortality_MPM0;
+        }
+    }
+    public class DLCO_Adj : Congthuc
+    {
+        public double DLCOPredicted { get; set; }
+        public double Hb { get; set; }
+        public int tuoi { get; set; }
+        public string gioitinh { get; set; }
+
+        public DLCO_Adj(double _DLCOPredicted, double _Hb, int _tuoi, string _gioitinh)
+        {
+            DLCOPredicted = _DLCOPredicted;
+            Hb = _Hb;
+            tuoi = _tuoi;
+            gioitinh = _gioitinh;
+        }
+
+        public double kqDLCO_Adj()
+        {
+            double DLCO_Adj = DLCOPredicted * 0.3348 * (1.7 * Hb / ((gioitinh == "nam" && tuoi > 15) ? 10.22 : 9.38));
+            return DLCO_Adj;
+        }
+    }
+    public class MAP : Congthuc
+    {
+        public double SBP { get; set; }
+        public double DBP { get; set; }
+        public MAP(Nguoibenh NB)
+        {
+            SBP = NB.HATThu;
+            DBP = NB.HATTruong;
+        }
+
+        public MAP(double _SBP, double _DBP)
+        {
+            SBP = _SBP;
+            DBP = _DBP;
+        }
+        public double kqMAP()
+        {
+            double MAP = (1.0 / 3) * SBP + (2.0 / 3) * DBP;
+            return MAP;
+        }
+    }
+    public class PostFEV1 : Congthuc
+    {
+        public double preFEV1 { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+        public double phansuattuoimau { get; set; }
+
+        public PostFEV1()
+        {
+
+        }
+
+        public PostFEV1(double _preFEV1, double _Y, double _Z)
+        {
+            preFEV1 = _preFEV1;
+            Y = _Y;
+            Z = _Z;
+        }
+        public PostFEV1(double _preFEV1, double _phansuattuoimau)
+        {
+            preFEV1 = _preFEV1;
+            phansuattuoimau = _phansuattuoimau;
+        }
+        public double kqPostFEV1_Dich()
+        {
+            double PostFEV1 = preFEV1 * (1 - phansuattuoimau);
+            return PostFEV1;
+        }
+        public double kqPostFEV1_GP()
+        {
+            double PostFEV1 = preFEV1 * (1 - Y / Z);
+            return PostFEV1;
+        }
+    }
+    public class PEF : Congthuc
+    {
+        public double chieucao { get; set; }
+        public double tuoi { get; set; }
+        public string gioitinh { get; set; }
+
+        public PEF()
+        {
+
+        }
+        public PEF(Nguoibenh nb)
+        {
+            chieucao = nb.chieucao;
+            tuoi = nb.tinhtuoi_nam();
+            gioitinh = nb.gioitinh;
+        }
+
+        public PEF(double _chieucao, double _tuoi, string _gioitinh)
+        {
+            chieucao = _chieucao;
+            tuoi = _tuoi;
+            gioitinh = _gioitinh;
+        }
+
+        public double kqPEF()
+        {
+            if (tuoi < 18)
+            {
+                // < 18 years old
+                return (chieucao - 100) * 5 + 100;
+            }
+            else if (gioitinh.ToLower() == "nam")
+            {
+                // Male
+                return ((chieucao * 5.48) / 100 + 1.58 - (tuoi * 0.041)) * 60;
+            }
+            else if (gioitinh.ToLower() == "nu")
+            {
+                // Female
+                return ((chieucao * 3.72) / 100 + 2.24 - (tuoi * 0.03)) * 60;
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
+        public string kqPEF_danhgia()
+        {
+            string kq = "";
+            double PEF_kq = kqPEF();
+            if (PEF_kq > 0.8)
+                kq = "Chức năng phổi tốt";
+            else if (PEF_kq > 0.5)
+                kq = "Chức năng phổi suy giảm";
+            else
+                kq = "Chức năng phổi suy giảm nhiều";
+            return kq;
+        }
+    }
+    public class AEC : Congthuc
+    {
+        public double WBC { get; set; }
+        public double WBC_Eos_tyle { get; set; }
+
+        public AEC()
+        {
+
+        }
+        public AEC(Xetnghiem XN)
+        {
+            if (XN.WBC != 0)
+                WBC = XN.WBC;
+            if (XN.WBC_EOS_tyle != 0)
+                WBC_Eos_tyle = XN.WBC_EOS_tyle;
+        }
+        public AEC(double _WBC, double _WBC_Eos_tyle)
+        {
+            WBC = _WBC;
+            WBC_Eos_tyle = _WBC_Eos_tyle;
+        }
+
+        public double kqAEC()
+        {
+            double AEC = WBC * WBC_Eos_tyle;
+            return AEC;
+        }
+    }
+    public class ANC : Congthuc
+    {
+        public double WBC { get; set; }
+        public double WBC_Neu_tyle { get; set; }
+
+        public ANC()
+        {
+
+        }
+        public ANC(Xetnghiem XN)
+        {
+            WBC = XN.WBC;
+            WBC_Neu_tyle = XN.WBC_NEU_tyle;
+        }
+        public ANC(double _WBC, double _WBC_Neu_tyle)
+        {
+            WBC = _WBC;
+            WBC_Neu_tyle = _WBC_Neu_tyle;
+        }
+
+        public double kqANC()
+        {
+            double ANC = WBC * WBC_Neu_tyle;
+            return ANC;
+        }
+    }
+    public class MIPI : Congthuc
+    {
+        public double tuoi { get; set; }
+        public int ECOG { get; set; }
+        public double LDHSerum { get; set; }
+        public double LDHSerum_ULN { get; set; }
+        public double WBC { get; set; }
+
+        public MIPI()
+        {
+
+        }
+        public MIPI(Nguoibenh nb, Xetnghiem xn)
+        {
+            tuoi = nb.tinhtuoi_nam();
+            WBC = xn.WBC;
+        }
+        public MIPI(double _tuoi, int _ECOG, double _LDHSerum, double _LDHSerum_ULN, double _WBC)
+        {
+            tuoi = _tuoi;
+            ECOG = _ECOG;
+            LDHSerum = _LDHSerum;
+            LDHSerum_ULN = _LDHSerum_ULN;
+            WBC = _WBC;
+        }
+
+        public double kqMIPI()
+        {
+            double LDHLog = Math.Log10(LDHSerum / LDHSerum_ULN);
+            double WBCLog = Math.Log10(WBC);
+
+            return (0.03535 * tuoi) + (ECOG > 1 ? 0.6978 : 0) + (1.367 * LDHLog + 0.9393 * WBCLog);
+        }
+        public string kqMIPI_danhgia()
+        {
+            double mipiScore = kqMIPI();
+
+            if (mipiScore < 5.7)
+            {
+                return "Tiên lượng tốt";
+            }
+            else if (mipiScore > 6.2)
+            {
+                return "Tiên lượng xấu";
+            }
+            else
+            {
+                return "Tiên lượng trung bình";
+            }
+        }
+    }
+    public class RPI : Congthuc
+    {
+        public double Hct { get; set; }
+        public double Rec { get; set; }
+        public RPI()
+        {
+            
+        }
+        public RPI(Xetnghiem xn)
+        {
+            Hct = xn.Hct;
+        }
+        public RPI(double _Hct, double _Rec)
+        {
+            Hct = _Hct;
+            Rec = _Rec;
+        }
+        public double kqRPI()
+        {
+            return (Hct / 45) * Rec / (Hct >= 0.4 ? 1 : (Hct >= 0.3 ? 1.5 : (Hct >= 0.2 ? 2 : 2.5)));
+        }
+
+        public string kqRPI_danhgia()
+        {
+            double rpi = kqRPI();
+
+            if (rpi > 3)
+            {
+                return "Phản ứng bình thường của tủy xương đối với tình trạng thiếu máu";
+            }
+            else if (rpi < 2)
+            {
+                return "Tủy xương kém đáp ứng với tình trạng thiếu máu";
+            }
+            else
+            {
+                return "Tủy xương có đáp ứng với tình trạng thiếu máu";
+            }
+        }
+    }
+    public class sTfR : Congthuc
+    {
+        public double sTfRdoduoc { get; set; }
+        public double Ferritin { get; set; }
+
+        public sTfR()
+        {
+
+        }
+        public sTfR(double _sTfRdoduoc, double _Ferritin)
+        {
+            sTfRdoduoc = _sTfRdoduoc;
+            Ferritin = _Ferritin;
+        }
+
+        public double kqsTfR()
+        {
+            return sTfRdoduoc / Math.Log10(Ferritin);
+        }
+    }
+    public class BMR : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double cannang { get; set; }
+        public double chieucao { get; set; }
+        public double tuoi { get; set; }
+
+        public BMR()
+        {
+
+        }
+        public BMR(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            cannang = nb.cannang;
+            chieucao = nb.chieucao;
+            tuoi = nb.tinhtuoi_nam();
+        }
+        public BMR(string _gioitinh, double _cannang, double _chieucao, double _tuoi)
+        {
+            gioitinh = _gioitinh;
+            cannang = _cannang;
+            chieucao = _chieucao;
+            tuoi = _tuoi;
+        }
+
+        public double kqBMR_HB()
+        {
+            return (gioitinh == "nam")
+                ? (66 + (13.7 * cannang) + (5 * chieucao) - (6.8 * tuoi))
+                : (655 + (9.6 * cannang) + (1.8 * chieucao) - (4.7 * tuoi));
+        }
+
+        public double kqBMR_Scho()
+        {
+            if (gioitinh == "nam")
+            {
+                return (tuoi < 10)
+                    ? ((22.706 * cannang) + 504.3)
+                    : ((17.686 * cannang) + 658.2);
+            }
+            else
+            {
+                return (tuoi < 10)
+                    ? ((20.315 * cannang) + 485.9)
+                    : ((13.384 * cannang) + 692.6);
+            }
+        }
+    }
+    public class CDC_chieucao : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double chieucao { get; set; }
+        public double[] datachieucao { get; set; }
+        public double[] dataLMS_Nam { get; set; }
+        public double[] dataLMS_Nu { get; set; }
+        public CDC_chieucao()
+        {
+
+        }
+        public CDC_chieucao(string _gioitinh, double _tuoi, double _chieucao)
+        {
+            gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            chieucao = _chieucao;
+        }
+        public CDC_chieucao(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            tuoi = nb.tinhtuoi_thang();
+            chieucao = nb.chieucao;
+        }
+        private void initCDC_chieucao()
+        {
+            double[] _datachieucao = {45.57, 48.56, 52.73, 55.77, 58.24, 60.34, 62.18, 63.84, 65.36, 66.75, 68.06, 69.28, 70.43, 71.53, 72.57, 73.57, 74.53, 75.45, 76.34, 77.20, 78.03, 78.83, 79.61, 80.37, 81.11, 81.09, 81.83, 82.56, 83.28, 83.98, 84.67, 85.35, 86.01, 86.67, 87.32, 87.95, 88.58, 89.20, 89.77, 90.33, 90.89, 91.43, 91.97, 92.50, 93.03, 93.55, 94.06, 94.57, 95.08, 95.58, 96.08, 96.58, 97.07, 97.56, 98.05, 98.54, 99.03, 99.51, 100.00, 100.48, 100.97, 101.45, 101.94, 102.42, 102.91, 103.39, 103.88, 104.37, 104.86, 105.35, 105.84, 106.33, 106.82, 107.31, 107.80, 108.29, 108.79, 109.28, 109.77, 110.26, 110.76, 111.25, 111.74, 112.23, 112.71, 113.20, 113.68, 114.16, 114.64, 115.12, 115.59, 116.06, 116.53, 116.99, 117.45, 117.91, 118.36, 118.81, 119.25, 119.69, 120.12, 120.55, 120.97, 121.39, 121.80, 122.21, 122.61, 123.01, 123.40, 123.79, 124.18, 124.56, 124.93, 125.30, 125.67, 126.04, 126.40, 126.75, 127.11, 127.46, 127.81, 128.16, 128.51, 128.86, 129.21, 129.55, 129.90, 130.25, 130.60, 130.95, 131.31, 131.67, 132.03, 132.40, 132.77, 133.15, 133.53, 133.92, 134.32, 134.73, 135.14, 135.56, 135.99, 136.43, 136.88, 137.33, 137.80, 138.28, 138.76, 139.26, 139.77, 140.28, 140.81, 141.34, 141.89, 142.44, 143.00, 143.56, 144.13, 144.71, 145.29, 145.87, 146.46, 147.05, 147.64, 148.23, 148.81, 149.39, 149.97, 150.55, 151.11, 151.67, 152.22, 152.76, 153.29, 153.81, 154.32, 154.81, 155.30, 155.76, 156.22, 156.66, 157.08, 157.49, 157.89, 158.27, 158.63, 158.98, 159.32, 159.64, 159.94, 160.24, 160.51, 160.78, 161.03, 161.27, 161.50, 161.72, 161.92, 162.12, 162.30, 162.48, 162.64, 162.80, 162.95, 163.09, 163.22, 163.34, 163.46, 163.57, 163.67, 163.77, 163.86, 163.95, 164.03, 164.10, 164.18, 164.24, 164.31, 164.37, 164.42, 164.47, 164.52, 164.57, 164.61, 164.65, 164.69, 164.73, 164.76, 164.79, 164.82, 164.85, 164.87, 164.90, 164.92, 164.94, 164.96, 164.98, 165.00, 165.02, 165.03, 165.04, 49.99, 52.70, 56.63, 59.61, 62.08, 64.22, 66.13, 67.86, 69.46, 70.95, 72.35, 73.67, 74.92, 76.12, 77.26, 78.37, 79.43, 80.45, 81.44, 82.41, 83.34, 84.25, 85.13, 86.00, 86.84, 86.86, 87.65, 88.42, 89.18, 89.91, 90.63, 91.33, 92.02, 92.70, 93.36, 94.01, 94.65, 95.27, 95.91, 96.55, 97.17, 97.79, 98.40, 99.00, 99.60, 100.19, 100.78, 101.36, 101.94, 102.51, 103.08, 103.65, 104.21, 104.77, 105.33, 105.88, 106.43, 106.99, 107.54, 108.08, 108.63, 109.18, 109.72, 110.26, 110.81, 111.35, 111.89, 112.43, 112.97, 113.51, 114.05, 114.59, 115.12, 115.66, 116.20, 116.73, 117.27, 117.80, 118.33, 118.87, 119.40, 119.93, 120.46, 120.98, 121.51, 122.03, 122.55, 123.07, 123.59, 124.10, 124.62, 125.13, 125.63, 126.14, 126.64, 127.14, 127.63, 128.12, 128.61, 129.10, 129.58, 130.06, 130.53, 131.00, 131.46, 131.93, 132.38, 132.84, 133.29, 133.73, 134.18, 134.62, 135.05, 135.48, 135.91, 136.33, 136.76, 137.17, 137.59, 138.00, 138.41, 138.82, 139.23, 139.64, 140.04, 140.45, 140.85, 141.26, 141.66, 142.07, 142.48, 142.89, 143.31, 143.73, 144.15, 144.58, 145.02, 145.46, 145.91, 146.37, 146.83, 147.31, 147.79, 148.29, 148.79, 149.31, 149.84, 150.38, 150.93, 151.50, 152.07, 152.66, 153.26, 153.87, 154.50, 155.13, 155.76, 156.41, 157.06, 157.72, 158.38, 159.03, 159.69, 160.35, 161.00, 161.65, 162.29, 162.92, 163.54, 164.14, 164.74, 165.31, 165.88, 166.42, 166.95, 167.46, 167.96, 168.43, 168.89, 169.32, 169.74, 170.14, 170.52, 170.88, 171.23, 171.55, 171.86, 172.16, 172.43, 172.70, 172.95, 173.18, 173.40, 173.61, 173.81, 173.99, 174.17, 174.33, 174.49, 174.63, 174.77, 174.90, 175.02, 175.13, 175.24, 175.34, 175.44, 175.53, 175.61, 175.69, 175.77, 175.84, 175.90, 175.97, 176.03, 176.08, 176.13, 176.19, 176.23, 176.28, 176.32, 176.36, 176.40, 176.44, 176.47, 176.50, 176.53, 176.56, 176.59, 176.62, 176.64, 176.67, 176.69, 176.71, 176.73, 176.75, 176.77, 176.79, 176.81, 176.83, 176.84, 176.85, 54.31, 57.00, 60.96, 64.01, 66.55, 68.77, 70.75, 72.56, 74.24, 75.80, 77.27, 78.66, 79.99, 81.25, 82.46, 83.63, 84.75, 85.84, 86.89, 87.91, 88.90, 89.86, 90.80, 91.72, 92.61, 92.63, 93.53, 94.41, 95.26, 96.08, 96.88, 97.66, 98.42, 99.16, 99.87, 100.58, 101.26, 101.93, 102.59, 103.25, 103.89, 104.54, 105.17, 105.81, 106.43, 107.06, 107.68, 108.30, 108.91, 109.52, 110.13, 110.74, 111.35, 111.95, 112.55, 113.16, 113.76, 114.36, 114.96, 115.56, 116.16, 116.76, 117.35, 117.95, 118.55, 119.15, 119.75, 120.35, 120.94, 121.54, 122.14, 122.74, 123.33, 123.93, 124.53, 125.12, 125.72, 126.31, 126.90, 127.50, 128.09, 128.68, 129.27, 129.85, 130.44, 131.02, 131.60, 132.18, 132.76, 133.34, 133.91, 134.48, 135.04, 135.61, 136.17, 136.72, 137.28, 137.83, 138.37, 138.92, 139.45, 139.99, 140.52, 141.05, 141.57, 142.09, 142.61, 143.12, 143.62, 144.13, 144.63, 145.12, 145.61, 146.10, 146.59, 147.07, 147.55, 148.02, 148.50, 148.97, 149.44, 149.91, 150.37, 150.84, 151.30, 151.77, 152.23, 152.70, 153.16, 153.63, 154.10, 154.58, 155.06, 155.54, 156.03, 156.52, 157.02, 157.52, 158.04, 158.56, 159.09, 159.62, 160.17, 160.73, 161.29, 161.87, 162.45, 163.05, 163.66, 164.27, 164.90, 165.53, 166.17, 166.82, 167.47, 168.13, 168.79, 169.46, 170.12, 170.78, 171.45, 172.10, 172.75, 173.40, 174.03, 174.66, 175.27, 175.87, 176.45, 177.02, 177.57, 178.11, 178.63, 179.13, 179.61, 180.07, 180.51, 180.93, 181.34, 181.72, 182.09, 182.44, 182.78, 183.09, 183.39, 183.68, 183.94, 184.20, 184.44, 184.67, 184.88, 185.09, 185.28, 185.46, 185.63, 185.80, 185.95, 186.09, 186.23, 186.36, 186.48, 186.60, 186.71, 186.81, 186.91, 187.00, 187.09, 187.18, 187.26, 187.33, 187.40, 187.47, 187.53, 187.60, 187.65, 187.71, 187.76, 187.81, 187.86, 187.91, 187.95, 187.99, 188.03, 188.07, 188.11, 188.14, 188.17, 188.21, 188.24, 188.27, 188.29, 188.32, 188.35, 188.37, 188.39, 188.42, 188.44, 188.46, 188.48, 188.50, 188.52, 188.53, 45.58, 47.96, 51.48, 54.18, 56.43, 58.40, 60.16, 61.77, 63.26, 64.65, 65.96, 67.19, 68.37, 69.49, 70.57, 71.61, 72.61, 73.58, 74.51, 75.42, 76.30, 77.16, 78.00, 78.82, 79.61, 79.65, 80.44, 81.23, 82.00, 82.74, 83.47, 84.17, 84.84, 85.49, 86.11, 86.70, 87.26, 87.81, 88.34, 88.87, 89.40, 89.92, 90.44, 90.95, 91.47, 91.98, 92.49, 93.01, 93.52, 94.04, 94.56, 95.08, 95.60, 96.13, 96.65, 97.18, 97.71, 98.24, 98.78, 99.31, 99.85, 100.39, 100.93, 101.47, 102.01, 102.55, 103.09, 103.64, 104.18, 104.72, 105.26, 105.80, 106.33, 106.87, 107.40, 107.93, 108.46, 108.99, 109.51, 110.03, 110.54, 111.05, 111.56, 112.06, 112.56, 113.05, 113.54, 114.03, 114.50, 114.98, 115.44, 115.90, 116.36, 116.81, 117.25, 117.69, 118.12, 118.54, 118.96, 119.38, 119.79, 120.19, 120.58, 120.97, 121.36, 121.74, 122.12, 122.49, 122.86, 123.22, 123.58, 123.93, 124.29, 124.64, 124.99, 125.34, 125.69, 126.04, 126.39, 126.74, 127.09, 127.45, 127.82, 128.18, 128.56, 128.94, 129.33, 129.73, 130.15, 130.57, 131.01, 131.46, 131.92, 132.40, 132.90, 133.41, 133.93, 134.47, 135.03, 135.60, 136.18, 136.78, 137.38, 137.99, 138.61, 139.22, 139.84, 140.46, 141.06, 141.66, 142.25, 142.83, 143.39, 143.93, 144.45, 144.95, 145.43, 145.89, 146.32, 146.73, 147.12, 147.49, 147.83, 148.15, 148.45, 148.73, 148.99, 149.23, 149.46, 149.67, 149.86, 150.04, 150.21, 150.36, 150.51, 150.64, 150.76, 150.88, 150.98, 151.08, 151.18, 151.26, 151.34, 151.42, 151.48, 151.55, 151.61, 151.67, 151.72, 151.77, 151.82, 151.86, 151.90, 151.94, 151.98, 152.01, 152.05, 152.08, 152.11, 152.14, 152.16, 152.19, 152.21, 152.23, 152.26, 152.28, 152.30, 152.32, 152.33, 152.35, 152.37, 152.38, 152.40, 152.41, 152.43, 152.44, 152.45, 152.46, 152.48, 152.49, 152.50, 152.51, 152.52, 152.53, 152.54, 152.55, 152.56, 152.56, 152.57, 152.58, 152.59, 152.59, 152.60, 152.61, 152.61, 152.62, 152.63, 152.63, 152.64, 152.64, 152.65, 152.65, 49.29, 51.68, 55.29, 58.09, 60.46, 62.54, 64.41, 66.12, 67.71, 69.19, 70.59, 71.92, 73.19, 74.40, 75.56, 76.68, 77.76, 78.80, 79.81, 80.80, 81.76, 82.69, 83.60, 84.48, 85.35, 85.40, 86.29, 87.16, 88.00, 88.81, 89.58, 90.33, 91.05, 91.74, 92.40, 93.03, 93.63, 94.21, 94.80, 95.37, 95.95, 96.52, 97.08, 97.65, 98.21, 98.78, 99.34, 99.90, 100.47, 101.03, 101.60, 102.17, 102.74, 103.31, 103.89, 104.46, 105.04, 105.62, 106.20, 106.79, 107.37, 107.96, 108.54, 109.13, 109.72, 110.31, 110.90, 111.49, 112.08, 112.66, 113.25, 113.84, 114.42, 115.01, 115.59, 116.16, 116.74, 117.31, 117.88, 118.45, 119.01, 119.57, 120.13, 120.68, 121.22, 121.76, 122.30, 122.83, 123.35, 123.87, 124.39, 124.90, 125.40, 125.90, 126.39, 126.87, 127.35, 127.83, 128.29, 128.76, 129.22, 129.67, 130.11, 130.56, 131.00, 131.43, 131.86, 132.29, 132.71, 133.13, 133.55, 133.97, 134.38, 134.80, 135.22, 135.63, 136.05, 136.48, 136.90, 137.33, 137.77, 138.21, 138.66, 139.12, 139.58, 140.06, 140.54, 141.04, 141.55, 142.07, 142.60, 143.14, 143.70, 144.26, 144.84, 145.42, 146.02, 146.62, 147.23, 147.84, 148.46, 149.07, 149.68, 150.29, 150.89, 151.49, 152.07, 152.64, 153.19, 153.73, 154.25, 154.76, 155.24, 155.70, 156.14, 156.56, 156.96, 157.34, 157.70, 158.04, 158.36, 158.66, 158.94, 159.21, 159.46, 159.69, 159.91, 160.11, 160.30, 160.48, 160.64, 160.80, 160.94, 161.08, 161.21, 161.33, 161.44, 161.54, 161.64, 161.73, 161.82, 161.90, 161.97, 162.05, 162.11, 162.18, 162.23, 162.29, 162.34, 162.39, 162.44, 162.49, 162.53, 162.57, 162.61, 162.64, 162.68, 162.71, 162.74, 162.77, 162.80, 162.83, 162.85, 162.88, 162.90, 162.92, 162.95, 162.97, 162.99, 163.00, 163.02, 163.04, 163.06, 163.07, 163.09, 163.10, 163.12, 163.13, 163.14, 163.16, 163.17, 163.18, 163.19, 163.20, 163.21, 163.22, 163.23, 163.24, 163.25, 163.26, 163.27, 163.28, 163.28, 163.29, 163.30, 163.30, 163.31, 163.32, 163.32, 163.33, 163.34, 163.34, 53.77, 55.96, 59.39, 62.15, 64.53, 66.65, 68.57, 70.36, 72.02, 73.59, 75.07, 76.48, 77.84, 79.14, 80.39, 81.59, 82.76, 83.90, 85.00, 86.07, 87.11, 88.13, 89.13, 90.10, 91.05, 91.13, 92.12, 93.08, 94.01, 94.90, 95.76, 96.58, 97.36, 98.12, 98.84, 99.53, 100.19, 100.83, 101.47, 102.11, 102.75, 103.38, 104.01, 104.64, 105.27, 105.90, 106.53, 107.16, 107.79, 108.42, 109.06, 109.69, 110.33, 110.97, 111.61, 112.25, 112.89, 113.54, 114.18, 114.83, 115.48, 116.13, 116.78, 117.43, 118.08, 118.73, 119.39, 120.04, 120.69, 121.33, 121.98, 122.63, 123.27, 123.91, 124.55, 125.18, 125.81, 126.44, 127.06, 127.68, 128.30, 128.91, 129.51, 130.11, 130.70, 131.29, 131.88, 132.45, 133.03, 133.59, 134.15, 134.70, 135.25, 135.79, 136.33, 136.86, 137.38, 137.90, 138.41, 138.92, 139.42, 139.92, 140.41, 140.90, 141.38, 141.86, 142.34, 142.82, 143.29, 143.77, 144.24, 144.71, 145.19, 145.66, 146.14, 146.62, 147.11, 147.59, 148.09, 148.59, 149.09, 149.60, 150.12, 150.65, 151.19, 151.73, 152.29, 152.85, 153.42, 154.00, 154.58, 155.17, 155.77, 156.38, 156.98, 157.59, 158.20, 158.81, 159.42, 160.02, 160.62, 161.21, 161.79, 162.36, 162.91, 163.46, 163.98, 164.49, 164.99, 165.46, 165.92, 166.36, 166.78, 167.18, 167.56, 167.93, 168.27, 168.60, 168.91, 169.20, 169.47, 169.73, 169.98, 170.21, 170.42, 170.63, 170.82, 171.00, 171.16, 171.32, 171.47, 171.61, 171.74, 171.86, 171.98, 172.08, 172.19, 172.28, 172.37, 172.45, 172.53, 172.61, 172.68, 172.75, 172.81, 172.87, 172.92, 172.98, 173.03, 173.07, 173.12, 173.16, 173.20, 173.24, 173.27, 173.31, 173.34, 173.37, 173.40, 173.43, 173.46, 173.48, 173.51, 173.53, 173.55, 173.57, 173.59, 173.61, 173.63, 173.65, 173.66, 173.68, 173.70, 173.71, 173.72, 173.74, 173.75, 173.76, 173.78, 173.79, 173.80, 173.81, 173.82, 173.83, 173.84, 173.85, 173.86, 173.86, 173.87, 173.88, 173.89, 173.89, 173.90, 173.91, 173.91, 173.92, 173.93, 173.93, 173.94, 173.94, 173.95, 173.95};
+            datachieucao = _datachieucao;
+            double[] _dataLMS_Nam = { 1.2670042261, 0.5112376962, -0.45224446, -0.990594599, -1.285837689, -1.43031238, -1.47657547, -1.456837849, -1.391898768, -1.29571459, -1.177919048, -1.045326049, -0.902800887, -0.753908107, -0.601263523, -0.446805039, -0.291974772, -0.13784767, 0.014776155, 0.1653041691, 0.3133018086, 0.4584554707, 0.6005446308, 0.7394389526, 0.8750004465, 1.00720807, 0.837251351, 0.681492975, 0.538779654, 0.407697153, 0.286762453, 0.174489485, 0.069444521, -0.029720564, -0.124251789, -0.215288396, -0.30385434, -0.390918369, -0.254801167, -0.125654535, -0.00316735, 0.11291221, 0.222754969, 0.326530126, 0.42436156, 0.516353108, 0.602595306, 0.683170764, 0.758158406, 0.827636736, 0.891686306, 0.95039153, 1.003830006, 1.05213569, 1.0953669, 1.133652119, 1.167104213, 1.195845353, 1.220004233, 1.239715856, 1.255121285, 1.266367398, 1.273606657, 1.276996893, 1.276701119, 1.272887366, 1.265728536, 1.255402281, 1.242090871, 1.225981067, 1.207263978, 1.186140222, 1.162796198, 1.137442868, 1.110286487, 1.081536236, 1.05140374, 1.020102497, 0.987847213, 0.954853043, 0.921334742, 0.887505723, 0.85357703, 0.819756239, 0.786246296, 0.753244292, 0.720940222, 0.689515708, 0.659142731, 0.629997853, 0.602203984, 0.575908038, 0.55123134, 0.528279901, 0.507143576, 0.487895344, 0.470590753, 0.455267507, 0.441945241, 0.430625458, 0.421291648, 0.413909588, 0.408427813, 0.404778262, 0.402877077, 0.402625561, 0.40391127, 0.406609232, 0.410583274, 0.415687443, 0.421767514, 0.428662551, 0.436206531, 0.44423, 0.45256176, 0.461030578, 0.469466904, 0.477704608, 0.48558272, 0.492947182, 0.499652617, 0.505564115, 0.510559047, 0.514528903, 0.517381177, 0.519041285, 0.519454524, 0.518588072, 0.516433004, 0.513006312, 0.508352901, 0.502547502, 0.495696454, 0.487939275, 0.479449924, 0.470437652, 0.461147305, 0.451858946, 0.442886661, 0.434576385, 0.427302633, 0.421464027, 0.417477538, 0.415771438, 0.416777012, 0.420919142, 0.428606007, 0.440218167, 0.456097443, 0.476536014, 0.501766234, 0.531951655, 0.567179725, 0.607456565, 0.652704121, 0.702759868, 0.757379106, 0.816239713, 0.878947416, 0.945053486, 1.014046108, 1.085383319, 1.158487278, 1.232768816, 1.307628899, 1.382473225, 1.456720479, 1.529810247, 1.601219573, 1.670433444, 1.736995571, 1.800483802, 1.860518777, 1.916765525, 1.968934444, 2.016781776, 2.060109658, 2.098765817, 2.132642948, 2.16167779, 2.185849904, 2.205180153, 2.219728869, 2.2295937, 2.234907144, 2.235833767, 2.232567138, 2.2253265, 2.214353232, 2.199905902, 2.182262864, 2.161704969, 2.138524662, 2.113023423, 2.085490286, 2.0562195, 2.025496648, 1.993598182, 1.960789092, 1.927320937, 1.89343024, 1.859337259, 1.825245107, 1.791339209, 1.757787065, 1.724738292, 1.692324905, 1.660661815, 1.629847495, 1.599964788, 1.571081817, 1.543252982, 1.516519998, 1.490912963, 1.466451429, 1.44314546, 1.420996665, 1.399999187, 1.380140651, 1.361403047, 1.343763564, 1.327195355, 1.311668242, 1.297149359, 1.283603728, 1.270994782, 1.25928483, 1.248435461, 1.23840791, 1.229163362, 1.220663228, 1.212869374, 1.20574431, 1.199251356, 1.19335477, 1.188019859, 1.183213059, 1.178901998, 1.175055543, 1.171643828, 1.16863827, 1.167279219, 49.988884079, 52.695975301, 56.628428552, 59.608953427, 62.077000266, 64.216864104, 66.125314898, 67.860179904, 69.459084582, 70.948039123, 72.345861109, 73.666654103, 74.921297174, 76.118375358, 77.264799111, 78.366223087, 79.427340501, 80.452094919, 81.443836034, 82.405436434, 83.339380627, 84.247833944, 85.132696575, 85.995648803, 86.838175097, 86.86160934, 87.65247282, 88.42326434, 89.17549228, 89.91040853, 90.62907762, 91.33242379, 92.02127167, 92.69637946, 93.35846546, 94.00822923, 94.64636981, 95.27359106, 95.91474929, 96.54734328, 97.17191309, 97.78897727, 98.3990283, 99.00254338, 99.599977, 100.191764, 100.7783198, 101.3600411, 101.9373058, 102.5104735, 103.0798852, 103.645864, 104.208713, 104.7687256, 105.3261638, 105.8812823, 106.4343146, 106.9854769, 107.534968, 108.0829695, 108.6296457, 109.1751441, 109.7195954, 110.2631136, 110.8057967, 111.3477265, 111.8889694, 112.4295761, 112.9695827, 113.5090108, 114.0478678, 114.5861486, 115.1238315, 115.6608862, 116.1972691, 116.732925, 117.2677879, 117.8017819, 118.3348215, 118.8668123, 119.397652, 119.9272309, 120.455433, 120.9821362, 121.5072136, 122.0305342, 122.5519634, 123.0713645, 123.588599, 124.1035312, 124.6160161, 125.1259182, 125.6331012, 126.1374319, 126.6387804, 127.1370217, 127.6320362, 128.1237104, 128.6119383, 129.096622, 129.5776723, 130.0550101, 130.5285669, 130.9982857, 131.4641218, 131.9260439, 132.3840348, 132.838092, 133.2882291, 133.7344759, 134.1768801, 134.6155076, 135.0504433, 135.4817925, 135.9096813, 136.3342577, 136.7556923, 137.1741794, 137.5899378, 138.0032114, 138.4142703, 138.8234114, 139.2309592, 139.6372663, 140.042714, 140.4477127, 140.8527022, 141.2581515, 141.6645592, 142.072452, 142.4823852, 142.8949403, 143.3107241, 143.7303663, 144.1545167, 144.5838414, 145.0190192, 145.4607359, 145.9096784, 146.3665278, 146.8319513, 147.3065929, 147.7910635, 148.2859294, 148.7917006, 149.3088178, 149.8376391, 150.3784267, 150.9313331, 151.4963887, 152.0734897, 152.6623878, 153.2626819, 153.8738124, 154.495058, 155.1255365, 155.7642086, 156.4098858, 157.0612415, 157.7168289, 158.3750929, 159.034399, 159.6930501, 160.3493168, 161.0014586, 161.6477515, 162.2865119, 162.9161202, 163.535045, 164.1418486, 164.7352199, 165.3139755, 165.8770715, 166.4236087, 166.9528354, 167.4641466, 167.9570814, 168.4313175, 168.8866644, 169.3230548, 169.7405351, 170.139255, 170.5194567, 170.881464, 171.2256717, 171.5525345, 171.8625576, 172.1562865, 172.4342983, 172.6971935, 172.9455898, 173.180112, 173.4013896, 173.6100518, 173.8067179, 173.9919998, 174.1664951, 174.3307855, 174.4854344, 174.6309856, 174.7679617, 174.8968634, 175.0181691, 175.1323345, 175.2397926, 175.340954, 175.4362071, 175.5259191, 175.6104358, 175.690083, 175.7651671, 175.8359757, 175.9027788, 175.9658293, 176.0253641, 176.081605, 176.1347593, 176.1850208, 176.2325707, 176.2775781, 176.3202008, 176.3605864, 176.3988725, 176.4351874, 176.469651, 176.5023751, 176.533464, 176.5630153, 176.5911197, 176.6178621, 176.6433219, 176.6675729, 176.6906844, 176.712721, 176.733743, 176.753807, 176.7729657, 176.7912687, 176.8087622, 176.8254895, 176.8414914, 176.8492322, 0.0531121908, 0.0486926838, 0.0441168302, 0.0417955825, 0.0404541256, 0.0396338789, 0.0391238128, 0.0388119944, 0.0386332091, 0.0385468328, 0.0385262623, 0.038553387, 0.0386155012, 0.0387034611, 0.0388105571, 0.0389317838, 0.0390633563, 0.0392023816, 0.0393466285, 0.0394943647, 0.0396442379, 0.0397951891, 0.0399463877, 0.0400971806, 0.0402470597, 0.040395626, 0.040577525, 0.040723122, 0.040833194, 0.040909059, 0.040952433, 0.04096533, 0.040949976, 0.040908737, 0.040844062, 0.040758431, 0.040654312, 0.04053412, 0.040572876, 0.04061691, 0.040666414, 0.040721467, 0.040782045, 0.040848042, 0.040919281, 0.040995524, 0.041076485, 0.041161838, 0.041251224, 0.041344257, 0.041440534, 0.041539635, 0.041641136, 0.041744602, 0.041849607, 0.041955723, 0.042062532, 0.042169628, 0.042276619, 0.042383129, 0.042488804, 0.042593311, 0.042696342, 0.042797615, 0.042896877, 0.042993904, 0.043088503, 0.043180513, 0.043269806, 0.043356287, 0.043439893, 0.043520597, 0.043598407, 0.043673359, 0.043745523, 0.043815003, 0.043881929, 0.043946461, 0.044008785, 0.044069112, 0.044127675, 0.044184725, 0.044240532, 0.044295379, 0.044349559, 0.044403374, 0.04445713, 0.044511135, 0.044565693, 0.044621104, 0.044677662, 0.044735646, 0.044795322, 0.044856941, 0.04492073, 0.044986899, 0.045055632, 0.045127088, 0.045201399, 0.045278671, 0.045358979, 0.045442372, 0.045528869, 0.045618459, 0.045711105, 0.045806742, 0.045905281, 0.046006604, 0.046110573, 0.046217028, 0.04632579, 0.046436662, 0.04654943, 0.046663871, 0.046779748, 0.046896817, 0.047014827, 0.047133525, 0.047252654, 0.047371961, 0.047491194, 0.047610108, 0.047728463, 0.04784603, 0.047962592, 0.048077942, 0.048191889, 0.048304259, 0.048414893, 0.048523648, 0.048630402, 0.04873505, 0.048837504, 0.048937694, 0.049035564, 0.049131073, 0.049224189, 0.049314887, 0.049403145, 0.049488934, 0.049572216, 0.049652935, 0.049731004, 0.0498063, 0.04987865, 0.049947823, 0.050013518, 0.050075353, 0.050132858, 0.050185471, 0.050232532, 0.050273285, 0.050306885, 0.050332406, 0.05034886, 0.050355216, 0.050350423, 0.050333444, 0.050303283, 0.050259018, 0.050199837, 0.050125062, 0.05003418, 0.049926861, 0.049802977, 0.04966261, 0.049506051, 0.049333801, 0.049146553, 0.04894519, 0.048730749, 0.048504404, 0.048267442, 0.04802123, 0.047767192, 0.047506783, 0.047241456, 0.04697265, 0.046701759, 0.046430122, 0.046159004, 0.045889585, 0.045622955, 0.045360101, 0.045101913, 0.044849174, 0.044602566, 0.044362674, 0.044129985, 0.043904897, 0.043687723, 0.043478698, 0.043277987, 0.043085685, 0.042901835, 0.042726424, 0.042559396, 0.042400652, 0.042250063, 0.042107465, 0.041972676, 0.041845488, 0.041725679, 0.041613015, 0.041507249, 0.041408129, 0.041315398, 0.041228796, 0.04114806, 0.041072931, 0.04100315, 0.040938463, 0.040878617, 0.040823368, 0.040772475, 0.040725706, 0.040682834, 0.04064364, 0.040607913, 0.040575448, 0.040546051, 0.040519532, 0.040495713, 0.040474421, 0.040455493, 0.040438773, 0.040424111, 0.040411366, 0.040400405, 0.040391101, 0.040383334, 0.04037699, 0.040371962, 0.040368149, 0.040365456, 0.040363795, 0.04036308, 0.040363233, 0.040364179, 0.04036585, 0.04036818, 0.040369574 };
+            dataLMS_Nam = _dataLMS_Nam;
+            double[] _dataLMS_Nu = { -1.295960857, -0.809249882, -0.050782985, 0.4768514065, 0.8432996117, 1.0975622571, 1.2725096408, 1.3904288587, 1.466733925, 1.5123019758, 1.534950767, 1.5403908751, 1.5328528917, 1.5155094695, 1.4907650275, 1.460458255, 1.4260060091, 1.3885070954, 1.3488181274, 1.3076096543, 1.2654081486, 1.2226277319, 1.1795943654, 1.1365644483, 1.0937319466, 1.051272912, 1.041951175, 1.012592236, 0.970541909, 0.921129988, 0.868221392, 0.81454413, 0.761957977, 0.711660228, 0.664323379, 0.620285102, 0.57955631, 0.54198094, 0.511429832, 0.482799937, 0.455521041, 0.429150288, 0.403351725, 0.377878239, 0.352555862, 0.327270297, 0.301955463, 0.276583851, 0.251158446, 0.225705996, 0.20027145, 0.174913356, 0.149700081, 0.12470671, 0.100012514, 0.075698881, 0.051847635, 0.02853967, 0.005853853, -0.016133871, -0.037351181, -0.057729947, -0.077206672, -0.09572283, -0.113225128, -0.129665689, -0.145002179, -0.159197885, -0.172221748, -0.184048358, -0.194660215, -0.204030559, -0.212174408, -0.219069129, -0.224722166, -0.229140412, -0.232335686, -0.234324563, -0.235128195, -0.234772114, -0.233286033, -0.230703633, -0.227062344, -0.222403111, -0.216770161, -0.210210748, -0.202774891, -0.194515104, -0.185486099, -0.175744476, -0.165348396, -0.15435722, -0.142831123, -0.130830669, -0.118416354, -0.105648092, -0.092584657, -0.079283065, -0.065797888, -0.0521805, -0.03847825, -0.024733545, -0.010982868, 0.002744306, 0.016426655, 0.030052231, 0.043619747, 0.05713988, 0.070636605, 0.08414848, 0.097729873, 0.111452039, 0.125404005, 0.13969316, 0.154445482, 0.169805275, 0.185934346, 0.203010488, 0.2212252, 0.240780542, 0.261885086, 0.284748919, 0.309577733, 0.336566048, 0.365889711, 0.397699038, 0.432104409, 0.46917993, 0.508943272, 0.551354277, 0.596307363, 0.643626542, 0.693062173, 0.744289752, 0.79691098, 0.85045728, 0.904395871, 0.958138449, 1.011054559, 1.062474568, 1.111727029, 1.158135105, 1.201050821, 1.239852328, 1.274006058, 1.303044695, 1.326605954, 1.344443447, 1.356437773, 1.362602695, 1.363085725, 1.358162799, 1.348227142, 1.333772923, 1.315374704, 1.293664024, 1.269304678, 1.242968236, 1.21531127, 1.186955477, 1.158471522, 1.130367088, 1.103079209, 1.076970655, 1.052329922, 1.029374161, 1.008254396, 0.989062282, 0.971837799, 0.95657215, 0.94324228, 0.931767062, 0.922058291, 0.914012643, 0.907516917, 0.902452436, 0.898698641, 0.896143482, 0.894659668, 0.89413892, 0.894475371, 0.895569834, 0.897330209, 0.899671635, 0.902516442, 0.905793969, 0.909440266, 0.913397733, 0.91761471, 0.922045055, 0.926647697, 0.931386217, 0.93622842, 0.941145943, 0.94611388, 0.95111043, 0.956116576, 0.961115792, 0.966093766, 0.971038162, 0.975938391, 0.980785418, 0.985571579, 0.99029042, 0.994936555, 0.999505539, 1.003993753, 1.0083983, 1.012716921, 1.016947912, 1.021090055, 1.025142554, 1.029104983, 1.032977233, 1.036759475, 1.040452117, 1.044055774, 1.047571238, 1.050999451, 1.054341482, 1.057598512, 1.060771808, 1.063862715, 1.066872639, 1.069803036, 1.072655401, 1.075431258, 1.078132156, 1.080759655, 1.083315329, 1.085800751, 1.088217496, 1.090567133, 1.092851222, 1.095071313, 1.097228939, 1.099325619, 1.101362852, 1.103342119, 1.105264876, 1.107132561, 1.108046193, 49.286396118, 51.683580573, 55.286128126, 58.093819061, 60.459807634, 62.536696555, 64.406327624, 66.118415533, 67.705744192, 69.191236138, 70.591639237, 71.919616727, 73.185010399, 74.395643786, 75.557854397, 76.676858713, 77.757009856, 78.801984056, 79.814918523, 80.798515316, 81.755120921, 82.686788098, 83.59532461, 84.48233206, 85.349236238, 85.3973169, 86.29026318, 87.15714182, 87.9960184, 88.8055115, 89.58476689, 90.33341722, 91.0515436, 91.7396352, 92.39854429, 93.02945392, 93.63382278, 94.21335709, 94.79643239, 95.37391918, 95.94692677, 96.51644912, 97.08337211, 97.6484807, 98.21246579, 98.77593069, 99.33939735, 99.9033122, 100.4680516, 101.033927, 101.6011898, 102.1700358, 102.7406094, 103.3130077, 103.8872839, 104.4634511, 105.0414853, 105.6213287, 106.2028921, 106.7860583, 107.3706841, 107.9566031, 108.5436278, 109.1315521, 109.7201531, 110.3091934, 110.8984228, 111.4875806, 112.0763967, 112.6645943, 113.2518902, 113.8380006, 114.4226317, 115.0054978, 115.5863089, 116.1647782, 116.7406221, 117.3135622, 117.8833259, 118.4496481, 119.0122722, 119.5709513, 120.1254495, 120.6755427, 121.22102, 121.7616844, 122.2973542, 122.827864, 123.3530652, 123.8728276, 124.38704, 124.8956114, 125.398472, 125.895574, 126.3868929, 126.8724284, 127.3522056, 127.8262759, 128.2947187, 128.757642, 129.2151839, 129.6675143, 130.1148354, 130.5573839, 130.995432, 131.4292887, 131.8593015, 132.2858574, 132.7093845, 133.1303527, 133.5492749, 133.9667073, 134.3832499, 134.7995463, 135.2162826, 135.634186, 136.0540223, 136.4765925, 136.9027281, 137.3332846, 137.7691339, 138.2111552, 138.6602228, 139.1171933, 139.5828898, 140.0580848, 140.5434787, 141.0396832, 141.5471945, 142.0663731, 142.59742, 143.1403553, 143.6949981, 144.2609497, 144.8375809, 145.4240246, 146.0191748, 146.621692, 147.2300177, 147.8423918, 148.4568879, 149.0714413, 149.6838943, 150.2920328, 150.8936469, 151.4865636, 152.0686985, 152.6380955, 153.1929631, 153.7317031, 154.2529332, 154.755501, 155.2384904, 155.7012216, 156.1432438, 156.564323, 156.9644258, 157.3436995, 157.7024507, 158.0411233, 158.3602756, 158.6605588, 158.9426964, 159.2074654, 159.455679, 159.688172, 159.9057871, 160.1093647, 160.299733, 160.4776996, 160.6440526, 160.7995428, 160.9448916, 161.0807857, 161.2078755, 161.3267744, 161.4380593, 161.5422726, 161.639917, 161.7314645, 161.8173534, 161.8979913, 161.9737558, 162.0449969, 162.1120386, 162.17518, 162.2346979, 162.2908474, 162.343864, 162.3939652, 162.4413513, 162.4862071, 162.5287029, 162.5689958, 162.6072309, 162.6435418, 162.6780519, 162.7108751, 162.7421168, 162.7718741, 162.8002371, 162.8272889, 162.8531067, 162.8777619, 162.9013208, 162.9238449, 162.9453912, 162.9660131, 162.9857599, 163.0046776, 163.0228094, 163.0401953, 163.0568727, 163.0728768, 163.0882404, 163.1029943, 163.1171673, 163.1307866, 163.1438776, 163.1564644, 163.1685697, 163.1802146, 163.1914194, 163.202203, 163.2125835, 163.2225779, 163.2322024, 163.2414722, 163.2504019, 163.2590052, 163.2672954, 163.2752848, 163.2829854, 163.2904086, 163.297565, 163.304465, 163.3111185, 163.3175349, 163.3237231, 163.3296918, 163.3354491, 163.338251, 0.0500855601, 0.0468185454, 0.0434439, 0.0417161032, 0.0407051733, 0.0400797646, 0.0396868449, 0.0394445547, 0.0393047376, 0.0392371101, 0.0392216648, 0.0392446716, 0.0392964203, 0.0393698746, 0.0394598321, 0.0395623818, 0.0396745415, 0.0397940102, 0.0399189943, 0.0400480838, 0.0401801621, 0.0403143396, 0.040449904, 0.0405862829, 0.0407230154, 0.040859727, 0.041142161, 0.041349399, 0.041500428, 0.041610508, 0.041691761, 0.04175368, 0.041803562, 0.041846882, 0.041887626, 0.041928568, 0.041971514, 0.042017509, 0.042104522, 0.042199507, 0.042300333, 0.042405225, 0.042512706, 0.042621565, 0.042730809, 0.042839638, 0.042947412, 0.043053626, 0.043157889, 0.043259907, 0.043359463, 0.043456406, 0.043550638, 0.043642107, 0.043730791, 0.043816701, 0.043899867, 0.043980337, 0.044058171, 0.04413344, 0.044206218, 0.044276588, 0.044344632, 0.044410436, 0.044474084, 0.044535662, 0.044595254, 0.044652942, 0.044708809, 0.044762936, 0.044815402, 0.044866288, 0.044915672, 0.044963636, 0.045010259, 0.045055624, 0.045099817, 0.045142924, 0.045185036, 0.045226249, 0.045266662, 0.045306383, 0.045345524, 0.045384203, 0.045422551, 0.045460702, 0.045498803, 0.045537012, 0.045575495, 0.045614432, 0.045654016, 0.04569445, 0.045735953, 0.045778759, 0.045823114, 0.04586928, 0.045917535, 0.045968169, 0.04602149, 0.046077818, 0.046137487, 0.046200842, 0.04626824, 0.046340046, 0.046416629, 0.046498361, 0.046585611, 0.046678741, 0.046778099, 0.04688401, 0.046996769, 0.047116633, 0.047243801, 0.047378413, 0.047520521, 0.047670085, 0.047826946, 0.04799081, 0.048161228, 0.04833757, 0.048519011, 0.048704503, 0.048892759, 0.049082239, 0.049271137, 0.049457371, 0.049638596, 0.049812203, 0.049975355, 0.050125012, 0.050257992, 0.050371024, 0.050460835, 0.050524236, 0.050558224, 0.050560083, 0.050527494, 0.050458634, 0.050352269, 0.050207825, 0.050025434, 0.049805967, 0.049551023, 0.049262895, 0.048944504, 0.048599314, 0.048231224, 0.047844442, 0.047443362, 0.04703243, 0.046616026, 0.046198356, 0.04578335, 0.045374597, 0.044975281, 0.044588148, 0.044215488, 0.043859135, 0.04352048, 0.043200497, 0.042899776, 0.042618565, 0.042356812, 0.042114211, 0.041890247, 0.04168424, 0.041495379, 0.041322765, 0.041165437, 0.041022401, 0.040892651, 0.040775193, 0.040669052, 0.040573288, 0.040487005, 0.040409354, 0.040339537, 0.040276811, 0.040220488, 0.040169932, 0.040124562, 0.040083845, 0.040047295, 0.040014473, 0.03998498, 0.039958458, 0.039934584, 0.039913066, 0.039893644, 0.039876087, 0.039860185, 0.039845754, 0.039832629, 0.039820663, 0.039809725, 0.0397997, 0.039790485, 0.039781991, 0.039774136, 0.03976685, 0.03976007, 0.039753741, 0.039747815, 0.039742249, 0.039737004, 0.039732048, 0.039727352, 0.03972289, 0.03971864, 0.039714581, 0.039710697, 0.039706971, 0.039703391, 0.039699945, 0.039696623, 0.039693415, 0.039690313, 0.039687311, 0.039684402, 0.039681581, 0.039678842, 0.039676182, 0.039673596, 0.039671082, 0.039668635, 0.039666254, 0.039663936, 0.039661679, 0.039659481, 0.039657339, 0.039655252, 0.039653218, 0.039651237, 0.039649306, 0.039647424, 0.039645591, 0.039643804, 0.039642063, 0.039640367, 0.039638715, 0.039637105, 0.039636316 };
+            dataLMS_Nu = _dataLMS_Nu;
+        }
+        public int kqCDC_chieucao()
+        {
+            initCDC_chieucao();
+
+            int stt = 0;
+            //Gioi tinh
+            if (gioitinh == "nữ")
+                stt = 726;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double phanphoi5 = datachieucao[stt];
+            double phanphoi50 = datachieucao[stt + 484];
+            double phanphoi95 = datachieucao[stt + 484 * 2];
+
+            if (chieucao < phanphoi5)
+            {
+                return 1;
+            }
+            else if (chieucao > phanphoi95)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+        public string kqCDC_chieucao_danhgia()
+        {
+            if (kqCDC_chieucao() == 1)
+            {
+                return "Trẻ thuộc nhóm tầm vóc thấp (p < 5%)";
+            }
+            else if (kqCDC_chieucao() == 3)
+            {
+                return "Trẻ thuộc nhóm tầm vóc cao (p > 95%)";
+            }
+            else
+            {
+                return "Trẻ thuộc nhóm tầm vóc bình thường (5% < p < 95%)";
+            }
+        }
+        public double kqCDC_chieucao_zscore()
+        {
+            initCDC_chieucao();
+
+            int stt = 0;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double L, M, S;
+            if (gioitinh == "nam")
+            {
+                L = dataLMS_Nam[stt];
+                M = dataLMS_Nam[stt + 242];
+                S = dataLMS_Nam[stt + 242 * 2];
+            }
+            else
+            {
+                L = dataLMS_Nu[stt];
+                M = dataLMS_Nu[stt + 242];
+                S = dataLMS_Nu[stt + 242 * 2];
+            }
+            return z_score(chieucao, L, M, S);
+        }
+    }
+    public class CDC_cannang : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double cannang { get; set; }
+        public double[] datacannang { get; set; }
+        public double[] dataLMS_Nam { get; set; }
+        public double[] dataLMS_Nu { get; set; }
+        public CDC_cannang()
+        {
+
+        }
+        public CDC_cannang(string _gioitinh, double _tuoi, double _cannang)
+        {
+            gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            cannang = _cannang;
+        }
+        public CDC_cannang(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            tuoi = nb.tinhtuoi_thang();
+            cannang = nb.cannang;
+        }
+        private void initCDC_cannang()
+        {
+            double[] _datacannang = {2.53, 2.96, 3.77, 4.50, 5.16, 5.74, 6.27, 6.75, 7.17, 7.56, 7.90, 8.21, 8.50, 8.75, 8.98, 9.20, 9.39, 9.58, 9.74, 9.90, 10.05, 10.19, 10.33, 10.45, 10.58, 10.70, 10.82, 10.94, 11.05, 11.17, 11.28, 11.40, 11.51, 11.63, 11.75, 11.86, 11.98, 12.10, 12.22, 12.34, 12.46, 12.59, 12.71, 12.84, 12.96, 13.09, 13.22, 13.35, 13.48, 13.61, 13.74, 13.87, 14.01, 14.14, 14.28, 14.41, 14.55, 14.68, 14.82, 14.96, 15.09, 15.23, 15.37, 15.51, 15.65, 15.79, 15.93, 16.07, 16.22, 16.36, 16.50, 16.65, 16.79, 16.94, 17.08, 17.23, 17.38, 17.53, 17.68, 17.83, 17.98, 18.13, 18.28, 18.43, 18.59, 18.74, 18.90, 19.05, 19.21, 19.37, 19.53, 19.69, 19.85, 20.01, 20.17, 20.33, 20.50, 20.66, 20.83, 20.99, 21.16, 21.33, 21.50, 21.67, 21.84, 22.01, 22.18, 22.36, 22.53, 22.71, 22.89, 23.07, 23.25, 23.43, 23.61, 23.80, 23.98, 24.17, 24.36, 24.55, 24.75, 24.94, 25.14, 25.34, 25.55, 25.75, 25.96, 26.17, 26.39, 26.60, 26.82, 27.04, 27.27, 27.50, 27.73, 27.97, 28.21, 28.45, 28.70, 28.95, 29.21, 29.47, 29.73, 30.00, 30.27, 30.55, 30.83, 31.12, 31.41, 31.70, 32.00, 32.31, 32.62, 32.93, 33.25, 33.57, 33.89, 34.22, 34.56, 34.90, 35.24, 35.59, 35.94, 36.29, 36.65, 37.01, 37.37, 37.74, 38.10, 38.48, 38.85, 39.22, 39.60, 39.98, 40.36, 40.74, 41.12, 41.50, 41.88, 42.26, 42.64, 43.02, 43.39, 43.76, 44.14, 44.51, 44.87, 45.23, 45.59, 45.95, 46.30, 46.64, 46.98, 47.32, 47.64, 47.97, 48.28, 48.59, 48.90, 49.19, 49.48, 49.76, 50.04, 50.30, 50.56, 50.81, 51.05, 51.29, 51.51, 51.73, 51.94, 52.15, 52.35, 52.54, 52.72, 52.89, 53.06, 53.23, 53.38, 53.54, 53.68, 53.82, 53.96, 54.09, 54.22, 54.34, 54.46, 54.58, 54.69, 54.80, 54.91, 55.01, 55.10, 55.20, 55.28, 55.36, 55.44, 55.51, 55.56, 55.61, 55.65, 55.66, 3.53, 4.00, 4.88, 5.67, 6.39, 7.04, 7.63, 8.16, 8.64, 9.08, 9.48, 9.84, 10.16, 10.46, 10.73, 10.98, 11.21, 11.42, 11.62, 11.80, 11.98, 12.14, 12.30, 12.45, 12.60, 12.74, 12.88, 13.02, 13.15, 13.29, 13.43, 13.56, 13.70, 13.84, 13.97, 14.12, 14.26, 14.40, 14.55, 14.70, 14.85, 15.00, 15.16, 15.32, 15.48, 15.64, 15.81, 15.98, 16.15, 16.32, 16.49, 16.66, 16.84, 17.02, 17.20, 17.38, 17.56, 17.74, 17.93, 18.11, 18.30, 18.49, 18.67, 18.86, 19.05, 19.24, 19.43, 19.62, 19.81, 20.00, 20.20, 20.39, 20.58, 20.78, 20.97, 21.17, 21.36, 21.56, 21.76, 21.96, 22.16, 22.36, 22.56, 22.76, 22.96, 23.17, 23.37, 23.58, 23.79, 24.00, 24.21, 24.43, 24.64, 24.86, 25.08, 25.30, 25.53, 25.75, 25.98, 26.21, 26.45, 26.68, 26.92, 27.16, 27.41, 27.66, 27.91, 28.16, 28.42, 28.68, 28.95, 29.21, 29.48, 29.76, 30.04, 30.32, 30.60, 30.89, 31.19, 31.48, 31.78, 32.09, 32.40, 32.71, 33.03, 33.35, 33.67, 34.00, 34.34, 34.68, 35.02, 35.37, 35.72, 36.07, 36.43, 36.80, 37.17, 37.54, 37.92, 38.30, 38.68, 39.07, 39.47, 39.87, 40.27, 40.67, 41.08, 41.50, 41.92, 42.34, 42.76, 43.19, 43.62, 44.05, 44.49, 44.93, 45.37, 45.81, 46.26, 46.71, 47.16, 47.61, 48.06, 48.51, 48.96, 49.42, 49.87, 50.33, 50.78, 51.23, 51.68, 52.13, 52.58, 53.03, 53.47, 53.91, 54.35, 54.79, 55.22, 55.65, 56.07, 56.49, 56.91, 57.32, 57.72, 58.12, 58.51, 58.90, 59.28, 59.66, 60.03, 60.39, 60.75, 61.10, 61.44, 61.77, 62.10, 62.42, 62.73, 63.03, 63.33, 63.62, 63.90, 64.17, 64.44, 64.70, 64.95, 65.20, 65.43, 65.67, 65.89, 66.11, 66.32, 66.52, 66.72, 66.92, 67.11, 67.29, 67.47, 67.64, 67.81, 67.98, 68.14, 68.30, 68.46, 68.61, 68.76, 68.91, 69.05, 69.19, 69.34, 69.47, 69.61, 69.74, 69.87, 70.00, 70.12, 70.24, 70.35, 70.46, 70.55, 70.60, 4.34, 4.91, 5.97, 6.92, 7.78, 8.56, 9.26, 9.89, 10.45, 10.97, 11.43, 11.85, 12.23, 12.57, 12.89, 13.18, 13.45, 13.69, 13.92, 14.14, 14.35, 14.54, 14.73, 14.92, 15.10, 15.28, 15.45, 15.63, 15.80, 15.98, 16.16, 16.34, 16.53, 16.72, 16.91, 17.11, 17.31, 17.51, 17.72, 17.93, 18.15, 18.37, 18.60, 18.83, 19.06, 19.30, 19.54, 19.78, 20.03, 20.28, 20.54, 20.80, 21.06, 21.32, 21.58, 21.85, 22.12, 22.40, 22.67, 22.95, 23.23, 23.51, 23.79, 24.08, 24.36, 24.65, 24.94, 25.24, 25.53, 25.83, 26.12, 26.43, 26.73, 27.03, 27.34, 27.65, 27.96, 28.28, 28.59, 28.91, 29.24, 29.56, 29.89, 30.23, 30.56, 30.90, 31.24, 31.59, 31.94, 32.30, 32.66, 33.02, 33.39, 33.76, 34.13, 34.51, 34.90, 35.29, 35.68, 36.08, 36.49, 36.90, 37.31, 37.73, 38.16, 38.59, 39.02, 39.46, 39.91, 40.36, 40.82, 41.28, 41.74, 42.22, 42.69, 43.17, 43.66, 44.15, 44.64, 45.14, 45.65, 46.16, 46.67, 47.19, 47.71, 48.23, 48.76, 49.30, 49.83, 50.37, 50.91, 51.46, 52.01, 52.56, 53.11, 53.66, 54.22, 54.78, 55.34, 55.90, 56.47, 57.03, 57.60, 58.17, 58.74, 59.30, 59.87, 60.44, 61.01, 61.58, 62.15, 62.72, 63.28, 63.85, 64.41, 64.98, 65.54, 66.10, 66.66, 67.22, 67.78, 68.33, 68.89, 69.44, 69.99, 70.53, 71.07, 71.61, 72.15, 72.69, 73.22, 73.75, 74.27, 74.79, 75.31, 75.83, 76.34, 76.84, 77.35, 77.84, 78.34, 78.83, 79.31, 79.79, 80.27, 80.74, 81.20, 81.66, 82.11, 82.56, 83.00, 83.44, 83.87, 84.29, 84.71, 85.12, 85.52, 85.92, 86.30, 86.68, 87.06, 87.42, 87.78, 88.13, 88.46, 88.80, 89.12, 89.43, 89.73, 90.03, 90.31, 90.59, 90.86, 91.11, 91.36, 91.60, 91.83, 92.05, 92.26, 92.46, 92.65, 92.84, 93.01, 93.18, 93.34, 93.49, 93.64, 93.78, 93.92, 94.05, 94.18, 94.31, 94.44, 94.57, 94.70, 94.83, 94.97, 95.11, 95.27, 95.44, 95.62, 95.71, 2.53, 2.96, 3.77, 4.50, 5.16, 5.74, 6.27, 6.75, 7.17, 7.56, 7.90, 8.21, 8.50, 8.75, 8.98, 9.20, 9.39, 9.58, 9.74, 9.90, 10.05, 10.19, 10.33, 10.45, 10.58, 10.27, 10.40, 10.52, 10.64, 10.76, 10.87, 10.99, 11.10, 11.21, 11.32, 11.43, 11.54, 11.66, 11.77, 11.88, 12.00, 12.11, 12.23, 12.35, 12.47, 12.59, 12.71, 12.84, 12.96, 13.09, 13.22, 13.35, 13.48, 13.61, 13.75, 13.88, 14.02, 14.15, 14.29, 14.43, 14.57, 14.71, 14.85, 14.99, 15.13, 15.28, 15.42, 15.56, 15.71, 15.85, 16.00, 16.14, 16.29, 16.44, 16.58, 16.73, 16.88, 17.03, 17.17, 17.32, 17.47, 17.62, 17.77, 17.92, 18.08, 18.23, 18.38, 18.54, 18.69, 18.85, 19.01, 19.16, 19.32, 19.49, 19.65, 19.81, 19.98, 20.15, 20.31, 20.49, 20.66, 20.83, 21.01, 21.19, 21.37, 21.56, 21.74, 21.93, 22.12, 22.32, 22.51, 22.71, 22.91, 23.12, 23.33, 23.54, 23.75, 23.97, 24.19, 24.41, 24.64, 24.87, 25.10, 25.33, 25.57, 25.81, 26.05, 26.30, 26.55, 26.80, 27.06, 27.31, 27.57, 27.84, 28.10, 28.37, 28.64, 28.91, 29.18, 29.46, 29.74, 30.02, 30.30, 30.58, 30.87, 31.15, 31.44, 31.72, 32.01, 32.30, 32.59, 32.88, 33.17, 33.46, 33.74, 34.03, 34.32, 34.61, 34.89, 35.18, 35.46, 35.74, 36.02, 36.30, 36.57, 36.85, 37.12, 37.39, 37.65, 37.91, 38.17, 38.43, 38.68, 38.93, 39.17, 39.41, 39.65, 39.88, 40.11, 40.33, 40.55, 40.77, 40.98, 41.18, 41.38, 41.58, 41.77, 41.95, 42.13, 42.31, 42.48, 42.64, 42.80, 42.96, 43.11, 43.25, 43.39, 43.52, 43.65, 43.78, 43.90, 44.02, 44.13, 44.23, 44.34, 44.44, 44.53, 44.62, 44.71, 44.79, 44.87, 44.95, 45.03, 45.10, 45.17, 45.23, 45.30, 45.36, 45.42, 45.48, 45.53, 45.59, 45.64, 45.69, 45.74, 45.79, 45.84, 45.88, 45.93, 45.97, 46.01, 46.05, 46.09, 46.12, 46.16, 46.19, 46.21, 46.24, 46.26, 46.27, 46.29, 46.29, 3.53, 4.00, 4.88, 5.67, 6.39, 7.04, 7.63, 8.16, 8.64, 9.08, 9.48, 9.84, 10.16, 10.46, 10.73, 10.98, 11.21, 11.42, 11.62, 11.80, 11.98, 12.14, 12.30, 12.45, 12.60, 12.13, 12.29, 12.44, 12.60, 12.75, 12.90, 13.04, 13.19, 13.34, 13.49, 13.64, 13.79, 13.94, 14.09, 14.25, 14.40, 14.56, 14.72, 14.88, 15.04, 15.21, 15.37, 15.54, 15.71, 15.88, 16.05, 16.22, 16.40, 16.57, 16.75, 16.93, 17.11, 17.29, 17.47, 17.65, 17.84, 18.02, 18.21, 18.40, 18.59, 18.78, 18.97, 19.16, 19.35, 19.55, 19.74, 19.94, 20.14, 20.34, 20.54, 20.74, 20.94, 21.15, 21.36, 21.57, 21.78, 21.99, 22.21, 22.43, 22.65, 22.87, 23.09, 23.32, 23.55, 23.78, 24.02, 24.26, 24.50, 24.74, 24.99, 25.24, 25.50, 25.76, 26.02, 26.28, 26.55, 26.83, 27.10, 27.38, 27.67, 27.95, 28.25, 28.54, 28.84, 29.14, 29.45, 29.76, 30.07, 30.39, 30.71, 31.04, 31.37, 31.70, 32.04, 32.38, 32.72, 33.06, 33.41, 33.76, 34.12, 34.47, 34.83, 35.19, 35.55, 35.92, 36.28, 36.65, 37.02, 37.39, 37.76, 38.13, 38.50, 38.88, 39.25, 39.62, 39.99, 40.36, 40.73, 41.10, 41.46, 41.83, 42.19, 42.55, 42.91, 43.26, 43.62, 43.97, 44.31, 44.65, 44.99, 45.33, 45.66, 45.98, 46.31, 46.62, 46.93, 47.24, 47.54, 47.84, 48.13, 48.41, 48.69, 48.96, 49.23, 49.49, 49.75, 49.99, 50.24, 50.47, 50.70, 50.93, 51.14, 51.35, 51.56, 51.76, 51.95, 52.14, 52.32, 52.49, 52.66, 52.82, 52.98, 53.13, 53.28, 53.42, 53.56, 53.69, 53.82, 53.95, 54.07, 54.18, 54.29, 54.40, 54.51, 54.61, 54.71, 54.81, 54.91, 55.00, 55.09, 55.18, 55.27, 55.36, 55.45, 55.53, 55.62, 55.71, 55.79, 55.88, 55.97, 56.05, 56.14, 56.23, 56.32, 56.41, 56.50, 56.59, 56.69, 56.78, 56.87, 56.97, 57.07, 57.16, 57.26, 57.35, 57.45, 57.54, 57.63, 57.72, 57.80, 57.88, 57.96, 58.03, 58.09, 58.15, 58.20, 58.22, 4.34, 4.91, 5.97, 6.92, 7.78, 8.56, 9.26, 9.89, 10.45, 10.97, 11.43, 11.85, 12.23, 12.57, 12.89, 13.18, 13.45, 13.69, 13.92, 14.14, 14.35, 14.54, 14.73, 14.92, 15.10, 14.68, 14.90, 15.11, 15.33, 15.55, 15.77, 15.99, 16.21, 16.44, 16.67, 16.90, 17.13, 17.36, 17.60, 17.84, 18.08, 18.33, 18.58, 18.83, 19.08, 19.34, 19.60, 19.86, 20.13, 20.39, 20.66, 20.93, 21.21, 21.48, 21.76, 22.04, 22.32, 22.60, 22.89, 23.17, 23.46, 23.75, 24.04, 24.34, 24.63, 24.93, 25.23, 25.53, 25.83, 26.14, 26.45, 26.76, 27.08, 27.39, 27.71, 28.04, 28.36, 28.69, 29.03, 29.36, 29.70, 30.05, 30.40, 30.75, 31.11, 31.47, 31.84, 32.21, 32.59, 32.97, 33.36, 33.75, 34.15, 34.55, 34.96, 35.38, 35.80, 36.23, 36.66, 37.10, 37.54, 38.00, 38.45, 38.92, 39.39, 39.86, 40.34, 40.83, 41.32, 41.82, 42.32, 42.83, 43.35, 43.86, 44.39, 44.92, 45.45, 45.99, 46.53, 47.07, 47.62, 48.18, 48.73, 49.29, 49.85, 50.41, 50.98, 51.54, 52.11, 52.68, 53.25, 53.82, 54.39, 54.96, 55.53, 56.09, 56.66, 57.22, 57.78, 58.34, 58.90, 59.45, 60.00, 60.55, 61.09, 61.63, 62.16, 62.69, 63.21, 63.72, 64.23, 64.73, 65.23, 65.72, 66.20, 66.67, 67.14, 67.59, 68.04, 68.48, 68.92, 69.34, 69.75, 70.16, 70.56, 70.94, 71.32, 71.69, 72.04, 72.39, 72.73, 73.06, 73.38, 73.69, 73.99, 74.28, 74.56, 74.83, 75.09, 75.35, 75.59, 75.83, 76.06, 76.27, 76.48, 76.69, 76.88, 77.07, 77.25, 77.42, 77.59, 77.75, 77.90, 78.05, 78.20, 78.33, 78.47, 78.60, 78.72, 78.84, 78.96, 79.08, 79.19, 79.30, 79.41, 79.52, 79.62, 79.72, 79.83, 79.93, 80.03, 80.13, 80.24, 80.34, 80.44, 80.54, 80.65, 80.75, 80.86, 80.96, 81.07, 81.17, 81.28, 81.39, 81.49, 81.60, 81.71, 81.81, 81.92, 82.02, 82.12, 82.22, 82.32, 82.41, 82.50, 82.59, 82.67, 82.74, 82.81, 82.88, 82.93, 82.95};
+            datacannang = _datacannang;
+            double[] _dataLMS_Nam = { 1.815151075, 1.547523128, 1.068795548, 0.695973505, 0.41981509, 0.219866801, 0.077505598, -0.02190761, -0.0894409, -0.1334091, -0.1600954, -0.17429685, -0.1797189, -0.179254, -0.17518447, -0.16932268, -0.1631139, -0.15770999, -0.15402279, -0.15276214, -0.15446658, -0.15952202, -0.16817926, -0.1805668, -0.19670196, -0.216501213, -0.239790488, -0.266315853, -0.295754969, -0.327729368, -0.361817468, -0.397568087, -0.434520252, -0.472188756, -0.510116627, -0.547885579, -0.58507011, -0.621319726, -0.656295986, -0.689735029, -0.721410388, -0.751175223, -0.778904279, -0.804515498, -0.828003255, -0.849380372, -0.86869965, -0.886033992, -0.901507878, -0.915241589, -0.927377772, -0.938069819, -0.94747794, -0.955765694, -0.963096972, -0.969633434, -0.975532355, -0.980937915, -0.986006518, -0.99086694, -0.995644402, -1.000453886, -1.005399668, -1.010575003, -1.016061941, -1.021931241, -1.028242376, -1.035043608, -1.042372125, -1.050254232, -1.058705595, -1.067731529, -1.077321193, -1.087471249, -1.098152984, -1.10933408, -1.120974043, -1.133024799, -1.145431351, -1.158132499, -1.171061612, -1.184141975, -1.197307185, -1.210475099, -1.223565263, -1.236497304, -1.249186293, -1.261555446, -1.273523619, -1.285013783, -1.295952066, -1.306268473, -1.31589753, -1.324778843, -1.332857581, -1.340080195, -1.346412105, -1.351813296, -1.356253969, -1.359710858, -1.362167159, -1.363612378, -1.364042106, -1.363457829, -1.361865669, -1.35928261, -1.355720571, -1.351202536, -1.345754408, -1.339405453, -1.332188093, -1.324137479, -1.315291073, -1.30568824, -1.295369867, -1.284374967, -1.272750864, -1.260539193, -1.247783611, -1.234527763, -1.220815047, -1.206688407, -1.19219015, -1.177361786, -1.162243894, -1.146876007, -1.131296524, -1.115542634, -1.099650267, -1.083654055, -1.067587314, -1.051482972, -1.035367321, -1.019277299, -1.003235326, -0.987269866, -0.971406609, -0.955670107, -0.940083834, -0.924670244, -0.909450843, -0.894446258, -0.879676305, -0.865160071, -0.850915987, -0.836961905, -0.823315176, -0.809992726, -0.797011132, -0.784386693, -0.772135506, -0.760273528, -0.748815968, -0.737780398, -0.727181568, -0.717035494, -0.707358338, -0.698166437, -0.689476327, -0.68130475, -0.673668658, -0.666585194, -0.660069969, -0.654142602, -0.648819666, -0.644118611, -0.640056805, -0.636651424, -0.633919328, -0.631876912, -0.63053994, -0.629923353, -0.630041066, -0.630905733, -0.632528509, -0.634918779, -0.638083884, -0.642028835, -0.646756013, -0.652262297, -0.658551638, -0.665609025, -0.673425951, -0.681987284, -0.691273614, -0.701261055, -0.711921092, -0.723218488, -0.735121189, -0.747580416, -0.760550666, -0.773984558, -0.787817728, -0.801993069, -0.816446409, -0.831110299, -0.845914498, -0.860786514, -0.875652181, -0.890436283, -0.905063185, -0.91945749, -0.933544683, -0.947251765, -0.960507855, -0.973244762, -0.985397502, -0.996904762, -1.007705555, -1.017756047, -1.027002713, -1.035402243, -1.042916356, -1.049511871, -1.055160732, -1.059840019, -1.063531973, -1.066224038, -1.067908908, -1.068589885, -1.068261146, -1.066933756, -1.064620976, -1.061341755, -1.057116957, -1.051988979, -1.04599033, -1.039168248, -1.031579574, -1.023291946, -1.014385118, -1.004952366, -0.995101924, -0.984958307, -0.974663325, -0.964376555, -0.954274945, -0.944551187, -0.935410427, -0.927059784, -0.919718461, -0.91648762 };
+            dataLMS_Nam = _dataLMS_Nam;
+            double[] _dataLMS_Nu = { 1.509187507, 1.357944315, 1.105537708, 0.902596648, 0.734121414, 0.590235275, 0.464391566, 0.352164071, 0.250497889, 0.15724751, 0.070885725, -0.00968493, -0.085258, -0.15640945, -0.22355869, -0.28701346, -0.34699919, -0.40368918, -0.45721877, -0.50770077, -0.55523599, -0.59992113, -0.64185418, -0.6811381, -0.71788283, -0.75220657, -0.78423366, -0.81409582, -0.841935504, -0.867889398, -0.892102647, -0.914718817, -0.935876584, -0.955723447, -0.974383363, -0.991980756, -1.008640742, -1.024471278, -1.039573604, -1.054039479, -1.067946784, -1.081374153, -1.094381409, -1.107021613, -1.119338692, -1.131367831, -1.143135936, -1.15466215, -1.165958392, -1.177029925, -1.187871001, -1.198484073, -1.208853947, -1.218965087, -1.228798212, -1.238330855, -1.247537914, -1.256392179, -1.264864846, -1.272926011, -1.28054514, -1.287691525, -1.294332076, -1.300441561, -1.305989011, -1.310946941, -1.315289534, -1.318992925, -1.322035315, -1.324398133, -1.326064539, -1.327020415, -1.327256387, -1.326763834, -1.325538668, -1.323579654, -1.320888012, -1.317468695, -1.313331446, -1.308487081, -1.302948173, -1.296733913, -1.289863329, -1.282358762, -1.274244931, -1.265548787, -1.256299378, -1.24653066, -1.236266832, -1.225551344, -1.214410914, -1.202884389, -1.191007906, -1.178818621, -1.166354376, -1.153653688, -1.140751404, -1.127684095, -1.114490244, -1.101204848, -1.087863413, -1.074500927, -1.061151213, -1.047847141, -1.034620551, -1.021502197, -1.008521695, -0.995707494, -0.983086844, -0.970685789, -0.958529157, -0.946640568, -0.935042447, -0.923756041, -0.912801445, -0.902197638, -0.891962513, -0.882112919, -0.872664706, -0.863632768, -0.855031092, -0.846872805, -0.839170224, -0.831934903, -0.825177688, -0.818908758, -0.813137675, -0.807873433, -0.803122613, -0.79889771, -0.795203499, -0.792047959, -0.789435274, -0.787374433, -0.785870695, -0.784929893, -0.784557605, -0.78475917, -0.785539703, -0.786904102, -0.788858208, -0.791403051, -0.794546352, -0.79829102, -0.802640891, -0.807599577, -0.813170461, -0.819356692, -0.826161176, -0.833586038, -0.841634949, -0.850307441, -0.859607525, -0.869534339, -0.880088651, -0.891270585, -0.903079458, -0.915513542, -0.928569454, -0.942245864, -0.956537923, -0.971440492, -0.986947308, -1.003050887, -1.019742425, -1.037011698, -1.054846957, -1.073234825, -1.092160195, -1.111606122, -1.131553723, -1.151982079, -1.172868141, -1.19418462, -1.215907492, -1.238005268, -1.260445591, -1.283193626, -1.306212032, -1.329460945, -1.35289798, -1.376478254, -1.400154426, -1.423876772, -1.447593267, -1.471249702, -1.494789826, -1.518155513, -1.541286949, -1.564122852, -1.586600712, -1.608657054, -1.630227728, -1.651248208, -1.67165392, -1.691380583, -1.710364557, -1.728543207, -1.745855274, -1.762241248, -1.777643747, -1.792007891, -1.805281675, -1.817416335, -1.828366707, -1.838091576, -1.846554015, -1.853721704, -1.859567242, -1.864068443, -1.86720861, -1.8689768, -1.869371157, -1.868386498, -1.866033924, -1.862327775, -1.857289195, -1.850946286, -1.84333425, -1.834495505, -1.824479785, -1.813344222, -1.801153404, -1.787979408, -1.773901816, -1.759007704, -1.743391606, -1.72715546, -1.710410733, -1.693267093, -1.67585442, -1.658302847, -1.640747464, -1.623332891, -1.606209374, -1.589533346, -1.573467222, -1.558179166, -1.543846192, -1.530642461, -1.518754013, -1.51336185 };
+            dataLMS_Nu = _dataLMS_Nu;
+        }
+        public int kqCDC_cannang()
+        {
+            initCDC_cannang();
+
+            int stt = 0;
+            //Gioi tinh
+            if (gioitinh == "nữ")
+                stt = 726;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double phanphoi5 = datacannang[stt];
+            double phanphoi50 = datacannang[stt + 484];
+            double phanphoi95 = datacannang[stt + 484 * 2];
+
+            if (cannang < phanphoi5)
+            {
+                return 1;
+            }
+            else if (cannang > phanphoi95)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+        public string kqCDC_chieucao_danhgia()
+        {
+            if (kqCDC_cannang() == 1)
+            {
+                return "Trẻ thuộc nhóm nhẹ cân (p < 5%)";
+            }
+            else if (kqCDC_cannang() == 3)
+            {
+                return "Trẻ thuộc nhóm nặng cân (p > 95%)";
+            }
+            else
+            {
+                return "Trẻ thuộc nhóm cân nặng bình thường (5% < p < 95%)";
+            }
+        }
+        public double kqCDC_cannang_zscore()
+        {
+            initCDC_cannang();
+
+            int stt = 0;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double L, M, S;
+            if (gioitinh == "nam")
+            {
+                L = dataLMS_Nam[stt];
+                M = dataLMS_Nam[stt + 242];
+                S = dataLMS_Nam[stt + 242 * 2];
+            }
+            else
+            {
+                L = dataLMS_Nu[stt];
+                M = dataLMS_Nu[stt + 242];
+                S = dataLMS_Nu[stt + 242 * 2];
+            }
+            return z_score(cannang, L, M, S);
+        }
+    }
+    public class CDC_Chuvi : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double chuvivongdau { get; set; }
+        public double[] datachuvi { get; set; }
+        public double[] dataLMS { get; set; }
+        public CDC_Chuvi()
+        {
+
+        }
+        public CDC_Chuvi(string _gioitinh, double _tuoi, double _chuvivongdau)
+        {
+            gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            chuvivongdau = _chuvivongdau;
+        }
+        public CDC_Chuvi(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            tuoi = nb.tinhtuoi_thang();
+        }
+        private void initCDC_chuvi()
+        {
+            double[] _datachuvi = {32.15, 33.83, 36.26, 37.98, 39.28, 40.31, 41.15, 41.85, 42.44, 42.95, 43.39, 43.78, 44.12, 44.43, 44.70, 44.94, 45.15, 45.35, 45.52, 45.68, 45.82, 45.95, 46.07, 46.17, 46.27, 46.35, 46.43, 46.50, 46.56, 46.62, 46.67, 46.71, 46.75, 46.78, 46.81, 46.84, 46.86, 46.87, 35.81, 37.19, 39.21, 40.65, 41.77, 42.66, 43.40, 44.04, 44.58, 45.06, 45.48, 45.86, 46.19, 46.50, 46.78, 47.03, 47.26, 47.48, 47.68, 47.86, 48.03, 48.19, 48.33, 48.47, 48.60, 48.72, 48.83, 48.94, 49.04, 49.13, 49.22, 49.30, 49.38, 49.46, 49.53, 49.59, 49.65, 49.68, 38.52, 39.77, 41.63, 42.97, 44.02, 44.87, 45.59, 46.20, 46.73, 47.20, 47.62, 48.00, 48.34, 48.65, 48.94, 49.20, 49.44, 49.67, 49.88, 50.08, 50.26, 50.44, 50.60, 50.76, 50.90, 51.04, 51.17, 51.30, 51.41, 51.53, 51.63, 51.74, 51.84, 51.93, 52.02, 52.10, 52.19, 52.23, 32.25, 33.69, 35.78, 37.27, 38.41, 39.32, 40.07, 40.71, 41.25, 41.72, 42.14, 42.51, 42.84, 43.13, 43.40, 43.64, 43.86, 44.06, 44.25, 44.42, 44.57, 44.72, 44.85, 44.97, 45.08, 45.19, 45.29, 45.38, 45.46, 45.54, 45.62, 45.68, 45.75, 45.81, 45.86, 45.91, 45.96, 45.98, 34.71, 36.03, 37.98, 39.38, 40.47, 41.35, 42.08, 42.71, 43.25, 43.73, 44.16, 44.54, 44.88, 45.20, 45.48, 45.74, 45.98, 46.21, 46.42, 46.61, 46.79, 46.96, 47.12, 47.27, 47.41, 47.54, 47.66, 47.78, 47.89, 48.00, 48.09, 48.19, 48.28, 48.37, 48.45, 48.52, 48.60, 48.63, 37.65, 38.83, 40.57, 41.84, 42.83, 43.65, 44.34, 44.93, 45.45, 45.91, 46.32, 46.69, 47.03, 47.34, 47.63, 47.90, 48.14, 48.38, 48.59, 48.80, 48.99, 49.17, 49.34, 49.50, 49.66, 49.80, 49.94, 50.08, 50.21, 50.33, 50.45, 50.56, 50.67, 50.77, 50.87, 50.97, 51.06, 51.10};
+            datachuvi = _datachuvi;
+            double[] _dataLMS = { 4.427825037, 4.310927464, 3.869576802, 3.305593039, 2.720590297, 2.16804824, 1.675465689, 1.255160322, 0.91054114, 0.639510474, 0.436978864, 0.296275856, 0.210107251, 0.171147024, 0.172393886, 0.207371541, 0.270226126, 0.355757274, 0.459407627, 0.577227615, 0.705826778, 0.842319055, 0.984266833, 1.129626698, 1.276691223, 1.424084853, 1.570621291, 1.715393998, 1.857652984, 1.996810563, 2.132411346, 2.264111009, 2.391658052, 2.514878222, 2.633661226, 2.747949445, 2.857728375, 2.910932095, -1.298749689, -1.440271514, -1.581016348, -1.593136386, -1.521492427, -1.394565915, -1.231713389, -1.046582628, -0.848932692, -0.645779124, -0.442165412, -0.24163206, -0.046673786, 0.141031094, 0.320403169, 0.490807133, 0.65193505, 0.803718086, 0.946259679, 1.079784984, 1.204602687, 1.321076285, 1.429602576, 1.530595677, 1.624475262, 1.71165803, 1.792551616, 1.867550375, 1.93703258, 2.001358669, 2.060870301, 2.115889982, 2.16672113, 2.21364844, 2.256943216, 2.296844024, 2.333589434, 2.350847202, 35.81366835, 37.19361054, 39.20742929, 40.65233195, 41.76516959, 42.66116148, 43.40488731, 44.03609923, 44.58096912, 45.05761215, 45.4790756, 45.85505706, 46.19295427, 46.49853438, 46.77637684, 47.03017599, 47.2629533, 47.47720989, 47.67503833, 47.85820606, 48.02821867, 48.18636864, 48.3337732, 48.47140432, 48.60011223, 48.72064621, 48.83366629, 48.93976089, 49.03945383, 49.13321432, 49.22146409, 49.30458348, 49.38291658, 49.45677569, 49.526445, 49.59218385, 49.65422952, 49.68393611, 34.7115617, 36.03453876, 37.97671987, 39.3801263, 40.46773733, 41.34841008, 42.0833507, 42.71033603, 43.25428882, 43.73249646, 44.15742837, 44.53836794, 44.88240562, 45.19507651, 45.48078147, 45.74307527, 45.98486901, 46.20857558, 46.41621635, 46.60950084, 46.78988722, 46.95862881, 47.11681039, 47.26537682, 47.40515585, 47.53687649, 47.66118396, 47.77865186, 47.8897923, 47.99506422, 48.09488048, 48.18961365, 48.2796011, 48.36514917, 48.44653703, 48.52401894, 48.59782828, 48.63342328, 0.052172542, 0.047259148, 0.040947903, 0.037027722, 0.034364245, 0.032462175, 0.031064702, 0.03002267, 0.029242173, 0.028660454, 0.0282336, 0.027929764, 0.027725179, 0.027601686, 0.027545148, 0.027544382, 0.027590417, 0.02767598, 0.027795115, 0.0279429, 0.028115241, 0.028308707, 0.028520407, 0.028747896, 0.028989089, 0.029242207, 0.029505723, 0.029778323, 0.030058871, 0.030346384, 0.030640006, 0.030938992, 0.031242693, 0.031550537, 0.031862026, 0.03217672, 0.032494231, 0.032653934, 0.046905108, 0.042999604, 0.038067862, 0.035079612, 0.033096443, 0.03170963, 0.030709039, 0.029974303, 0.029430992, 0.029030379, 0.028739112, 0.028533537, 0.028396382, 0.028314722, 0.028278682, 0.028280585, 0.028314363, 0.028375159, 0.028459033, 0.028562759, 0.028683666, 0.028819525, 0.028968459, 0.029128879, 0.029299426, 0.029478937, 0.029666406, 0.02986096, 0.030061839, 0.030268375, 0.030479985, 0.03069615, 0.030916413, 0.031140368, 0.031367651, 0.031597939, 0.031830942, 0.031948378 };
+            dataLMS = _dataLMS;
+        }
+        public int kqCDC_chuvi()
+        {
+            initCDC_chuvi();
+
+            int stt = 0;
+            //Gioi tinh
+            if (gioitinh == "nữ")
+                stt = 38;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double phanphoi5 = datachuvi[stt];
+            double phanphoi50 = datachuvi[stt + 76];
+            double phanphoi95 = datachuvi[stt + 76 * 2];
+
+            if (chuvivongdau < phanphoi5)
+            {
+                return 1;
+            }
+            else if (chuvivongdau > phanphoi95)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+        public string kqCDC_chuvi_danhgia()
+        {
+            if (kqCDC_chuvi() == 1)
+            {
+                return "Trẻ thuộc nhóm chu vi vòng đầu nhỏ (p < 5%)";
+            }
+            else if (kqCDC_chuvi() == 3)
+            {
+                return "Trẻ thuộc nhóm chu vi vòng đầu to (p > 95%)";
+            }
+            else
+            {
+                return "Trẻ thuộc nhóm chu vi vòng đầu bình thường (5% < p < 95%)";
+            }
+        }
+
+        public double kqCDC_chuvi_zscore()
+        {
+            initCDC_chuvi();
+
+            int stt = 0;
+            //Gioi tinh
+            if (gioitinh == "nữ")
+                stt = 38;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double L = dataLMS[stt];
+            double M = dataLMS[stt + 76];
+            double S = dataLMS[stt + 76 * 2];
+
+            double Z = z_score(chuvivongdau, L, M, S);
+
+            return Z;
+        }
+    }
+    public class Vbudich : Congthuc
+    {
+        public double cannang { get; set; }
+        public Vbudich()
+        {
+
+        }
+        public Vbudich(Nguoibenh nb)
+        {
+            cannang = nb.cannang;
+        }
+        public Vbudich(double _cannang)
+        {
+            cannang = _cannang;
+        }
+        public double kqVdich24h()
+        {
+            double result = (cannang < 11) ? (100 * cannang) : ((cannang <= 20) ? (1000 + 50 * (cannang - 10)) : (1500 + 20 * (cannang - 20)));
+            return Math.Min(result, 2400);
+        }
+        public double kqtocdotruyen24h()
+        {
+            return kqVdich24h() / 24;
+        }
+        public double kqVdich_theogio()
+        {
+            double result = (cannang < 11) ? (4 * cannang) : ((cannang <= 20) ? (40 + 2 * (cannang - 10)) : (60 + (cannang - 20)));
+
+            //Max 100ml/h
+            return Math.Min(result, 100);
+        }
+    }
+    public class PELD_Old : Congthuc
+    {
+        public bool macbenhduoi1t { get; set; }
+        public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double cannang { get; set; }
+        public double chieucao { get; set; }
+        public double BilirubinSerum { get; set; }
+        public double INR { get; set; }
+        public double AlbuminSerum { get; set; }
+
+        public PELD_Old()
+        {
+            // Empty constructor
+        }
+        public PELD_Old(Nguoibenh nb, Xetnghiem xn)
+        {
+            gioitinh = nb.gioitinh;
+            tuoi = nb.tinhtuoi_nam();
+            cannang = nb.cannang;
+            chieucao = nb.chieucao;
+            BilirubinSerum = xn.bilirubin;
+        }
+
+        public PELD_Old(bool _macbenhduoi1t, string _gioitinh, double _tuoi, double _cannang, double _chieucao, double _BilirubinSerum, double _INR, double _AlbuminSerum)
+        {
+            macbenhduoi1t = _macbenhduoi1t;
+            gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            cannang = _cannang;
+            chieucao = _chieucao;
+            BilirubinSerum = _BilirubinSerum;
+            INR = _INR;
+            AlbuminSerum = _AlbuminSerum;
+        }
+
+        public double kqPELD_Old()
+        {
+            double hesotuoi_PELD = (macbenhduoi1t && tuoi < 2) ? 0.436 : 0;
+
+            CDC_cannang phanbocannang = new CDC_cannang(gioitinh, tuoi, cannang);
+            CDC_chieucao phanbochieucao = new CDC_chieucao(gioitinh, tuoi, chieucao);
+
+            double hesotangtruong_PELD = (phanbocannang.kqCDC_cannang() == 1 || phanbochieucao.kqCDC_chieucao() == 1) ? 0.667 : 0;
+
+            return 10 * (0.480 * Math.Log(BilirubinSerum) + 1.857 * Math.Log(INR) - (0.687 * Math.Log(AlbuminSerum))
+                + hesotuoi_PELD + hesotangtruong_PELD);
+        }
+    }
+    public class PELD_New : Congthuc
+    {
+        public DateTime ngayxetnghiem { get; set; }
+        public DateTime ngaysinh { get; set; }
+        public string gioitinh { get; set; }
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
+        public double albuminSerum { get; set; }
+        public double bilirubinSerum { get; set; }
+        public double INR { get; set; }
+        public bool checklocmau { get; set; }
+        public double creatininSerum { get; set; }
+
+
+        public PELD_New()
+        {
+            
+        }
+
+        public PELD_New(DateTime _NgayXetNghiem, DateTime _NgaySinh, string _gioitinh, double _chieucao, double _cannang, double _Albumin_HC,
+            double _Bilirubin_HC, double _INR_HC, bool _LocMau, double _Creatinin_HC)
+        {
+            ngayxetnghiem = _NgayXetNghiem;
+            ngaysinh = _NgaySinh;
+            chieucao = _chieucao;
+            cannang = _cannang;
+            albuminSerum = _Albumin_HC;
+            bilirubinSerum = _Bilirubin_HC;
+            INR = _INR_HC;
+            checklocmau = _LocMau;
+            creatininSerum = _Creatinin_HC;
+        }
+        public double kqPELD_New()
+        {
+            //Tuoi hieu chinh, giới hạn Tuổi_HC: [1; 5,5]
+            double tuoi_HC = (ngayxetnghiem - ngaysinh).TotalDays / 365;
+            tuoi_HC = Math.Min(5.5, Math.Max(1, tuoi_HC));
+
+            //Giới hạn Albumin_HC: [1; 1,9]
+            double albumin_YT = Math.Max(1, Math.Min(1.9, albuminSerum));
+
+            //Giới hạn Bilirubin_HC: [1; 40]
+            double bilirubin_YT = (bilirubinSerum <= 4) ? 0.7854 * Math.Log(bilirubinSerum) + 0.3434 * Math.Log(4) :
+                0.7854 * Math.Log(4) + 0.3434 * Math.Log(bilirubinSerum);
+            bilirubin_YT = Math.Min(40, Math.Max(1, bilirubin_YT));
+
+            //Giới hạn INR_HC: [1; 10]
+            double INR_YT = (INR <= 2) ? 1.981 * Math.Log(INR) + 0.7298 * Math.Log(2) :
+                1.981 * Math.Log(2) + 0.7298 * Math.Log(INR);
+            INR_YT = Math.Min(10, Math.Max(1, INR_YT));
+
+            //Giới hạn Creatinin_HC: [0,2; 1,3]
+            double creatinin_YT = (checklocmau) ? 1.3 : Math.Max(0.2, Math.Min(1.3, creatininSerum));
+
+            //Dùng method tính tuổi theo tháng
+            Nguoibenh nb = new Nguoibenh();
+            nb.ngaysinh = ngaysinh;
+            //Giới hạn MZS_HC: [-5; -2,1]
+            CDC_cannang phanbocannang = new CDC_cannang(gioitinh, nb.tinhtuoi_thang(), cannang);
+            CDC_chieucao phanbochieucao = new CDC_chieucao(gioitinh, nb.tinhtuoi_thang(), chieucao);
+            double MZS_HC = Math.Min(phanbocannang.kqCDC_cannang_zscore(), phanbochieucao.kqCDC_chieucao_zscore());
+            MZS_HC = Math.Min(-2.1, Math.Max(-5, INR_YT));
+
+            double PELD_New = 10 * ((-0.1967 * tuoi_HC) - (1.842 * Math.Log(albumin_YT)) + bilirubin_YT +
+                INR_YT - (0.1807 * MZS_HC) + (1.453 * Math.Log(creatinin_YT)) + 1.5287) + 2.82;
+
+            return Math.Max(6, Math.Round(PELD_New));
+        }
+    }
+    public class WHO_suyDD : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
+        public double[] dataLMS_H { get; set; }
+        public double[] dataLMS_W { get; set; }
+        public WHO_suyDD()
+        {
+
+        }
+        public WHO_suyDD(string _gioitinh, double _tuoi, double _chieucao, double _cannang)
+        {
+            gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            chieucao = _chieucao;
+            cannang = _cannang;
+        }
+        public WHO_suyDD(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            tuoi = nb.tinhtuoi_thang();
+            chieucao = nb.chieucao;
+            cannang = nb.cannang;
+        }
+        private void initWHO_suyDD()
+        {
+            double[] _dataLMS_H = { 49.8842, 54.7244, 58.4249, 61.4292, 63.886, 65.9026, 67.6236, 69.1645, 70.5994, 71.9687, 73.2812, 74.5388, 75.7488, 76.9186, 78.0497, 79.1458, 80.2113, 81.2487, 82.2587, 83.2418, 84.1996, 85.1348, 86.0477, 86.941, 87.8161, 87.972, 88.8065, 89.6197, 90.412, 91.1828, 91.9327, 92.6631, 93.3753, 94.0711, 94.7532, 95.4236, 96.0835, 96.7337, 97.3749, 98.0073, 98.631, 99.2459, 99.8515, 100.4485, 101.0374, 101.6186, 102.1933, 102.7625, 103.3273, 103.8886, 104.4473, 105.0041, 105.5596, 106.1138, 106.6668, 107.2188, 107.7697, 108.3198, 108.8689, 109.417, 109.9638, 0.03795, 0.03557, 0.03424, 0.03328, 0.03257, 0.03204, 0.03165, 0.03139, 0.03124, 0.03117, 0.03118, 0.03125, 0.03137, 0.03154, 0.03174, 0.03197, 0.03222, 0.0325, 0.03279, 0.0331, 0.03342, 0.03376, 0.0341, 0.03445, 0.03479, 0.03542, 0.03576, 0.0361, 0.03642, 0.03674, 0.03704, 0.03733, 0.03761, 0.03787, 0.03812, 0.03836, 0.03858, 0.03879, 0.039, 0.03919, 0.03937, 0.03954, 0.03971, 0.03986, 0.04002, 0.04016, 0.04031, 0.04045, 0.04059, 0.04073, 0.04086, 0.041, 0.04113, 0.04126, 0.04139, 0.04152, 0.04165, 0.04177, 0.0419, 0.04202, 0.04214, 1.8931, 1.9465, 2.0005, 2.0444, 2.0808, 2.1115, 2.1403, 2.1711, 2.2055, 2.2433, 2.2849, 2.3293, 2.3762, 2.426, 2.4773, 2.5303, 2.5844, 2.6406, 2.6973, 2.7553, 2.814, 2.8742, 2.9342, 2.9951, 3.0551, 3.116, 3.1757, 3.2353, 3.2928, 3.3501, 3.4052, 3.4591, 3.5118, 3.5625, 3.612, 3.6604, 3.7069, 3.7523, 3.7976, 3.8409, 3.8831, 3.9242, 3.9651, 4.0039, 4.0435, 4.081, 4.1194, 4.1567, 4.1941, 4.2314, 4.2677, 4.3052, 4.3417, 4.3783, 4.4149, 4.4517, 4.4886, 4.5245, 4.5616, 4.5977, 4.6339, 49.1477, 53.6872, 57.0673, 59.8029, 62.0899, 64.0301, 65.7311, 67.2873, 68.7498, 70.1435, 71.4818, 72.771, 74.015, 75.2176, 76.3817, 77.5099, 78.6055, 79.671, 80.7079, 81.7182, 82.7036, 83.6654, 84.604, 85.5202, 86.4153, 86.5904, 87.4462, 88.283, 89.1004, 89.8991, 90.6797, 91.443, 92.1906, 92.9239, 93.6444, 94.3533, 95.0515, 95.7399, 96.4187, 97.0885, 97.7493, 98.4015, 99.0448, 99.6795, 100.3058, 100.9238, 101.5337, 102.136, 102.7312, 103.3197, 103.9021, 104.4786, 105.0494, 105.6148, 106.1748, 106.7295, 107.2788, 107.8227, 108.3613, 108.8948, 109.4233, 0.0379, 0.0364, 0.03568, 0.0352, 0.03486, 0.03463, 0.03448, 0.03441, 0.0344, 0.03444, 0.03452, 0.03464, 0.03479, 0.03496, 0.03514, 0.03534, 0.03555, 0.03576, 0.03598, 0.0362, 0.03643, 0.03666, 0.03688, 0.03711, 0.03734, 0.03786, 0.03808, 0.0383, 0.03851, 0.03872, 0.03893, 0.03913, 0.03933, 0.03952, 0.03971, 0.03989, 0.04006, 0.04024, 0.04041, 0.04057, 0.04073, 0.04089, 0.04105, 0.0412, 0.04135, 0.0415, 0.04164, 0.04179, 0.04193, 0.04206, 0.0422, 0.04233, 0.04246, 0.04259, 0.04272, 0.04285, 0.04298, 0.0431, 0.04322, 0.04334, 0.04347, 1.8627, 1.9542, 2.0362, 2.1051, 2.1645, 2.2174, 2.2664, 2.3154, 2.365, 2.4157, 2.4676, 2.5208, 2.575, 2.6296, 2.6841, 2.7392, 2.7944, 2.849, 2.9039, 2.9582, 3.0129, 3.0672, 3.1202, 3.1737, 3.2267, 3.2783, 3.33, 3.3812, 3.4313, 3.4809, 3.5302, 3.5782, 3.6259, 3.6724, 3.7186, 3.7638, 3.8078, 3.8526, 3.8963, 3.9389, 3.9813, 4.0236, 4.0658, 4.1068, 4.1476, 4.1883, 4.2279, 4.2683, 4.3075, 4.3456, 4.3847, 4.4226, 4.4604, 4.4981, 4.5358, 4.5734, 4.6108, 4.6472, 4.6834, 4.7195, 4.7566 };
+            dataLMS_H = _dataLMS_H;
+            double[] _dataLMS_W = { 0.3487, 0.2297, 0.197, 0.1738, 0.1553, 0.1395, 0.1257, 0.1134, 0.1021, 0.0917, 0.082, 0.073, 0.0644, 0.0563, 0.0487, 0.0413, 0.0343, 0.0275, 0.0211, 0.0148, 0.0087, 0.0029, -0.0028, -0.0083, -0.0137, -0.0189, -0.024, -0.0289, -0.0337, -0.0385, -0.0431, -0.0476, -0.052, -0.0564, -0.0606, -0.0648, -0.0689, -0.0729, -0.0769, -0.0808, -0.0846, -0.0883, -0.092, -0.0957, -0.0993, -0.1028, -0.1063, -0.1097, -0.1131, -0.1165, -0.1198, -0.123, -0.1262, -0.1294, -0.1325, -0.1356, -0.1387, -0.1417, -0.1447, -0.1477, -0.1506, 3.3464, 4.4709, 5.5675, 6.3762, 7.0023, 7.5105, 7.934, 8.297, 8.6151, 8.9014, 9.1649, 9.4122, 9.6479, 9.8749, 10.0953, 10.3108, 10.5228, 10.7319, 10.9385, 11.143, 11.3462, 11.5486, 11.7504, 11.9514, 12.1515, 12.3502, 12.5466, 12.7401, 12.9303, 13.1169, 13.3, 13.4798, 13.6567, 13.8309, 14.0031, 14.1736, 14.3429, 14.5113, 14.6791, 14.8466, 15.014, 15.1813, 15.3486, 15.5158, 15.6828, 15.8497, 16.0163, 16.1827, 16.3489, 16.515, 16.6811, 16.8471, 17.0132, 17.1792, 17.3452, 17.5111, 17.6768, 17.8422, 18.0073, 18.1722, 18.3366, 0.14602, 0.13395, 0.12385, 0.11727, 0.11316, 0.1108, 0.10958, 0.10902, 0.10882, 0.10881, 0.10891, 0.10906, 0.10925, 0.10949, 0.10976, 0.11007, 0.11041, 0.11079, 0.11119, 0.11164, 0.11211, 0.11261, 0.11314, 0.11369, 0.11426, 0.11485, 0.11544, 0.11604, 0.11664, 0.11723, 0.11781, 0.11839, 0.11896, 0.11953, 0.12008, 0.12062, 0.12116, 0.12168, 0.1222, 0.12271, 0.12322, 0.12373, 0.12425, 0.12478, 0.12531, 0.12586, 0.12643, 0.127, 0.12759, 0.12819, 0.1288, 0.12943, 0.13005, 0.13069, 0.13133, 0.13197, 0.13261, 0.13325, 0.13389, 0.13453, 0.13517, 0.3809, 0.1714, 0.0962, 0.0402, -0.005, -0.043, -0.0756, -0.1039, -0.1288, -0.1507, -0.17, -0.1872, -0.2024, -0.2158, -0.2278, -0.2384, -0.2478, -0.2562, -0.2637, -0.2703, -0.2762, -0.2815, -0.2862, -0.2903, -0.2941, -0.2975, -0.3005, -0.3032, -0.3057, -0.308, -0.3101, -0.312, -0.3138, -0.3155, -0.3171, -0.3186, -0.3201, -0.3216, -0.323, -0.3243, -0.3257, -0.327, -0.3283, -0.3296, -0.3309, -0.3322, -0.3335, -0.3348, -0.3361, -0.3374, -0.3387, -0.34, -0.3414, -0.3427, -0.344, -0.3453, -0.3466, -0.3479, -0.3492, -0.3505, -0.3518, 3.2322, 4.1873, 5.1282, 5.8458, 6.4237, 6.8985, 7.297, 7.6422, 7.9487, 8.2254, 8.48, 8.7192, 8.9481, 9.1699, 9.387, 9.6008, 9.8124, 10.0226, 10.2315, 10.4393, 10.6464, 10.8534, 11.0608, 11.2688, 11.4775, 11.6864, 11.8947, 12.1015, 12.3059, 12.5073, 12.7055, 12.9006, 13.093, 13.2837, 13.4731, 13.6618, 13.8503, 14.0385, 14.2265, 14.414, 14.601, 14.7873, 14.9727, 15.1573, 15.341, 15.524, 15.7064, 15.8882, 16.0697, 16.2511, 16.4322, 16.6133, 16.7942, 16.9748, 17.1551, 17.3347, 17.5136, 17.6916, 17.8686, 18.0445, 18.2193, 0.14171, 0.13724, 0.13, 0.12619, 0.12402, 0.12274, 0.12204, 0.12178, 0.12181, 0.12199, 0.12223, 0.12247, 0.12268, 0.12283, 0.12294, 0.12299, 0.12303, 0.12306, 0.12309, 0.12315, 0.12323, 0.12335, 0.1235, 0.12369, 0.1239, 0.12414, 0.12441, 0.12472, 0.12506, 0.12545, 0.12587, 0.12633, 0.12683, 0.12737, 0.12794, 0.12855, 0.12919, 0.12988, 0.13059, 0.13135, 0.13213, 0.13293, 0.13376, 0.1346, 0.13545, 0.1363, 0.13716, 0.138, 0.13884, 0.13968, 0.14051, 0.14132, 0.14213, 0.14293, 0.14371, 0.14448, 0.14525, 0.146, 0.14675, 0.14748, 0.14821 };
+            dataLMS_W = _dataLMS_W;
+        }
+        public string kqWHO_suyDD()
+        {
+            string kq = "Trẻ thuộc nhóm ";
+            double phanphoichieucao = kqWHO_chieucao_zscore();
+            double phanphoicannang = kqWHO_cannang_zscore();
+
+            if (phanphoichieucao > -2)
+                kq = kq + "có chiều cao bình thường; ";
+            else if (phanphoichieucao > -2)
+                kq = kq + "thấp còi trung bình (p < 5%); ";
+            else
+                kq = kq + "thấp còi nghiêm trọng (p < 1%); ";
+
+            if (phanphoicannang > -2)
+                kq = kq + "có cân nặng bình thường; ";
+            else if (phanphoicannang > -2)
+                kq = kq + "gầy trung bình (p < 5%); ";
+            else
+                kq = kq + "gầy nghiêm trọng (p < 1%); ";
+            return kq;
+        }
+        public double kqWHO_chieucao_zscore()
+        {
+            initWHO_suyDD();
+
+            int stt = 0;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double L, M, S;
+            if (gioitinh == "nữ")
+                stt = stt + 183;
+
+            L = dataLMS_H[stt];
+            M = dataLMS_H[stt + 61];
+            S = dataLMS_H[stt + 61 * 2];
+
+            return z_score(chieucao, L, M, S);
+        }
+        public double kqWHO_cannang_zscore()
+        {
+            initWHO_suyDD();
+
+            int stt = 0;
+            //Thang tuoi
+            stt = stt + Convert.ToInt32(tuoi);
+
+            double L, M, S;
+            if (gioitinh == "nữ")
+                stt = stt + 183;
+
+            L = dataLMS_W[stt];
+            M = dataLMS_W[stt + 61];
+            S = dataLMS_W[stt + 61 * 2];
+
+            return z_score(cannang, L, M, S);
+        }
+    }
+    public class ePER : Congthuc
+    {
+        public double proteinUrine { get; set; }
+        public double creatininUrine { get; set; }
+
+        public ePER()
+        {
+
+        }
+        public ePER(Xetnghiem xn)
+        {
+            creatininUrine = xn.creatininUrine;
+        }
+        public ePER(double _ProteinUrine, double _CreatininUrine)
+        {
+            proteinUrine = _ProteinUrine;
+            creatininUrine = _CreatininUrine;
+        }
+
+        public double kqePER_PNCT()
+        {
+            return (proteinUrine / creatininUrine) * 1373.5 - 60.508;
+        }
+    }
+    public class OxyIndex : Congthuc
+    {
+        public double tg_hitvao { get; set; }
+        public double nhiptho { get; set; }
+        public double PIP { get; set; }
+        public double PEEP { get; set; }
+        public double FIO2 { get; set; }
+        public double PaO2 { get; set; }
+
+        public OxyIndex()
+        {
+
+        }
+        public OxyIndex(double _tg_hitvao, double _nhiptho, double _PIP, double _PEEP, double _FIO2, double _PaO2)
+        {
+            tg_hitvao = _tg_hitvao;
+            nhiptho = _nhiptho;
+            PIP = _PIP;
+            PEEP = _PEEP;
+            FIO2 = _FIO2;
+            PaO2 = _PaO2;
+        }
+
+        public double kqOxyIndex()
+        {
+            double aplucduongthoTB = (tg_hitvao * nhiptho / 60) * (PIP - PEEP) + PEEP;
+            return FIO2 * aplucduongthoTB / PaO2;
+        }
+        public string kqOxyIndex_danhgia()
+        {
+            double OI = kqOxyIndex();
+
+            if (OI < 8)
+            {
+                return "Suy hô hấp nhẹ";
+            }
+            else if (8 <= OI && OI < 16)
+            {
+                return "Suy hô hấp trung bình";
+            }
+            else if (16 <= OI && OI < 40)
+            {
+                return "Suy hô hấp nặng";
+            }
+            else
+            {
+                return "Suy hô hấp rất nặng";
+            }
+        }
+    }
+    public class EED : Congthuc
+    {
+        public DateTime ngayKNcuoi { get; set; }
+        public DateTime ngaysieuam { get; set; }
+        public DateTime EED_calculated { get; set; }
+        public int tuoithaisieuam { get; set; }
+
+        public EED()
+        {
+
+        }
+
+        public EED(DateTime _ngayKNcuoi, DateTime _ngaysieuam, int _tuoithaisieuam)
+        {
+            ngayKNcuoi = _ngayKNcuoi;
+            ngaysieuam = _ngaysieuam;
+            tuoithaisieuam = _tuoithaisieuam;
+        }
+
+        public DateTime kqEED_ngayKNcuoi()
+        {
+            EED_calculated = ngayKNcuoi.AddDays(280);
+            return EED_calculated;
+        }
+
+        public DateTime kqEED_ngaysieuam()
+        {
+            EED_calculated = ngaysieuam.AddDays(280 - tuoithaisieuam);
+            return EED_calculated;
+        }
+
+        public int GestationalAge()
+        {
+            TimeSpan gestationalAge = DateTime.Now - EED_calculated;
+            return gestationalAge.Days;
+        }
+    }
+    public class EER : Congthuc
+    {
+        public double tuoi { get; set; }
+        public string gioitinh { get; set; }
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
+        public string hesohoatdong { get; set; }
+        public double ECG { get; set; }
+
+        public EER()
+        {
+
+        }
+        public EER(Nguoibenh nb)
+        {
+            tuoi = nb.tinhtuoi_nam();
+            gioitinh = nb.gioitinh;
+            chieucao = nb.chieucao;
+            cannang = nb.cannang;
+        }
+        public EER(double _tuoi, string _gioitinh, double _chieucao, double _cannang, string _hesohoatdong, double _ECG)
+        {
+            tuoi = _tuoi;
+            gioitinh = _gioitinh;
+            chieucao = _chieucao;
+            cannang = _cannang;
+            hesohoatdong = _hesohoatdong;
+            ECG = _ECG;
+        }
+
+        public double kqEER()
+        {
+            double ECGValue = (tuoi < 0.25) ? 200 : (tuoi < 0.5) ? 50 : (tuoi < 4) ? 20 : (tuoi < 9) ? 15 : (tuoi < 14) ? 25 : 20;
+            double EER;
+
+            if (gioitinh == "Nam")
+            {
+                if (tuoi < 3)
+                {
+                    EER = -716.45 - tuoi + (17.82 * chieucao) + (15.06 * cannang) + ECGValue;
+                }
+                else
+                {
+                    if (hesohoatdong == "Không vận động")
+                    {
+                        EER = -447.51 + (3.68 * tuoi) + (13.01 * chieucao) + (13.15 * cannang) + ECGValue;
+                    }
+                    else if (hesohoatdong == "Ít vận động")
+                    {
+                        EER = 19.12 + (3.68 * tuoi) + (8.62 * chieucao) + (20.28 * cannang) + ECGValue;
+                    }
+                    else if (hesohoatdong == "Vận động trung bình")
+                    {
+                        EER = -388.19 + (3.68 * tuoi) + (12.66 * chieucao) + (20.46 * cannang) + ECGValue;
+                    }
+                    else
+                    {
+                        EER = -671.75 + (3.68 * tuoi) + (15.38 * chieucao) + (23.25 * cannang) + ECGValue;
+                    }
+                }
+            }
+            else
+            {
+                if (tuoi < 3)
+                {
+                    EER = -69.15 + (80.0 * tuoi) + (2.65 * chieucao) + (54.15 * cannang) + ECGValue;
+                }
+                else
+                {
+                    if (hesohoatdong == "Không vận động")
+                    {
+                        EER = 55.59 - (22.25 * tuoi) + (8.43 * chieucao) + (17.07 * cannang) + ECGValue;
+                    }
+                    else if (hesohoatdong == "Ít vận động")
+                    {
+                        EER = -297.54 - (22.25 * tuoi) + (12.77 * chieucao) + (14.73 * cannang) + ECGValue;
+                    }
+                    else if (hesohoatdong == "Vận động trung bình")
+                    {
+                        EER = -189.55 - (22.25 * tuoi) + (11.74 * chieucao) + (18.34 * cannang) + ECGValue;
+                    }
+                    else
+                    {
+                        EER = -709.59 - (22.25 * tuoi) + (18.22 * chieucao) + (14.25 * cannang) + ECGValue;
+                    }
+                }
+            }
+
+            return EER;
+        }
+    }
+    public class CDC_BMI : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double thangtuoi { get; set; }
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
+        public double BMI { get; set; }
+        public double[] data_Nam { get; set; }
+        public double[] data_Nu { get; set; }
+        public CDC_BMI()
+        {
+
+        }
+        public CDC_BMI(string _gioitinh, double _thangtuoi, double _BMI)
+        {
+            gioitinh = _gioitinh;
+            thangtuoi = _thangtuoi;
+            BMI = _BMI;
+        }
+        public CDC_BMI(string _gioitinh, double _thangtuoi, double _chieucao, double _cannang)
+        {
+            gioitinh = _gioitinh;
+            thangtuoi = _thangtuoi;
+            BMI = _chieucao * _chieucao / _cannang;
+        }
+        public CDC_BMI(Nguoibenh nb)
+        {
+            gioitinh = nb.gioitinh;
+            thangtuoi = nb.tinhtuoi_thang();
+            BMI = nb.chieucao * nb.chieucao / nb.cannang;
+        }
+        private void initCDC_BMI()
+        {
+            //P5, P85, P95
+            double[] _data_Nam = { 14.737319472, 14.719292573, 14.683608414, 14.648433294, 14.613786255, 14.579685777, 14.546149661, 14.513194923, 14.480837948, 14.449093293, 14.417975614, 14.387498109, 14.357672932, 14.328511189, 14.300022559, 14.27221761, 14.245102016, 14.218684325, 14.192970112, 14.167964724, 14.143670894, 14.120092688, 14.097232459, 14.075089663, 14.053664432, 14.032955327, 14.012959844, 13.993674447, 13.975094635, 13.957215715, 13.940029469, 13.923531161, 13.907712809, 13.892566777, 13.878085253, 13.864259589, 13.851083083, 13.838548037, 13.82664746, 13.815374889, 13.804723699, 13.794690036, 13.785268816, 13.776456272, 13.76824936, 13.760645736, 13.75364373, 13.747242303, 13.741440993, 13.736239868, 13.731639461, 13.727640719, 13.724244334, 13.721452886, 13.719267752, 13.717690937, 13.716724582, 13.716371244, 13.716632334, 13.717510776, 13.719008868, 13.72112886, 13.723872927, 13.727243152, 13.731241504, 13.73586983, 13.741129903, 13.747023092, 13.753550999, 13.760714804, 13.76851558, 13.776954225, 13.786031452, 13.795747785, 13.806103553, 13.817098777, 13.828733753, 13.841007841, 13.853920676, 13.867471738, 13.881660126, 13.896484539, 13.911944391, 13.928037855, 13.944763576, 13.962118903, 13.98010297, 13.998713275, 14.017947378, 14.037802816, 14.058276901, 14.079366766, 14.101069371, 14.123381501, 14.146299772, 14.169820633, 14.193940365, 14.218655083, 14.243960805, 14.269853131, 14.296327886, 14.323380481, 14.351006234, 14.379200308, 14.407957708, 14.43727329, 14.467141754, 14.497557648, 14.528515371, 14.560009167, 14.592033134, 14.62458122, 14.657647224, 14.691223806, 14.725306007, 14.759886606, 14.794958832, 14.830515777, 14.86655039, 14.903055485, 14.940023736, 14.977447683, 15.01531973, 15.053632148, 15.092377074, 15.131546514, 15.171132342, 15.211126303, 15.251520013, 15.292304961, 15.333472509, 15.375013894, 15.416920229, 15.459182504, 15.501791587, 15.544738227, 15.588013052, 15.631606575, 15.67550919, 15.719711177, 15.764202704, 15.808973823, 15.854014479, 15.899314507, 15.944863634, 15.990651482, 16.036667567, 16.082901303, 16.129342004, 16.175978884, 16.222801059, 16.26979755, 16.316957284, 16.364269095, 16.411721727, 16.459303836, 16.507003989, 16.55481067, 16.60271228, 16.650697137, 16.698753478, 16.746869466, 16.795033183, 16.843232639, 16.891455767, 16.939690432, 16.987924425, 17.036145468, 17.084341215, 17.132499251, 17.180607093, 17.228652193, 17.276622589, 17.324504231, 17.372285093, 17.41995236, 17.46749315, 17.514894512, 17.562143423, 17.609226793, 17.656131455, 17.702844168, 17.749351612, 17.795640388, 17.841697008, 17.8875079, 17.933059395, 17.978337728, 18.023329032, 18.068019329, 18.112394528, 18.156440415, 18.200142556, 18.243486617, 18.286457268, 18.329041829, 18.371223685, 18.412986957, 18.454317938, 18.495200616, 18.535619323, 18.575558186, 18.615001112, 18.653931783, 18.692334366, 18.730190245, 18.767483802, 18.804197322, 18.840313184, 18.875813476, 18.910679987, 18.944894195, 18.978437264, 19.011288695, 19.043431335, 19.074844245, 19.105507218, 19.120551107, 19.13539969, 18.162194733, 18.119549228, 18.036680126, 17.957002275, 17.880471005, 17.807042591, 17.736674142, 17.669323458, 17.604948602, 17.543508981, 17.484962947, 17.429269329, 17.376386767, 17.326273561, 17.278887949, 17.234185537, 17.192125454, 17.152662007, 17.115750983, 17.081346773, 17.049405037, 17.019878597, 16.992720871, 16.967887393, 16.945332151, 16.925010281, 16.90687779, 16.890891793, 16.877010731, 16.865193742, 16.85540483, 16.847604904, 16.841759872, 16.837836599, 16.835803652, 16.835632225, 16.837292715, 16.840758382, 16.84600319, 16.853001975, 16.861731244, 16.872165194, 16.884280854, 16.898054589, 16.913462745, 16.930481531, 16.949086925, 16.969254612, 16.990959933, 17.01417786, 17.038882985, 17.065049527, 17.092652232, 17.121663187, 17.152056291, 17.18380454, 17.216880721, 17.251256966, 17.286907078, 17.323802541, 17.361915701, 17.40121891, 17.441684564, 17.483285128, 17.525993169, 17.56978138, 17.614622659, 17.660489848, 17.707356316, 17.755195413, 17.803980772, 17.853686264, 17.90428602, 17.955754442, 18.008066222, 18.061196533, 18.1151201, 18.169813026, 18.225251187, 18.281410552, 18.338267739, 18.395799994, 18.453983546, 18.512796471, 18.572216211, 18.632222229, 18.692791276, 18.753902661, 18.815535648, 18.877669577, 18.940284187, 19.003359543, 19.066876031, 19.130814356, 19.195155544, 19.259880939, 19.324972199, 19.390411298, 19.456180423, 19.522262472, 19.588640056, 19.655296491, 19.722215306, 19.789380335, 19.85677572, 19.924385908, 19.992195654, 20.060190019, 20.128354368, 20.196674371, 20.265136002, 20.333725539, 20.402429562, 20.471236496, 20.540131144, 20.609101892, 20.678136503, 20.747223033, 20.816349832, 20.885505539, 20.954679086, 21.023859692, 21.093036865, 21.1622004, 21.231340378, 21.300447165, 21.369511412, 21.438524051, 21.507476296, 21.576359641, 21.645165861, 21.713887007, 21.782515408, 21.851043669, 21.919464668, 21.987771559, 22.055957764, 22.12401698, 22.191943172, 22.259730572, 22.327373681, 22.394867265, 22.462206356, 22.529386247, 22.596402495, 22.663250919, 22.729927595, 22.79642886, 22.862751308, 22.928891788, 22.994847407, 23.060615524, 23.126193753, 23.191579959, 23.256772259, 23.321769021, 23.386568863, 23.451170652, 23.515573503, 23.579776782, 23.6437801, 23.707583317, 23.771186541, 23.834590127, 23.897794676, 23.960801041, 24.023610321, 24.086223863, 24.148643267, 24.21087038, 24.272907303, 24.334756391, 24.396419305, 24.457900896, 24.519203235, 24.580329706, 24.641283953, 24.702069886, 24.76269168, 24.823153782, 24.883460908, 24.943618051, 25.003630482, 25.063503754, 25.123243703, 25.182856454, 25.242348423, 25.301726323, 25.360997164, 25.42016826, 25.479247229, 25.538242002, 25.597160953, 25.656012444, 25.714806292, 25.773548883, 25.832252068, 25.890926872, 25.949581158, 26.008226305, 26.066873207, 26.125533104, 26.184217589, 26.242938608, 26.301707228, 26.360539323, 26.419445233, 26.478439122, 26.537534783, 26.596746393, 26.656088513, 26.715576094, 26.775224484, 26.835051321, 26.895069442, 26.955296972, 27.015750924, 27.046068183, 27.076448741, 19.338010618, 19.278898128, 19.164659645, 19.055674233, 18.951867497, 18.853165291, 18.759493593, 18.670778406, 18.586945886, 18.507921309, 18.433630719, 18.363999601, 18.298953229, 18.238416662, 18.182314401, 18.130572441, 18.083113112, 18.039861981, 18.00074262, 17.965679031, 17.934593498, 17.907410074, 17.884051832, 17.864439827, 17.848496221, 17.836142298, 17.827298905, 17.821886501, 17.819825229, 17.821035591, 17.825435776, 17.832947441, 17.843490284, 17.85698505, 17.873353184, 17.892516422, 17.914398944, 17.938925239, 17.966021441, 17.995615231, 18.027635434, 18.062013961, 18.098683166, 18.137577538, 18.178633273, 18.221788238, 18.266981906, 18.314155288, 18.363250846, 18.414212415, 18.46698511, 18.52151524, 18.577749955, 18.635638156, 18.695129036, 18.756172877, 18.818720783, 18.882724739, 18.948137004, 19.014911065, 19.08300081, 19.152360731, 19.22294589, 19.294711907, 19.367614933, 19.441611647, 19.516658939, 19.592715391, 19.669738304, 19.747686659, 19.826519632, 19.906196889, 19.986678588, 20.067925378, 20.149898403, 20.232559281, 20.315870259, 20.399793794, 20.484293234, 20.569332163, 20.654874798, 20.740885842, 20.827330585, 20.914174799, 21.001384829, 21.08892746, 21.176770225, 21.264881065, 21.353228504, 21.441781645, 21.530510151, 21.619384256, 21.708374769, 21.797453077, 21.886591146, 21.975761529, 22.064937365, 22.154092383, 22.243200913, 22.332237858, 22.42117875, 22.509999702, 22.598677436, 22.687189277, 22.775513158, 22.86362762, 22.951511816, 23.039145509, 23.126509077, 23.213583513, 23.300350425, 23.38679204, 23.472891203, 23.558631287, 23.643996517, 23.728971547, 23.813541709, 23.897692958, 23.981411874, 24.064685664, 24.147502159, 24.22984982, 24.311717735, 24.39309562, 24.473973823, 24.554343318, 24.634195716, 24.713523254, 24.792318805, 24.870575873, 24.948288599, 25.025451754, 25.10206075, 25.17811163, 25.253601077, 25.328526412, 25.402885595, 25.476677223, 25.549900538, 25.62255542, 25.694642395, 25.766162632, 25.837117943, 25.90751079, 25.977344281, 26.046622172, 26.115348872, 26.183529439, 26.251169587, 26.318275685, 26.384854755, 26.450914482, 26.516463208, 26.581509939, 26.646064342, 26.71013675, 26.773738166, 26.83688026, 26.899575372, 26.961836518, 27.023677386, 27.085112342, 27.146156433, 27.206825382, 27.267135598, 27.327104173, 27.386748884, 27.446088197, 27.505141264, 27.563927929, 27.622468728, 27.680784887, 27.738898541, 27.796831854, 27.854608369, 27.912252088, 27.969787706, 28.027240611, 28.084636885, 28.1420033, 28.199367319, 28.256757094, 28.314201462, 28.371729945, 28.429372744, 28.487160738, 28.545125479, 28.60329919, 28.661714756, 28.720405723, 28.779406289, 28.838751302, 28.898476211, 28.958617197, 29.019210796, 29.080295026, 29.141907344, 29.204085991, 29.266870788, 29.330301268, 29.394417774, 29.459261215, 29.524873058, 29.591295323, 29.658570912, 29.726742037, 29.79585303, 29.865947819, 29.93707103, 30.009267783, 30.082583688, 30.157064835, 30.232757788, 30.309709009, 30.387967, 30.467579243, 30.548594139, 30.589642847, 30.631060541 };
+            data_Nam = _data_Nam;
+            double[] _data_Nu = { 14.397870893, 14.380186596, 14.345272624, 14.310968062, 14.277276856, 14.244203026, 14.211749089, 14.179917754, 14.148711114, 14.118130621, 14.088177926, 14.058853902, 14.030159316, 14.002094761, 13.974660728, 13.947857672, 13.921686084, 13.89614655, 13.871239805, 13.846966782, 13.823328646, 13.800326818, 13.777962994, 13.756238848, 13.735157169, 13.714720207, 13.694930704, 13.675791616, 13.657306081, 13.639477387, 13.622308935, 13.605804206, 13.589966725, 13.574800023, 13.560307612, 13.546492949, 13.53335941, 13.520910267, 13.509148527, 13.498077398, 13.487699767, 13.47801782, 13.469034401, 13.460751754, 13.453171909, 13.44629667, 13.440127612, 13.434666084, 13.429913207, 13.425870418, 13.422537877, 13.419916293, 13.41800595, 13.416806916, 13.416319045, 13.416541975, 13.417475136, 13.419117751, 13.421468839, 13.424527221, 13.428291519, 13.432760162, 13.43793139, 13.443803253, 13.450373621, 13.45764018, 13.46560044, 13.47425174, 13.483591251, 13.493615981, 13.504322782, 13.515708349, 13.527769222, 13.540501762, 13.553901719, 13.567965559, 13.582689175, 13.598067882, 13.614097684, 13.630773884, 13.648091204, 13.666045501, 13.684631476, 13.703844013, 13.723677453, 13.744126561, 13.765186202, 13.78684956, 13.809111546, 13.83196589, 13.855406666, 13.879426466, 13.904020526, 13.92918106, 13.954901632, 13.981175358, 14.007995218, 14.035354051, 14.063244558, 14.091659301, 14.120590705, 14.150031057, 14.179972506, 14.210407062, 14.2413266, 14.272722855, 14.304587427, 14.336911777, 14.369687229, 14.402904971, 14.436556052, 14.470631805, 14.505122367, 14.540018622, 14.575311069, 14.610990067, 14.647045838, 14.683468464, 14.720247888, 14.757373914, 14.794836204, 14.832624281, 14.870727527, 14.909135184, 14.947836351, 14.986819986, 15.026074904, 15.065589778, 15.105353137, 15.145353366, 15.185578709, 15.22601726, 15.266656971, 15.307485648, 15.34849095, 15.389660389, 15.430981329, 15.472440986, 15.514026427, 15.555724571, 15.597522183, 15.639405882, 15.681362131, 15.723377243, 15.765437378, 15.807528542, 15.849636587, 15.891747208, 15.933845947, 15.975918187, 16.017949155, 16.059923921, 16.101827393, 16.143644323, 16.185359301, 16.226956758, 16.268420961, 16.309736017, 16.350885869, 16.391854299, 16.432624923, 16.473181193, 16.513506398, 16.55358366, 16.593395935, 16.632926016, 16.672156529, 16.711069932, 16.749648518, 16.787874416, 16.825729586, 16.863195825, 16.900254764, 16.936887868, 16.97307644, 17.008801618, 17.044044915, 17.078785534, 17.113005736, 17.146685474, 17.179805079, 17.212344716, 17.244285168, 17.275604072, 17.306282966, 17.336301585, 17.365638249, 17.394272864, 17.422184393, 17.449351838, 17.475755094, 17.501369744, 17.526176669, 17.550154683, 17.573280181, 17.595534679, 17.616892752, 17.637333562, 17.656834899, 17.675374442, 17.692929755, 17.709478294, 17.724997408, 17.739464345, 17.752856251, 17.765150176, 17.776323076, 17.786351816, 17.795213175, 17.802883845, 17.809340439, 17.814557553, 17.818516749, 17.821191341, 17.822557366, 17.822590601, 17.821266527, 17.820090457, 17.818563561, 18.018205792, 17.973714126, 17.887488124, 17.804890513, 17.725863959, 17.650351371, 17.578297744, 17.509648394, 17.44434994, 17.38235043, 17.323598458, 17.268044363, 17.215639512, 17.166336426, 17.120088721, 17.076851036, 17.036578944, 16.99922885, 16.964757881, 16.933123775, 16.904284765, 16.878199474, 16.85482681, 16.834126282, 16.816056377, 16.800576707, 16.787646543, 16.777225115, 16.769271588, 16.763745045, 16.760604487, 16.759808835, 16.761316945, 16.765087627, 16.771079664, 16.779251844, 16.789562983, 16.801971953, 16.816437922, 16.832919646, 16.85137625, 16.871767854, 16.894053448, 16.918192851, 16.94414613, 16.971873618, 17.001335934, 17.032493991, 17.065309004, 17.099741723, 17.135754682, 17.173309679, 17.212369113, 17.252895716, 17.294852556, 17.338203042, 17.382910923, 17.428940294, 17.476255597, 17.524821619, 17.574603494, 17.625566704, 17.67767708, 17.730900798, 17.785204382, 17.840554704, 17.896918975, 17.95426475, 18.01255992, 18.071772705, 18.131871655, 18.192825645, 18.254603884, 18.317175943, 18.380512412, 18.444582911, 18.509357979, 18.574809309, 18.640907397, 18.70762408, 18.774932139, 18.842802758, 18.911208974, 18.980123661, 19.049520628, 19.119373164, 19.189654528, 19.260340621, 19.331404869, 19.402822598, 19.474568694, 19.546620507, 19.618951499, 19.691539649, 19.764361199, 19.837393135, 19.91061278, 19.983997788, 20.05752615, 20.131176192, 20.204926574, 20.278756292, 20.352644676, 20.426571391, 20.500516439, 20.574460154, 20.648383208, 20.722266606, 20.79609169, 20.869840136, 20.943493956, 21.017034888, 21.090446529, 21.163711548, 21.2368133, 21.309735477, 21.38246211, 21.454977564, 21.527266545, 21.599314096, 21.671105598, 21.742626772, 21.813863676, 21.884802708, 21.955430607, 22.02573445, 22.095701657, 22.165319987, 22.23457754, 22.303462758, 22.371964427, 22.440071674, 22.507773969, 22.575061126, 22.641923303, 22.708351005, 22.774335079, 22.839866721, 22.904937473, 22.969539223, 23.033664209, 23.097305018, 23.160454584, 23.223106195, 23.285253487, 23.346890452, 23.408011431, 23.468611122, 23.528684575, 23.588227198, 23.647234755, 23.705703367, 23.763629515, 23.821010038, 23.877842138, 23.934123376, 23.989851678, 24.045025332, 24.099642992, 24.153703678, 24.207206776, 24.260152041, 24.312539595, 24.364369931, 24.415643913, 24.466362775, 24.516528123, 24.566141937, 24.61520657, 24.663724748, 24.711699572, 24.759134514, 24.806033424, 24.852400525, 24.898240411, 24.943558054, 24.988357847, 25.032648356, 25.076432823, 25.11971866, 25.162512708, 25.204822177, 25.246653477, 25.28801794, 25.328921084, 25.369371303, 25.409379292, 25.448953455, 25.488103769, 25.526840293, 25.56517184, 25.603114, 25.640674345, 25.67786376, 25.714697004, 25.751181066, 25.787333798, 25.823166106, 25.858691151, 25.893922413, 25.928873687, 25.963559081, 25.997993009, 26.032190187, 26.06616563, 26.099934651, 26.133512849, 26.166916112, 26.20016061, 26.23326279, 26.266239373, 26.299110386, 26.331885089, 26.364585813, 26.397230769, 26.429838734, 26.462429098, 26.478719662, 26.495016788, 19.10623522, 19.058238445, 18.965949897, 18.878533884, 18.795909992, 18.717998385, 18.644718454, 18.575990295, 18.511734023, 18.451869784, 18.396318479, 18.345000987, 18.29783876, 18.254753806, 18.215668786, 18.180507113, 18.149193044, 18.121651762, 18.097809453, 18.077593361, 18.06093184, 18.047754376, 18.037991607, 18.03157513, 18.028438215, 18.028514727, 18.031739765, 18.038049459, 18.047380913, 18.059672159, 18.074862097, 18.092890445, 18.11369768, 18.137224989, 18.163414224, 18.192207855, 18.223548932, 18.257381051, 18.293648259, 18.332295253, 18.373267126, 18.41650918, 18.461967542, 18.509588576, 18.559319065, 18.611106202, 18.664897596, 18.72064127, 18.778285671, 18.837779538, 18.899072288, 18.962113544, 19.026853412, 19.093242432, 19.161231581, 19.230772276, 19.301816386, 19.374316236, 19.448224611, 19.523494768, 19.600080436, 19.677935827, 19.757015637, 19.837275057, 19.918669774, 20.001155979, 20.08469037, 20.169230159, 20.254733074, 20.341157368, 20.428461818, 20.516605734, 20.605548956, 20.695251857, 20.785675251, 20.876780679, 20.968530139, 21.060886065, 21.153811648, 21.247270492, 21.341226663, 21.435645054, 21.530490897, 21.625730052, 21.721328849, 21.817254297, 21.913474016, 22.00995586, 22.106668641, 22.203581509, 22.300664287, 22.397887094, 22.495221076, 22.592637546, 22.690108545, 22.787606652, 22.88510501, 22.982577328, 23.079997876, 23.177341493, 23.274583578, 23.371700099, 23.468667584, 23.56546313, 23.662064395, 23.758449602, 23.854597539, 23.950487558, 24.046099573, 24.141414065, 24.236412075, 24.331075256, 24.4253857, 24.519326162, 24.612879933, 24.706030862, 24.798763363, 24.891062407, 24.982913526, 25.074302811, 25.165216914, 25.255643043, 25.345568966, 25.434983007, 25.523874049, 25.612231528, 25.700045441, 25.787306336, 25.874005319, 25.960134049, 26.045684738, 26.130650155, 26.215023617, 26.298798997, 26.381970718, 26.464533755, 26.546483632, 26.627816426, 26.70852876, 26.788617809, 26.868081296, 26.94691749, 27.025125211, 27.102703824, 27.17965324, 27.255973919, 27.331666865, 27.406733627, 27.481176301, 27.554997527, 27.62820049, 27.700788918, 27.772767087, 27.844139812, 27.914912457, 27.985090927, 28.054681672, 28.123691687, 28.192128511, 28.260000228, 28.327315465, 28.394083399, 28.460313748, 28.52601678, 28.591203309, 28.655884697, 28.720072857, 28.783780248, 28.847019885, 28.909805333, 28.972150709, 29.034070689, 29.095580504, 29.156695943, 29.217433356, 29.277809657, 29.33784232, 29.397549393, 29.456949484, 29.51606178, 29.574906037, 29.633502591, 29.691872359, 29.750036824, 29.808018082, 29.865838796, 29.923522234, 29.981092247, 30.038573291, 30.095990421, 30.153369256, 30.210736178, 30.268117989, 30.325542155, 30.38303689, 30.440630728, 30.498353237, 30.556234331, 30.614304629, 30.672595385, 30.731138492, 30.789966483, 30.849112534, 30.908610469, 30.968494761, 31.028800535, 31.089563569, 31.150820299, 31.212607819, 31.274963885, 31.337926913, 31.401536312, 31.465830973, 31.530851807, 31.596639946, 31.663237236, 31.730686253, 31.764743113, 31.799029637 };
+            data_Nu = _data_Nu;
+        }
+        public double[] kqCDC_BMI()
+        {
+            initCDC_BMI();
+            double phanphoi5, phanphoi85, phanphoi95;
+            //Thang tuoi
+            int stt = Convert.ToInt32(thangtuoi);
+            if (gioitinh == "nữ")
+            {
+                phanphoi5 = data_Nu[stt];
+                phanphoi85 = data_Nu[stt + 219];
+                phanphoi95 = data_Nu[stt + 219 * 2];
+            }
+            else
+            {
+                phanphoi5 = data_Nam[stt];
+                phanphoi85 = data_Nam[stt + 219];
+                phanphoi95 = data_Nam[stt + 219 * 2];
+            }
+            return new double[] { phanphoi5, phanphoi85, phanphoi95 };
+        }
+        public string kqCDC_BMI_danhgia()
+        {
+            //P5, P85, P95
+            double[] kqphanphoi = kqCDC_BMI();
+
+            if (0 <= BMI && BMI < kqphanphoi[0])
+            {
+                return "Thiếu cân";
+            }
+            else if (kqphanphoi[0] <= BMI && BMI < kqphanphoi[1])
+            {
+                return "Bình thường";
+            }
+            else if (kqphanphoi[1] <= BMI && BMI < kqphanphoi[2])
+            {
+                return "Thừa cân";
+            }
+            else if (BMI >= 40 || BMI > kqphanphoi[2] * 1.4)
+            {
+                return "Béo phì độ 3 (nghiêm trọng)";
+            }
+            else if (BMI >= 35 || BMI > kqphanphoi[2] * 1.2)
+            {
+                return "Béo phì độ 2 (nghiêm trọng)";
+            }
+            else
+            {
+                return "Béo phì độ 1 (nhẹ)";
+            }
+        }
+    }
+    public class Noikhiquan : Congthuc
+    {
+        public bool bongchen { get; set; }
+        public double tuoi { get; set; }
+        public double ongnoikhiquan { get; set; }
+
+        public Noikhiquan()
+        {
+
+        }
+
+        public Noikhiquan(bool _bongchen, double _tuoi)
+        {
+            bongchen = _bongchen;
+            tuoi = _tuoi;
+        }
+
+        public double kqNoikhiquan()
+        {
+            ongnoikhiquan = (bongchen) ? (3.5 + (tuoi / 4)) : (4 + (tuoi / 4));
+            return ongnoikhiquan;
         }
     }
     public class NatriSerum_Adj : Congthuc
@@ -781,6 +2524,37 @@ namespace Chisoyhoc_API
             return CardiacOutputResult;
         }
     }
+    public class FEPO4 : Congthuc
+    {
+        public double phosphatUrine { get; set; }
+        public double phosphatSerum { get; set; }
+        public double creatininUrine { get; set; }
+        public double creatininSerum { get; set; }
+        public double FePO4 { get; set; }
+
+        public FEPO4()
+        {
+
+        }
+        public FEPO4(Xetnghiem XN)
+        {
+            creatininUrine = XN.creatininUrine;
+            creatininSerum = XN.creatininSerum;
+        }
+        public FEPO4(double _phosphatUrine, double _phosphatSerum, double _creatininUrine, double _creatininSerum)
+        {
+            phosphatUrine = _phosphatUrine;
+            phosphatSerum = _phosphatSerum;
+            creatininUrine = _creatininUrine;
+            creatininSerum = _creatininSerum;
+        }
+
+        public double kqFEPO4()
+        {
+            FePO4 = (phosphatUrine / phosphatSerum) / (creatininUrine / creatininSerum) * 100;
+            return FePO4;
+        }
+    }
     public class LDL : Congthuc
     {
         public double TotalCholesterol { get; set; }
@@ -826,7 +2600,7 @@ namespace Chisoyhoc_API
         }
         public FIB4(Nguoibenh NB, Xetnghiem XN)
         {
-            tuoi = NB.tuoi;
+            tuoi = NB.tinhtuoi_nam();
             AST = XN.AST;
             tieucau = XN.platelet;
             ALT = XN.ALT;
@@ -843,6 +2617,30 @@ namespace Chisoyhoc_API
         {
             FIB4Result = tuoi * AST / (0.001 * tieucau * Math.Sqrt(ALT));
             return FIB4Result;
+        }
+    }
+    public class TSAT : Congthuc
+    {
+        //TransferrinSaturation
+        public double FeSerum { get; set; }
+        public double TIBC { get; set; }
+        public double TSAT_calculated { get; set; }
+
+        public TSAT()
+        {
+
+        }
+
+        public TSAT(double _FeSerum, double _TIBC)
+        {
+            FeSerum = _FeSerum;
+            TIBC = _TIBC;
+        }
+
+        public double kqTransferrinSaturation()
+        {
+            TSAT_calculated = (FeSerum / TIBC) * 100;
+            return TSAT_calculated;
         }
     }
     public class APRI : Congthuc
@@ -895,6 +2693,12 @@ namespace Chisoyhoc_API
             CreatininSerum = XN.creatininSerum;
             BilirubinSerum = XN.bilirubin;
             INR = 0;
+        }
+        public MELD(double _CreatininSerum, double _BilirubinSerum, double _INR)
+        {
+            CreatininSerum = _CreatininSerum;
+            BilirubinSerum = _BilirubinSerum;
+            INR = _INR;
         }
         public MELD(double _tansuatlocmau1tuan, double _thoigianlocmau1tuan, double _CreatininSerum, double _BilirubinSerum, double _INR)
         {
@@ -955,6 +2759,53 @@ namespace Chisoyhoc_API
             return MELDNaResult;
         }
     }
+    public class PVR : Congthuc
+    {
+        public double HATThu { get; set; } // Systolic Blood Pressure (SBP)
+        public double HATTruong { get; set; } // Diastolic Blood Pressure (DBP)
+        public double aplucnhitrai { get; set; }
+        public double luuluongmau { get; set; }
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
+
+        public double PVR_calculated { get; private set; }
+        public double PVRI { get; private set; }
+
+        public PVR()
+        {
+
+        }
+        public PVR(Nguoibenh nb)
+        {
+            HATThu = nb.HATThu;
+            HATTruong = nb.HATTruong;
+            chieucao = nb.chieucao;
+            cannang = nb.cannang;
+        }
+        public PVR(double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau, double _chieucao, double _cannang)
+        {
+            HATThu = _HATThu;
+            HATTruong = _HATTruong;
+            aplucnhitrai = _aplucnhitrai;
+            luuluongmau = _luuluongmau;
+            chieucao = _chieucao;
+            cannang = _cannang;
+        }
+
+        public double kqPVR()
+        {
+            MAP MAP = new MAP(HATThu, HATTruong);
+            PVR_calculated = 80 * (MAP.kqMAP() - aplucnhitrai) / luuluongmau;
+            return PVR_calculated;
+        }
+
+        public double kqPVRI()
+        {
+            double BSA = Math.Sqrt(chieucao * cannang / 3600);
+            PVRI = BSA * kqPVR();
+            return PVRI;
+        }
+    }
     public class AdjECG : Congthuc
     {
         public double QT_ECG { get; set; }
@@ -999,6 +2850,39 @@ namespace Chisoyhoc_API
             return QT_ECG + (1.75 * (nhiptim - 60));
         }
     }
+    public class SVR : Congthuc
+    {
+        public double HATThu { get; set; } // Systolic Blood Pressure
+        public double HATTruong { get; set; } // Diastolic Blood Pressure
+        public double aplucnhiphai { get; set; }
+        public double luuluongmau { get; set; }
+
+        public double SVR_calculated { get; private set; }
+
+        public SVR()
+        {
+
+        }
+        public SVR(Nguoibenh nb)
+        {
+            HATThu = nb.HATThu;
+            HATTruong = nb.HATTruong;
+        }
+        public SVR(double _HATThu, double _HATTruong, double _aplucnhiphai, double _luuluongmau)
+        {
+            HATThu = _HATThu;
+            HATTruong = _HATTruong;
+            aplucnhiphai = _aplucnhiphai;
+            luuluongmau = _luuluongmau;
+        }
+
+        public double kq()
+        {
+            MAP MAP = new MAP(HATThu, HATTruong);
+            SVR_calculated = 80 * (MAP.kqMAP() - aplucnhiphai) / luuluongmau;
+            return SVR_calculated;
+        }
+    }
     public class WBCCFS_Adj : Congthuc
     {
         public double WBC_CFS { get; set; }
@@ -1032,8 +2916,242 @@ namespace Chisoyhoc_API
             return kqWBCCFS_Adj;
         }
     }
+    public class Hauphauxogan : Congthuc
+    {
+        public double tuoi { get; set; }
+        public double ASA { get; set; }
+        public double CreatininSerum { get; set; }
+        public double BilirubinSerum { get; set; }
+        public double INR { get; set; }
+
+        public Hauphauxogan()
+        {
+
+        }
+        public Hauphauxogan(Nguoibenh nb, Xetnghiem xn)
+        {
+            tuoi = nb.tinhtuoi_nam();
+            CreatininSerum = xn.creatininSerum;
+            BilirubinSerum = xn.bilirubin;
+        }
+        public Hauphauxogan(double _tuoi, double _ASA, double _CreatininSerum, double _BilirubinSerum, double _INR)
+        {
+            tuoi = _tuoi;
+            ASA = _ASA;
+            CreatininSerum = _CreatininSerum;
+            BilirubinSerum = _BilirubinSerum;
+            INR = _INR;
+        }
+
+        public double kqHauphauxogan()
+        {
+            MELD MELD = new MELD(CreatininSerum, BilirubinSerum, INR);
+            double MELD_value = MELD.kqMELD();
+            double hesohauphauxogan = Math.Exp((0.02382 * (tuoi - 60)) + (0.88884 * ASA) + (0.11798 * (MELD_value - 8)));
+
+            return hesohauphauxogan;
+        }
+
+        public double mortalityhauphau7n()
+        {
+            double hesohauphauxogan = kqHauphauxogan();
+            double mortality = 100 * (1 - Math.Pow(0.98370, hesohauphauxogan));
+
+            return mortality;
+        }
+
+        public double mortalityhauphau30n()
+        {
+            double hesohauphauxogan = kqHauphauxogan();
+            double mortality = 100 * (1 - Math.Pow(0.93479, hesohauphauxogan));
+
+            return mortality;
+        }
+
+        public double mortalityhauphau90n()
+        {
+            double hesohauphauxogan = kqHauphauxogan();
+            double mortality = 100 * (1 - Math.Pow(0.89681, hesohauphauxogan));
+
+            return mortality;
+        }
+    }
+    public class MESA_SCORE : Congthuc
+    {
+        public double tuoi { get; set; }
+        public string gioitinh { get; set; }
+        public int hesogioitinhCAC { get; set; }
+        public string chungtoc { get; set; }
+        public double hesochungtocCAC { get; set; }
+        public bool DTD { get; set; }
+        public bool hutthuoc { get; set; }
+        public double TotalCholesterol { get; set; }
+        public double HDL { get; set; }
+        public bool dieutriRLLH { get; set; }
+        public double SBP { get; set; }
+        public bool dieutriTHA { get; set; }
+        public bool lichsuNMCTGD { get; set; }
+        public double CAC { get; set; }
+
+        public MESA_SCORE()
+        {
+
+        }
+        public MESA_SCORE(Nguoibenh nb, Xetnghiem xn)
+        {
+            tuoi = nb.tinhtuoi_nam();
+            gioitinh = nb.gioitinh;
+            DTD = nb.DTD;
+            hutthuoc = nb.hutthuoc;
+            TotalCholesterol = xn.totalCholesterol;
+            HDL = xn.HDL;
+            SBP = nb.HATThu;
+            dieutriTHA = nb.THA;
+            lichsuNMCTGD = nb.dotquytim || nb.thieumaunao || nb.NMCT;
+        }
+        public MESA_SCORE(double _tuoi, string _gioitinh, string _chungtoc, bool _DTD, bool _hutthuoc,
+                  double _TotalCholesterol, double _HDL, bool _dieutriRLLH, double _SBP, bool _dieutriTHA,
+                  bool _lichsuNMCTGD)
+        {
+            tuoi = _tuoi;
+            gioitinh = _gioitinh;
+            chungtoc = _chungtoc;
+            DTD = _DTD;
+            hutthuoc = _hutthuoc;
+            TotalCholesterol = _TotalCholesterol;
+            HDL = _HDL;
+            dieutriRLLH = _dieutriRLLH;
+            SBP = _SBP;
+            dieutriTHA = _dieutriTHA;
+            lichsuNMCTGD = _lichsuNMCTGD;
+        }
+        public MESA_SCORE(double _tuoi, string _gioitinh, string _chungtoc, bool _DTD, bool _hutthuoc,
+                          double _TotalCholesterol, double _HDL, bool _dieutriRLLH, double _SBP, bool _dieutriTHA,
+                          bool _lichsuNMCTGD, double _CAC)
+        {
+            tuoi = _tuoi;
+            gioitinh = _gioitinh;
+            chungtoc = _chungtoc;
+            DTD = _DTD;
+            hutthuoc = _hutthuoc;
+            TotalCholesterol = _TotalCholesterol;
+            HDL = _HDL;
+            dieutriRLLH = _dieutriRLLH;
+            SBP = _SBP;
+            dieutriTHA = _dieutriTHA;
+            lichsuNMCTGD = _lichsuNMCTGD;
+            CAC = _CAC;
+        }
+        public int CheckHesogioitinh(string input)
+        {
+            return (input == "nam") ? 1 : 0;
+        }
+        public double CheckHesochungtocCAC(string input)
+        {
+            switch (input)
+            {
+                case "Người da trắng":
+                    return 0;
+                case "Người da đen":
+                    return -0.2111;
+                case "Người châu Á":
+                    return -0.5055;
+                case "Người gốc Latinh & Tây Ban Nha":
+                    return -0.19;
+                case "Khác":
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+        public void init()
+        {
+            hesogioitinhCAC = CheckHesogioitinh(gioitinh);
+            hesochungtocCAC = CheckHesochungtocCAC(chungtoc);
+        }
+        public double kqMESA_SCORE_nonCAC()
+        {
+            double hesoNonCAC = (tuoi * 0.0455) + (hesogioitinhCAC * 0.7496) + hesochungtocCAC +
+                                (DTD ? 0.5168 : 0) + (hutthuoc ? 0.4732 : 0) + (TotalCholesterol * 0.0053) -
+                                (HDL * 0.0140) + (dieutriRLLH ? 0.2473 : 0) + (SBP * 0.0085) +
+                                (dieutriTHA ? 0.3381 : 0) + (lichsuNMCTGD ? 0.4522 : 0);
+
+            double nguyco10namNonCAC = 100 * (1 - Math.Pow(0.99963, Math.Exp(hesoNonCAC)));
+
+            return nguyco10namNonCAC;
+        }
+
+        public double kqMESA_SCORE_CAC()
+        {
+            double hesoCAC = (tuoi * 0.0172) + (hesogioitinhCAC * 0.4079) + hesochungtocCAC +
+                             (DTD ? 0.3892 : 0) + (hutthuoc ? 0.3717 : 0) + (TotalCholesterol * 0.0043) -
+                             (HDL * 0.0114) + (dieutriRLLH ? 0.1206 : 0) + (SBP * 0.0066) +
+                             (dieutriTHA ? 0.2278 : 0) + (lichsuNMCTGD ? 0.3239 : 0) + (Math.Log(CAC + 1) * 0.2743);
+
+            double nguyco10namCAC = 100 * (1 - Math.Pow(0.99833, Math.Exp(hesoCAC)));
+
+            return nguyco10namCAC;
+        }
+    }
     #endregion
     #region Chỉ số y học chi tiết - Thang điểm
+    public class GlasgowComa : Thangdiem
+    {
+        public int mat { get; set; }
+        public int loinoi { get; set; }
+        public int vandong { get; set; }
+        public GlasgowComa()
+        {
+
+        }
+        public GlasgowComa(string _mat, string _loinoi, string _vandong)
+        {
+
+        }
+        public void checkMat(string _mat)
+        {
+            if (_mat == "Mở mắt tự nhiên")
+                mat = 4;
+            else if (_mat == "Mở mắt khi được gọi")
+                mat = 3;
+            else if (_mat == "Mở mắt khi bị kích thích đau")
+                mat = 2;
+            else if (_mat == "Không mở mắt")
+                mat = 1;
+        }
+        public void checkLoinoi(string _loinoi)
+        {
+            if (_loinoi == "Trả lời chính xác")
+                loinoi = 5;
+            else if (_loinoi == "Có nhầm lẫn (lú lẫn)")
+                loinoi = 4;
+            else if (_loinoi == "Phát ngôn vô nghĩa (thành câu, không đúng câu hỏi)")
+                loinoi = 3;
+            else if (_loinoi == "Phát ngôn khó hiểu (không thành câu hay từ có nghĩa)")
+                loinoi = 2;
+            else if (_loinoi == "Im lặng")
+                loinoi = 1;
+        }
+        public void checkVandong(string _vandong)
+        {
+            if (_vandong == "Thực hiện đúng y lệnh")
+                vandong = 6;
+            else if (_vandong == "Phản xạ cục bộ với kích thích đau")
+                vandong = 5;
+            else if (_vandong == "Phản xạ toàn thân với kích thích đau")
+                vandong = 4;
+            else if (_vandong == "Co cứng mất vỏ khi gây đau (decorticate posturing)")
+                vandong = 3;
+            else if (_vandong == "Tư thế duỗi cứng mất não (decerebrate posturing)")
+                vandong = 2;
+            else if (_vandong == "Nằm yên, không đáp ứng kích thích đau")
+                vandong = 1;
+        }
+        public int kqGlasgowComa()
+        {
+            return mat + loinoi + vandong;
+        }
+    }
     public class SCORE2_DM : Thangdiem
     {
         public string gioitinh { get; set; }
@@ -1061,12 +3179,12 @@ namespace Chisoyhoc_API
         public SCORE2_DM(Nguoibenh NB, Xetnghiem XN)
         {
             init_SCORE2_DM();
-            checktuoi(NB.tuoi);
+            checktuoi(NB.tinhtuoi_nam());
             checkSmoking(NB.hutthuoc);
             checkHATT(NB.HATThu);
             checkTotalCholesterol(XN.totalCholesterol);
             checkHDL(XN.HDL);
-            checkEGFR(NB.gioitinh, XN.creatininSerum, NB.tuoi);
+            checkEGFR(NB.gioitinh, XN.creatininSerum, NB.tinhtuoi_nam());
         }
         public SCORE2_DM(string _gioitinh, double _tuoi, double _namDM, bool _smoking, double _HATT, double _TotalCholesterol,
             double _HDL, double _HbA1C, double _creatininSerum, string _vungnguyco)
@@ -1314,7 +3432,7 @@ namespace Chisoyhoc_API
         {
             init_SCORE2();
             checkgioitinh(NB.gioitinh);
-            checktuoi(NB.tuoi);
+            checktuoi(NB.tinhtuoi_nam());
             checkSmoking(NB.hutthuoc);
             checkHATT(NB.HATThu);
             checkNonHDL(XN.HDL, XN.totalCholesterol);

@@ -72,10 +72,11 @@
             this.label26 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.textBoxGT = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.textBoxPP = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -473,6 +474,15 @@
             this.tabPage1.Text = "Giới thiệu chỉ số";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // textBoxGT
+            // 
+            this.textBoxGT.Enabled = false;
+            this.textBoxGT.Location = new System.Drawing.Point(8, 6);
+            this.textBoxGT.Multiline = true;
+            this.textBoxGT.Name = "textBoxGT";
+            this.textBoxGT.Size = new System.Drawing.Size(777, 157);
+            this.textBoxGT.TabIndex = 0;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.textBoxPP);
@@ -484,24 +494,6 @@
             this.tabPage2.Text = "Phương pháp & diễn giải kết quả";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(791, 169);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Ghi chú & TLTK";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // textBoxGT
-            // 
-            this.textBoxGT.Enabled = false;
-            this.textBoxGT.Location = new System.Drawing.Point(8, 6);
-            this.textBoxGT.Multiline = true;
-            this.textBoxGT.Name = "textBoxGT";
-            this.textBoxGT.Size = new System.Drawing.Size(777, 157);
-            this.textBoxGT.TabIndex = 0;
-            // 
             // textBoxPP
             // 
             this.textBoxPP.Enabled = false;
@@ -511,11 +503,34 @@
             this.textBoxPP.Size = new System.Drawing.Size(777, 157);
             this.textBoxPP.TabIndex = 1;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(791, 169);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Ghi chú & TLTK";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "Nam",
+            "nữ",
+            "Box",
+            "Helicopter"});
+            this.checkedListBox1.Location = new System.Drawing.Point(496, 368);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(230, 174);
+            this.checkedListBox1.TabIndex = 44;
+            // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 770);
+            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
@@ -622,5 +637,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TextBox textBoxGT;
         private System.Windows.Forms.TextBox textBoxPP;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
     }
 }
