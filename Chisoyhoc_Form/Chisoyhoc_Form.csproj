@@ -65,6 +65,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,6 +93,12 @@
     </Compile>
     <Compile Include="GiaodienMau\Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiaodienMau\Test2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GiaodienMau\Test2.Designer.cs">
+      <DependentUpon>Test2.cs</DependentUpon>
     </Compile>
     <Compile Include="TestChiso\TestChiso101_110.cs">
       <SubType>Form</SubType>
@@ -193,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GiaodienMau\Test.resx">
       <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaodienMau\Test2.resx">
+      <DependentUpon>Test2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestChiso\TestChiso101_110.resx">
       <DependentUpon>TestChiso101_110.cs</DependentUpon>

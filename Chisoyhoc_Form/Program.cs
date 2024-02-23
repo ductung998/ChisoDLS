@@ -17,7 +17,7 @@ namespace Chisoyhoc_Form
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestChiso11_20());
+            Application.Run(new GiaodienMau.Test2());
         }
     }
 }
