@@ -322,7 +322,197 @@ namespace Chisoyhoc_API.Controllers
                 #region C_B
                 else if (machiso.Substring(0, 3) == "C_B")
                 {
-
+                    switch (machiso)
+                    {
+                        case "C_B01": //4
+                            {
+                                DLCO_Adj DLCO_AdjCal = new DLCO_Adj(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(DLCO_AdjCal.kqDLCO_Adj(), 2).ToString());
+                                break;
+                            }
+                        case "C_B02": //2
+                            {
+                                MAP MAPCal = new MAP(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(MAPCal.kqMAP(), 2).ToString());
+                                break;
+                            }
+                        case "C_B03": //7
+                            {
+                                PostFEV1 PostFEV1Cal = new PostFEV1(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    KetnoiDB.str_to_bool(inputs[4]));
+                                kq.Add(Math.Round(PostFEV1Cal.kqPostFEV1(), 2).ToString());
+                                break;
+                            }
+                        case "C_B04": //2
+                            {
+                                AEC AECCal = new AEC(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(AECCal.kqAEC(), 2).ToString());
+                                break;
+                            }
+                        case "C_B05": //2
+                            {
+                                ANC ANCCal = new ANC(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(ANCCal.kqANC(), 2).ToString());
+                                break;
+                            }
+                        case "C_B06": //5
+                            {
+                                MIPI MIPICal = new MIPI(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    int.Parse(inputs[4]));
+                                kq.Add(Math.Round(MIPICal.kqMIPI(), 2).ToString());
+                                kq.Add(MIPICal.kqMIPI_danhgia());
+                                break;
+                            }
+                        case "C_B07": //2
+                            {
+                                RPI RPICal = new RPI(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(RPICal.kqRPI(), 2).ToString());
+                                break;
+                            }
+                        case "C_B08": //2
+                            {
+                                sTfR sTfRCal = new sTfR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(sTfRCal.kqsTfR(), 2).ToString());
+                                break;
+                            }
+                        case "C_B09": //4
+                            {
+                                BMR BMRCal = new BMR(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(BMRCal.kqBMR_HB(), 2).ToString());
+                                kq.Add(Math.Round(BMRCal.kqBMR_Scho(), 2).ToString());
+                                break;
+                            }
+                        case "C_B10": //3
+                            {
+                                CDC_chieucao CDC_chieucaoCal = new CDC_chieucao(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_chieucaoCal.kqCDC_chieucao_danhgia());
+                                kq.Add(Math.Round(CDC_chieucaoCal.kqCDC_chieucao_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B11": //3
+                            {
+                                CDC_cannang CDC_cannangCal = new CDC_cannang(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_cannangCal.kqCDC_cannang_danhgia());
+                                kq.Add(Math.Round(CDC_cannangCal.kqCDC_cannang_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B12": //3
+                            {
+                                CDC_chuvi CDC_chuviCal = new CDC_chuvi(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_chuviCal.kqCDC_chuvi_danhgia());
+                                kq.Add(Math.Round(CDC_chuviCal.kqCDC_chuvi_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B13": //1
+                            {
+                                Vbudich VbudichCal = new Vbudich(double.Parse(inputs[0]));
+                                kq.Add(Math.Round(VbudichCal.kqVdich24h(), 2).ToString());
+                                kq.Add(Math.Round(VbudichCal.kqtocdotruyen24h(), 2).ToString());
+                                kq.Add(Math.Round(VbudichCal.kqVdich_theogio(), 2).ToString());
+                                break;
+                            }
+                        case "C_B14": //8
+                            {
+                                PELD_Old PELD_OldCal = new PELD_Old(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]),
+                                    double.Parse(inputs[6]),
+                                    KetnoiDB.str_to_bool(inputs[7]));
+                                kq.Add(Math.Round(PELD_OldCal.kqPELD_Old(), 2).ToString());
+                                break;
+                            }
+                        case "C_B15": //4
+                            {
+                                WHO_suyDD WHO_suyDDCal = new WHO_suyDD(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(WHO_suyDDCal.kqWHO_suyDD());
+                                kq.Add(Math.Round(WHO_suyDDCal.kqWHO_chieucao_zscore(), 2).ToString());
+                                kq.Add(Math.Round(WHO_suyDDCal.kqWHO_cannang_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B16":
+                            {
+                                eCrCl eCrClCal = new eCrCl(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(eCrClCal.kqeCrCl(), 2).ToString());
+                                break;
+                            }
+                        case "C_B17":
+                            {
+                                FEMg FEMgCal = new FEMg(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(FEMgCal.kqFEMg(), 2).ToString());
+                                break;
+                            }
+                        case "C_B18":
+                            {
+                                FENa FENaCal = new FENa(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(FENaCal.kqFENa(), 2).ToString());
+                                break;
+                            }
+                        case "C_B19":
+                            {
+                                KtVDaugirdas KtVDaugirdasCal = new KtVDaugirdas(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(KtVDaugirdasCal.kqKtVDaugirdas(), 2).ToString());
+                                break;
+                            }
+                        case "C_B20":
+                            {
+                                RRF_Kru RRF_KruCal = new RRF_Kru(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(RRF_KruCal.kqRRF_Kru(), 2).ToString());
+                                break;
+                            }
+                        case "C_B21": //2
+                            {
+                                ACR ACRCal = new ACR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(ACRCal.kqACR(), 2).ToString());
+                                break;
+                            }
+                    }
                 }
                 #endregion
                 #region C_C

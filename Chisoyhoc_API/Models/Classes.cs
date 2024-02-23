@@ -1441,12 +1441,18 @@ namespace Chisoyhoc_API
     }
     public class DLCO_Adj : Congthuc
     {
-        public double DLCOPredicted { get; set; }
-        public double Hb { get; set; }
-        public int tuoi { get; set; }
         public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double Hb { get; set; }
+        public double DLCOPredicted { get; set; }
+        public DLCO_Adj(Nguoibenh nb, Xetnghiem xn)
+        {
+            Hb = xn.Hb;
+            tuoi = nb.tinhtuoi_nam();
+            gioitinh = nb.gioitinh;
+        }
 
-        public DLCO_Adj(double _DLCOPredicted, double _Hb, int _tuoi, string _gioitinh)
+        public DLCO_Adj(string _gioitinh, double _tuoi, double _Hb,  double _DLCOPredicted)
         {
             DLCOPredicted = _DLCOPredicted;
             Hb = _Hb;
@@ -1484,35 +1490,40 @@ namespace Chisoyhoc_API
     public class PostFEV1 : Congthuc
     {
         public double preFEV1 { get; set; }
-        public double Y { get; set; }
-        public double Z { get; set; }
+        public double phanthuyCNcatbo { get; set; }
+        public double tongphanthuyCN { get; set; }
         public double phansuattuoimau { get; set; }
+        public bool phuongphapgiaiphau { get; set; }
 
         public PostFEV1()
         {
 
         }
 
-        public PostFEV1(double _preFEV1, double _Y, double _Z)
+        public PostFEV1(double _preFEV1, double _phanthuyCNcatbo, double _tongphanthuyCN, double _phansuattuoimau, bool _phuongphapgiaiphau)
         {
+            phuongphapgiaiphau = _phuongphapgiaiphau;
             preFEV1 = _preFEV1;
-            Y = _Y;
-            Z = _Z;
-        }
-        public PostFEV1(double _preFEV1, double _phansuattuoimau)
-        {
-            preFEV1 = _preFEV1;
+            phanthuyCNcatbo = _phanthuyCNcatbo;
+            tongphanthuyCN = _tongphanthuyCN;
             phansuattuoimau = _phansuattuoimau;
         }
-        public double kqPostFEV1_Dich()
+        public double PostFEV1_Dich()
         {
             double PostFEV1 = preFEV1 * (1 - phansuattuoimau);
             return PostFEV1;
         }
-        public double kqPostFEV1_GP()
+        public double PostFEV1_GP()
         {
-            double PostFEV1 = preFEV1 * (1 - Y / Z);
+            double PostFEV1 = preFEV1 * (1 - phanthuyCNcatbo / tongphanthuyCN);
             return PostFEV1;
+        }
+        public double kqPostFEV1()
+        {
+            if (phuongphapgiaiphau)
+                return PostFEV1_GP();
+            else
+                return PostFEV1_Dich();
         }
     }
     public class PEF : Congthuc
@@ -1631,10 +1642,10 @@ namespace Chisoyhoc_API
     public class MIPI : Congthuc
     {
         public double tuoi { get; set; }
-        public int ECOG { get; set; }
+        public double WBC { get; set; }
         public double LDHSerum { get; set; }
         public double LDHSerum_ULN { get; set; }
-        public double WBC { get; set; }
+        public int ECOG { get; set; }
 
         public MIPI()
         {
@@ -1645,7 +1656,7 @@ namespace Chisoyhoc_API
             tuoi = nb.tinhtuoi_nam();
             WBC = xn.WBC;
         }
-        public MIPI(double _tuoi, int _ECOG, double _LDHSerum, double _LDHSerum_ULN, double _WBC)
+        public MIPI(double _tuoi, double _WBC, double _LDHSerum, double _LDHSerum_ULN, int _ECOG)
         {
             tuoi = _tuoi;
             ECOG = _ECOG;
@@ -1742,8 +1753,8 @@ namespace Chisoyhoc_API
     public class BMR : Congthuc
     {
         public string gioitinh { get; set; }
-        public double cannang { get; set; }
         public double chieucao { get; set; }
+        public double cannang { get; set; }
         public double tuoi { get; set; }
 
         public BMR()
@@ -1757,9 +1768,9 @@ namespace Chisoyhoc_API
             chieucao = nb.chieucao;
             tuoi = nb.tinhtuoi_nam();
         }
-        public BMR(string _gioitinh, double _cannang, double _chieucao, double _tuoi)
+        public BMR(string _gioitinh, double _chieucao, double _cannang, double _tuoi)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             cannang = _cannang;
             chieucao = _chieucao;
             tuoi = _tuoi;
@@ -1949,7 +1960,7 @@ namespace Chisoyhoc_API
                 return 3;
             }
         }
-        public string kqCDC_chieucao_danhgia()
+        public string kqCDC_cannang_danhgia()
         {
             if (kqCDC_cannang() == 1)
             {
@@ -1988,24 +1999,24 @@ namespace Chisoyhoc_API
             return z_score(cannang, L, M, S);
         }
     }
-    public class CDC_Chuvi : Congthuc
+    public class CDC_chuvi : Congthuc
     {
         public string gioitinh { get; set; }
         public double tuoi { get; set; }
         public double chuvivongdau { get; set; }
         public double[] datachuvi { get; set; }
         public double[] dataLMS { get; set; }
-        public CDC_Chuvi()
+        public CDC_chuvi()
         {
 
         }
-        public CDC_Chuvi(string _gioitinh, double _tuoi, double _chuvivongdau)
+        public CDC_chuvi(string _gioitinh, double _tuoi, double _chuvivongdau)
         {
             gioitinh = _gioitinh;
             tuoi = _tuoi;
             chuvivongdau = _chuvivongdau;
         }
-        public CDC_Chuvi(Nguoibenh nb)
+        public CDC_chuvi(Nguoibenh nb)
         {
             gioitinh = nb.gioitinh;
             tuoi = nb.tinhtuoi_thang();
@@ -2115,18 +2126,18 @@ namespace Chisoyhoc_API
     }
     public class PELD_Old : Congthuc
     {
-        public bool macbenhduoi1t { get; set; }
         public string gioitinh { get; set; }
-        public double tuoi { get; set; }
-        public double cannang { get; set; }
         public double chieucao { get; set; }
+        public double cannang { get; set; }
+        public double tuoi { get; set; }
         public double BilirubinSerum { get; set; }
         public double INR { get; set; }
         public double AlbuminSerum { get; set; }
+        public bool macbenhduoi1t { get; set; }
 
         public PELD_Old()
         {
-            // Empty constructor
+
         }
         public PELD_Old(Nguoibenh nb, Xetnghiem xn)
         {
@@ -2136,19 +2147,17 @@ namespace Chisoyhoc_API
             chieucao = nb.chieucao;
             BilirubinSerum = xn.bilirubin;
         }
-
-        public PELD_Old(bool _macbenhduoi1t, string _gioitinh, double _tuoi, double _cannang, double _chieucao, double _BilirubinSerum, double _INR, double _AlbuminSerum)
+        public PELD_Old(string _gioitinh, double _chieucao, double _cannang, double _tuoi, double _BilirubinSerum, double _INR, double _AlbuminSerum, bool _macbenhduoi1t)
         {
-            macbenhduoi1t = _macbenhduoi1t;
             gioitinh = _gioitinh;
-            tuoi = _tuoi;
-            cannang = _cannang;
             chieucao = _chieucao;
+            cannang = _cannang;
+            tuoi = _tuoi;
             BilirubinSerum = _BilirubinSerum;
             INR = _INR;
             AlbuminSerum = _AlbuminSerum;
+            macbenhduoi1t = _macbenhduoi1t;
         }
-
         public double kqPELD_Old()
         {
             double hesotuoi_PELD = (macbenhduoi1t && tuoi < 2) ? 0.436 : 0;
@@ -2234,16 +2243,16 @@ namespace Chisoyhoc_API
     public class WHO_suyDD : Congthuc
     {
         public string gioitinh { get; set; }
-        public double tuoi { get; set; }
         public double chieucao { get; set; }
         public double cannang { get; set; }
+        public double tuoi { get; set; }
         public double[] dataLMS_H { get; set; }
         public double[] dataLMS_W { get; set; }
         public WHO_suyDD()
         {
 
         }
-        public WHO_suyDD(string _gioitinh, double _tuoi, double _chieucao, double _cannang)
+        public WHO_suyDD(string _gioitinh, double _chieucao, double _cannang,double _tuoi)
         {
             gioitinh = _gioitinh;
             tuoi = _tuoi;
