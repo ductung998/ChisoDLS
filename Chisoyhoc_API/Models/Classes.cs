@@ -2,9 +2,105 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Chisoyhoc_API.Models;
 
 namespace Chisoyhoc_API
 {
+    #region Ket not CSDL
+    public class KetnoiDB
+    {
+        public CSDL_PMChisoyhocDataContext connectDB;
+        public List<chisoyhoc> DSchiso;
+        public void initDB()
+        {
+            connectDB = new CSDL_PMChisoyhocDataContext();
+        }
+        public List<Dataclass.DSchisoyhoc> GetDSchisoyhoc()
+        {
+            initDB();
+            DSchiso = (from data in connectDB.chisoyhocs
+                       select data).ToList();
+
+            List<Dataclass.DSchisoyhoc> DSchisoyhoc = new List<Dataclass.DSchisoyhoc>();
+            foreach (chisoyhoc chiso in DSchiso)
+            {
+                Dataclass.DSchisoyhoc chisokq = new Dataclass.DSchisoyhoc(chiso.machiso, chiso.tenchiso);
+                DSchisoyhoc.Add(chisokq);
+            }
+            return DSchisoyhoc;
+        }
+        public string GetTenchiso(string _machiso)
+        {
+            initDB();
+            string tenchiso = (from data in connectDB.chisoyhocs
+                               where data.machiso == _machiso
+                               select data.tenchiso).FirstOrDefault();
+            return tenchiso;
+        }
+        public string GetMachiso(string _tenchiso)
+        {
+            initDB();
+            string machiso = (from data in connectDB.chisoyhocs
+                              where data.tenchiso == _tenchiso
+                              select data.machiso).FirstOrDefault();
+            return machiso;
+        }
+        public List<Dataclass.DSbienCSYH> GetDSbien(string machiso)
+        {
+            initDB();
+            List<chiso_DSbien> DSIDbien = (from data in connectDB.chiso_DSbiens
+                                  join rela in connectDB.r_chiso_biens on data.IDbien equals rela.IDBien
+                                  where rela.machiso == machiso
+                                  select data).ToList();
+            
+            List<Dataclass.DSbienCSYH> kq = new List<Dataclass.DSbienCSYH>();
+            foreach (chiso_DSbien bien in DSIDbien)
+            {
+                Dataclass.DSbienCSYH bienkq = new Dataclass.DSbienCSYH(bien.IDbien, bien.tenbien, bien.IDPhanloaibien, bien.IDbiengoc);
+                kq.Add(bienkq);
+            }
+            return kq;
+        }
+        public static bool str_to_bool(string input)
+        {
+            if (input.ToLower() == "true" || input.ToLower() == "1")
+                return true;
+            else if (input.ToLower() == "false" || input.ToLower() == "0")
+                return false;
+            else
+                throw new ArgumentException("Invalid boolean input: " + input);
+        }
+    }
+    #endregion
+    #region Data class
+    public class Dataclass
+    {
+        public class DSchisoyhoc
+        {
+            public string machiso { get; set; }
+            public string tenchiso { get; set; }
+            public DSchisoyhoc(string _machiso, string _tenchiso)
+            {
+                machiso = _machiso;
+                tenchiso = _tenchiso;
+            }
+        }
+        public class DSbienCSYH
+        {
+            public int IDBien { get; set; }
+            public string tenbien { get; set; }
+            public int IDPhanloaibien { get; set; }
+            public int IDBiengoc { get; set; }
+            public DSbienCSYH(int _IDBien, string _tenbien, int _IDPhanloaibien, int _IDBiengoc)
+            {
+                IDBien = _IDBien;
+                tenbien = _tenbien;
+                IDPhanloaibien = _IDPhanloaibien;
+                IDBiengoc = _IDBiengoc;
+            }
+        }
+    }
+    #endregion
     #region Users
     public class Users
     {
@@ -25,6 +121,7 @@ namespace Chisoyhoc_API
         public double chieucao { get; set; }
         public double cannang { get; set; }
         public int nhiptim { get; set; }
+        public int nhiptho { get; set; }
         public double thannhiet { get; set; }
         public int HATThu { get; set; }
         public int HATTruong { get; set; }
@@ -42,7 +139,7 @@ namespace Chisoyhoc_API
 
         }
         public Nguoibenh(string _idnb, string _hoten, string _gioitinh, DateTime _ngaysinh, double _chieucao, double _cannang,
-                     int _nhiptim, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
+                     int _nhiptim, int _nhiptho, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
                      bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
         {
             IDNB = _idnb;
@@ -53,6 +150,7 @@ namespace Chisoyhoc_API
             chieucao = _chieucao;
             cannang = _cannang;
             nhiptim = _nhiptim;
+            nhiptho = _nhiptho;
             thannhiet = _thannhiet;
             HATThu = _hatThu;
             HATTruong = _hatTruong;
@@ -66,7 +164,7 @@ namespace Chisoyhoc_API
             thieumaunao = _thieumaunao;
         }
         public void capnhat(string _hoten, string _gioitinh, DateTime _ngaysinh, double _chieucao, double _cannang,
-             int _nhiptim, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
+             int _nhiptim, int _nhiptho, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
              bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
         {
             hoten = _hoten;
@@ -76,6 +174,7 @@ namespace Chisoyhoc_API
             chieucao = _chieucao;
             cannang = _cannang;
             nhiptim = _nhiptim;
+            nhiptho = _nhiptho;
             thannhiet = _thannhiet;
             HATThu = _hatThu;
             HATTruong = _hatTruong;
@@ -124,6 +223,8 @@ namespace Chisoyhoc_API
         public double AST { get; set; }
         public double ALT { get; set; }
         public double BUN { get; set; }
+        public double albumin { get; set; }
+        public double proteinSerum { get; set; }
         public double bilirubin { get; set; }
         public double totalCholesterol { get; set; }
         public double triglyceride { get; set; }
@@ -156,18 +257,29 @@ namespace Chisoyhoc_API
         public double cloUrine { get; set; }
         public double ureUrine { get; set; }
         public double glucoseUrine { get; set; }
+        public double PO2 { get; set; }
+        public double PaO2 { get; set; }
+        public double PvO2 { get; set; }
+        public double PCO2 { get; set; }
+        public double PaCO2 { get; set; }
+        public double PvCO2 { get; set; }
+        public double FiO2 { get; set; }
+        public double SpO2 { get; set; }
+        public double INR { get; set; }
         public Xetnghiem()
         {
 
         }
         public Xetnghiem(string _idxn, double _creatininSerum, double _creatininUrine, double _ast, double _alt,
-            double _bun, double _bilirubin, double _totalCholesterol, double _triglyceride, double _ldl,
+            double _bun, double _albumin, double _proteinSerum, double _bilirubin, double _totalCholesterol, double _triglyceride, double _ldl,
             double _hdl, double _rbc, double _hb, double _hct, double _platelet, double _wbc,
             double _wbcEos, double _wbcBas, double _wbcNeu, double _wbcMono, double _wbcLympho,
             double _wbcEos_tyle, double _wbcBas_tyle, double _wbcNeu_tyle, double _wbcMono_tyle, double _wbcLympho_tyle,
             double _natriSerum, double _kaliSerum, double _canxiSerum, double _cloSerum,
             double _hco3Serum, double _phSerum, double _glucoseSerum, double _natriUrine,
-            double _kaliUrine, double _cloUrine, double _ureUrine, double _glucoseUrine)
+            double _kaliUrine, double _cloUrine, double _ureUrine, double _glucoseUrine,
+            double _PO2, double _PaO2, double _PvO2, double _PCO2, double _PaCO2, double _PvCO2,
+            double _FiO2, double _SpO2, double _INR)
         {
             IDXN = _idxn;
             creatininSerum = _creatininSerum;
@@ -175,6 +287,8 @@ namespace Chisoyhoc_API
             AST = _ast;
             ALT = _alt;
             BUN = _bun;
+            albumin = _albumin;
+            proteinSerum = _proteinSerum;
             bilirubin = _bilirubin;
             totalCholesterol = _totalCholesterol;
             triglyceride = _triglyceride;
@@ -207,6 +321,15 @@ namespace Chisoyhoc_API
             cloUrine = _cloUrine;
             ureUrine = _ureUrine;
             glucoseUrine = _glucoseUrine;
+            PO2 = _PO2;
+            PaO2 = _PaO2;
+            PvO2 = _PvO2;
+            PCO2 = _PCO2;
+            PaCO2 = _PaCO2;
+            PvCO2 = _PvCO2;
+            FiO2 = _FiO2;
+            SpO2 = _SpO2;
+            INR = _INR;
         }
     }
     #endregion
@@ -277,9 +400,34 @@ namespace Chisoyhoc_API
 
     public class Thangdiem : Chisoyhoc
     {
+        public CSDL_PMChisoyhocDataContext connectDB;
         public Thangdiem()
         {
 
+        }
+        public void initDB()
+        {
+            connectDB = new CSDL_PMChisoyhocDataContext();
+        }
+        public List<string> laygiatri(int _IDBien)
+        {
+            List<string> DSgiatri = new List<string>();
+
+//            int phanloaibien = (from data in connectDB.chiso_DSbiens
+//                               where data.IDbien == _IDBien
+//                               select data.IDPhanloaibien).FirstOrDefault();
+            DSgiatri = (from data in connectDB.chiso_DSbienDTs
+                        where data.IDbien == _IDBien
+                        select data.giatri).ToList();
+            return DSgiatri;
+        }
+        public double laydiem(int _IDBien)
+        {
+            double? laydiem = (from data in connectDB.chiso_DSbienDTs
+                           where data.IDbien == _IDBien
+                           select data.diem).FirstOrDefault();
+            double diem = laydiem ?? 404;
+            return diem;
         }
     }
     #endregion
@@ -320,8 +468,8 @@ namespace Chisoyhoc_API
     public class AdjBW : Congthuc
     {
         public string gioitinh { get; set; }
-        public double cannang { get; set; }
         public double chieucao { get; set; }
+        public double cannang { get; set; }
         public AdjBW()
         {
 
@@ -350,8 +498,8 @@ namespace Chisoyhoc_API
     public class LBW : Congthuc
     {
         public string gioitinh { get; set; }
-        public double cannang { get; set; }
         public double chieucao { get; set; }
+        public double cannang { get; set; }
 
         public LBW()
         {
@@ -363,7 +511,7 @@ namespace Chisoyhoc_API
             cannang = nb.cannang;
             chieucao = nb.chieucao;
         }
-        public LBW(string _gioitinh, double _cannang, double _chieucao)
+        public LBW(string _gioitinh, double _chieucao, double _cannang)
         {
             gioitinh = _gioitinh;
             cannang = _cannang;
@@ -381,10 +529,9 @@ namespace Chisoyhoc_API
     }
     public class AlcoholSerum : Congthuc
     {
+        public double cannang { get; set; }
         public double AlcoholVolume { get; set; }
         public double AlcoholConcentration { get; set; }
-        public double cannang { get; set; }
-
         public AlcoholSerum()
         {
 
@@ -393,7 +540,7 @@ namespace Chisoyhoc_API
         {
             cannang = nb.cannang;
         }
-        public AlcoholSerum(double _AlcoholVolume, double _AlcoholConcentration, double _cannang)
+        public AlcoholSerum(double _cannang, double _AlcoholVolume, double _AlcoholConcentration)
         {
             AlcoholVolume = _AlcoholVolume;
             AlcoholConcentration = _AlcoholConcentration;
@@ -447,9 +594,8 @@ namespace Chisoyhoc_API
     }
     public class BMI : Congthuc
     {
-        public double cannang { get; set; }
         public double chieucao { get; set; }
-
+        public double cannang { get; set; }
         public BMI()
         {
 
@@ -475,30 +621,29 @@ namespace Chisoyhoc_API
     }
     public class AaG : Congthuc
     {
-        public double FiO2 { get; set; }
-        public double docaouoctinh { get; set; }
-        public double thannhiet { get; set; }
-        public double pCO2 { get; set; }
-        public double Hesohohap { get; set; }
         public double tuoi { get; set; }
+        public double thannhiet { get; set; }
+        public double FiO2 { get; set; }
+        public double pCO2 { get; set; }
         public double PaO2 { get; set; }
-
+        public double docaouoctinh { get; set; }
+        public double Hesohohap { get; set; }
         public AaG()
         {
 
         }
-        public AaG(Nguoibenh NB)
+        public AaG(Nguoibenh NB, Xetnghiem XN)
         {
             tuoi = NB.tinhtuoi_nam();
             thannhiet = NB.thannhiet;
-            FiO2 = 0;
+            FiO2 = XN.FiO2;
             docaouoctinh = 0;
-            pCO2 = 0;
+            pCO2 = XN.PCO2;
             Hesohohap = 0;
-            PaO2 = 0;
+            PaO2 = XN.PaO2; 
         }
 
-        public AaG(double _FiO2, double _docaouoctinh, double _thannhiet, double _pCO2, double _Hesohohap, double _tuoi, double _PaO2)
+        public AaG(double _tuoi, double _thannhiet, double _FiO2, double _pCO2, double _PaO2, double _docaouoctinh, double _Hesohohap)
         {
             FiO2 = _FiO2;
             docaouoctinh = _docaouoctinh;
@@ -509,7 +654,7 @@ namespace Chisoyhoc_API
             PaO2 = _PaO2;
         }
 
-        public double CalculateAaG()
+        public double kqAaG()
         {
             double pKhiquyen = 760 * Math.Exp(docaouoctinh);
             double pH2O = 47 * Math.Exp((thannhiet - 37) / 18.4);
@@ -517,7 +662,7 @@ namespace Chisoyhoc_API
             return AaG;
         }
 
-        public double CalculateAaGnormal()
+        public double kqAaGnormal()
         {
             double AaGnormal = 2.5 + (0.21 * tuoi);
             return AaGnormal;
@@ -525,9 +670,9 @@ namespace Chisoyhoc_API
     }   
     public class CalciSerum_Adj : Congthuc
     {
+        public double calciSerum { get; set; }
         public double albuminSerumNorm { get; set; }
         public double albuminSerum { get; set; }
-        public double calciSerum { get; set; }
 
         public CalciSerum_Adj()
         {
@@ -540,7 +685,7 @@ namespace Chisoyhoc_API
             albuminSerum = 0;
         }
 
-        public CalciSerum_Adj(double _normAlbumin, double _albuminSerum, double _calciSerum)
+        public CalciSerum_Adj(double _calciSerum, double _normAlbumin, double _albuminSerum)
         {
             albuminSerumNorm = _normAlbumin;
             albuminSerum = _albuminSerum;
@@ -616,10 +761,10 @@ namespace Chisoyhoc_API
     }
     public class SOG : Congthuc
     {
-        public double OsmSerum { get; set; }
         public double NatriSerum { get; set; }
         public double BUN { get; set; }
         public double GlucoseSerum { get; set; }
+        public double OsmSerum { get; set; }
 
         public SOG()
         {
@@ -631,7 +776,7 @@ namespace Chisoyhoc_API
             BUN = XN.BUN;
             GlucoseSerum = XN.glucoseSerum;
         }
-        public SOG(double _OsmSerum, double _NatriSerum, double _BUN, double _GlucoseSerum)
+        public SOG(double _NatriSerum, double _BUN, double _GlucoseSerum, double _OsmSerum)
         {
             OsmSerum = _OsmSerum;
             NatriSerum = _NatriSerum;
@@ -671,8 +816,8 @@ namespace Chisoyhoc_API
     public class UAG : Congthuc
     {
         public double NatriUrine { get; set; }
-        public double KaliUrine { get; set; }
         public double CloUrine { get; set; }
+        public double KaliUrine { get; set; }
 
         public UAG()
         {
@@ -684,7 +829,7 @@ namespace Chisoyhoc_API
             KaliUrine = XN.kaliUrine;
             CloUrine = XN.cloUrine;
         }
-        public UAG(double _NatriUrine, double _KaliUrine, double _CloUrine)
+        public UAG(double _NatriUrine, double _CloUrine, double _KaliUrine)
         {
             NatriUrine = _NatriUrine;
             KaliUrine = _KaliUrine;
@@ -699,15 +844,15 @@ namespace Chisoyhoc_API
     }
     public class UOG : Congthuc
     {
-        public double OsmUrine { get; set; }
         public double NatriUrine { get; set; }
         public double KaliUrine { get; set; }
         public double UreUrine { get; set; }
         public double GlucoseUrine { get; set; }
+        public double OsmUrine { get; set; }
 
         public UOG()
         {
-            // Empty constructor
+            
         }
         public UOG(Xetnghiem XN)
         {
@@ -716,7 +861,7 @@ namespace Chisoyhoc_API
             UreUrine = XN.ureUrine;
             GlucoseUrine = XN.glucoseUrine;
         }
-        public UOG(double _OsmUrine, double _NatriUrine, double _KaliUrine, double _UreUrine, double _GlucoseUrine)
+        public UOG(double _NatriUrine, double _KaliUrine, double _UreUrine, double _GlucoseUrine,double _OsmUrine)
         {
             OsmUrine = _OsmUrine;
             NatriUrine = _NatriUrine;
@@ -753,7 +898,7 @@ namespace Chisoyhoc_API
             SetCoefficients();
         }
 
-        public eGFR_CKD(string _gioitinh, double _CreatininSerum, double _tuoi)
+        public eGFR_CKD(double _tuoi, double _cannang, string _gioitinh, double _CreatininSerum, string _chungtoc)
         {
             gioitinh = _gioitinh.ToLower();
             CreatininSerum = _CreatininSerum;
@@ -797,7 +942,7 @@ namespace Chisoyhoc_API
             chungtoc = "người châu á";
         }
 
-        public eGFR_MDRD(double _CreatininSerum, double _tuoi, string _chungtoc, string _gioitinh)
+        public eGFR_MDRD(double _tuoi, double _cannang, string _gioitinh, double _CreatininSerum, string _chungtoc)
         {
             CreatininSerum = _CreatininSerum;
             tuoi = _tuoi;
@@ -816,10 +961,10 @@ namespace Chisoyhoc_API
     }
     public class eCrCl : Congthuc
     {
-        public double tuoi { get; set; }
-        public double cannang { get; set; }
-        public double CreatininSerum { get; set; }
         public string gioitinh { get; set; }
+        public double cannang { get; set; }
+        public double tuoi { get; set; }
+        public double CreatininSerum { get; set; }
 
         public eCrCl()
         {
@@ -833,7 +978,7 @@ namespace Chisoyhoc_API
             gioitinh = NB.gioitinh;
         }
 
-        public eCrCl(double _tuoi, double _cannang, double _CreatininSerum, string _gioitinh)
+        public eCrCl(string _gioitinh, double _cannang, double _tuoi, double _CreatininSerum)
         {
             tuoi = _tuoi;
             cannang = _cannang;
@@ -850,10 +995,10 @@ namespace Chisoyhoc_API
     }
     public class FEMg : Congthuc
     {
-        public double MagieUrine { get; set; }
         public double CreatininSerum { get; set; }
-        public double MagieSerum { get; set; }
         public double CreatininUrine { get; set; }
+        public double MagieUrine { get; set; }
+        public double MagieSerum { get; set; }
 
         public FEMg()
         {
@@ -864,7 +1009,7 @@ namespace Chisoyhoc_API
             CreatininSerum = XN.creatininSerum;
             CreatininUrine = XN.creatininUrine;
         }
-        public FEMg(double _MagieUrine, double _CreatininSerum, double _MagieSerum, double _CreatininUrine)
+        public FEMg(double _CreatininSerum, double _CreatininUrine, double _MagieUrine,double _MagieSerum)
         {
             MagieUrine = _MagieUrine;
             CreatininSerum = _CreatininSerum;
@@ -880,9 +1025,9 @@ namespace Chisoyhoc_API
     }
     public class FENa : Congthuc
     {
+        public double NatriSerum { get; set; }
         public double NatriUrine { get; set; }
         public double CreatininSerum { get; set; }
-        public double NatriSerum { get; set; }
         public double CreatininUrine { get; set; }
 
         public FENa()
@@ -896,7 +1041,7 @@ namespace Chisoyhoc_API
             NatriSerum = XN.natriSerum;
             CreatininUrine = XN.creatininUrine;
         }
-        public FENa(double _NatriUrine, double _CreatininSerum, double _NatriSerum, double _CreatininUrine)
+        public FENa(double _NatriSerum, double _NatriUrine, double _CreatininSerum, double _CreatininUrine)
         {
             NatriUrine = _NatriUrine;
             CreatininSerum = _CreatininSerum;
@@ -904,7 +1049,7 @@ namespace Chisoyhoc_API
             CreatininUrine = _CreatininUrine;
         }
 
-        public double kqFENatri()
+        public double kqFENa()
         {
             double kq = (NatriUrine * CreatininSerum) / (NatriSerum * CreatininUrine);
             return kq;
@@ -912,19 +1057,18 @@ namespace Chisoyhoc_API
     }
     public class KtVDaugirdas : Congthuc
     {
-        public double BUNsauloc { get; set; }
         public double BUNtruocloc { get; set; }
+        public double BUNsauloc { get; set; }
         public double tglocmau { get; set; }
         public double Vlocmau { get; set; }
         public double cannangsaulocmau { get; set; }
-        public double KtVDaugirdasResult { get; set; }
 
         public KtVDaugirdas()
         {
 
         }
 
-        public KtVDaugirdas(double _BUNsauloc, double _BUNtruocloc, double _tglocmau, double _Vlocmau, double _cannangsaulocmau)
+        public KtVDaugirdas(double _BUNtruocloc, double _BUNsauloc, double _tglocmau, double _Vlocmau, double _cannangsaulocmau)
         {
             BUNsauloc = _BUNsauloc;
             BUNtruocloc = _BUNtruocloc;
@@ -935,14 +1079,15 @@ namespace Chisoyhoc_API
 
         public double kqKtVDaugirdas()
         {
-            KtVDaugirdasResult = -Math.Log((BUNsauloc / BUNtruocloc) - (0.008 * tglocmau)) + ((4 - (3.5 * BUNsauloc / BUNtruocloc)) * Vlocmau / cannangsaulocmau);
-            return KtVDaugirdasResult;
+            double kq = -Math.Log((BUNsauloc / BUNtruocloc) - (0.008 * tglocmau)) +
+                ((4 - (3.5 * BUNsauloc / BUNtruocloc)) * Vlocmau / cannangsaulocmau);
+            return kq;
         }
     }
     public class RRF_Kru : Congthuc
     {
-        public double VUrineRRF { get; set; }
         public double UreUrine { get; set; }
+        public double VUrineRRF { get; set; }
         public double IntervalRRF { get; set; }
         public double BUN1RRF { get; set; }
         public double BUN2RRF { get; set; }
@@ -953,7 +1098,7 @@ namespace Chisoyhoc_API
 
         }
 
-        public RRF_Kru(double _VUrineRRF, double _UreUrine, double _IntervalRRF, double _BUN1RRF, double _BUN2RRF)
+        public RRF_Kru(double _UreUrine, double _VUrineRRF, double _IntervalRRF, double _BUN1RRF, double _BUN2RRF)
         {
             VUrineRRF = _VUrineRRF;
             UreUrine = _UreUrine;
@@ -970,8 +1115,8 @@ namespace Chisoyhoc_API
     }
     public class ACR : Congthuc
     {
-        public double AlbuminUrine { get; set; }
         public double CreatininUrine { get; set; }
+        public double AlbuminUrine { get; set; }
 
         public ACR()
         {
@@ -981,7 +1126,7 @@ namespace Chisoyhoc_API
         {
             CreatininUrine = XN.creatininUrine;
         }
-        public ACR(double _AlbuminUrine, double _CreatininUrine)
+        public ACR(double _CreatininUrine, double _AlbuminUrine)
         {
             AlbuminUrine = _AlbuminUrine;
             CreatininUrine = _CreatininUrine;
@@ -1039,7 +1184,7 @@ namespace Chisoyhoc_API
             chungtoc = "người châu á";
             tuoi = NB.tinhtuoi_nam();
         }
-        public eAER(double _AlbuminUrine, double _CreatininUrine, string _gioitinh, string _chungtoc, double _tuoi)
+        public eAER(string _gioitinh, double _tuoi, double _CreatininUrine, string _chungtoc, double _AlbuminUrine)
         {
             AlbuminUrine = _AlbuminUrine;
             CreatininUrine = _CreatininUrine;
@@ -1079,6 +1224,40 @@ namespace Chisoyhoc_API
             return eAERResult;
         }
     }
+    public class ePER : Congthuc
+    {
+        public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double creatininUrine { get; set; }
+        public string chungtoc { get; set; }
+        public double proteinUrine { get; set; }
+
+        public ePER()
+        {
+
+        }
+
+        public ePER(string _gioitinh, double _tuoi, double _creatininUrine, string _chungtoc, double _proteinUrine)
+        {
+            gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            creatininUrine = _creatininUrine;
+            chungtoc = _chungtoc;
+            proteinUrine = _proteinUrine;
+        }
+
+        public double kqePER()
+        {
+            double ePER = proteinUrine / creatininUrine * ((gioitinh == "nam") ?
+                         ((chungtoc == "người da đen") ?
+                         1413.9 + (23.2 * tuoi) - (0.3 * tuoi * tuoi) :
+                         1307.3 + (23.1 * tuoi) - (0.3 * tuoi * tuoi)) :
+                         ((chungtoc == "người da đen") ?
+                         1148.6 + (15.6 * tuoi) - (0.3 * tuoi * tuoi) :
+                         1051.3 + (5.3 * tuoi) - (0.1 * tuoi * tuoi)));
+            return ePER;
+        }
+    }
     public class TocDoTruyen : Congthuc
     {
         public double VdichTruyen { get; set; }
@@ -1105,9 +1284,9 @@ namespace Chisoyhoc_API
     }
     public class CrCl24h : Congthuc
     {
+        public double CreatininSerum { get; set; }
         public double CreatininUrine { get; set; }
         public double VUrine24h { get; set; }
-        public double CreatininSerum { get; set; }
 
         public CrCl24h()
         {
@@ -1118,7 +1297,7 @@ namespace Chisoyhoc_API
             CreatininUrine = XN.creatininUrine;
             CreatininSerum = XN.creatininSerum;
         }
-        public CrCl24h(double _CreatininUrine, double _VUrine24h, double _CreatininSerum)
+        public CrCl24h(double _CreatininSerum, double _CreatininUrine, double _VUrine24h)
         {
             CreatininUrine = _CreatininUrine;
             VUrine24h = _VUrine24h;
@@ -1133,13 +1312,13 @@ namespace Chisoyhoc_API
     }
     public class eGFR_Schwartz : Congthuc
     {
-        public string loaiXNcreatinin { get; set; }
-        public bool benhthanman { get; set; }
-        public double tuoi { get; set; }
-        public bool sinhnon { get; set; }
         public string gioitinh { get; set; }
         public double chieucao { get; set; }
+        public double tuoi { get; set; }
         public double CreatininSerum { get; set; }
+        public bool sinhnon { get; set; }
+        public string loaiXNcreatinin { get; set; }
+        public bool benhthanman { get; set; }
         public double eGFR_SchwartzResult { get; set; }
 
         public eGFR_Schwartz()
@@ -1156,15 +1335,15 @@ namespace Chisoyhoc_API
             chieucao = NB.chieucao;
             CreatininSerum = XN.creatininSerum;
         }
-        public eGFR_Schwartz(string _loaiXNcreatinin, bool _benhthanman, double _tuoi, bool _sinhnon, string _gioitinh, double _chieucao, double _CreatininSerum)
+        public eGFR_Schwartz(string _gioitinh, double _chieucao, double _tuoi, double _CreatininSerum, bool _sinhnon, string _loaiXNcreatinin, bool _benhthanman)
         {
-            loaiXNcreatinin = _loaiXNcreatinin.ToLower();
-            benhthanman = _benhthanman;
-            tuoi = _tuoi;
-            sinhnon = _sinhnon;
             gioitinh = _gioitinh.ToLower();
             chieucao = _chieucao;
+            tuoi = _tuoi;
             CreatininSerum = _CreatininSerum;
+            sinhnon = _sinhnon;
+            loaiXNcreatinin = _loaiXNcreatinin.ToLower();
+            benhthanman = _benhthanman;
         }
 
         public double kqeGFR_Schwartz()
@@ -1195,26 +1374,28 @@ namespace Chisoyhoc_API
     public class MPM0 : Congthuc
     {
         public int tuoi { get; set; }
-        public double honmeF { get; set; }
         public double nhiptimF { get; set; }
         public double sbpF { get; set; }
+        public double strokenaoF { get; set; }
         public double suythanmanF { get; set; }
+        public double honmeF { get; set; }
+        public double glasgowcomaF { get; set; }
         public double xoganF { get; set; }
         public double ungthuF { get; set; }
         public double suythancapF { get; set; }
         public double loannhipF { get; set; }
-        public double strokenaoF { get; set; }
         public double xhthF { get; set; }
         public double khoinoisoF { get; set; }
         public double hoisuctimF { get; set; }
         public double thongkhicohocF { get; set; }
         public double yeucauphauthuatF { get; set; }
+        public double capcuutimphoiF { get; set; }
         public double fullcodeF { get; set; }
 
-        public MPM0(int _tuoi, bool _honme, int _glasgowcoma, int _nhiptim, int _sbp, bool _suythanman, bool _xogan,
-                    bool _ungthudican, bool _suythancap, bool _loannhip, bool _strokebrain,
-                    bool _xuathuyettieuhoa, bool _khoinoiso, bool _hoisuctim, bool _thongkhicohoc,
-                    bool _yeucauphauthuat, bool _capcuutimphoi)
+        public MPM0(int _tuoi, int _nhiptim, int _sbp, bool _strokebrain, bool _suythanman, bool _honme,
+                int _glasgowcoma, bool _xogan, bool _ungthudican, bool _suythancap, bool _loannhip,
+                bool _xuathuyettieuhoa, bool _khoinoiso, bool _hoisuctim, bool _thongkhicohoc,
+                bool _yeucauphauthuat, bool _capcuutimphoi)
         {
             tuoi = _tuoi;
             honmeF = (_honme || _glasgowcoma < 5) ? 2.050514 : 0;
@@ -2141,20 +2322,20 @@ namespace Chisoyhoc_API
             return z_score(cannang, L, M, S);
         }
     }
-    public class ePER : Congthuc
+    public class ePER_PNCT : Congthuc
     {
         public double proteinUrine { get; set; }
         public double creatininUrine { get; set; }
 
-        public ePER()
+        public ePER_PNCT()
         {
 
         }
-        public ePER(Xetnghiem xn)
+        public ePER_PNCT(Xetnghiem xn)
         {
             creatininUrine = xn.creatininUrine;
         }
-        public ePER(double _ProteinUrine, double _CreatininUrine)
+        public ePER_PNCT(double _ProteinUrine, double _CreatininUrine)
         {
             proteinUrine = _ProteinUrine;
             creatininUrine = _CreatininUrine;
@@ -3095,61 +3276,50 @@ namespace Chisoyhoc_API
     }
     #endregion
     #region Chỉ số y học chi tiết - Thang điểm
+    public class APACHEII : Thangdiem
+    {
+
+    }
     public class GlasgowComa : Thangdiem
     {
-        public int mat { get; set; }
-        public int loinoi { get; set; }
-        public int vandong { get; set; }
+        //T_A14
+        public int GSC_01 { get; set; }
+        public int GSC_02 { get; set; }
+        public int GSC_03 { get; set; }
+        private string machiso = "T_A14";
         public GlasgowComa()
         {
-
+            initDB();
         }
-        public GlasgowComa(string _mat, string _loinoi, string _vandong)
+        public GlasgowComa(int _mat, int _loinoi, int _vandong)
+        {
+            initDB();
+        }
+        public void checkMat(int _idbien, int _mat)
+        {
+            string kq = (from data in connectDB.chiso_DSbienDTs
+                     where data.thutu == _mat && data.IDbien == _idbien
+                     select data.diem).ToString();
+            GSC_01 = int.Parse(kq);
+        }
+        public void checkLoinoi(int _idbien, int _loinoi)
         {
 
         }
-        public void checkMat(string _mat)
+        public void checkVandong(int _idbien, int _vandong)
         {
-            if (_mat == "Mở mắt tự nhiên")
-                mat = 4;
-            else if (_mat == "Mở mắt khi được gọi")
-                mat = 3;
-            else if (_mat == "Mở mắt khi bị kích thích đau")
-                mat = 2;
-            else if (_mat == "Không mở mắt")
-                mat = 1;
-        }
-        public void checkLoinoi(string _loinoi)
-        {
-            if (_loinoi == "Trả lời chính xác")
-                loinoi = 5;
-            else if (_loinoi == "Có nhầm lẫn (lú lẫn)")
-                loinoi = 4;
-            else if (_loinoi == "Phát ngôn vô nghĩa (thành câu, không đúng câu hỏi)")
-                loinoi = 3;
-            else if (_loinoi == "Phát ngôn khó hiểu (không thành câu hay từ có nghĩa)")
-                loinoi = 2;
-            else if (_loinoi == "Im lặng")
-                loinoi = 1;
-        }
-        public void checkVandong(string _vandong)
-        {
-            if (_vandong == "Thực hiện đúng y lệnh")
-                vandong = 6;
-            else if (_vandong == "Phản xạ cục bộ với kích thích đau")
-                vandong = 5;
-            else if (_vandong == "Phản xạ toàn thân với kích thích đau")
-                vandong = 4;
-            else if (_vandong == "Co cứng mất vỏ khi gây đau (decorticate posturing)")
-                vandong = 3;
-            else if (_vandong == "Tư thế duỗi cứng mất não (decerebrate posturing)")
-                vandong = 2;
-            else if (_vandong == "Nằm yên, không đáp ứng kích thích đau")
-                vandong = 1;
+
         }
         public int kqGlasgowComa()
         {
-            return mat + loinoi + vandong;
+            return GSC_01 + GSC_02 + GSC_03;
+        }
+        public class GSC_Data
+        {
+            public GSC_Data()
+            {
+
+            }
         }
     }
     public class SCORE2_DM : Thangdiem
@@ -3317,8 +3487,8 @@ namespace Chisoyhoc_API
         }
         private void checkEGFR(string _gioitinh, double _creatininSerum, double _tuoi)
         {
-            //eGFR
-            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_gioitinh, _creatininSerum, _tuoi);
+            //eGFR CKD khong can can nang & chung toc
+            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_tuoi,0,_gioitinh,_creatininSerum,"");
             double kqeGFR = eGFR_CKD_temp.kqeGFR_CKD();
             if (kqeGFR < 45)
                 nhomEGFR = 0;
