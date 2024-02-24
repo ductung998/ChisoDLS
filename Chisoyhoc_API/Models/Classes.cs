@@ -63,6 +63,7 @@ namespace Chisoyhoc_API
         }
         public List<string> Xulycongthuc(string machiso, string input)
         {
+            // truyền vào machiso và input, trả về kết quả dạng List<string>
             List<string> kq = new List<string>();
 
             string[] inputs = input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
