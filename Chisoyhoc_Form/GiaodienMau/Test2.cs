@@ -41,5 +41,10 @@ namespace Chisoyhoc_Form.GiaodienMau
             MessageBox.Show(((ComboBoxItem)comboBox1.SelectedItem).ID.ToString());
         }
 
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

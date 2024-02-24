@@ -61,6 +61,720 @@ namespace Chisoyhoc_API
             }
             return kq;
         }
+        public List<string> Xulycongthuc(string machiso, string input)
+        {
+            List<string> kq = new List<string>();
+
+            string[] inputs = input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (machiso.Substring(0, 1) == "C")
+            {
+                #region C_A
+                if (machiso.Substring(0, 3) == "C_A")
+                {
+                    switch (machiso)
+                    {
+                        case "C_A01": //2
+                            {
+                                IBW IBWCal = new IBW(inputs[0],
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(IBWCal.kqIBW(), 2).ToString());
+                                break;
+                            }
+                        case "C_A02": //3
+                            {
+                                AdjBW AdjBWCal = new AdjBW(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(AdjBWCal.kqAdjBW(), 2).ToString());
+                                break;
+                            }
+                        case "C_A03":
+                            {
+                                LBW LBWCal = new LBW(inputs[0], double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(LBWCal.KqLBW(), 2).ToString());
+                                break;
+                            }
+                        case "C_A04":
+                            {
+                                AlcoholSerum AlcoholSerumCal = new AlcoholSerum(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(AlcoholSerumCal.kqAlcoholSerum(), 2).ToString());
+                                break;
+                            }
+                        case "C_A05":
+                            {
+                                Budichbong BudichbongCal = new Budichbong(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(BudichbongCal.kqVdich24h(), 2).ToString());
+                                kq.Add(Math.Round(BudichbongCal.kqtocdotruyen8h(), 2).ToString());
+                                kq.Add(Math.Round(BudichbongCal.kqtocdotruyen16h(), 2).ToString());
+                                break;
+                            }
+                        case "C_A06":
+                            {
+                                BMI BMICal = new BMI(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(BMICal.kqBMI(), 2).ToString());
+                                break;
+                            }
+                        case "C_A07":
+                            {
+                                AaG AaGCal = new AaG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]),
+                                    double.Parse(inputs[6]));
+                                kq.Add(Math.Round(AaGCal.kqAaG(), 2).ToString());
+                                kq.Add(Math.Round(AaGCal.kqAaGnormal(), 2).ToString());
+                                break;
+                            }
+                        case "C_A08":
+                            {
+                                CalciSerum_Adj CalciSerum_AdjCal = new CalciSerum_Adj(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(CalciSerum_AdjCal.kqCalciSerum_Adj(), 2).ToString());
+                                break;
+                            }
+                        case "C_A09":
+                            {
+                                BSA BSACal = new BSA(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(BSACal.kqBSA_Dub(), 2).ToString());
+                                kq.Add(Math.Round(BSACal.kqBSA_Mos(), 2).ToString());
+                                break;
+                            }
+                        case "C_A10":
+                            {
+                                SAG SAGCal = new SAG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(SAGCal.kqSAG(), 2).ToString());
+                                break;
+                            }
+                        case "C_A11":
+                            {
+                                SOG SOGCal = new SOG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(SOGCal.kqSOG(), 2).ToString());
+                                break;
+                            }
+                        case "C_A12":
+                            {
+                                StOG StOGCal = new StOG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(StOGCal.kqStOG(), 2).ToString());
+                                break;
+                            }
+                        case "C_A13":
+                            {
+                                UAG UAGCal = new UAG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(UAGCal.kqUAG(), 2).ToString());
+                                break;
+                            }
+                        case "C_A14":
+                            {
+                                UOG UOGCal = new UOG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(UOGCal.kqUOG(), 2).ToString());
+                                break;
+                            }
+                        case "C_A15":
+                            {
+                                eGFR_CKD eGFR_CKDCal = new eGFR_CKD(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    inputs[2],
+                                    double.Parse(inputs[3]),
+                                    inputs[4]);
+                                eGFR_MDRD eGFR_MDRDCal = new eGFR_MDRD(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    inputs[2],
+                                    double.Parse(inputs[3]),
+                                    inputs[4]);
+                                kq.Add(Math.Round(eGFR_CKDCal.kqeGFR_CKD(), 2).ToString());
+                                kq.Add(Math.Round(eGFR_MDRDCal.kqeGFR_MDRD(), 2).ToString());
+                                break;
+                            }
+                        case "C_A16":
+                            {
+                                eCrCl eCrClCal = new eCrCl(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(eCrClCal.kqeCrCl(), 2).ToString());
+                                break;
+                            }
+                        case "C_A17":
+                            {
+                                FEMg FEMgCal = new FEMg(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(FEMgCal.kqFEMg(), 2).ToString());
+                                break;
+                            }
+                        case "C_A18":
+                            {
+                                FENa FENaCal = new FENa(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(FENaCal.kqFENa(), 2).ToString());
+                                break;
+                            }
+                        case "C_A19":
+                            {
+                                KtVDaugirdas KtVDaugirdasCal = new KtVDaugirdas(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(KtVDaugirdasCal.kqKtVDaugirdas(), 2).ToString());
+                                break;
+                            }
+                        case "C_A20":
+                            {
+                                RRF_Kru RRF_KruCal = new RRF_Kru(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(RRF_KruCal.kqRRF_Kru(), 2).ToString());
+                                break;
+                            }
+                        case "C_A21": //2
+                            {
+                                ACR ACRCal = new ACR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(ACRCal.kqACR(), 2).ToString());
+                                break;
+                            }
+                        case "C_A22": //2
+                            {
+                                PCR PCRCal = new PCR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(PCRCal.kqPCR(), 2).ToString());
+                                break;
+                            }
+                        case "C_A23": //5
+                            {
+                                eAER eAERCal = new eAER(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    inputs[3],
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(eAERCal.kqeAER(), 2).ToString());
+                                break;
+                            }
+                        case "C_A24": //5
+                            {
+                                ePER ePERCal = new ePER(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    inputs[3],
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(ePERCal.kqePER(), 2).ToString());
+                                break;
+                            }
+                        case "C_A25": //3
+                            {
+                                TocDoTruyen TocDoTruyenCal = new TocDoTruyen(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(TocDoTruyenCal.kqTocDoTruyen(), 2).ToString());
+                                break;
+                            }
+                        case "C_A26": //3
+                            {
+                                CrCl24h CrCl24hCal = new CrCl24h(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(CrCl24hCal.kqCrCl24h(), 2).ToString());
+                                break;
+                            }
+                        case "C_A27": //7
+                            {
+                                eGFR_Schwartz eGFR_SchwartzCal = new eGFR_Schwartz(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    KetnoiDB.str_to_bool(inputs[4]),
+                                    inputs[5],
+                                    KetnoiDB.str_to_bool(inputs[6]));
+                                kq.Add(Math.Round(eGFR_SchwartzCal.kqeGFR_Schwartz(), 2).ToString());
+                                break;
+                            }
+                        case "C_A28": //17
+                            {
+                                MPM0 MPM0Cal = new MPM0(int.Parse(inputs[0]),
+                                    int.Parse(inputs[1]),
+                                    int.Parse(inputs[2]),
+                                    KetnoiDB.str_to_bool(inputs[3]),
+                                    KetnoiDB.str_to_bool(inputs[4]),
+                                    KetnoiDB.str_to_bool(inputs[5]),
+                                    int.Parse(inputs[6]),
+                                    KetnoiDB.str_to_bool(inputs[7]),
+                                    KetnoiDB.str_to_bool(inputs[8]),
+                                    KetnoiDB.str_to_bool(inputs[9]),
+                                    KetnoiDB.str_to_bool(inputs[10]),
+                                    KetnoiDB.str_to_bool(inputs[11]),
+                                    KetnoiDB.str_to_bool(inputs[12]),
+                                    KetnoiDB.str_to_bool(inputs[13]),
+                                    KetnoiDB.str_to_bool(inputs[14]),
+                                    KetnoiDB.str_to_bool(inputs[15]),
+                                    KetnoiDB.str_to_bool(inputs[16]));
+                                kq.Add(Math.Round(MPM0Cal.kqMPM0(), 2).ToString());
+                                break;
+                            }
+                    }
+                }
+                #endregion
+                #region C_B
+                else if (machiso.Substring(0, 3) == "C_B")
+                {
+                    switch (machiso)
+                    {
+                        case "C_B01": //4
+                            {
+                                DLCO_Adj DLCO_AdjCal = new DLCO_Adj(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(DLCO_AdjCal.kqDLCO_Adj(), 2).ToString());
+                                break;
+                            }
+                        case "C_B02": //2
+                            {
+                                MAP MAPCal = new MAP(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(MAPCal.kqMAP(), 2).ToString());
+                                break;
+                            }
+                        case "C_B03": //7
+                            {
+                                PostFEV1 PostFEV1Cal = new PostFEV1(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    KetnoiDB.str_to_bool(inputs[4]));
+                                kq.Add(Math.Round(PostFEV1Cal.kqPostFEV1(), 2).ToString());
+                                break;
+                            }
+                        case "C_B04": //2
+                            {
+                                AEC AECCal = new AEC(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(AECCal.kqAEC(), 2).ToString());
+                                break;
+                            }
+                        case "C_B05": //2
+                            {
+                                ANC ANCCal = new ANC(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(ANCCal.kqANC(), 2).ToString());
+                                break;
+                            }
+                        case "C_B06": //5
+                            {
+                                MIPI MIPICal = new MIPI(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    int.Parse(inputs[4]));
+                                kq.Add(Math.Round(MIPICal.kqMIPI(), 2).ToString());
+                                kq.Add(MIPICal.kqMIPI_danhgia());
+                                break;
+                            }
+                        case "C_B07": //2
+                            {
+                                RPI RPICal = new RPI(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(RPICal.kqRPI(), 2).ToString());
+                                break;
+                            }
+                        case "C_B08": //2
+                            {
+                                sTfR sTfRCal = new sTfR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(sTfRCal.kqsTfR(), 2).ToString());
+                                break;
+                            }
+                        case "C_B09": //4
+                            {
+                                BMR BMRCal = new BMR(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(BMRCal.kqBMR_HB(), 2).ToString());
+                                kq.Add(Math.Round(BMRCal.kqBMR_Scho(), 2).ToString());
+                                break;
+                            }
+                        case "C_B10": //3
+                            {
+                                CDC_chieucao CDC_chieucaoCal = new CDC_chieucao(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_chieucaoCal.kqCDC_chieucao_danhgia());
+                                kq.Add(Math.Round(CDC_chieucaoCal.kqCDC_chieucao_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B11": //3
+                            {
+                                CDC_cannang CDC_cannangCal = new CDC_cannang(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_cannangCal.kqCDC_cannang_danhgia());
+                                kq.Add(Math.Round(CDC_cannangCal.kqCDC_cannang_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B12": //3
+                            {
+                                CDC_chuvi CDC_chuviCal = new CDC_chuvi(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_chuviCal.kqCDC_chuvi_danhgia());
+                                kq.Add(Math.Round(CDC_chuviCal.kqCDC_chuvi_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B13": //1
+                            {
+                                Vbudich VbudichCal = new Vbudich(double.Parse(inputs[0]));
+                                kq.Add(Math.Round(VbudichCal.kqVdich24h(), 2).ToString());
+                                kq.Add(Math.Round(VbudichCal.kqtocdotruyen24h(), 2).ToString());
+                                kq.Add(Math.Round(VbudichCal.kqVdich_theogio(), 2).ToString());
+                                break;
+                            }
+                        case "C_B14": //8
+                            {
+                                PELD_Old PELD_OldCal = new PELD_Old(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]),
+                                    double.Parse(inputs[6]),
+                                    KetnoiDB.str_to_bool(inputs[7]));
+                                kq.Add(Math.Round(PELD_OldCal.kqPELD_Old(), 2).ToString());
+                                break;
+                            }
+                        case "C_B15": //4
+                            {
+                                WHO_suyDD WHO_suyDDCal = new WHO_suyDD(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(WHO_suyDDCal.kqWHO_suyDD());
+                                kq.Add(Math.Round(WHO_suyDDCal.kqWHO_chieucao_zscore(), 2).ToString());
+                                kq.Add(Math.Round(WHO_suyDDCal.kqWHO_cannang_zscore(), 2).ToString());
+                                break;
+                            }
+                        case "C_B16": //2
+                            {
+                                ePER_PNCT ePER_PNCTCal = new ePER_PNCT(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(ePER_PNCTCal.kqePER_PNCT(), 2).ToString());
+                                break;
+                            }
+                        case "C_B17": //6
+                            {
+                                OxyIndex OxyIndexCal = new OxyIndex(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]));
+                                kq.Add(Math.Round(OxyIndexCal.kqOxyIndex(), 2).ToString());
+                                kq.Add(OxyIndexCal.kqOxyIndex_danhgia());
+                                break;
+                            }
+                        case "C_B18": //4
+                            {
+                                EED EEDCal = new EED(DateTime.Parse(inputs[0]),
+                                    DateTime.Parse(inputs[1]),
+                                    int.Parse(inputs[2]),
+                                    KetnoiDB.str_to_bool(inputs[3]));
+                                kq.Add(EEDCal.kqEED().ToString());
+                                kq.Add(EEDCal.kqTuoithai().ToString());
+                                break;
+                            }
+                        case "C_B19": //5
+                            {
+                                EER EERCal = new EER(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    inputs[4]);
+                                kq.Add(Math.Round(EERCal.kqEER(), 2).ToString());
+                                break;
+                            }
+                        case "C_B20": //3
+                            {
+                                CDC_BMI CDC_BMICal = new CDC_BMI(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(CDC_BMICal.kqCDC_BMI());
+                                break;
+                            }
+                        case "C_B21": //2
+                            {
+                                Noikhiquan NoikhiquanCal = new Noikhiquan(KetnoiDB.str_to_bool(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(NoikhiquanCal.kqNoikhiquan(), 2).ToString());
+                                break;
+                            }
+                        case "C_B22": //3
+                            {
+                                PEF PEFCal = new PEF(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    inputs[2]);
+                                kq.Add(Math.Round(PEFCal.kqPEF(), 2).ToString());
+                                kq.Add(PEFCal.kqPEF_danhgia());
+                                break;
+                            }
+                        case "C_B23": //10
+                            {
+                                PELD_New PELD_NewCal = new PELD_New(inputs[0],
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]),
+                                    double.Parse(inputs[6]),
+                                    DateTime.Parse(inputs[7]),
+                                    DateTime.Parse(inputs[8]),
+                                    KetnoiDB.str_to_bool(inputs[9]));
+                                kq.Add(Math.Round(PELD_NewCal.kqPELD_New(), 2).ToString());
+                                break;
+                            }
+                    }
+                }
+                #endregion
+                #region C_C
+                else
+                {
+                    switch (machiso)
+                    {
+                        case "C_C01": //2
+                            {
+                                NatriSerum_Adj NatriSerum_AdjCal = new NatriSerum_Adj(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(NatriSerum_AdjCal.kqNatriSerum_Adj(), 2).ToString());
+                                break;
+                            }
+                        case "C_C02": //6
+                            {
+                                CardiacOutput CardiacOutputCal = new CardiacOutput(
+                                    double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]));
+                                kq.Add(Math.Round(CardiacOutputCal.kqCardiacOutput(), 2).ToString());
+                                break;
+                            }
+                        case "C_C03": //4
+                            {
+                                FEPO4 FEPO4Cal = new FEPO4(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(FEPO4Cal.kqFEPO4(), 2).ToString());
+                                break;
+                            }
+                        case "C_C04": //3
+                            {
+                                LDL LDLCal = new LDL(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(LDLCal.kqLDL(), 2).ToString());
+                                break;
+                            }
+                        case "C_C05": //4
+                            {
+                                FIB4 FIB4Cal = new FIB4(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(FIB4Cal.kqFIB4(), 2).ToString());
+                                break;
+                            }
+                        case "C_C06": //2
+                            {
+                                TSAT TSATCal = new TSAT(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]));
+                                kq.Add(Math.Round(TSATCal.kqTSAT(), 2).ToString());
+                                break;
+                            }
+                        case "C_C07": //3
+                            {
+                                APRI APRICal = new APRI(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(APRICal.kqAPRI(), 2).ToString());
+                                break;
+                            }
+                        case "C_C08": // 5 MELD
+                            {
+                                MELD MELDCal = new MELD(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(MELDCal.kqMELD(), 2).ToString());
+                                break;
+                            }
+                        case "C_C09": // 6 MELDNa
+                            {
+                                MELDNa MELDNaCal = new MELDNa(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]));
+                                kq.Add(Math.Round(MELDNaCal.kqMELDNa(), 2).ToString());
+                                break;
+                            }
+                        case "C_C10": // 3 PVR, 5 PVRI
+                            {
+                                PVR PVRCal = new PVR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(PVRCal.kqPVR(), 2).ToString());
+
+                                PVR PVRICal = new PVR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]));
+                                kq.Add(Math.Round(PVRICal.kqPVRI(), 2).ToString());
+                                break;
+                            }
+                        case "C_C11": //3 AdjECG
+                            {
+                                AdjECG AdjECGCal = new AdjECG(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]));
+                                kq.Add(Math.Round(AdjECGCal.kqAdjQT_Bazett(), 2).ToString());
+                                kq.Add(Math.Round(AdjECGCal.kqAdjQT_Framingham(), 2).ToString());
+                                kq.Add(Math.Round(AdjECGCal.kqAdjQT_Fridericia(), 2).ToString());
+                                kq.Add(Math.Round(AdjECGCal.kqAdjQT_Hodges(), 2).ToString());
+                                break;
+                            }
+                        case "C_C12": //4 SVR
+                            {
+                                SVR SVRCal = new SVR(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(SVRCal.kqSVR(), 2).ToString());
+                                break;
+                            }
+                        case "C_C13": //4 WBCCFS_Adj
+                            {
+                                WBCCFS_Adj WBCCFS_AdjCal = new WBCCFS_Adj(double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]));
+                                kq.Add(Math.Round(WBCCFS_AdjCal.kqWBCCFS_Adj(), 2).ToString());
+                                break;
+                            }
+                        case "C_C14": //5 Hauphauxogan + tu vong 7n, 30n, 90n
+                            {
+                                Hauphauxogan HauphauxoganCal = new Hauphauxogan(
+                                    double.Parse(inputs[0]),
+                                    double.Parse(inputs[1]),
+                                    double.Parse(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]));
+                                kq.Add(Math.Round(HauphauxoganCal.kqHauphauxogan(), 2).ToString());
+                                kq.Add(Math.Round(HauphauxoganCal.kqhauphau7n(), 2).ToString());
+                                kq.Add(Math.Round(HauphauxoganCal.kqhauphau30n(), 2).ToString());
+                                kq.Add(Math.Round(HauphauxoganCal.kqhauphau90n(), 2).ToString());
+                                break;
+                            }
+                        case "C_C15": //12 MESA Score, CAC & khong CAC
+                            {
+                                if (inputs.Count() == 11)
+                                {
+                                    MESA_SCORE MESA_SCORECal = new MESA_SCORE(
+                                        double.Parse(inputs[0]),
+                                        inputs[1],
+                                        double.Parse(inputs[2]),
+                                        double.Parse(inputs[3]),
+                                        double.Parse(inputs[4]),
+                                        KetnoiDB.str_to_bool(inputs[5]),
+                                        KetnoiDB.str_to_bool(inputs[6]),
+                                        KetnoiDB.str_to_bool(inputs[7]),
+                                        inputs[8],
+                                        KetnoiDB.str_to_bool(inputs[9]),
+                                        KetnoiDB.str_to_bool(inputs[10]));
+                                    kq.Add(Math.Round(MESA_SCORECal.kqMESA_SCORE_nonCAC(), 2).ToString());
+                                }
+                                else
+                                {
+                                    MESA_SCORE MESA_SCORECal = new MESA_SCORE(
+                                        double.Parse(inputs[0]),
+                                        inputs[1],
+                                        double.Parse(inputs[2]),
+                                        double.Parse(inputs[3]),
+                                        double.Parse(inputs[4]),
+                                        KetnoiDB.str_to_bool(inputs[5]),
+                                        KetnoiDB.str_to_bool(inputs[6]),
+                                        KetnoiDB.str_to_bool(inputs[7]),
+                                        inputs[8],
+                                        KetnoiDB.str_to_bool(inputs[9]),
+                                        KetnoiDB.str_to_bool(inputs[10]),
+                                        double.Parse(inputs[11]));
+                                    kq.Add(Math.Round(MESA_SCORECal.kqMESA_SCORE_CAC(), 2).ToString());
+                                }
+
+                                break;
+                            }
+                    }
+                }
+                #endregion
+            }
+            else
+            {
+                #region T_A
+                if (machiso.Substring(0, 3) == "T_A")
+                {
+
+                }
+                #endregion
+                #region T_B
+                else if (machiso.Substring(0, 3) == "T_B")
+                {
+
+                }
+                #endregion
+                #region T_C
+                else
+                {
+
+                }
+                #endregion
+            }
+
+            return kq;
+        }
         public static bool str_to_bool(string input)
         {
             if (input.ToLower() == "true" || input.ToLower() == "1")
@@ -2173,16 +2887,16 @@ namespace Chisoyhoc_API
     }
     public class PELD_New : Congthuc
     {
-        public DateTime ngayxetnghiem { get; set; }
-        public DateTime ngaysinh { get; set; }
         public string gioitinh { get; set; }
         public double chieucao { get; set; }
         public double cannang { get; set; }
-        public double albuminSerum { get; set; }
+        public double creatininSerum { get; set; }
         public double bilirubinSerum { get; set; }
         public double INR { get; set; }
+        public double albuminSerum { get; set; }
+        public DateTime ngayxetnghiem { get; set; }
+        public DateTime ngaysinh { get; set; }
         public bool checklocmau { get; set; }
-        public double creatininSerum { get; set; }
 
 
         public PELD_New()
@@ -2190,8 +2904,9 @@ namespace Chisoyhoc_API
             
         }
 
-        public PELD_New(DateTime _NgayXetNghiem, DateTime _NgaySinh, string _gioitinh, double _chieucao, double _cannang, double _Albumin_HC,
-            double _Bilirubin_HC, double _INR_HC, bool _LocMau, double _Creatinin_HC)
+        public PELD_New(string _gioitinh, double _chieucao, double _cannang, double _Creatinin_HC,
+            double _Bilirubin_HC, double _INR_HC, double _Albumin_HC, DateTime _NgayXetNghiem,
+            DateTime _NgaySinh, bool _LocMau)
         {
             ngayxetnghiem = _NgayXetNghiem;
             ngaysinh = _NgaySinh;
@@ -2333,8 +3048,8 @@ namespace Chisoyhoc_API
     }
     public class ePER_PNCT : Congthuc
     {
-        public double proteinUrine { get; set; }
         public double creatininUrine { get; set; }
+        public double proteinUrine { get; set; }
 
         public ePER_PNCT()
         {
@@ -2344,7 +3059,7 @@ namespace Chisoyhoc_API
         {
             creatininUrine = xn.creatininUrine;
         }
-        public ePER_PNCT(double _ProteinUrine, double _CreatininUrine)
+        public ePER_PNCT(double _CreatininUrine, double _ProteinUrine)
         {
             proteinUrine = _ProteinUrine;
             creatininUrine = _CreatininUrine;
@@ -2357,18 +3072,24 @@ namespace Chisoyhoc_API
     }
     public class OxyIndex : Congthuc
     {
+        public double FIO2 { get; set; }
+        public double PaO2 { get; set; }
         public double tg_hitvao { get; set; }
         public double nhiptho { get; set; }
         public double PIP { get; set; }
         public double PEEP { get; set; }
-        public double FIO2 { get; set; }
-        public double PaO2 { get; set; }
 
         public OxyIndex()
         {
 
         }
-        public OxyIndex(double _tg_hitvao, double _nhiptho, double _PIP, double _PEEP, double _FIO2, double _PaO2)
+        public OxyIndex(Nguoibenh nb, Xetnghiem xn)
+        {
+            nhiptho = nb.nhiptho;
+            FIO2 = xn.FiO2;
+            PaO2 = xn.PaO2;
+        }
+        public OxyIndex(double _FIO2, double _PaO2, double _tg_hitvao, double _nhiptho, double _PIP, double _PEEP)
         {
             tg_hitvao = _tg_hitvao;
             nhiptho = _nhiptho;
@@ -2411,43 +3132,47 @@ namespace Chisoyhoc_API
         public DateTime ngaysieuam { get; set; }
         public DateTime EED_calculated { get; set; }
         public int tuoithaisieuam { get; set; }
+        public bool sieuam { get; set; }
 
         public EED()
         {
 
         }
-
-        public EED(DateTime _ngayKNcuoi, DateTime _ngaysieuam, int _tuoithaisieuam)
+        public EED(DateTime _ngayKNcuoi, DateTime _ngaysieuam, int _tuoithaisieuam, bool _sieuam)
         {
+            sieuam = _sieuam;
             ngayKNcuoi = _ngayKNcuoi;
             ngaysieuam = _ngaysieuam;
             tuoithaisieuam = _tuoithaisieuam;
         }
 
-        public DateTime kqEED_ngayKNcuoi()
+        public DateTime EED_ngayKNcuoi()
         {
-            EED_calculated = ngayKNcuoi.AddDays(280);
-            return EED_calculated;
+            DateTime kq = ngayKNcuoi.AddDays(280);
+            return kq;
         }
 
-        public DateTime kqEED_ngaysieuam()
+        public DateTime EED_ngaysieuam()
         {
-            EED_calculated = ngaysieuam.AddDays(280 - tuoithaisieuam);
-            return EED_calculated;
+            DateTime kq = ngaysieuam.AddDays(280 - tuoithaisieuam);
+            return kq;
         }
-
-        public int GestationalAge()
+        public DateTime kqEED()
         {
-            TimeSpan gestationalAge = DateTime.Now - EED_calculated;
-            return gestationalAge.Days;
+            return sieuam ? EED_ngaysieuam() : EED_ngayKNcuoi();
+        }
+        public int kqTuoithai()
+        {
+            TimeSpan tuoithai = DateTime.Now - EED_calculated;
+            return tuoithai.Days;
         }
     }
     public class EER : Congthuc
     {
-        public double tuoi { get; set; }
         public string gioitinh { get; set; }
         public double chieucao { get; set; }
         public double cannang { get; set; }
+        public double tuoi { get; set; }
         public string hesohoatdong { get; set; }
         public double ECG { get; set; }
 
@@ -2462,44 +3187,43 @@ namespace Chisoyhoc_API
             chieucao = nb.chieucao;
             cannang = nb.cannang;
         }
-        public EER(double _tuoi, string _gioitinh, double _chieucao, double _cannang, string _hesohoatdong, double _ECG)
+        public EER(string _gioitinh, double _chieucao, double _cannang, double _tuoi, string _hesohoatdong)
         {
             tuoi = _tuoi;
             gioitinh = _gioitinh;
             chieucao = _chieucao;
             cannang = _cannang;
             hesohoatdong = _hesohoatdong;
-            ECG = _ECG;
         }
 
         public double kqEER()
         {
-            double ECGValue = (tuoi < 0.25) ? 200 : (tuoi < 0.5) ? 50 : (tuoi < 4) ? 20 : (tuoi < 9) ? 15 : (tuoi < 14) ? 25 : 20;
+            double ECG = (tuoi < 0.25) ? 200 : (tuoi < 0.5) ? 50 : (tuoi < 4) ? 20 : (tuoi < 9) ? 15 : (tuoi < 14) ? 25 : 20;
             double EER;
 
             if (gioitinh == "Nam")
             {
                 if (tuoi < 3)
                 {
-                    EER = -716.45 - tuoi + (17.82 * chieucao) + (15.06 * cannang) + ECGValue;
+                    EER = -716.45 - tuoi + (17.82 * chieucao) + (15.06 * cannang) + ECG;
                 }
                 else
                 {
                     if (hesohoatdong == "Không vận động")
                     {
-                        EER = -447.51 + (3.68 * tuoi) + (13.01 * chieucao) + (13.15 * cannang) + ECGValue;
+                        EER = -447.51 + (3.68 * tuoi) + (13.01 * chieucao) + (13.15 * cannang) + ECG;
                     }
                     else if (hesohoatdong == "Ít vận động")
                     {
-                        EER = 19.12 + (3.68 * tuoi) + (8.62 * chieucao) + (20.28 * cannang) + ECGValue;
+                        EER = 19.12 + (3.68 * tuoi) + (8.62 * chieucao) + (20.28 * cannang) + ECG;
                     }
                     else if (hesohoatdong == "Vận động trung bình")
                     {
-                        EER = -388.19 + (3.68 * tuoi) + (12.66 * chieucao) + (20.46 * cannang) + ECGValue;
+                        EER = -388.19 + (3.68 * tuoi) + (12.66 * chieucao) + (20.46 * cannang) + ECG;
                     }
                     else
                     {
-                        EER = -671.75 + (3.68 * tuoi) + (15.38 * chieucao) + (23.25 * cannang) + ECGValue;
+                        EER = -671.75 + (3.68 * tuoi) + (15.38 * chieucao) + (23.25 * cannang) + ECG;
                     }
                 }
             }
@@ -2507,25 +3231,25 @@ namespace Chisoyhoc_API
             {
                 if (tuoi < 3)
                 {
-                    EER = -69.15 + (80.0 * tuoi) + (2.65 * chieucao) + (54.15 * cannang) + ECGValue;
+                    EER = -69.15 + (80.0 * tuoi) + (2.65 * chieucao) + (54.15 * cannang) + ECG;
                 }
                 else
                 {
                     if (hesohoatdong == "Không vận động")
                     {
-                        EER = 55.59 - (22.25 * tuoi) + (8.43 * chieucao) + (17.07 * cannang) + ECGValue;
+                        EER = 55.59 - (22.25 * tuoi) + (8.43 * chieucao) + (17.07 * cannang) + ECG;
                     }
                     else if (hesohoatdong == "Ít vận động")
                     {
-                        EER = -297.54 - (22.25 * tuoi) + (12.77 * chieucao) + (14.73 * cannang) + ECGValue;
+                        EER = -297.54 - (22.25 * tuoi) + (12.77 * chieucao) + (14.73 * cannang) + ECG;
                     }
                     else if (hesohoatdong == "Vận động trung bình")
                     {
-                        EER = -189.55 - (22.25 * tuoi) + (11.74 * chieucao) + (18.34 * cannang) + ECGValue;
+                        EER = -189.55 - (22.25 * tuoi) + (11.74 * chieucao) + (18.34 * cannang) + ECG;
                     }
                     else
                     {
-                        EER = -709.59 - (22.25 * tuoi) + (18.22 * chieucao) + (14.25 * cannang) + ECGValue;
+                        EER = -709.59 - (22.25 * tuoi) + (18.22 * chieucao) + (14.25 * cannang) + ECG;
                     }
                 }
             }
@@ -2572,7 +3296,7 @@ namespace Chisoyhoc_API
             double[] _data_Nu = { 14.397870893, 14.380186596, 14.345272624, 14.310968062, 14.277276856, 14.244203026, 14.211749089, 14.179917754, 14.148711114, 14.118130621, 14.088177926, 14.058853902, 14.030159316, 14.002094761, 13.974660728, 13.947857672, 13.921686084, 13.89614655, 13.871239805, 13.846966782, 13.823328646, 13.800326818, 13.777962994, 13.756238848, 13.735157169, 13.714720207, 13.694930704, 13.675791616, 13.657306081, 13.639477387, 13.622308935, 13.605804206, 13.589966725, 13.574800023, 13.560307612, 13.546492949, 13.53335941, 13.520910267, 13.509148527, 13.498077398, 13.487699767, 13.47801782, 13.469034401, 13.460751754, 13.453171909, 13.44629667, 13.440127612, 13.434666084, 13.429913207, 13.425870418, 13.422537877, 13.419916293, 13.41800595, 13.416806916, 13.416319045, 13.416541975, 13.417475136, 13.419117751, 13.421468839, 13.424527221, 13.428291519, 13.432760162, 13.43793139, 13.443803253, 13.450373621, 13.45764018, 13.46560044, 13.47425174, 13.483591251, 13.493615981, 13.504322782, 13.515708349, 13.527769222, 13.540501762, 13.553901719, 13.567965559, 13.582689175, 13.598067882, 13.614097684, 13.630773884, 13.648091204, 13.666045501, 13.684631476, 13.703844013, 13.723677453, 13.744126561, 13.765186202, 13.78684956, 13.809111546, 13.83196589, 13.855406666, 13.879426466, 13.904020526, 13.92918106, 13.954901632, 13.981175358, 14.007995218, 14.035354051, 14.063244558, 14.091659301, 14.120590705, 14.150031057, 14.179972506, 14.210407062, 14.2413266, 14.272722855, 14.304587427, 14.336911777, 14.369687229, 14.402904971, 14.436556052, 14.470631805, 14.505122367, 14.540018622, 14.575311069, 14.610990067, 14.647045838, 14.683468464, 14.720247888, 14.757373914, 14.794836204, 14.832624281, 14.870727527, 14.909135184, 14.947836351, 14.986819986, 15.026074904, 15.065589778, 15.105353137, 15.145353366, 15.185578709, 15.22601726, 15.266656971, 15.307485648, 15.34849095, 15.389660389, 15.430981329, 15.472440986, 15.514026427, 15.555724571, 15.597522183, 15.639405882, 15.681362131, 15.723377243, 15.765437378, 15.807528542, 15.849636587, 15.891747208, 15.933845947, 15.975918187, 16.017949155, 16.059923921, 16.101827393, 16.143644323, 16.185359301, 16.226956758, 16.268420961, 16.309736017, 16.350885869, 16.391854299, 16.432624923, 16.473181193, 16.513506398, 16.55358366, 16.593395935, 16.632926016, 16.672156529, 16.711069932, 16.749648518, 16.787874416, 16.825729586, 16.863195825, 16.900254764, 16.936887868, 16.97307644, 17.008801618, 17.044044915, 17.078785534, 17.113005736, 17.146685474, 17.179805079, 17.212344716, 17.244285168, 17.275604072, 17.306282966, 17.336301585, 17.365638249, 17.394272864, 17.422184393, 17.449351838, 17.475755094, 17.501369744, 17.526176669, 17.550154683, 17.573280181, 17.595534679, 17.616892752, 17.637333562, 17.656834899, 17.675374442, 17.692929755, 17.709478294, 17.724997408, 17.739464345, 17.752856251, 17.765150176, 17.776323076, 17.786351816, 17.795213175, 17.802883845, 17.809340439, 17.814557553, 17.818516749, 17.821191341, 17.822557366, 17.822590601, 17.821266527, 17.820090457, 17.818563561, 18.018205792, 17.973714126, 17.887488124, 17.804890513, 17.725863959, 17.650351371, 17.578297744, 17.509648394, 17.44434994, 17.38235043, 17.323598458, 17.268044363, 17.215639512, 17.166336426, 17.120088721, 17.076851036, 17.036578944, 16.99922885, 16.964757881, 16.933123775, 16.904284765, 16.878199474, 16.85482681, 16.834126282, 16.816056377, 16.800576707, 16.787646543, 16.777225115, 16.769271588, 16.763745045, 16.760604487, 16.759808835, 16.761316945, 16.765087627, 16.771079664, 16.779251844, 16.789562983, 16.801971953, 16.816437922, 16.832919646, 16.85137625, 16.871767854, 16.894053448, 16.918192851, 16.94414613, 16.971873618, 17.001335934, 17.032493991, 17.065309004, 17.099741723, 17.135754682, 17.173309679, 17.212369113, 17.252895716, 17.294852556, 17.338203042, 17.382910923, 17.428940294, 17.476255597, 17.524821619, 17.574603494, 17.625566704, 17.67767708, 17.730900798, 17.785204382, 17.840554704, 17.896918975, 17.95426475, 18.01255992, 18.071772705, 18.131871655, 18.192825645, 18.254603884, 18.317175943, 18.380512412, 18.444582911, 18.509357979, 18.574809309, 18.640907397, 18.70762408, 18.774932139, 18.842802758, 18.911208974, 18.980123661, 19.049520628, 19.119373164, 19.189654528, 19.260340621, 19.331404869, 19.402822598, 19.474568694, 19.546620507, 19.618951499, 19.691539649, 19.764361199, 19.837393135, 19.91061278, 19.983997788, 20.05752615, 20.131176192, 20.204926574, 20.278756292, 20.352644676, 20.426571391, 20.500516439, 20.574460154, 20.648383208, 20.722266606, 20.79609169, 20.869840136, 20.943493956, 21.017034888, 21.090446529, 21.163711548, 21.2368133, 21.309735477, 21.38246211, 21.454977564, 21.527266545, 21.599314096, 21.671105598, 21.742626772, 21.813863676, 21.884802708, 21.955430607, 22.02573445, 22.095701657, 22.165319987, 22.23457754, 22.303462758, 22.371964427, 22.440071674, 22.507773969, 22.575061126, 22.641923303, 22.708351005, 22.774335079, 22.839866721, 22.904937473, 22.969539223, 23.033664209, 23.097305018, 23.160454584, 23.223106195, 23.285253487, 23.346890452, 23.408011431, 23.468611122, 23.528684575, 23.588227198, 23.647234755, 23.705703367, 23.763629515, 23.821010038, 23.877842138, 23.934123376, 23.989851678, 24.045025332, 24.099642992, 24.153703678, 24.207206776, 24.260152041, 24.312539595, 24.364369931, 24.415643913, 24.466362775, 24.516528123, 24.566141937, 24.61520657, 24.663724748, 24.711699572, 24.759134514, 24.806033424, 24.852400525, 24.898240411, 24.943558054, 24.988357847, 25.032648356, 25.076432823, 25.11971866, 25.162512708, 25.204822177, 25.246653477, 25.28801794, 25.328921084, 25.369371303, 25.409379292, 25.448953455, 25.488103769, 25.526840293, 25.56517184, 25.603114, 25.640674345, 25.67786376, 25.714697004, 25.751181066, 25.787333798, 25.823166106, 25.858691151, 25.893922413, 25.928873687, 25.963559081, 25.997993009, 26.032190187, 26.06616563, 26.099934651, 26.133512849, 26.166916112, 26.20016061, 26.23326279, 26.266239373, 26.299110386, 26.331885089, 26.364585813, 26.397230769, 26.429838734, 26.462429098, 26.478719662, 26.495016788, 19.10623522, 19.058238445, 18.965949897, 18.878533884, 18.795909992, 18.717998385, 18.644718454, 18.575990295, 18.511734023, 18.451869784, 18.396318479, 18.345000987, 18.29783876, 18.254753806, 18.215668786, 18.180507113, 18.149193044, 18.121651762, 18.097809453, 18.077593361, 18.06093184, 18.047754376, 18.037991607, 18.03157513, 18.028438215, 18.028514727, 18.031739765, 18.038049459, 18.047380913, 18.059672159, 18.074862097, 18.092890445, 18.11369768, 18.137224989, 18.163414224, 18.192207855, 18.223548932, 18.257381051, 18.293648259, 18.332295253, 18.373267126, 18.41650918, 18.461967542, 18.509588576, 18.559319065, 18.611106202, 18.664897596, 18.72064127, 18.778285671, 18.837779538, 18.899072288, 18.962113544, 19.026853412, 19.093242432, 19.161231581, 19.230772276, 19.301816386, 19.374316236, 19.448224611, 19.523494768, 19.600080436, 19.677935827, 19.757015637, 19.837275057, 19.918669774, 20.001155979, 20.08469037, 20.169230159, 20.254733074, 20.341157368, 20.428461818, 20.516605734, 20.605548956, 20.695251857, 20.785675251, 20.876780679, 20.968530139, 21.060886065, 21.153811648, 21.247270492, 21.341226663, 21.435645054, 21.530490897, 21.625730052, 21.721328849, 21.817254297, 21.913474016, 22.00995586, 22.106668641, 22.203581509, 22.300664287, 22.397887094, 22.495221076, 22.592637546, 22.690108545, 22.787606652, 22.88510501, 22.982577328, 23.079997876, 23.177341493, 23.274583578, 23.371700099, 23.468667584, 23.56546313, 23.662064395, 23.758449602, 23.854597539, 23.950487558, 24.046099573, 24.141414065, 24.236412075, 24.331075256, 24.4253857, 24.519326162, 24.612879933, 24.706030862, 24.798763363, 24.891062407, 24.982913526, 25.074302811, 25.165216914, 25.255643043, 25.345568966, 25.434983007, 25.523874049, 25.612231528, 25.700045441, 25.787306336, 25.874005319, 25.960134049, 26.045684738, 26.130650155, 26.215023617, 26.298798997, 26.381970718, 26.464533755, 26.546483632, 26.627816426, 26.70852876, 26.788617809, 26.868081296, 26.94691749, 27.025125211, 27.102703824, 27.17965324, 27.255973919, 27.331666865, 27.406733627, 27.481176301, 27.554997527, 27.62820049, 27.700788918, 27.772767087, 27.844139812, 27.914912457, 27.985090927, 28.054681672, 28.123691687, 28.192128511, 28.260000228, 28.327315465, 28.394083399, 28.460313748, 28.52601678, 28.591203309, 28.655884697, 28.720072857, 28.783780248, 28.847019885, 28.909805333, 28.972150709, 29.034070689, 29.095580504, 29.156695943, 29.217433356, 29.277809657, 29.33784232, 29.397549393, 29.456949484, 29.51606178, 29.574906037, 29.633502591, 29.691872359, 29.750036824, 29.808018082, 29.865838796, 29.923522234, 29.981092247, 30.038573291, 30.095990421, 30.153369256, 30.210736178, 30.268117989, 30.325542155, 30.38303689, 30.440630728, 30.498353237, 30.556234331, 30.614304629, 30.672595385, 30.731138492, 30.789966483, 30.849112534, 30.908610469, 30.968494761, 31.028800535, 31.089563569, 31.150820299, 31.212607819, 31.274963885, 31.337926913, 31.401536312, 31.465830973, 31.530851807, 31.596639946, 31.663237236, 31.730686253, 31.764743113, 31.799029637 };
             data_Nu = _data_Nu;
         }
-        public double[] kqCDC_BMI()
+        public double[] phanphoiCDC_BMI()
         {
             initCDC_BMI();
             double phanphoi5, phanphoi85, phanphoi95;
@@ -2592,10 +3316,10 @@ namespace Chisoyhoc_API
             }
             return new double[] { phanphoi5, phanphoi85, phanphoi95 };
         }
-        public string kqCDC_BMI_danhgia()
+        public string kqCDC_BMI()
         {
             //P5, P85, P95
-            double[] kqphanphoi = kqCDC_BMI();
+            double[] kqphanphoi = phanphoiCDC_BMI();
 
             if (0 <= BMI && BMI < kqphanphoi[0])
             {
@@ -2650,7 +3374,6 @@ namespace Chisoyhoc_API
     {
         public double NatriSerum { get; set; }
         public double GlucoseSerum { get; set; }
-        public double NatriSerum_AdjResult { get; set; }
 
         public NatriSerum_Adj()
         {
@@ -2670,19 +3393,18 @@ namespace Chisoyhoc_API
 
         public double kqNatriSerum_Adj()
         {
-            NatriSerum_AdjResult = NatriSerum + (2 * (GlucoseSerum - 100) / 100);
-            return NatriSerum_AdjResult;
+            double kq = NatriSerum + (2 * (GlucoseSerum - 100) / 100);
+            return kq;
         }
     }
     public class CardiacOutput : Congthuc
     {
-        public double oxytieuthu { get; set; }
         public double Hb { get; set; }
-        public double O2Sat { get; set; }
         public double PaO2 { get; set; }
-        public double O2vSat { get; set; }
         public double PvO2 { get; set; }
-        public double CardiacOutputResult { get; set; }
+        public double oxytieuthu { get; set; }
+        public double O2vSat { get; set; }
+        public double O2Sat { get; set; }
 
         public CardiacOutput()
         {
@@ -2698,7 +3420,7 @@ namespace Chisoyhoc_API
             PvO2 = 0;
         }
 
-        public CardiacOutput(double _oxytieuthu, double _Hb, double _O2Sat, double _PaO2, double _O2vSat, double _PvO2)
+        public CardiacOutput(double _Hb, double _PaO2, double _PvO2, double _oxytieuthu, double _O2Sat, double _O2vSat)
         {
             oxytieuthu = _oxytieuthu;
             Hb = _Hb;
@@ -2710,17 +3432,16 @@ namespace Chisoyhoc_API
 
         public double kqCardiacOutput()
         {
-            CardiacOutputResult = oxytieuthu / (((Hb * 13.4 * O2Sat / 100) + (PaO2 * 0.031)) - (Hb * 13.4 * O2vSat / 100) + (PvO2 * 0.031));
-            return CardiacOutputResult;
+            double kq = oxytieuthu / (((Hb * 13.4 * O2Sat / 100) + (PaO2 * 0.031)) - (Hb * 13.4 * O2vSat / 100) + (PvO2 * 0.031));
+            return kq;
         }
     }
     public class FEPO4 : Congthuc
     {
+        public double creatininSerum { get; set; }
+        public double creatininUrine { get; set; }
         public double phosphatUrine { get; set; }
         public double phosphatSerum { get; set; }
-        public double creatininUrine { get; set; }
-        public double creatininSerum { get; set; }
-        public double FePO4 { get; set; }
 
         public FEPO4()
         {
@@ -2741,16 +3462,15 @@ namespace Chisoyhoc_API
 
         public double kqFEPO4()
         {
-            FePO4 = (phosphatUrine / phosphatSerum) / (creatininUrine / creatininSerum) * 100;
-            return FePO4;
+            double kq = (phosphatUrine / phosphatSerum) / (creatininUrine / creatininSerum) * 100;
+            return kq;
         }
     }
     public class LDL : Congthuc
     {
         public double TotalCholesterol { get; set; }
-        public double Triglycerid { get; set; }
         public double HDL { get; set; }
-        public double LDLResult { get; set; }
+        public double Triglycerid { get; set; }
 
         public LDL()
         {
@@ -2763,7 +3483,7 @@ namespace Chisoyhoc_API
             HDL = XN.HDL;
         }
 
-        public LDL(double _TotalCholesterol, double _Triglycerid, double _HDL)
+        public LDL(double _TotalCholesterol, double _HDL, double _Triglycerid)
         {
             TotalCholesterol = _TotalCholesterol;
             Triglycerid = _Triglycerid;
@@ -2772,17 +3492,16 @@ namespace Chisoyhoc_API
 
         public double kqLDL()
         {
-            LDLResult = TotalCholesterol - (Triglycerid / 5) - HDL;
-            return LDLResult;
+            double kq = TotalCholesterol - (Triglycerid / 5) - HDL;
+            return kq;
         }
     }
     public class FIB4 : Congthuc
     {
         public double tuoi { get; set; }
         public double AST { get; set; }
-        public double tieucau { get; set; }
         public double ALT { get; set; }
-        public double FIB4Result { get; set; }
+        public double tieucau { get; set; }
 
         public FIB4()
         {
@@ -2805,8 +3524,8 @@ namespace Chisoyhoc_API
 
         public double kqFIB4()
         {
-            FIB4Result = tuoi * AST / (0.001 * tieucau * Math.Sqrt(ALT));
-            return FIB4Result;
+            double kq = tuoi * AST / (0.001 * tieucau * Math.Sqrt(ALT));
+            return kq;
         }
     }
     public class TSAT : Congthuc
@@ -2814,7 +3533,6 @@ namespace Chisoyhoc_API
         //TransferrinSaturation
         public double FeSerum { get; set; }
         public double TIBC { get; set; }
-        public double TSAT_calculated { get; set; }
 
         public TSAT()
         {
@@ -2827,18 +3545,17 @@ namespace Chisoyhoc_API
             TIBC = _TIBC;
         }
 
-        public double kqTransferrinSaturation()
+        public double kqTSAT()
         {
-            TSAT_calculated = (FeSerum / TIBC) * 100;
-            return TSAT_calculated;
+            double kq = (FeSerum / TIBC) * 100;
+            return kq;
         }
     }
     public class APRI : Congthuc
     {
         public double AST { get; set; }
-        public double ASTNormUL { get; set; }
         public double tieucau { get; set; }
-        public double APRIResult { get; set; }
+        public double ASTNormUL { get; set; }
 
         public APRI()
         {
@@ -2859,18 +3576,16 @@ namespace Chisoyhoc_API
 
         public double kqAPRI()
         {
-            APRIResult = 100 * ((AST / ASTNormUL) / (tieucau / 1000));
-            return APRIResult;
+            return 100 * ((AST / ASTNormUL) / (tieucau / 1000));;
         }
     }
     public class MELD : Congthuc
     {
-        public double tansuatlocmau1tuan { get; set; }
-        public double thoigianlocmau1tuan { get; set; }
         public double CreatininSerum { get; set; }
         public double BilirubinSerum { get; set; }
         public double INR { get; set; }
-        public double MELDResult { get; set; }
+        public double tansuatlocmau1tuan { get; set; }
+        public double thoigianlocmau1tuan { get; set; }
 
         public MELD()
         {
@@ -2882,15 +3597,17 @@ namespace Chisoyhoc_API
             thoigianlocmau1tuan = 0;
             CreatininSerum = XN.creatininSerum;
             BilirubinSerum = XN.bilirubin;
-            INR = 0;
+            INR = XN.INR;
         }
         public MELD(double _CreatininSerum, double _BilirubinSerum, double _INR)
         {
+            tansuatlocmau1tuan = 0;
+            thoigianlocmau1tuan = 0;
             CreatininSerum = _CreatininSerum;
             BilirubinSerum = _BilirubinSerum;
             INR = _INR;
         }
-        public MELD(double _tansuatlocmau1tuan, double _thoigianlocmau1tuan, double _CreatininSerum, double _BilirubinSerum, double _INR)
+        public MELD(double _CreatininSerum, double _BilirubinSerum, double _INR, double _tansuatlocmau1tuan, double _thoigianlocmau1tuan)
         {
             tansuatlocmau1tuan = _tansuatlocmau1tuan;
             thoigianlocmau1tuan = _thoigianlocmau1tuan;
@@ -2903,19 +3620,18 @@ namespace Chisoyhoc_API
         {
             double creatinineTerm = (tansuatlocmau1tuan >= 2 || thoigianlocmau1tuan >= 24) ? 4 : CreatininSerum;
 
-            MELDResult = 9.57 * Math.Log(creatinineTerm) + 3.78 * Math.Log(BilirubinSerum) + 11.2 * Math.Log(INR) + 6.43;
+            double MELDResult = 9.57 * Math.Log(creatinineTerm) + 3.78 * Math.Log(BilirubinSerum) + 11.2 * Math.Log(INR) + 6.43;
             return MELDResult;
         }
     }
     public class MELDNa : Congthuc
     {
-        public double tansuatlocmau1tuan { get; set; }
-        public double thoigianlocmau1tuan { get; set; }
+        public double NatriSerum { get; set; }
         public double CreatininSerum { get; set; }
         public double BilirubinSerum { get; set; }
         public double INR { get; set; }
-        public double NatriSerum { get; set; }
-        public double MELDNaResult { get; set; }
+        public double tansuatlocmau1tuan { get; set; }
+        public double thoigianlocmau1tuan { get; set; }
 
         public MELDNa()
         {
@@ -2927,10 +3643,10 @@ namespace Chisoyhoc_API
             thoigianlocmau1tuan = 0;
             CreatininSerum = XN.creatininSerum;
             BilirubinSerum = XN.bilirubin;
-            INR = 0;
+            INR = XN.INR;
             NatriSerum = XN.natriSerum;
         }
-        public MELDNa(double _tansuatlocmau1tuan, double _thoigianlocmau1tuan, double _CreatininSerum, double _BilirubinSerum, double _INR, double _NatriSerum)
+        public MELDNa( double _NatriSerum, double _CreatininSerum, double _BilirubinSerum, double _INR, double _tansuatlocmau1tuan, double _thoigianlocmau1tuan)
         {
             tansuatlocmau1tuan = _tansuatlocmau1tuan;
             thoigianlocmau1tuan = _thoigianlocmau1tuan;
@@ -2945,18 +3661,18 @@ namespace Chisoyhoc_API
             MELD meld = new MELD(tansuatlocmau1tuan, thoigianlocmau1tuan, CreatininSerum, BilirubinSerum, INR);
             double meldValue = meld.kqMELD();
 
-            MELDNaResult = (meldValue <= 11) ? meldValue : meldValue + ((1.32 * (137 - NatriSerum)) - (0.033 * meldValue * (137 - NatriSerum)));
+            double MELDNaResult = (meldValue <= 11) ? meldValue : meldValue + ((1.32 * (137 - NatriSerum)) - (0.033 * meldValue * (137 - NatriSerum)));
             return MELDNaResult;
         }
     }
     public class PVR : Congthuc
     {
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
         public double HATThu { get; set; } // Systolic Blood Pressure (SBP)
         public double HATTruong { get; set; } // Diastolic Blood Pressure (DBP)
         public double aplucnhitrai { get; set; }
         public double luuluongmau { get; set; }
-        public double chieucao { get; set; }
-        public double cannang { get; set; }
 
         public double PVR_calculated { get; private set; }
         public double PVRI { get; private set; }
@@ -2972,7 +3688,14 @@ namespace Chisoyhoc_API
             chieucao = nb.chieucao;
             cannang = nb.cannang;
         }
-        public PVR(double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau, double _chieucao, double _cannang)
+        public PVR(double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau)
+        {
+            HATThu = _HATThu;
+            HATTruong = _HATTruong;
+            aplucnhitrai = _aplucnhitrai;
+            luuluongmau = _luuluongmau;
+        }
+        public PVR(double _chieucao, double _cannang, double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau)
         {
             HATThu = _HATThu;
             HATTruong = _HATTruong;
@@ -2998,9 +3721,9 @@ namespace Chisoyhoc_API
     }
     public class AdjECG : Congthuc
     {
+        public double nhiptim { get; set; }
         public double QT_ECG { get; set; }
         public double RR_ECG { get; set; }
-        public double nhiptim { get; set; }
 
         public AdjECG()
         {
@@ -3013,7 +3736,7 @@ namespace Chisoyhoc_API
             nhiptim = NB.nhiptim;
         }
 
-        public AdjECG(double _QT_ECG, double _RR_ECG, double _nhiptim)
+        public AdjECG(double _nhiptim, double _QT_ECG, double _RR_ECG)
         {
             QT_ECG = _QT_ECG;
             RR_ECG = _RR_ECG;
@@ -3047,8 +3770,6 @@ namespace Chisoyhoc_API
         public double aplucnhiphai { get; set; }
         public double luuluongmau { get; set; }
 
-        public double SVR_calculated { get; private set; }
-
         public SVR()
         {
 
@@ -3062,25 +3783,23 @@ namespace Chisoyhoc_API
         {
             HATThu = _HATThu;
             HATTruong = _HATTruong;
-            aplucnhiphai = _aplucnhiphai;
             luuluongmau = _luuluongmau;
+            aplucnhiphai = _aplucnhiphai;
         }
 
-        public double kq()
+        public double kqSVR()
         {
             MAP MAP = new MAP(HATThu, HATTruong);
-            SVR_calculated = 80 * (MAP.kqMAP() - aplucnhiphai) / luuluongmau;
+            double SVR_calculated = 80 * (MAP.kqMAP() - aplucnhiphai) / luuluongmau;
             return SVR_calculated;
         }
     }
     public class WBCCFS_Adj : Congthuc
     {
-        public double WBC_CFS { get; set; }
-        public double RBC_CFS { get; set; }
         public double WBC { get; set; }
         public double RBC { get; set; }
-
-        public double kqWBCCFS_Adj { get; private set; }
+        public double RBC_CFS { get; set; }
+        public double WBC_CFS { get; set; }
 
         public WBCCFS_Adj()
         {
@@ -3093,26 +3812,26 @@ namespace Chisoyhoc_API
             WBC = XN.WBC;
             RBC = XN.RBC;
         }
-        public WBCCFS_Adj(double _WBC_CFS, double _RBC_CFS, double _WBC, double _RBC)
+        public WBCCFS_Adj(double _WBC, double _RBC, double _RBC_CFS, double _WBC_CFS)
         {
             WBC_CFS = _WBC_CFS;
             RBC_CFS = _RBC_CFS;
             WBC = _WBC;
             RBC = _RBC;
         }
-        public double GetkqWBCCFS_Adj()
+        public double kqWBCCFS_Adj()
         {
-            kqWBCCFS_Adj = WBC_CFS - ((WBC * RBC_CFS) / (RBC * 1000000));
+            double kqWBCCFS_Adj = WBC_CFS - ((WBC * RBC_CFS) / (RBC * 1000000));
             return kqWBCCFS_Adj;
         }
     }
     public class Hauphauxogan : Congthuc
     {
         public double tuoi { get; set; }
-        public double ASA { get; set; }
         public double CreatininSerum { get; set; }
         public double BilirubinSerum { get; set; }
         public double INR { get; set; }
+        public double ASA { get; set; }
 
         public Hauphauxogan()
         {
@@ -3123,8 +3842,9 @@ namespace Chisoyhoc_API
             tuoi = nb.tinhtuoi_nam();
             CreatininSerum = xn.creatininSerum;
             BilirubinSerum = xn.bilirubin;
+            INR = xn.INR;
         }
-        public Hauphauxogan(double _tuoi, double _ASA, double _CreatininSerum, double _BilirubinSerum, double _INR)
+        public Hauphauxogan(double _tuoi, double _CreatininSerum, double _BilirubinSerum, double _INR, double _ASA)
         {
             tuoi = _tuoi;
             ASA = _ASA;
@@ -3142,7 +3862,7 @@ namespace Chisoyhoc_API
             return hesohauphauxogan;
         }
 
-        public double mortalityhauphau7n()
+        public double kqhauphau7n()
         {
             double hesohauphauxogan = kqHauphauxogan();
             double mortality = 100 * (1 - Math.Pow(0.98370, hesohauphauxogan));
@@ -3150,7 +3870,7 @@ namespace Chisoyhoc_API
             return mortality;
         }
 
-        public double mortalityhauphau30n()
+        public double kqhauphau30n()
         {
             double hesohauphauxogan = kqHauphauxogan();
             double mortality = 100 * (1 - Math.Pow(0.93479, hesohauphauxogan));
@@ -3158,7 +3878,7 @@ namespace Chisoyhoc_API
             return mortality;
         }
 
-        public double mortalityhauphau90n()
+        public double kqhauphau90n()
         {
             double hesohauphauxogan = kqHauphauxogan();
             double mortality = 100 * (1 - Math.Pow(0.89681, hesohauphauxogan));
@@ -3168,20 +3888,20 @@ namespace Chisoyhoc_API
     }
     public class MESA_SCORE : Congthuc
     {
-        public double tuoi { get; set; }
         public string gioitinh { get; set; }
-        public int hesogioitinhCAC { get; set; }
-        public string chungtoc { get; set; }
-        public double hesochungtocCAC { get; set; }
-        public bool DTD { get; set; }
-        public bool hutthuoc { get; set; }
+        public double tuoi { get; set; }
+        public double SBP { get; set; }
         public double TotalCholesterol { get; set; }
         public double HDL { get; set; }
-        public bool dieutriRLLH { get; set; }
-        public double SBP { get; set; }
         public bool dieutriTHA { get; set; }
+        public bool DTD{ get; set; }
+        public bool hutthuoc { get; set; }
+        public string chungtoc { get; set; }
+        public bool dieutriRLLH { get; set; }
         public bool lichsuNMCTGD { get; set; }
         public double CAC { get; set; }
+        public int hesogioitinhCAC { get; set; }
+        public double hesochungtocCAC { get; set; }
 
         public MESA_SCORE()
         {
@@ -3199,9 +3919,9 @@ namespace Chisoyhoc_API
             dieutriTHA = nb.THA;
             lichsuNMCTGD = nb.dotquytim || nb.thieumaunao || nb.NMCT;
         }
-        public MESA_SCORE(double _tuoi, string _gioitinh, string _chungtoc, bool _DTD, bool _hutthuoc,
-                  double _TotalCholesterol, double _HDL, bool _dieutriRLLH, double _SBP, bool _dieutriTHA,
-                  bool _lichsuNMCTGD)
+        public MESA_SCORE(double _tuoi, string _gioitinh, double _SBP, double _TotalCholesterol, double _HDL,
+                      bool _dieutriTHA, bool _DTD, bool _hutthuoc, string _chungtoc,
+                      bool _dieutriRLLH, bool _lichsuNMCTGD)
         {
             tuoi = _tuoi;
             gioitinh = _gioitinh;
@@ -3215,9 +3935,9 @@ namespace Chisoyhoc_API
             dieutriTHA = _dieutriTHA;
             lichsuNMCTGD = _lichsuNMCTGD;
         }
-        public MESA_SCORE(double _tuoi, string _gioitinh, string _chungtoc, bool _DTD, bool _hutthuoc,
-                          double _TotalCholesterol, double _HDL, bool _dieutriRLLH, double _SBP, bool _dieutriTHA,
-                          bool _lichsuNMCTGD, double _CAC)
+        public MESA_SCORE(double _tuoi, string _gioitinh, double _SBP, double _TotalCholesterol, double _HDL,
+                      bool _dieutriTHA, bool _DTD, bool _hutthuoc, string _chungtoc,
+                      bool _dieutriRLLH, bool _lichsuNMCTGD, double _CAC)
         {
             tuoi = _tuoi;
             gioitinh = _gioitinh;
