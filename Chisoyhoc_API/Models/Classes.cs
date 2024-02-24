@@ -64,10 +64,13 @@ namespace Chisoyhoc_API
         public List<string> Xulycongthuc(string machiso, string input)
         {
             // truyền vào machiso và input, trả về kết quả dạng List<string>
+            //Input dạng: [Biến 1]_[Biến 2]_[Biến 3]_...
             List<string> kq = new List<string>();
-
-            string[] inputs = input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
-
+            
+            //Tách input thành mảng
+            List<string> inputs = input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            
+            //Chia nhỏ & check
             if (machiso.Substring(0, 1) == "C")
             {
                 #region C_A
@@ -75,14 +78,14 @@ namespace Chisoyhoc_API
                 {
                     switch (machiso)
                     {
-                        case "C_A01": //2
+                        case "C_A01": //2 IBW
                             {
                                 IBW IBWCal = new IBW(inputs[0],
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(IBWCal.kqIBW(), 2).ToString());
                                 break;
                             }
-                        case "C_A02": //3
+                        case "C_A02": //3 AdjBW
                             {
                                 AdjBW AdjBWCal = new AdjBW(inputs[0],
                                     double.Parse(inputs[1]),
@@ -90,14 +93,15 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(AdjBWCal.kqAdjBW(), 2).ToString());
                                 break;
                             }
-                        case "C_A03":
+                        case "C_A03": //3 LBW
                             {
-                                LBW LBWCal = new LBW(inputs[0], double.Parse(inputs[1]),
+                                LBW LBWCal = new LBW(inputs[0],
+                                    double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(LBWCal.KqLBW(), 2).ToString());
                                 break;
                             }
-                        case "C_A04":
+                        case "C_A04": //3 AlcoholSerum
                             {
                                 AlcoholSerum AlcoholSerumCal = new AlcoholSerum(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -105,7 +109,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(AlcoholSerumCal.kqAlcoholSerum(), 2).ToString());
                                 break;
                             }
-                        case "C_A05":
+                        case "C_A05"://2 Budichbong
                             {
                                 Budichbong BudichbongCal = new Budichbong(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
@@ -121,7 +125,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(BMICal.kqBMI(), 2).ToString());
                                 break;
                             }
-                        case "C_A07":
+                        case "C_A07"://7 AaG
                             {
                                 AaG AaGCal = new AaG(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -150,7 +154,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(BSACal.kqBSA_Mos(), 2).ToString());
                                 break;
                             }
-                        case "C_A10":
+                        case "C_A10"://4
                             {
                                 SAG SAGCal = new SAG(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -159,7 +163,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(SAGCal.kqSAG(), 2).ToString());
                                 break;
                             }
-                        case "C_A11":
+                        case "C_A11"://4
                             {
                                 SOG SOGCal = new SOG(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -184,7 +188,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(UAGCal.kqUAG(), 2).ToString());
                                 break;
                             }
-                        case "C_A14":
+                        case "C_A14"://5
                             {
                                 UOG UOGCal = new UOG(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -194,7 +198,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(UOGCal.kqUOG(), 2).ToString());
                                 break;
                             }
-                        case "C_A15":
+                        case "C_A15"://5 CKD 5 MDRD
                             {
                                 eGFR_CKD eGFR_CKDCal = new eGFR_CKD(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -210,7 +214,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(eGFR_MDRDCal.kqeGFR_MDRD(), 2).ToString());
                                 break;
                             }
-                        case "C_A16":
+                        case "C_A16": //4
                             {
                                 eCrCl eCrClCal = new eCrCl(inputs[0],
                                     double.Parse(inputs[1]),
@@ -219,7 +223,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(eCrClCal.kqeCrCl(), 2).ToString());
                                 break;
                             }
-                        case "C_A17":
+                        case "C_A17": //4
                             {
                                 FEMg FEMgCal = new FEMg(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -228,7 +232,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(FEMgCal.kqFEMg(), 2).ToString());
                                 break;
                             }
-                        case "C_A18":
+                        case "C_A18"://4
                             {
                                 FENa FENaCal = new FENa(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -237,7 +241,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(FENaCal.kqFENa(), 2).ToString());
                                 break;
                             }
-                        case "C_A19":
+                        case "C_A19": //5
                             {
                                 KtVDaugirdas KtVDaugirdasCal = new KtVDaugirdas(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -247,7 +251,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(KtVDaugirdasCal.kqKtVDaugirdas(), 2).ToString());
                                 break;
                             }
-                        case "C_A20":
+                        case "C_A20"://5
                             {
                                 RRF_Kru RRF_KruCal = new RRF_Kru(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
