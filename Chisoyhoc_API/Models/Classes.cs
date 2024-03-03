@@ -4059,14 +4059,23 @@ namespace Chisoyhoc_API
     public class SCORE2_DM : Thangdiem
     {
         public string gioitinh { get; set; }
+        public double tuoi { get; set; }
         public int nhomtuoi { get; set; }
+        public double DM_age { get; set; }
         public int nhomDM_Age { get; set; }
+        public bool smoking { get; set; }
         public int nhomSmoking { get; set; }
+        public double HATT { get; set; }
         public int nhomHATT { get; set; }
+        public double TotalCholesterol { get; set; }
         public int nhomTotalCholesterol { get; set; }
+        public double HDL { get; set; }
         public int nhomHDL { get; set; }
+        public double HbA1C { get; set; }
         public int nhomHbA1C { get; set; }
+        public double creatininSerum { get; set; }
         public int nhomEGFR { get; set; }
+        public string vungnguyco { get; set; }
         public int nhomvungnguyco { get; set; }
         public int[] diemNam { get; set; }
         public int[] diemNu { get; set; }
@@ -4083,6 +4092,14 @@ namespace Chisoyhoc_API
         public SCORE2_DM(Nguoibenh NB, Xetnghiem XN)
         {
             init_SCORE2_DM();
+            tuoi = NB.tinhtuoi_nam();
+            gioitinh = NB.gioitinh;
+            smoking = NB.hutthuoc;
+            HATT = NB.HATThu;
+            HDL = XN.HDL;
+            TotalCholesterol = XN.totalCholesterol;
+            creatininSerum = XN.creatininSerum;
+
             checktuoi(NB.tinhtuoi_nam());
             checkSmoking(NB.hutthuoc);
             checkHATT(NB.HATThu);
@@ -4090,13 +4107,22 @@ namespace Chisoyhoc_API
             checkHDL(XN.HDL);
             checkEGFR(NB.gioitinh, XN.creatininSerum, NB.tinhtuoi_nam());
         }
-        public SCORE2_DM(string _gioitinh, double _tuoi, double _namDM, bool _smoking, double _HATT, double _TotalCholesterol,
+        public SCORE2_DM(string _gioitinh, double _tuoi, double _DM_Age, bool _smoking, double _HATT, double _TotalCholesterol,
             double _HDL, double _HbA1C, double _creatininSerum, string _vungnguyco)
         {
             init_SCORE2_DM();
             gioitinh = _gioitinh;
+            tuoi = _tuoi;
+            DM_age = _DM_Age;
+            smoking = _smoking;
+            HATT = _HATT;
+            TotalCholesterol = _TotalCholesterol;
+            HDL = _HDL;
+            HbA1C = _HbA1C;
+            creatininSerum = _creatininSerum;
+            vungnguyco = _vungnguyco;
             checktuoi(_tuoi);
-            double DM_Age = _tuoi - (DateTime.Now.Year - _namDM);
+            double DM_Age = _tuoi - (DateTime.Now.Year - _DM_Age);
             checkDM_Age(DM_Age);
             checkSmoking(_smoking);
             checkHATT(_HATT);
@@ -4319,11 +4345,18 @@ namespace Chisoyhoc_API
     }
     public class SCORE2 : Thangdiem
     {
+        public string gioitinh { get; set; }
         public int nhomgioitinh { get; set; }
+        public double tuoi { get; set; }
         public int nhomtuoi { get; set; }
+        public bool smoking { get; set; }
         public int nhomSmoking { get; set; }
+        public double HATT { get; set; }
         public int nhomHATT { get; set; }
+        public double TotalCholesterol { get; set; }
+        public double HDL { get; set; }
         public int nhomNonHDL { get; set; }
+        public string vungnguyco { get; set; }
         public int nhomvungnguyco { get; set; }
         public int[] diem { get; set; }
         public string[] PLnguyco { get; set; }
@@ -4335,6 +4368,13 @@ namespace Chisoyhoc_API
         public SCORE2(Nguoibenh NB, Xetnghiem XN)
         {
             init_SCORE2();
+            tuoi = NB.tinhtuoi_nam();
+            gioitinh = NB.gioitinh;
+            smoking = NB.hutthuoc;
+            HATT = NB.HATThu;
+            HDL = XN.HDL;
+            TotalCholesterol = XN.totalCholesterol;
+
             checkgioitinh(NB.gioitinh);
             checktuoi(NB.tinhtuoi_nam());
             checkSmoking(NB.hutthuoc);
@@ -4345,11 +4385,18 @@ namespace Chisoyhoc_API
             double _HDL, string _vungnguyco)
         {
             init_SCORE2();
+            gioitinh = _gioitinh;
             checkgioitinh(_gioitinh);
+            tuoi = _tuoi;
             checktuoi(_tuoi);
+            smoking = _smoking;
             checkSmoking(_smoking);
+            HATT = _HATT;
             checkHATT(_HATT);
+            TotalCholesterol = _TotalCholesterol;
+            HDL = _HDL;
             checkNonHDL(_HDL,_TotalCholesterol);
+            vungnguyco = _vungnguyco;
             checkvungnguyco(_vungnguyco);
         }
         private void init_SCORE2()
