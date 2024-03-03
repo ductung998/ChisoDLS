@@ -36,7 +36,7 @@ namespace Chisoyhoc_Form.GiaodienMau
             else
                 gioitinh = "Nữ";
 
-            eGFR_CKD eGFR_CKD_Cal = new eGFR_CKD(gioitinh, creatininSer, tuoi);
+            eGFR_CKD eGFR_CKD_Cal = new eGFR_CKD(tuoi, 0, gioitinh, creatininSer, "");
             label15.Text = "eGFR: " + Math.Round(eGFR_CKD_Cal.kqeGFR_CKD(),2).ToString() +" mL/phút/1,73m^2";
             SCORE2_DM SCORE2_DM_Cal = new SCORE2_DM(gioitinh, tuoi, DM_Nam, hutthuoc, HATT, TCho, HDL, HbA1C, creatininSer, vungnguyco);
 /*            label8.Text = SCORE2_DM_Cal.nhomDM_Age.ToString();

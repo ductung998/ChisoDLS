@@ -33,12 +33,6 @@ namespace Chisoyhoc_API.Models
     partial void Insertchisoyhoc(chisoyhoc instance);
     partial void Updatechisoyhoc(chisoyhoc instance);
     partial void Deletechisoyhoc(chisoyhoc instance);
-    partial void Insertchiso_DSbienDT(chiso_DSbienDT instance);
-    partial void Updatechiso_DSbienDT(chiso_DSbienDT instance);
-    partial void Deletechiso_DSbienDT(chiso_DSbienDT instance);
-    partial void Insertchiso_DSbienLT(chiso_DSbienLT instance);
-    partial void Updatechiso_DSbienLT(chiso_DSbienLT instance);
-    partial void Deletechiso_DSbienLT(chiso_DSbienLT instance);
     partial void Insertchiso_phanloaibien(chiso_phanloaibien instance);
     partial void Updatechiso_phanloaibien(chiso_phanloaibien instance);
     partial void Deletechiso_phanloaibien(chiso_phanloaibien instance);
@@ -51,10 +45,16 @@ namespace Chisoyhoc_API.Models
     partial void Insertchiso_DSbien(chiso_DSbien instance);
     partial void Updatechiso_DSbien(chiso_DSbien instance);
     partial void Deletechiso_DSbien(chiso_DSbien instance);
+    partial void Insertchiso_DSbienLT(chiso_DSbienLT instance);
+    partial void Updatechiso_DSbienLT(chiso_DSbienLT instance);
+    partial void Deletechiso_DSbienLT(chiso_DSbienLT instance);
+    partial void Insertchiso_DSbienDT(chiso_DSbienDT instance);
+    partial void Updatechiso_DSbienDT(chiso_DSbienDT instance);
+    partial void Deletechiso_DSbienDT(chiso_DSbienDT instance);
     #endregion
 		
 		public CSDL_PMChisoyhocDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["PM_ChisoyhocConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["PM_ChisoyhocConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -91,22 +91,6 @@ namespace Chisoyhoc_API.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<chiso_DSbienDT> chiso_DSbienDTs
-		{
-			get
-			{
-				return this.GetTable<chiso_DSbienDT>();
-			}
-		}
-		
-		public System.Data.Linq.Table<chiso_DSbienLT> chiso_DSbienLTs
-		{
-			get
-			{
-				return this.GetTable<chiso_DSbienLT>();
-			}
-		}
-		
 		public System.Data.Linq.Table<chiso_phanloaibien> chiso_phanloaibiens
 		{
 			get
@@ -136,6 +120,22 @@ namespace Chisoyhoc_API.Models
 			get
 			{
 				return this.GetTable<chiso_DSbien>();
+			}
+		}
+		
+		public System.Data.Linq.Table<chiso_DSbienLT> chiso_DSbienLTs
+		{
+			get
+			{
+				return this.GetTable<chiso_DSbienLT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<chiso_DSbienDT> chiso_DSbienDTs
+		{
+			get
+			{
+				return this.GetTable<chiso_DSbienDT>();
 			}
 		}
 	}
@@ -443,428 +443,6 @@ namespace Chisoyhoc_API.Models
 		{
 			this.SendPropertyChanging();
 			entity.chisoyhoc = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.chiso_DSbienDT")]
-	public partial class chiso_DSbienDT : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IDbienDT;
-		
-		private System.Nullable<int> _IDbien;
-		
-		private int _thutu;
-		
-		private string _giatri;
-		
-		private System.Nullable<double> _diem;
-		
-		private string _limit;
-		
-		private EntityRef<chiso_DSbien> _chiso_DSbien;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDbienDTChanging(int value);
-    partial void OnIDbienDTChanged();
-    partial void OnIDbienChanging(System.Nullable<int> value);
-    partial void OnIDbienChanged();
-    partial void OnthutuChanging(int value);
-    partial void OnthutuChanged();
-    partial void OngiatriChanging(string value);
-    partial void OngiatriChanged();
-    partial void OndiemChanging(System.Nullable<double> value);
-    partial void OndiemChanged();
-    partial void OnlimitChanging(string value);
-    partial void OnlimitChanged();
-    #endregion
-		
-		public chiso_DSbienDT()
-		{
-			this._chiso_DSbien = default(EntityRef<chiso_DSbien>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDbienDT", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IDbienDT
-		{
-			get
-			{
-				return this._IDbienDT;
-			}
-			set
-			{
-				if ((this._IDbienDT != value))
-				{
-					this.OnIDbienDTChanging(value);
-					this.SendPropertyChanging();
-					this._IDbienDT = value;
-					this.SendPropertyChanged("IDbienDT");
-					this.OnIDbienDTChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDbien", DbType="Int")]
-		public System.Nullable<int> IDbien
-		{
-			get
-			{
-				return this._IDbien;
-			}
-			set
-			{
-				if ((this._IDbien != value))
-				{
-					if (this._chiso_DSbien.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIDbienChanging(value);
-					this.SendPropertyChanging();
-					this._IDbien = value;
-					this.SendPropertyChanged("IDbien");
-					this.OnIDbienChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thutu", DbType="Int NOT NULL")]
-		public int thutu
-		{
-			get
-			{
-				return this._thutu;
-			}
-			set
-			{
-				if ((this._thutu != value))
-				{
-					this.OnthutuChanging(value);
-					this.SendPropertyChanging();
-					this._thutu = value;
-					this.SendPropertyChanged("thutu");
-					this.OnthutuChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_giatri", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string giatri
-		{
-			get
-			{
-				return this._giatri;
-			}
-			set
-			{
-				if ((this._giatri != value))
-				{
-					this.OngiatriChanging(value);
-					this.SendPropertyChanging();
-					this._giatri = value;
-					this.SendPropertyChanged("giatri");
-					this.OngiatriChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_diem", DbType="Float")]
-		public System.Nullable<double> diem
-		{
-			get
-			{
-				return this._diem;
-			}
-			set
-			{
-				if ((this._diem != value))
-				{
-					this.OndiemChanging(value);
-					this.SendPropertyChanging();
-					this._diem = value;
-					this.SendPropertyChanged("diem");
-					this.OndiemChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_limit", DbType="NChar(1000)")]
-		public string limit
-		{
-			get
-			{
-				return this._limit;
-			}
-			set
-			{
-				if ((this._limit != value))
-				{
-					this.OnlimitChanging(value);
-					this.SendPropertyChanging();
-					this._limit = value;
-					this.SendPropertyChanged("limit");
-					this.OnlimitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienDT", Storage="_chiso_DSbien", ThisKey="IDbien", OtherKey="IDbien", IsForeignKey=true)]
-		public chiso_DSbien chiso_DSbien
-		{
-			get
-			{
-				return this._chiso_DSbien.Entity;
-			}
-			set
-			{
-				chiso_DSbien previousValue = this._chiso_DSbien.Entity;
-				if (((previousValue != value) 
-							|| (this._chiso_DSbien.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._chiso_DSbien.Entity = null;
-						previousValue.chiso_DSbienDTs.Remove(this);
-					}
-					this._chiso_DSbien.Entity = value;
-					if ((value != null))
-					{
-						value.chiso_DSbienDTs.Add(this);
-						this._IDbien = value.IDbien;
-					}
-					else
-					{
-						this._IDbien = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("chiso_DSbien");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.chiso_DSbienLT")]
-	public partial class chiso_DSbienLT : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IDBienLT;
-		
-		private System.Nullable<int> _IDBien;
-		
-		private string _donvichuan;
-		
-		private int _IDphanloaidonvi;
-		
-		private string _tenkhac;
-		
-		private EntityRef<chiso_DSbien> _chiso_DSbien;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDBienLTChanging(int value);
-    partial void OnIDBienLTChanged();
-    partial void OnIDBienChanging(System.Nullable<int> value);
-    partial void OnIDBienChanged();
-    partial void OndonvichuanChanging(string value);
-    partial void OndonvichuanChanged();
-    partial void OnIDphanloaidonviChanging(int value);
-    partial void OnIDphanloaidonviChanged();
-    partial void OntenkhacChanging(string value);
-    partial void OntenkhacChanged();
-    #endregion
-		
-		public chiso_DSbienLT()
-		{
-			this._chiso_DSbien = default(EntityRef<chiso_DSbien>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBienLT", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IDBienLT
-		{
-			get
-			{
-				return this._IDBienLT;
-			}
-			set
-			{
-				if ((this._IDBienLT != value))
-				{
-					this.OnIDBienLTChanging(value);
-					this.SendPropertyChanging();
-					this._IDBienLT = value;
-					this.SendPropertyChanged("IDBienLT");
-					this.OnIDBienLTChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBien", DbType="Int")]
-		public System.Nullable<int> IDBien
-		{
-			get
-			{
-				return this._IDBien;
-			}
-			set
-			{
-				if ((this._IDBien != value))
-				{
-					if (this._chiso_DSbien.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIDBienChanging(value);
-					this.SendPropertyChanging();
-					this._IDBien = value;
-					this.SendPropertyChanged("IDBien");
-					this.OnIDBienChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_donvichuan", DbType="NVarChar(500)")]
-		public string donvichuan
-		{
-			get
-			{
-				return this._donvichuan;
-			}
-			set
-			{
-				if ((this._donvichuan != value))
-				{
-					this.OndonvichuanChanging(value);
-					this.SendPropertyChanging();
-					this._donvichuan = value;
-					this.SendPropertyChanged("donvichuan");
-					this.OndonvichuanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDphanloaidonvi", DbType="Int NOT NULL")]
-		public int IDphanloaidonvi
-		{
-			get
-			{
-				return this._IDphanloaidonvi;
-			}
-			set
-			{
-				if ((this._IDphanloaidonvi != value))
-				{
-					this.OnIDphanloaidonviChanging(value);
-					this.SendPropertyChanging();
-					this._IDphanloaidonvi = value;
-					this.SendPropertyChanged("IDphanloaidonvi");
-					this.OnIDphanloaidonviChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenkhac", DbType="NVarChar(500)")]
-		public string tenkhac
-		{
-			get
-			{
-				return this._tenkhac;
-			}
-			set
-			{
-				if ((this._tenkhac != value))
-				{
-					this.OntenkhacChanging(value);
-					this.SendPropertyChanging();
-					this._tenkhac = value;
-					this.SendPropertyChanged("tenkhac");
-					this.OntenkhacChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienLT", Storage="_chiso_DSbien", ThisKey="IDBien", OtherKey="IDbien", IsForeignKey=true)]
-		public chiso_DSbien chiso_DSbien
-		{
-			get
-			{
-				return this._chiso_DSbien.Entity;
-			}
-			set
-			{
-				chiso_DSbien previousValue = this._chiso_DSbien.Entity;
-				if (((previousValue != value) 
-							|| (this._chiso_DSbien.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._chiso_DSbien.Entity = null;
-						previousValue.chiso_DSbienLTs.Remove(this);
-					}
-					this._chiso_DSbien.Entity = value;
-					if ((value != null))
-					{
-						value.chiso_DSbienLTs.Add(this);
-						this._IDBien = value.IDbien;
-					}
-					else
-					{
-						this._IDBien = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("chiso_DSbien");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -1290,11 +868,11 @@ namespace Chisoyhoc_API.Models
 		
 		private int _IDbiengoc;
 		
-		private EntitySet<chiso_DSbienDT> _chiso_DSbienDTs;
+		private EntitySet<r_chiso_bien> _r_chiso_biens;
 		
 		private EntitySet<chiso_DSbienLT> _chiso_DSbienLTs;
 		
-		private EntitySet<r_chiso_bien> _r_chiso_biens;
+		private EntitySet<chiso_DSbienDT> _chiso_DSbienDTs;
 		
 		private EntityRef<chiso_phanloaibien> _chiso_phanloaibien;
 		
@@ -1330,9 +908,9 @@ namespace Chisoyhoc_API.Models
 		
 		public chiso_DSbien()
 		{
-			this._chiso_DSbienDTs = new EntitySet<chiso_DSbienDT>(new Action<chiso_DSbienDT>(this.attach_chiso_DSbienDTs), new Action<chiso_DSbienDT>(this.detach_chiso_DSbienDTs));
-			this._chiso_DSbienLTs = new EntitySet<chiso_DSbienLT>(new Action<chiso_DSbienLT>(this.attach_chiso_DSbienLTs), new Action<chiso_DSbienLT>(this.detach_chiso_DSbienLTs));
 			this._r_chiso_biens = new EntitySet<r_chiso_bien>(new Action<r_chiso_bien>(this.attach_r_chiso_biens), new Action<r_chiso_bien>(this.detach_r_chiso_biens));
+			this._chiso_DSbienLTs = new EntitySet<chiso_DSbienLT>(new Action<chiso_DSbienLT>(this.attach_chiso_DSbienLTs), new Action<chiso_DSbienLT>(this.detach_chiso_DSbienLTs));
+			this._chiso_DSbienDTs = new EntitySet<chiso_DSbienDT>(new Action<chiso_DSbienDT>(this.attach_chiso_DSbienDTs), new Action<chiso_DSbienDT>(this.detach_chiso_DSbienDTs));
 			this._chiso_phanloaibien = default(EntityRef<chiso_phanloaibien>);
 			OnCreated();
 		}
@@ -1581,20 +1159,20 @@ namespace Chisoyhoc_API.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienDT", Storage="_chiso_DSbienDTs", ThisKey="IDbien", OtherKey="IDbien")]
-		public EntitySet<chiso_DSbienDT> chiso_DSbienDTs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_r_chiso_bien", Storage="_r_chiso_biens", ThisKey="IDbien", OtherKey="IDBien")]
+		public EntitySet<r_chiso_bien> r_chiso_biens
 		{
 			get
 			{
-				return this._chiso_DSbienDTs;
+				return this._r_chiso_biens;
 			}
 			set
 			{
-				this._chiso_DSbienDTs.Assign(value);
+				this._r_chiso_biens.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienLT", Storage="_chiso_DSbienLTs", ThisKey="IDbien", OtherKey="IDBien")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienLT", Storage="_chiso_DSbienLTs", ThisKey="IDbien", OtherKey="ID_Bien")]
 		public EntitySet<chiso_DSbienLT> chiso_DSbienLTs
 		{
 			get
@@ -1607,16 +1185,16 @@ namespace Chisoyhoc_API.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_r_chiso_bien", Storage="_r_chiso_biens", ThisKey="IDbien", OtherKey="IDBien")]
-		public EntitySet<r_chiso_bien> r_chiso_biens
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienDT", Storage="_chiso_DSbienDTs", ThisKey="IDbien", OtherKey="IDBien")]
+		public EntitySet<chiso_DSbienDT> chiso_DSbienDTs
 		{
 			get
 			{
-				return this._r_chiso_biens;
+				return this._chiso_DSbienDTs;
 			}
 			set
 			{
-				this._r_chiso_biens.Assign(value);
+				this._chiso_DSbienDTs.Assign(value);
 			}
 		}
 		
@@ -1674,13 +1252,13 @@ namespace Chisoyhoc_API.Models
 			}
 		}
 		
-		private void attach_chiso_DSbienDTs(chiso_DSbienDT entity)
+		private void attach_r_chiso_biens(r_chiso_bien entity)
 		{
 			this.SendPropertyChanging();
 			entity.chiso_DSbien = this;
 		}
 		
-		private void detach_chiso_DSbienDTs(chiso_DSbienDT entity)
+		private void detach_r_chiso_biens(r_chiso_bien entity)
 		{
 			this.SendPropertyChanging();
 			entity.chiso_DSbien = null;
@@ -1698,16 +1276,438 @@ namespace Chisoyhoc_API.Models
 			entity.chiso_DSbien = null;
 		}
 		
-		private void attach_r_chiso_biens(r_chiso_bien entity)
+		private void attach_chiso_DSbienDTs(chiso_DSbienDT entity)
 		{
 			this.SendPropertyChanging();
 			entity.chiso_DSbien = this;
 		}
 		
-		private void detach_r_chiso_biens(r_chiso_bien entity)
+		private void detach_chiso_DSbienDTs(chiso_DSbienDT entity)
 		{
 			this.SendPropertyChanging();
 			entity.chiso_DSbien = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.chiso_DSbienLT")]
+	public partial class chiso_DSbienLT : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IDBienLT;
+		
+		private int _ID_Bien;
+		
+		private string _donvichuan;
+		
+		private int _IDphanloaidonvi;
+		
+		private string _tenkhac;
+		
+		private EntityRef<chiso_DSbien> _chiso_DSbien;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDBienLTChanging(int value);
+    partial void OnIDBienLTChanged();
+    partial void OnID_BienChanging(int value);
+    partial void OnID_BienChanged();
+    partial void OndonvichuanChanging(string value);
+    partial void OndonvichuanChanged();
+    partial void OnIDphanloaidonviChanging(int value);
+    partial void OnIDphanloaidonviChanged();
+    partial void OntenkhacChanging(string value);
+    partial void OntenkhacChanged();
+    #endregion
+		
+		public chiso_DSbienLT()
+		{
+			this._chiso_DSbien = default(EntityRef<chiso_DSbien>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBienLT", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IDBienLT
+		{
+			get
+			{
+				return this._IDBienLT;
+			}
+			set
+			{
+				if ((this._IDBienLT != value))
+				{
+					this.OnIDBienLTChanging(value);
+					this.SendPropertyChanging();
+					this._IDBienLT = value;
+					this.SendPropertyChanged("IDBienLT");
+					this.OnIDBienLTChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Bien", DbType="Int NOT NULL")]
+		public int ID_Bien
+		{
+			get
+			{
+				return this._ID_Bien;
+			}
+			set
+			{
+				if ((this._ID_Bien != value))
+				{
+					if (this._chiso_DSbien.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_BienChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Bien = value;
+					this.SendPropertyChanged("ID_Bien");
+					this.OnID_BienChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_donvichuan", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string donvichuan
+		{
+			get
+			{
+				return this._donvichuan;
+			}
+			set
+			{
+				if ((this._donvichuan != value))
+				{
+					this.OndonvichuanChanging(value);
+					this.SendPropertyChanging();
+					this._donvichuan = value;
+					this.SendPropertyChanged("donvichuan");
+					this.OndonvichuanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDphanloaidonvi", DbType="Int NOT NULL")]
+		public int IDphanloaidonvi
+		{
+			get
+			{
+				return this._IDphanloaidonvi;
+			}
+			set
+			{
+				if ((this._IDphanloaidonvi != value))
+				{
+					this.OnIDphanloaidonviChanging(value);
+					this.SendPropertyChanging();
+					this._IDphanloaidonvi = value;
+					this.SendPropertyChanged("IDphanloaidonvi");
+					this.OnIDphanloaidonviChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tenkhac", DbType="NVarChar(255)")]
+		public string tenkhac
+		{
+			get
+			{
+				return this._tenkhac;
+			}
+			set
+			{
+				if ((this._tenkhac != value))
+				{
+					this.OntenkhacChanging(value);
+					this.SendPropertyChanging();
+					this._tenkhac = value;
+					this.SendPropertyChanged("tenkhac");
+					this.OntenkhacChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienLT", Storage="_chiso_DSbien", ThisKey="ID_Bien", OtherKey="IDbien", IsForeignKey=true)]
+		public chiso_DSbien chiso_DSbien
+		{
+			get
+			{
+				return this._chiso_DSbien.Entity;
+			}
+			set
+			{
+				chiso_DSbien previousValue = this._chiso_DSbien.Entity;
+				if (((previousValue != value) 
+							|| (this._chiso_DSbien.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._chiso_DSbien.Entity = null;
+						previousValue.chiso_DSbienLTs.Remove(this);
+					}
+					this._chiso_DSbien.Entity = value;
+					if ((value != null))
+					{
+						value.chiso_DSbienLTs.Add(this);
+						this._ID_Bien = value.IDbien;
+					}
+					else
+					{
+						this._ID_Bien = default(int);
+					}
+					this.SendPropertyChanged("chiso_DSbien");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.chiso_DSbienDT")]
+	public partial class chiso_DSbienDT : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IDBienDT;
+		
+		private int _IDBien;
+		
+		private int _thutu;
+		
+		private string _giatri;
+		
+		private double _diem;
+		
+		private string _limit;
+		
+		private EntityRef<chiso_DSbien> _chiso_DSbien;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDBienDTChanging(int value);
+    partial void OnIDBienDTChanged();
+    partial void OnIDBienChanging(int value);
+    partial void OnIDBienChanged();
+    partial void OnthutuChanging(int value);
+    partial void OnthutuChanged();
+    partial void OngiatriChanging(string value);
+    partial void OngiatriChanged();
+    partial void OndiemChanging(double value);
+    partial void OndiemChanged();
+    partial void OnlimitChanging(string value);
+    partial void OnlimitChanged();
+    #endregion
+		
+		public chiso_DSbienDT()
+		{
+			this._chiso_DSbien = default(EntityRef<chiso_DSbien>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBienDT", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IDBienDT
+		{
+			get
+			{
+				return this._IDBienDT;
+			}
+			set
+			{
+				if ((this._IDBienDT != value))
+				{
+					this.OnIDBienDTChanging(value);
+					this.SendPropertyChanging();
+					this._IDBienDT = value;
+					this.SendPropertyChanged("IDBienDT");
+					this.OnIDBienDTChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBien", DbType="Int NOT NULL")]
+		public int IDBien
+		{
+			get
+			{
+				return this._IDBien;
+			}
+			set
+			{
+				if ((this._IDBien != value))
+				{
+					if (this._chiso_DSbien.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIDBienChanging(value);
+					this.SendPropertyChanging();
+					this._IDBien = value;
+					this.SendPropertyChanged("IDBien");
+					this.OnIDBienChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thutu", DbType="Int NOT NULL")]
+		public int thutu
+		{
+			get
+			{
+				return this._thutu;
+			}
+			set
+			{
+				if ((this._thutu != value))
+				{
+					this.OnthutuChanging(value);
+					this.SendPropertyChanging();
+					this._thutu = value;
+					this.SendPropertyChanged("thutu");
+					this.OnthutuChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_giatri", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string giatri
+		{
+			get
+			{
+				return this._giatri;
+			}
+			set
+			{
+				if ((this._giatri != value))
+				{
+					this.OngiatriChanging(value);
+					this.SendPropertyChanging();
+					this._giatri = value;
+					this.SendPropertyChanged("giatri");
+					this.OngiatriChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_diem", DbType="Float NOT NULL")]
+		public double diem
+		{
+			get
+			{
+				return this._diem;
+			}
+			set
+			{
+				if ((this._diem != value))
+				{
+					this.OndiemChanging(value);
+					this.SendPropertyChanging();
+					this._diem = value;
+					this.SendPropertyChanged("diem");
+					this.OndiemChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_limit", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string limit
+		{
+			get
+			{
+				return this._limit;
+			}
+			set
+			{
+				if ((this._limit != value))
+				{
+					this.OnlimitChanging(value);
+					this.SendPropertyChanging();
+					this._limit = value;
+					this.SendPropertyChanged("limit");
+					this.OnlimitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="chiso_DSbien_chiso_DSbienDT", Storage="_chiso_DSbien", ThisKey="IDBien", OtherKey="IDbien", IsForeignKey=true)]
+		public chiso_DSbien chiso_DSbien
+		{
+			get
+			{
+				return this._chiso_DSbien.Entity;
+			}
+			set
+			{
+				chiso_DSbien previousValue = this._chiso_DSbien.Entity;
+				if (((previousValue != value) 
+							|| (this._chiso_DSbien.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._chiso_DSbien.Entity = null;
+						previousValue.chiso_DSbienDTs.Remove(this);
+					}
+					this._chiso_DSbien.Entity = value;
+					if ((value != null))
+					{
+						value.chiso_DSbienDTs.Add(this);
+						this._IDBien = value.IDbien;
+					}
+					else
+					{
+						this._IDBien = default(int);
+					}
+					this.SendPropertyChanged("chiso_DSbien");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

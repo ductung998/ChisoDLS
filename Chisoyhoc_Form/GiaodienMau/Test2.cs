@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Chisoyhoc_API;
 using Chisoyhoc_API.Models;
+using Chisoyhoc_API;
 
 
 namespace Chisoyhoc_Form.GiaodienMau
@@ -29,6 +29,12 @@ namespace Chisoyhoc_Form.GiaodienMau
             comboBox1.DataSource = itemList;
             comboBox1.DisplayMember = "DisplayText";
             comboBox1.ValueMember = "ID";
+
+            KetnoiDB db = new KetnoiDB();
+
+            dataGridView1.DataSource = db.GetDSchisoyhoc(); ;
+
+            //Chisoyhoc a = new Chisoyhoc()
         }
         public class ComboBoxItem
         {

@@ -9,29 +9,31 @@ namespace Chisoyhoc_API
     #region Ket not CSDL
     public class KetnoiDB
     {
+        public KetnoiDB()
+        {
+            initDB();
+        }
         public CSDL_PMChisoyhocDataContext connectDB;
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
             connectDB = new CSDL_PMChisoyhocDataContext();
         }
-        public List<Dataclass.DSchisoyhoc> GetDSchisoyhoc()
+        public List<DSchisoyhoc> GetDSchisoyhoc()
         {
-            initDB();
             DSchiso = (from data in connectDB.chisoyhocs
                        select data).ToList();
 
-            List<Dataclass.DSchisoyhoc> DSchisoyhoc = new List<Dataclass.DSchisoyhoc>();
+            List<DSchisoyhoc> DSchisoyhoc = new List<DSchisoyhoc>();
             foreach (chisoyhoc chiso in DSchiso)
             {
-                Dataclass.DSchisoyhoc chisokq = new Dataclass.DSchisoyhoc(chiso.machiso, chiso.tenchiso);
+                DSchisoyhoc chisokq = new DSchisoyhoc(chiso.machiso, chiso.tenchiso);
                 DSchisoyhoc.Add(chisokq);
             }
             return DSchisoyhoc;
         }
         public string GetTenchiso(string _machiso)
         {
-            initDB();
             string tenchiso = (from data in connectDB.chisoyhocs
                                where data.machiso == _machiso
                                select data.tenchiso).FirstOrDefault();
@@ -39,25 +41,99 @@ namespace Chisoyhoc_API
         }
         public string GetMachiso(string _tenchiso)
         {
-            initDB();
             string machiso = (from data in connectDB.chisoyhocs
                               where data.tenchiso == _tenchiso
                               select data.machiso).FirstOrDefault();
             return machiso;
         }
-        public List<Dataclass.DSbienCSYH> GetDSbien(string machiso)
+        public List<Bien> GetDSbien(string _IDchiso)
         {
-            initDB();
-            List<chiso_DSbien> DSIDbien = (from data in connectDB.chiso_DSbiens
-                                  join rela in connectDB.r_chiso_biens on data.IDbien equals rela.IDBien
-                                  where rela.machiso == machiso
-                                  select data).ToList();
-            
-            List<Dataclass.DSbienCSYH> kq = new List<Dataclass.DSbienCSYH>();
-            foreach (chiso_DSbien bien in DSIDbien)
+            List<Bien> kq = new List<Bien>();
+
+            List<int> DSIDbien = GetDSIDbien(_IDchiso);
+
+            foreach (int i in DSIDbien)
             {
-                Dataclass.DSbienCSYH bienkq = new Dataclass.DSbienCSYH(bien.IDbien, bien.tenbien, bien.IDPhanloaibien, bien.IDbiengoc);
-                kq.Add(bienkq);
+                chiso_DSbien j = (from data in connectDB.chiso_DSbiens
+                                  where data.IDbien == i
+                                  select data).FirstOrDefault();
+                kq.Add(new Bien(j.IDbien, j.tenbien, j.tendaydu, j.IDPhanloaibien, j.IDbiengoc));
+            }
+            return kq;
+        }
+        public List<int> GetDSIDbien(string _machiso)
+        {
+            List<int> DSIDbien = (from data in connectDB.r_chiso_biens
+                                  where data.machiso == _machiso
+                                  select data.IDBien).ToList();
+            return DSIDbien;
+        }
+        public Bien Getbien(int _idbien)
+        {
+            chiso_DSbien checkbiengoc = (from data in connectDB.chiso_DSbiens
+                                  where data.IDbien == _idbien
+                                  select data).FirstOrDefault();
+            chiso_DSbien biengoc;
+            if (checkbiengoc.IDbiengoc == 0)
+            {
+                biengoc = checkbiengoc;
+            }
+            else
+            {
+                biengoc = (from data in connectDB.chiso_DSbiens
+                           where data.IDbien == checkbiengoc.IDbiengoc
+                           select data).FirstOrDefault();
+            }
+            Bien kq = new Bien(biengoc);
+            return kq;
+        }
+        public BienLT GetbienLT(int _idbien)
+        {
+            chiso_DSbienLT bienLTgoc = (from data in connectDB.chiso_DSbienLTs
+                                 where data.ID_Bien == _idbien
+                                 select data).FirstOrDefault();
+            BienLT kq = new BienLT(Getbien(_idbien), bienLTgoc.donvichuan, bienLTgoc.IDphanloaidonvi);
+            return kq;
+        }
+        public BienDT GetbienDT(int _idbien)
+        {
+            List<chiso_DSbienDT> bienDTgoc = (from data in connectDB.chiso_DSbienDTs
+                                              where data.IDBien == _idbien
+                                              select data).ToList();
+            List<GiatribienDT> DSgiatri = GetGTbienDT(_idbien);
+
+            BienDT kq = new BienDT(Getbien(_idbien), DSgiatri.Count());
+
+            return kq;
+        }
+        public List<GiatribienDT> GetGTbienDT(int _idbien)
+        {
+            List<chiso_DSbienDT> bienDTgoc = (from data in connectDB.chiso_DSbienDTs
+                                              where data.IDBien == _idbien
+                                              select data).ToList();
+            List<GiatribienDT> kq = new List<GiatribienDT>();
+
+                foreach (chiso_DSbienDT i in bienDTgoc)
+                {
+                    GiatribienDT them = new GiatribienDT(i.thutu, i.giatri, i.diem, i.limit);
+                    if (!kq.Contains(them))
+                    {
+                        kq.Add(them);
+                    }
+                }
+
+                return kq;
+        }
+        public List<string> GetDatabienDT(int _idbien)
+        {
+            List<chiso_DSbienDT> bienDTgoc = (from data in connectDB.chiso_DSbienDTs
+                                              where data.IDBien == _idbien
+                                              select data).ToList();
+            List<string> kq = new List<string>();
+
+            foreach (chiso_DSbienDT i in bienDTgoc)
+            {
+                kq.Add(i.giatri);
             }
             return kq;
         }
@@ -792,31 +868,151 @@ namespace Chisoyhoc_API
     }
     #endregion
     #region Data class
-    public class Dataclass
+    public class DSchisoyhoc
     {
-        public class DSchisoyhoc
+        public string machiso { get; set; }
+        public string tenchiso { get; set; }
+        public DSchisoyhoc(string _machiso, string _tenchiso)
         {
-            public string machiso { get; set; }
-            public string tenchiso { get; set; }
-            public DSchisoyhoc(string _machiso, string _tenchiso)
-            {
-                machiso = _machiso;
-                tenchiso = _tenchiso;
-            }
+            machiso = _machiso;
+            tenchiso = _tenchiso;
         }
-        public class DSbienCSYH
+    }
+    public class DSBienCSYH
+    {
+        public int idbien { get; set; }
+        public string tenbien { get; set; }
+        public string tendaydu { get; set; }
+        public int idloaibien { get; set; }
+        public int idbiengoc { get; set; }
+        public DSBienCSYH()
         {
-            public int IDBien { get; set; }
-            public string tenbien { get; set; }
-            public int IDPhanloaibien { get; set; }
-            public int IDBiengoc { get; set; }
-            public DSbienCSYH(int _IDBien, string _tenbien, int _IDPhanloaibien, int _IDBiengoc)
-            {
-                IDBien = _IDBien;
-                tenbien = _tenbien;
-                IDPhanloaibien = _IDPhanloaibien;
-                IDBiengoc = _IDBiengoc;
-            }
+
+        }
+        public DSBienCSYH(int _idbien, string _tenbien, string _tendaydu, int _idloaibien, int _idbiengoc)
+        {
+            idbien = _idbien;
+            tenbien = _tenbien;
+            tendaydu = _tendaydu;
+            idloaibien = _idloaibien;
+            idbiengoc = _idbiengoc;
+        }
+        public void setDSBienCSYH(int _idbien, string _tenbien, string _tendaydu, int _idloaibien, int _idbiengoc)
+        {
+            idbien = _idbien;
+            tenbien = _tenbien;
+            tendaydu = _tendaydu;
+            idloaibien = _idloaibien;
+            idbiengoc = _idbiengoc;
+        }
+    }
+    public class BienLT_CSYH : DSBienCSYH
+    {
+        public string donvichuan { get; set; } //LT
+        public int IDloaidonvi { get; set; } //LT
+        public BienLT_CSYH(BienLT _bienLT)
+        {
+            setDSBienCSYH(_bienLT.idbien, _bienLT.tenbien, _bienLT.tendaydu, _bienLT.idloaibien, _bienLT.idbiengoc);
+            donvichuan = _bienLT.donvichuan;
+            IDloaidonvi = _bienLT.IDloaidonvi;
+        }
+    }
+    public class BienDT_CSYH : DSBienCSYH
+    {
+        public int sogiatri { get; set; } //DT
+        public BienDT_CSYH(BienDT _bienDT)
+        {
+            setDSBienCSYH(_bienDT.idbien, _bienDT.tenbien, _bienDT.tendaydu, _bienDT.idloaibien, _bienDT.idbiengoc);
+            sogiatri = _bienDT.sogiatri;
+        }
+    }
+    public class Bien
+    {
+        public int idbien { get; set; }
+        public string tenbien { get; set; }
+        public string tendaydu { get; set; }
+        public int idloaibien { get; set; }
+        public int idbiengoc { get; set; }
+        public string donvichuan { get; set; } //LT
+        public int IDloaidonvi { get; set; } //LT
+        public List<GiatribienDT> giatribien { get; set; } //DT
+
+        public KetnoiDB db;
+
+        public Bien()
+        {
+            initDB();
+        }
+        public void initDB()
+        {
+            db = new KetnoiDB();
+        }
+        public Bien(int _idbien, string _tenbien, string _tendaydu, int _idloaibien, int _idbiengoc)
+        {
+            idbien = _idbien;
+            tenbien = _tenbien;
+            tendaydu = _tendaydu;
+            idloaibien = _idloaibien;
+            idbiengoc = _idbiengoc;
+
+            initDB();
+        }
+        public Bien(chiso_DSbien _bien)
+        {
+            idbien = _bien.IDbien;
+            tenbien = _bien.tenbien;
+            tendaydu = _bien.tendaydu;
+            idloaibien = _bien.IDPhanloaibien;
+            idbiengoc = _bien.IDbiengoc;
+
+            initDB();
+        }
+        public void setBien(int _idbien, string _tenbien, string _tendaydu, int _idloaibien, int _idbiengoc)
+        {
+            idbien = _idbien;
+            tenbien = _tenbien;
+            tendaydu = _tendaydu;
+            idloaibien = _idloaibien;
+            idbiengoc = _idbiengoc;
+        }
+
+    }
+    public class BienLT : Bien
+    {
+        public BienLT(Bien _bien, string _donvichuan, int _IDphanloaidonvi)
+        {
+            initDB();
+            setBien(_bien.idbien, _bien.tenbien, _bien.tendaydu, _bien.idloaibien, _bien.idbiengoc);
+            donvichuan = _donvichuan;
+            IDloaidonvi = _IDphanloaidonvi;
+        }
+    }
+    public class BienDT : Bien
+    {
+        public int sogiatri { get; set; }
+        public BienDT(Bien _bien, int _sogiatri)
+        {
+            initDB();
+            setBien(_bien.idbien, _bien.tenbien, _bien.tendaydu, _bien.idloaibien, _bien.idbiengoc);
+            sogiatri = _sogiatri;
+        }
+    }
+    public class GiatribienDT
+    {
+        public int thutu { get; set; }
+        public string giatri { get; set; }
+        public double diem { get; set; }
+        public string limit { get; set; }
+        public GiatribienDT()
+        {
+
+        }
+        public GiatribienDT(int _thutu, string _giatri, double _diem, string _limit)
+        {
+            thutu = _thutu;
+            giatri = _giatri;
+            diem = _diem;
+            limit = _limit;
         }
     }
     #endregion
@@ -1072,7 +1268,8 @@ namespace Chisoyhoc_API
     #endregion
     #region Chỉ số y học parent
     public class Chisoyhoc
-    {       
+    {
+        public CSDL_PMChisoyhocDataContext connectDB;
         public string IDChiso { get; set; }
         public string Tenchiso { get; set; }
         public string mucdich { get; set; }
@@ -1097,8 +1294,13 @@ namespace Chisoyhoc_API
             diengiai = _Diengiai;
             ghichu = _Ghichu;
             TLTK = _TLTK;
-        }
 
+            initDB();
+        }
+        public void initDB()
+        {
+            connectDB = new CSDL_PMChisoyhocDataContext();
+        }
         public double z_score(double X, double L, double M, double S)
         {
             double Z = (L == 0) ?
@@ -1107,8 +1309,6 @@ namespace Chisoyhoc_API
             return Z;
         }
     }
-
-
     public class Congthuc : Chisoyhoc
     {
         public Congthuc()
@@ -1116,37 +1316,11 @@ namespace Chisoyhoc_API
 
         }
     }
-
     public class Thangdiem : Chisoyhoc
     {
-        public CSDL_PMChisoyhocDataContext connectDB;
         public Thangdiem()
         {
 
-        }
-        public void initDB()
-        {
-            connectDB = new CSDL_PMChisoyhocDataContext();
-        }
-        public List<string> laygiatri(int _IDBien)
-        {
-            List<string> DSgiatri = new List<string>();
-
-//            int phanloaibien = (from data in connectDB.chiso_DSbiens
-//                               where data.IDbien == _IDBien
-//                               select data.IDPhanloaibien).FirstOrDefault();
-            DSgiatri = (from data in connectDB.chiso_DSbienDTs
-                        where data.IDbien == _IDBien
-                        select data.giatri).ToList();
-            return DSgiatri;
-        }
-        public double laydiem(int _IDBien)
-        {
-            double? laydiem = (from data in connectDB.chiso_DSbienDTs
-                           where data.IDbien == _IDBien
-                           select data.diem).FirstOrDefault();
-            double diem = laydiem ?? 404;
-            return diem;
         }
     }
     #endregion
@@ -4032,7 +4206,7 @@ namespace Chisoyhoc_API
         public void checkMat(int _idbien, int _mat)
         {
             string kq = (from data in connectDB.chiso_DSbienDTs
-                     where data.thutu == _mat && data.IDbien == _idbien
+                     where data.thutu == _mat && data.IDBien == _idbien
                      select data.diem).ToString();
             GSC_01 = int.Parse(kq);
         }

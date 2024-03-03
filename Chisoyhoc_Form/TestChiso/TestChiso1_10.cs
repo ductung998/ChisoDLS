@@ -166,12 +166,12 @@ namespace Chisoyhoc_Form
             double tuoiCKD = double.Parse(txtTuoiCKD.Text);
             if (radNamCKD.Checked)
             {
-                eGFR_CKD dtCKD = new eGFR_CKD("nam", crclCKD, tuoiCKD);
+                eGFR_CKD dtCKD = new eGFR_CKD(tuoiCKD, 0, "nam", crclCKD, "");
                 lblKetQuaCKD.Text = dtCKD.kqeGFR_CKD().ToString() + "ml/phút/1,73m^2";
             }
             else
             {
-                eGFR_CKD dtCKD = new eGFR_CKD("nữ", crclCKD, tuoiCKD);
+                eGFR_CKD dtCKD = new eGFR_CKD(tuoiCKD, 0, "nữ", crclCKD, "");
                 lblKetQuaCKD.Text = dtCKD.kqeGFR_CKD().ToString() + "ml/phút/1,73m^2";
             }
         }
@@ -225,12 +225,12 @@ namespace Chisoyhoc_Form
             {
                 if (radDaDenMDRD.Checked)
                 {
-                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "người da đen", "nam");
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(tuoiMDRD, 0, "nam", crclMDRD, "người da đen");
                     lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
                 }
                 else
                 {
-                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "khác", "nam");
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(tuoiMDRD, 0, "nam", crclMDRD, "khác");
                     lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
                 }
             }
@@ -238,12 +238,12 @@ namespace Chisoyhoc_Form
             {
                 if (radDaDenMDRD.Checked)
                 {
-                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "người da đen", "nữ");
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(tuoiMDRD, 0, "nữ", crclMDRD, "người da đen");
                     lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
                 }
                 else
                 {
-                    eGFR_MDRD dtMDRD = new eGFR_MDRD(crclMDRD, tuoiMDRD, "khác", "nữ");
+                    eGFR_MDRD dtMDRD = new eGFR_MDRD(tuoiMDRD, 0, "nữ", crclMDRD, "khác");
                     lblKetQuaMDRD.Text = dtMDRD.kqeGFR_MDRD().ToString() + "mL/phút/1.73m2";
                 }
             }
@@ -294,12 +294,12 @@ namespace Chisoyhoc_Form
             double crclCrCl = double.Parse(txtCreCrCl.Text);
             if (radNamCrCl.Checked)
             {
-                eCrCl dteCrCl = new eCrCl(tuoiCrCl, cannangCrCl, crclCrCl, "nam");
+                eCrCl dteCrCl = new eCrCl("nam", cannangCrCl, tuoiCrCl, crclCrCl);
                 lblKetQuaCrCl.Text = dteCrCl.kqeCrCl().ToString() + "mL/phút/1.73m^2";
             }
             else
             {
-                eCrCl dteCrCl = new eCrCl(tuoiCrCl, cannangCrCl, crclCrCl, "nữ");
+                eCrCl dteCrCl = new eCrCl("nữ", cannangCrCl, tuoiCrCl, crclCrCl);
                 lblKetQuaCrCl.Text = dteCrCl.kqeCrCl().ToString() + "mL/phút/1.73m^2";
             }
 
