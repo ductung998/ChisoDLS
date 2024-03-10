@@ -38,7 +38,7 @@ namespace Chisoyhoc_Form.GiaodienMau
 
             eGFR_CKD eGFR_CKD_Cal = new eGFR_CKD(tuoi, 0, gioitinh, creatininSer, "");
             label15.Text = "eGFR: " + Math.Round(eGFR_CKD_Cal.kqeGFR_CKD(),2).ToString() +" mL/phút/1,73m^2";
-            SCORE2_DM SCORE2_DM_Cal = new SCORE2_DM(gioitinh, tuoi, DM_Nam, hutthuoc, HATT, TCho, HDL, HbA1C, creatininSer, vungnguyco);
+            SCORE2_DM SCORE2_DM_Cal = new SCORE2_DM(tuoi, gioitinh, DM_Nam, hutthuoc, HATT, TCho, HDL, HbA1C, creatininSer, vungnguyco);
 /*            label8.Text = SCORE2_DM_Cal.nhomDM_Age.ToString();
             label9.Text = SCORE2_DM_Cal.nhomHATT.ToString();
             label10.Text = SCORE2_DM_Cal.nhomTotalCholesterol.ToString();
@@ -222,7 +222,7 @@ namespace Chisoyhoc_Form.GiaodienMau
             else
                 gioitinh = "Nữ";
 
-            SCORE2 SCORE2_Cal = new SCORE2(gioitinh, tuoi, hutthuoc, HATT, TCho, HDL, vungnguyco);
+            SCORE2 SCORE2_Cal = new SCORE2(tuoi, gioitinh, hutthuoc, HATT, TCho, HDL, vungnguyco);
             label16.Text = "Nguy cơ biến cố tim mạch 10 năm: " + SCORE2_Cal.kqSCORE2().ToString() + "%";
             labelnguyco.Text = "Phân nhóm nguy cơ: " + SCORE2_Cal.kqPLNguycoSCORE2();
         }

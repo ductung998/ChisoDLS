@@ -11,16 +11,19 @@ namespace Chisoyhoc_API
     {
         public KetnoiDB()
         {
+            //Khởi tạo kết nối với CSDL
             initDB();
         }
         public CSDL_PMChisoyhocDataContext db;
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
+            //Tạo kết nối LINQ to SQL
             db = new CSDL_PMChisoyhocDataContext();
         }
         public List<DSchisoyhoc> GetDSchisoyhoc()
         {
+            //Lấy toàn bộ danh sách chỉ số y học
             DSchiso = (from data in db.chisoyhocs
                        select data).ToList();
 
@@ -34,6 +37,7 @@ namespace Chisoyhoc_API
         }
         public Chisoyhoc GetCSYHtheoIDchiso(string _machiso)
         {
+            //Lấy chỉ số y học theo mã chỉ số (ID)
             Chisoyhoc kq = new Chisoyhoc();
 
             chisoyhoc i = (from data in db.chisoyhocs
@@ -44,6 +48,7 @@ namespace Chisoyhoc_API
         }
         public string GetTenchiso(string _machiso)
         {
+            //Lấy TÊN chỉ số y học theo mã chỉ số (ID)
             string tenchiso = (from data in db.chisoyhocs
                                where data.machiso == _machiso
                                select data.tenchiso).FirstOrDefault();
@@ -51,6 +56,7 @@ namespace Chisoyhoc_API
         }
         public string GetMachiso(string _tenchiso)
         {
+            //Lấy mã chỉ số (ID) chỉ số y học theo tên
             string machiso = (from data in db.chisoyhocs
                               where data.tenchiso == _tenchiso
                               select data.machiso).FirstOrDefault();
@@ -58,6 +64,7 @@ namespace Chisoyhoc_API
         }
         public List<int> GetDSIDbien(string _machiso)
         {
+            //Lấy danh sách ID biến theo mã chỉ số (1 chỉ số có nhiều biến) => List
             List<int> DSIDbien = (from data in db.r_chiso_biens
                                   where data.machiso == _machiso
                                   select data.IDBien).ToList();
@@ -65,6 +72,7 @@ namespace Chisoyhoc_API
         }
         public List<Bien> GetDSbien(string _IDchiso)
         {
+            //Lấy danh sách Bien theo mã chỉ số (1 chỉ số có nhiều biến) => List
             List<Bien> kq = new List<Bien>();
 
             List<int> DSIDbien = GetDSIDbien(_IDchiso);
@@ -81,6 +89,8 @@ namespace Chisoyhoc_API
 
         public List<int> GetDSsoluongGT(string _IDchiso)
         {
+            //Lấy danh sách số lượng giá trị biến định tính theo mã chỉ số (1 chỉ số có nhiều biến)
+            //1 biến định tính có tối thiểu 2 giá trị (VD: Có/Không)
             List<int> kq = new List<int>();
 
             List<Bien> DSbien = GetDSbien(_IDchiso);
@@ -100,6 +110,8 @@ namespace Chisoyhoc_API
         }
         public List<DSBienCSYH> GetDSbienCSYH(List<Bien> input)
         {
+            //Trả về danh sách biến để hiển thị, chỉ gồm một số thuộc tính của Bien
+            //DSBienCSYH là class hiển thị đơn thuần
             List<DSBienCSYH> kq = new List<DSBienCSYH>();
             foreach (Bien i in input)
             {
@@ -109,6 +121,7 @@ namespace Chisoyhoc_API
         }
         public Bien Getbien(int _idbien)
         {
+            //Trả về Bien có idbien tương ứng
             chiso_DSbien checkbiengoc = (from data in db.chiso_DSbiens
                                   where data.IDbien == _idbien
                                   select data).FirstOrDefault();
@@ -128,6 +141,7 @@ namespace Chisoyhoc_API
         }
         public BienLT GetbienLT(int _idbien)
         {
+            //Trả về BienLT với IDbien tương ứng (BienLT là class con của Bien, có thêm một số thuộc tính)
             chiso_DSbienLT bienLTgoc = (from data in db.chiso_DSbienLTs
                                  where data.ID_Bien == _idbien
                                  select data).FirstOrDefault();
@@ -136,6 +150,7 @@ namespace Chisoyhoc_API
         }
         public BienDT GetbienDT(int _idbien)
         {
+            //Trả về BienLT với IDbien tương ứng (BienDT là class con của Bien, có thêm một số thuộc tính)
             chiso_DSbienDT bienDTgoc = (from data in db.chiso_DSbienDTs
                                               where data.IDBien == _idbien
                                               select data).FirstOrDefault();
@@ -148,6 +163,8 @@ namespace Chisoyhoc_API
         }
         public List<GiatribienDT> GetGiatribienDT(int _idbien)
         {
+            //Trả về List GiatribienDT (giá trị biến định tính theo idbien
+            //GiatribienDT gồm thứ tự, giá trị, điểm, giới hạn
             List<chiso_DSbienDT> bienDTgoc = (from data in db.chiso_DSbienDTs
                                               where data.IDBien == _idbien
                                               select data).ToList();
@@ -166,16 +183,23 @@ namespace Chisoyhoc_API
         }
         public string GetCSYHtheoIDBien(string _idbien)
         {
+            //Trả về chuỗi các Mã chỉ số y học có sử dụng biến theo idbien truyền vào
+            //(kể cả biến gốc và biến được chuyển từ biến gốc (vd khoảng tuổi)
+            //CHuỗi trả về dưới dạng Mã chỉ số 1-Mã chỉ số 2
             string kq = "";
             List<string> them = (from data in db.r_chiso_biens
                                  where data.IDBien == int.Parse(_idbien)
                                  select data.machiso).ToList();
             foreach (string i in them)
-                kq = kq + i + "_";
+                kq = kq + i + "-";
+            kq = kq.Substring(0, kq.Length - 1);
             return kq;
         }
         public List<string> GetDSCSYHtheoIDBien(string _input)
         {
+            //Trả về List các Mã chỉ số y học có sử dụng biến theo idbien truyền vào
+            //(kể cả biến gốc và biến được chuyển từ biến gốc (vd khoảng tuổi)
+            //CHuỗi trả về dưới dạng Mã chỉ số 1-Mã chỉ số 2
             List<string> kq = new List<string>();
 
             List<string> input = _input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -188,6 +212,7 @@ namespace Chisoyhoc_API
         }
         public List<string> GetDatabienDT(int _idbien)
         {
+            //Trả về danh sách giá trị của biến định tính theo idbien tương ứng (tối thiểu 2)
             List<chiso_DSbienDT> bienDTgoc = (from data in db.chiso_DSbienDTs
                                               where data.IDBien == _idbien
                                               select data).ToList();
@@ -201,6 +226,8 @@ namespace Chisoyhoc_API
         }
         public List<Bien> GetDSBiengoc(List<Bien> input)
         {
+            //Trả về danh sách Biến gốc từ danh sách Bien đưa vào
+            //VD: nhóm tuổi sẽ có biến gốc là Tuổi => gom về biến Tuổi
             List<int> idbiencheck = new List<int>();
             List<Bien> kq = new List<Bien>();
             foreach (Bien i in input)
@@ -237,13 +264,13 @@ namespace Chisoyhoc_API
         public List<string> Xulycongthuc(string machiso, string input)
         {
             // truyền vào machiso và input, trả về kết quả dạng List<string>
-            //Input dạng: [Biến 1]_[Biến 2]_[Biến 3]_...
+            //Input dạng: [Giá trị biến 1]_[Giá trị biến 2]_[Giá trị biến 3]_...
             List<string> kq = new List<string>();
             
-            //Tách input thành mảng
+            //Tách input thành List theo ký tự _
             List<string> inputs = input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             
-            //Chia nhỏ & check
+            //Chia nhỏ & check rồi xử lý
             if (machiso.Substring(0, 1) == "C")
             {
                 #region C_A
@@ -1538,6 +1565,44 @@ namespace Chisoyhoc_API
                                 kq.AddRange(ISICal.kqISI_diengiai());
                                 break;
                             }
+                        case "T_C26": //SCORE2
+                            {
+                                SCORE2 SCORE2Cal = new SCORE2(double.Parse(inputs[0]),
+                                    inputs[1],
+                                    KetnoiDB.str_to_bool(inputs[2]),
+                                    double.Parse(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[6]),
+                                    inputs[7]);
+
+                                kq.Add(SCORE2Cal.kqSCORE2().ToString());
+                                kq.Add(SCORE2Cal.kqPLNguycoSCORE2());
+                                break;
+                            }
+                        case "T_C27": //SCORE2_DM 10 var
+                            {
+                                SCORE2_DM SCORE2_DMCal = new SCORE2_DM(double.Parse(inputs[0]),
+                                    inputs[1],
+                                    double.Parse(inputs[2]),
+                                    KetnoiDB.str_to_bool(inputs[3]),
+                                    double.Parse(inputs[4]),
+                                    double.Parse(inputs[5]),
+                                    double.Parse(inputs[6]),
+                                    double.Parse(inputs[7]),
+                                    double.Parse(inputs[8]),
+                                    inputs[9]);
+
+                                kq.Add(SCORE2_DMCal.kqSCORE2_DM().ToString());
+                                kq.Add(SCORE2_DMCal.kqPLNguycoSCORE2_DM());
+                                break;
+                            }
+                        case "T_C28": //SCORED	9 var: 4,2,2,2,2,2,2,2,2
+                            {
+                                SCORED SCOREDCal = new SCORED(input);
+                                kq.Add(SCOREDCal.kqSCORED().ToString());
+                                kq.AddRange(SCOREDCal.kqSCORED_diengiai());
+                                break;
+                            }
                     }
                 }
                 #endregion
@@ -1546,6 +1611,7 @@ namespace Chisoyhoc_API
         }
         public double GetDiembienDT(int _idbien, int _thutu)
         {
+            //Trả về điểm của biến định tính với idbien và thứ tự nhập tương ứng
             double kq = (from data in db.chiso_DSbienDTs
                          where data.IDBien == _idbien && data.thutu == _thutu
                          select data.diem).FirstOrDefault();
@@ -1553,6 +1619,7 @@ namespace Chisoyhoc_API
         }
         public chiso_DSBienKQ GetBienKQ(string _machiso)
         {
+            //Trả về biến kết quả theo mã chỉ số tương ứng để đánh giá điểm đã tính
             chiso_DSBienKQ kq = (from data in db.chiso_DSBienKQs
                                      where data.machiso == _machiso
                                      select data).FirstOrDefault();
@@ -1560,6 +1627,7 @@ namespace Chisoyhoc_API
         }
         public List<chiso_GTBienKQ> GetGTBienKQ(int idbienkq)
         {
+            //Trả về danh sách giá trị của biến kết quả theo idbienkq cung cấp (để dò diễn giải, đánh giá)
             List<chiso_GTBienKQ> kq = (from data in db.chiso_GTBienKQs
                                        where data.IDBienKQ == idbienkq
                                        select data).ToList();
@@ -1567,6 +1635,8 @@ namespace Chisoyhoc_API
         }
         public List<string> GetDiengiaiKQ(string _machiso, double _diem)
         {
+            //Dò diễn giải và đánh giá theo mã chỉ số và điểm tương ứng
+            //Dùng khi BienKQ CHỈ CÓ 1 idbienkq
             List<string> kq = new List<string>();
 
             chiso_DSBienKQ Bienkq = GetBienKQ(_machiso);
@@ -1584,7 +1654,8 @@ namespace Chisoyhoc_API
         }
         public List<string> GetDiengiaiKQ_2(string _machiso, double _diem, int _idbienkq)
         {
-            //Dùng khi BienKQ có 2 idbien riêng (vd DIPSSPLus)
+            //Dò diễn giải và đánh giá theo mã chỉ số và điểm tương ứng
+            //Dùng khi BienKQ CÓ 2 idbienkq riêng (vd chỉ số DIPSSPLus có DIPSS và DIPSS Plus)
             List<string> kq = new List<string>();
 
             chiso_DSBienKQ Bienkq = GetBienKQ(_machiso);
@@ -1602,6 +1673,7 @@ namespace Chisoyhoc_API
         }
         public int phannhomDTDL(int _idbien, double _giatri)
         {
+            //Trả về thứ tự nhập của biến ĐỊNH TÍNH ĐỊNH LƯỢNG từ idbien và giá trị ĐỊNH LƯỢNG
             List<GiatribienDT> dataDT = GetGiatribienDT(_idbien);
             int thutu = 0;
             foreach (GiatribienDT i in dataDT)
@@ -1613,6 +1685,8 @@ namespace Chisoyhoc_API
         }
         public static bool GetkqinputGioihan(string _gioihan, double _input)
         {
+            //Xử lý chuỗi giới hạn
+            //Trả về true nếu input nằm trong CÁC khoảng giới hạn (tra từ CSDL, tự động)
             bool kq = false;
             if (_gioihan.Contains('U'))
             {
@@ -1631,6 +1705,7 @@ namespace Chisoyhoc_API
         }
         public static bool checkinputGioihan(Gioihan _gioihan, double _input)
         {
+            //Trả về true nếu input nằm trong khoảng giới hạn (truyền vào từ method xử lý chuỗi ở trên)
             bool kq;
 
             if (_gioihan.equalLL && _gioihan.equalUL)
@@ -1646,6 +1721,7 @@ namespace Chisoyhoc_API
         }
         private static List<Gioihan> GetListGioihan(string _gioihan)
         {
+            //Xử lý chuỗi ĐA giới hạn thành từng khoảng giới hạn
             string[] tachGioihan = _gioihan.Split('U');
 
             List<Gioihan> kq = new List<Gioihan>();
@@ -1659,6 +1735,7 @@ namespace Chisoyhoc_API
         }
         private static Gioihan Getgioihan(string _gioihan)
         {
+            //Xử lý chuỗi ĐƠN giới hạn thành từng khoảng giới hạn, được gọi từ method xử lý chuỗi đa
             string[] parts = _gioihan.Trim(new char[] { '(', '[', ')', ']' }).Split(':');
 
             if (parts.Length == 2)
@@ -1678,15 +1755,18 @@ namespace Chisoyhoc_API
         }
         public static bool str_to_bool(string input)
         {
-            if (input.ToLower() == "true" || input.ToLower() == "1")
+            //Chuyển chuỗi input thành boolean, bao gồm cả giá trị 1, 0 hoặc Y, N
+            if (input.ToLower() == "true" || input.ToLower() == "1" || input.ToLower() == "y")
                 return true;
-            else if (input.ToLower() == "false" || input.ToLower() == "0")
+            else if (input.ToLower() == "false" || input.ToLower() == "0" || input.ToLower() == "n")
                 return false;
             else
                 throw new ArgumentException("Invalid boolean input: " + input);
         }
         public static string datetimetonumber(DateTime input)
         {
+            //Chuyển giá trị biến THỜI GIAN nhập vào thành CHUỖI
+            //Chuỗi xử lý là số ngày các với ngày 1/1/0001
             string kq;
             DateTime referenceDate = new DateTime(0001, 1, 1);
 
@@ -1695,6 +1775,7 @@ namespace Chisoyhoc_API
         }
         public static DateTime numbertodatetime(string input)
         {
+            //Chuyển giá trị biến CHUỖI trở lại thành biến THỜI GIAN
             DateTime kq;
             DateTime referenceDate = new DateTime(0001, 1, 1);
 
@@ -1706,6 +1787,7 @@ namespace Chisoyhoc_API
     #region Data class
     public class DSchisoyhoc
     {
+        //CLASS HIỂN THỊ
         public string machiso { get; set; }
         public string tenchiso { get; set; }
         public DSchisoyhoc(string _machiso, string _tenchiso)
@@ -1716,6 +1798,7 @@ namespace Chisoyhoc_API
     }
     public class DSBienCSYH
     {
+        //CLASS HIỂN THỊ
         public int idbien { get; set; }
         public string tenbien { get; set; }
         public string tendaydu { get; set; }
@@ -1744,6 +1827,7 @@ namespace Chisoyhoc_API
     }
     public class BienLT_CSYH : DSBienCSYH
     {
+        //CLASS HIỂN THỊ
         public string donvichuan { get; set; } //LT
         public int IDloaidonvi { get; set; } //LT
         public BienLT_CSYH(BienLT _bienLT)
@@ -1755,6 +1839,7 @@ namespace Chisoyhoc_API
     }
     public class BienDT_CSYH : DSBienCSYH
     {
+        //CLASS HIỂN THỊ
         public int sogiatri { get; set; } //DT
         public BienDT_CSYH(BienDT _bienDT)
         {
@@ -1764,6 +1849,7 @@ namespace Chisoyhoc_API
     }
     public class Bien
     {
+        //CLASS LƯU TRỮ VÀ XỬ LÝ
         public int idbien { get; set; }
         public string tenbien { get; set; }
         public string tendaydu { get; set; }
@@ -2218,7 +2304,7 @@ namespace Chisoyhoc_API
             {
                 DStinhdiem.Add(new BiendiemCSYH(i.idbien, i.idloaibien));
             }
-
+            //Comment vì URL quá dài khi truyền cả IDbien và giá trị
 /*            List<string> inputRieng = _input.Split(new[] { "__" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             foreach (string i in inputRieng)
             {
@@ -6090,6 +6176,13 @@ namespace Chisoyhoc_API
     public class APACHE2 : Thangdiem //T_B01
     {
         public double APACHE2_SCORE { get; set; }
+        public double GSC { get; set; }
+        public double diembenhPT { get; set; }
+        public double trongsobenhPT { get; set; }
+        public double trongsochandoan { get; set; }
+        public double Log_OR { get; set; }
+        public double OR { get; set; }
+        public double nguycotuvong { get; set; }
 
         public APACHE2()
         {
@@ -6100,11 +6193,69 @@ namespace Chisoyhoc_API
         {
             initchiso("T_B01");
             initTongdiem(_input);
-            tinhTongdiem();
         }
+        public void xulybien()
+        {
 
+            bool FiO2_AaG = DStinhdiem[4].thutunhap == 1;
+            if (FiO2_AaG)
+                DStinhdiem[6].thutunhap = 0;
+            else
+                DStinhdiem[5].thutunhap = 0;
+
+            bool pHSerum = DStinhdiem[7].thutunhap == 1;
+            if (pHSerum)
+                DStinhdiem[9].thutunhap = 0;
+            else
+                DStinhdiem[8].thutunhap = 0;
+
+            GSC = Math.Min(15 - DStinhdiem[15].giatri, 3);
+
+            bool benhmantinh = DStinhdiem[17].thutunhap == 1;
+            int loaiphauthuat = DStinhdiem[18].thutunhap;
+
+            if (benhmantinh)
+            {
+                diembenhPT = 0;
+                if (loaiphauthuat != 3)
+                {
+                    trongsobenhPT = 0;
+                }
+                else
+                {
+                    trongsobenhPT = 0.603;
+                }
+            }
+            else
+            {
+                if (loaiphauthuat == 1)
+                {
+                    diembenhPT = 5;
+                    trongsobenhPT = 0;
+                }
+                else if (loaiphauthuat == 2)
+                {
+                    diembenhPT = 2;
+                    trongsobenhPT = 0;
+                }
+                else
+                {
+                    diembenhPT = 5;
+                    trongsobenhPT = 0.603;
+                }
+            }
+        }
         public double kqAPACHE2()
         {
+            xulybien();
+            tinhTongdiem();
+
+            bool phauthuat = DStinhdiem[19].thutunhap == 2;
+            if (!phauthuat)
+                DStinhdiem[21].diemketqua = 0;
+            else
+                DStinhdiem[20].diemketqua = 0;
+
             APACHE2_SCORE = 0;
 
             foreach (BiendiemCSYH i in DStinhdiem)
@@ -6112,12 +6263,22 @@ namespace Chisoyhoc_API
                 APACHE2_SCORE += i.diemketqua;
             }
 
+            APACHE2_SCORE = APACHE2_SCORE - DStinhdiem[20].diemketqua - DStinhdiem[21].diemketqua;
+
             return APACHE2_SCORE;
         }
 
         public List<string> kqAPACHE2_diengiai()
         {
-            List<string> kq = db.GetDiengiaiKQ(IDChiso, APACHE2_SCORE);
+            Log_OR = -3.517 + (APACHE2_SCORE * 0.146) + trongsobenhPT + trongsochandoan;
+
+            OR = Math.Exp(Log_OR);
+
+            nguycotuvong = 100 * OR / (1 + OR);
+
+            List<string> kq = new List<string>() {"LogOR", Math.Round(Log_OR,2).ToString(),
+                "OR", Math.Round(OR,2).ToString(),
+                "Nguy cơ tử vong", Math.Round(nguycotuvong,2).ToString() };
             return kq;
         }
     }
@@ -8385,7 +8546,170 @@ namespace Chisoyhoc_API
             return kq;
         }
     }
-    public class SCORE2_DM : Thangdiem //T_C26
+    public class SCORE2 : Thangdiem //T_C26
+    {
+        public string gioitinh { get; set; }
+        public int nhomgioitinh { get; set; }
+        public double tuoi { get; set; }
+        public int nhomtuoi { get; set; }
+        public bool smoking { get; set; }
+        public int nhomSmoking { get; set; }
+        public double HATT { get; set; }
+        public int nhomHATT { get; set; }
+        public double TotalCholesterol { get; set; }
+        public double HDL { get; set; }
+        public int nhomNonHDL { get; set; }
+        public string vungnguyco { get; set; }
+        public int nhomvungnguyco { get; set; }
+        public int[] diem { get; set; }
+        public string[] PLnguyco { get; set; }
+        public int diem_start_index { get; set; }
+        public SCORE2()
+        {
+            init_SCORE2();
+        }
+        public SCORE2(Nguoibenh NB, Xetnghiem XN)
+        {
+            init_SCORE2();
+            tuoi = NB.tinhtuoi_nam();
+            gioitinh = NB.gioitinh;
+            smoking = NB.hutthuoc;
+            HATT = NB.HATThu;
+            HDL = XN.HDL;
+            TotalCholesterol = XN.totalCholesterol;
+
+            checkgioitinh(NB.gioitinh);
+            checktuoi(NB.tinhtuoi_nam());
+            checkSmoking(NB.hutthuoc);
+            checkHATT(NB.HATThu);
+            checkNonHDL(XN.HDL, XN.totalCholesterol);
+        }
+        public SCORE2(double _tuoi, string _gioitinh, bool _smoking, double _TotalCholesterol,
+            double _HDL, double _HATT, string _vungnguyco)
+        {
+            init_SCORE2();
+            gioitinh = _gioitinh.ToLower();
+            checkgioitinh(_gioitinh.ToLower());
+            tuoi = _tuoi;
+            checktuoi(_tuoi);
+            smoking = _smoking;
+            checkSmoking(_smoking);
+            HATT = _HATT;
+            checkHATT(_HATT);
+            TotalCholesterol = _TotalCholesterol;
+            HDL = _HDL;
+            checkNonHDL(_HDL, _TotalCholesterol);
+            vungnguyco = _vungnguyco;
+            checkvungnguyco(_vungnguyco);
+        }
+        private void init_SCORE2()
+        {
+            //Vùng nguy cơ: 640; Giới tính: 320; Hút thuốc: 160; Tuổi: 16; NonHDL: 4; HATT: 1
+            int[] _diem = { 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 3, 1, 1, 2, 2, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 4, 2, 2, 3, 4, 2, 3, 3, 4, 2, 3, 3, 4, 2, 3, 4, 5, 3, 3, 4, 5, 3, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 6, 4, 4, 5, 7, 4, 5, 6, 7, 5, 5, 7, 8, 5, 6, 7, 8, 5, 6, 7, 9, 5, 6, 7, 9, 6, 7, 9, 10, 6, 7, 9, 11, 6, 8, 10, 12, 7, 8, 10, 12, 9, 11, 13, 15, 10, 11, 13, 15, 10, 12, 14, 16, 11, 13, 15, 17, 15, 16, 18, 20, 15, 17, 19, 21, 16, 18, 20, 22, 17, 19, 21, 23, 23, 24, 26, 28, 24, 25, 27, 29, 25, 26, 28, 30, 26, 27, 29, 31, 2, 2, 3, 4, 2, 3, 3, 4, 2, 3, 4, 5, 2, 3, 4, 6, 2, 3, 4, 5, 2, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 7, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 7, 4, 5, 6, 8, 4, 5, 6, 8, 4, 5, 7, 8, 5, 6, 7, 9, 5, 6, 8, 10, 5, 6, 8, 10, 6, 7, 8, 10, 6, 7, 9, 11, 6, 8, 9, 11, 7, 8, 10, 12, 7, 9, 10, 12, 7, 9, 11, 13, 8, 9, 11, 13, 9, 11, 14, 17, 10, 12, 15, 18, 10, 13, 15, 19, 11, 14, 16, 20, 13, 15, 18, 21, 14, 16, 19, 22, 15, 17, 20, 23, 15, 18, 21, 24, 18, 20, 23, 25, 19, 21, 24, 26, 20, 22, 25, 28, 21, 23, 26, 29, 25, 27, 29, 31, 26, 28, 30, 32, 27, 29, 31, 33, 28, 30, 32, 34, 1, 2, 2, 3, 2, 2, 3, 4, 2, 3, 3, 5, 2, 3, 4, 5, 2, 2, 3, 4, 2, 3, 4, 5, 3, 3, 4, 6, 3, 4, 5, 6, 3, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 8, 4, 4, 5, 7, 4, 5, 6, 7, 4, 5, 7, 8, 5, 6, 8, 9, 5, 6, 7, 8, 5, 6, 8, 9, 6, 7, 8, 10, 6, 8, 9, 11, 6, 8, 9, 11, 7, 8, 10, 12, 7, 9, 11, 12, 8, 10, 11, 13, 8, 10, 12, 15, 8, 11, 13, 16, 9, 12, 14, 18, 10, 13, 16, 19, 12, 14, 16, 19, 13, 15, 18, 21, 15, 18, 21, 24, 17, 20, 23, 27, 17, 19, 21, 23, 20, 22, 25, 27, 24, 26, 29, 32, 28, 31, 34, 37, 25, 26, 28, 29, 30, 32, 33, 35, 36, 38, 40, 42, 43, 45, 47, 49, 3, 3, 5, 6, 3, 4, 5, 7, 4, 5, 6, 8, 5, 6, 8, 10, 3, 4, 6, 7, 4, 5, 7, 8, 5, 6, 8, 10, 5, 7, 9, 11, 4, 6, 7, 9, 5, 6, 8, 10, 6, 7, 9, 11, 7, 8, 10, 13, 6, 7, 9, 10, 6, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 15, 7, 9, 10, 13, 8, 10, 11, 14, 9, 10, 13, 15, 10, 11, 14, 17, 9, 11, 13, 15, 10, 12, 14, 16, 11, 13, 15, 17, 11, 13, 16, 19, 12, 14, 18, 22, 13, 16, 19, 24, 14, 17, 21, 26, 15, 19, 23, 28, 15, 18, 21, 24, 17, 20, 23, 27, 19, 23, 26, 31, 22, 26, 30, 34, 19, 22, 24, 26, 23, 25, 28, 31, 27, 30, 33, 36, 31, 34, 38, 41, 25, 26, 27, 29, 30, 32, 33, 35, 36, 38, 40, 42, 43, 45, 47, 49, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 3, 3, 2, 2, 3, 4, 2, 2, 3, 4, 2, 2, 3, 4, 2, 3, 4, 5, 2, 3, 4, 5, 3, 3, 4, 5, 3, 3, 4, 6, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 7, 4, 5, 6, 8, 4, 5, 7, 8, 5, 6, 7, 9, 5, 7, 8, 10, 6, 7, 9, 10, 6, 7, 9, 11, 6, 8, 9, 12, 7, 9, 11, 13, 7, 9, 11, 14, 8, 10, 12, 15, 8, 11, 13, 16, 12, 14, 16, 19, 12, 15, 17, 20, 13, 15, 18, 21, 14, 16, 19, 23, 19, 21, 24, 27, 20, 22, 25, 28, 21, 24, 27, 30, 22, 25, 28, 31, 30, 32, 35, 37, 32, 34, 36, 39, 33, 35, 38, 40, 34, 37, 39, 42, 2, 3, 3, 5, 2, 3, 4, 5, 2, 3, 5, 6, 3, 4, 5, 7, 3, 3, 5, 6, 3, 4, 5, 7, 3, 4, 6, 8, 4, 5, 6, 9, 3, 5, 6, 8, 4, 5, 6, 8, 4, 6, 7, 9, 5, 6, 8, 10, 5, 6, 8, 10, 5, 7, 8, 11, 6, 7, 9, 11, 6, 8, 10, 12, 6, 8, 10, 12, 7, 8, 11, 13, 7, 9, 11, 14, 8, 10, 12, 15, 9, 10, 13, 15, 9, 11, 13, 16, 9, 12, 14, 17, 10, 12, 15, 18, 12, 15, 18, 22, 13, 16, 19, 23, 13, 17, 20, 25, 14, 18, 22, 26, 17, 20, 24, 27, 18, 21, 25, 29, 19, 22, 26, 30, 20, 24, 28, 32, 24, 27, 30, 34, 25, 28, 32, 35, 27, 30, 33, 37, 28, 31, 35, 39, 34, 36, 39, 41, 35, 38, 40, 43, 37, 39, 42, 44, 38, 41, 43, 46, 2, 2, 3, 4, 2, 3, 4, 5, 2, 3, 4, 6, 3, 4, 5, 7, 2, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 8, 3, 4, 5, 7, 4, 5, 6, 8, 4, 5, 7, 9, 5, 6, 8, 10, 4, 5, 7, 9, 5, 6, 8, 10, 6, 7, 9, 11, 6, 8, 10, 12, 6, 7, 9, 11, 7, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 15, 8, 10, 12, 14, 9, 11, 13, 15, 10, 12, 14, 17, 10, 13, 15, 18, 10, 12, 15, 19, 11, 13, 17, 21, 12, 15, 18, 23, 13, 16, 20, 25, 15, 17, 21, 24, 17, 20, 23, 27, 19, 23, 27, 31, 22, 26, 30, 35, 22, 25, 27, 30, 26, 29, 32, 35, 31, 34, 37, 41, 36, 40, 43, 47, 32, 34, 36, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 62, 3, 4, 6, 8, 4, 5, 7, 9, 5, 6, 8, 11, 6, 8, 10, 13, 4, 5, 7, 9, 5, 7, 8, 11, 6, 8, 10, 13, 7, 9, 12, 15, 5, 7, 9, 11, 6, 8, 10, 13, 7, 9, 12, 15, 8, 11, 14, 17, 7, 9, 11, 14, 8, 10, 13, 16, 9, 11, 14, 17, 10, 13, 16, 20, 9, 11, 14, 17, 10, 13, 15, 18, 11, 14, 17, 20, 12, 15, 18, 22, 12, 14, 17, 20, 13, 15, 18, 22, 14, 17, 20, 23, 15, 18, 21, 25, 15, 19, 23, 28, 16, 20, 25, 31, 18, 22, 28, 34, 20, 24, 30, 36, 19, 23, 27, 31, 22, 26, 30, 35, 25, 29, 34, 39, 29, 33, 38, 44, 25, 28, 31, 34, 30, 33, 36, 40, 35, 38, 42, 46, 40, 44, 48, 53, 32, 34, 35, 37, 39, 41, 43, 45, 46, 48, 51, 53, 55, 57, 59, 61, 1, 1, 1, 2, 1, 1, 2, 3, 1, 1, 2, 3, 1, 2, 2, 4, 1, 2, 2, 3, 1, 2, 3, 4, 2, 2, 3, 4, 2, 2, 4, 5, 2, 3, 3, 5, 2, 3, 4, 5, 2, 3, 4, 6, 3, 4, 5, 7, 3, 4, 5, 7, 3, 4, 6, 8, 4, 5, 7, 9, 4, 5, 7, 10, 5, 6, 8, 11, 5, 7, 9, 11, 6, 7, 9, 12, 6, 8, 10, 13, 8, 10, 12, 15, 8, 10, 13, 16, 8, 11, 14, 17, 9, 11, 14, 18, 11, 14, 17, 21, 12, 15, 18, 22, 13, 16, 19, 24, 14, 17, 20, 25, 18, 22, 25, 29, 19, 23, 27, 31, 20, 24, 28, 32, 22, 25, 29, 34, 29, 32, 36, 40, 31, 34, 38, 42, 32, 36, 39, 44, 34, 37, 41, 45, 44, 47, 50, 53, 46, 49, 52, 55, 48, 51, 54, 57, 50, 52, 55, 58, 2, 3, 4, 6, 2, 4, 5, 7, 3, 4, 6, 9, 3, 5, 7, 10, 3, 4, 6, 8, 3, 5, 7, 10, 4, 6, 8, 11, 5, 6, 9, 13, 4, 6, 8, 11, 5, 7, 9, 13, 6, 8, 10, 14, 6, 9, 12, 16, 6, 8, 11, 15, 7, 9, 12, 16, 8, 10, 14, 18, 8, 11, 15, 20, 9, 12, 15, 20, 10, 13, 16, 21, 11, 14, 18, 23, 11, 15, 19, 25, 13, 16, 21, 26, 14, 17, 22, 27, 14, 18, 23, 29, 15, 19, 24, 30, 19, 23, 28, 33, 20, 24, 29, 35, 21, 26, 31, 37, 22, 27, 33, 39, 26, 31, 35, 41, 28, 32, 37, 43, 29, 34, 39, 45, 31, 36, 41, 47, 36, 40, 44, 49, 38, 42, 46, 51, 40, 44, 48, 53, 41, 46, 50, 55, 49, 52, 55, 58, 51, 53, 56, 59, 52, 55, 58, 61, 54, 57, 60, 63, 1, 2, 3, 4, 2, 2, 3, 5, 2, 3, 4, 6, 3, 4, 5, 7, 2, 3, 4, 5, 2, 3, 5, 6, 3, 4, 6, 8, 4, 5, 7, 9, 3, 4, 5, 7, 3, 5, 6, 8, 4, 5, 7, 10, 5, 6, 9, 11, 4, 6, 7, 9, 5, 6, 8, 11, 6, 7, 10, 12, 7, 9, 11, 14, 6, 8, 10, 13, 7, 9, 11, 14, 8, 10, 13, 16, 9, 11, 14, 18, 9, 11, 14, 17, 10, 12, 15, 18, 11, 13, 16, 20, 12, 15, 18, 22, 12, 15, 19, 23, 14, 17, 20, 25, 15, 18, 22, 27, 16, 20, 24, 29, 18, 21, 24, 28, 20, 24, 27, 32, 23, 27, 31, 35, 26, 30, 34, 39, 26, 29, 31, 34, 30, 33, 36, 40, 35, 38, 42, 45, 40, 44, 47, 51, 36, 38, 40, 42, 43, 45, 47, 49, 51, 53, 55, 57, 58, 61, 63, 65, 3, 4, 6, 8, 4, 5, 7, 10, 5, 7, 9, 13, 6, 8, 11, 16, 4, 6, 8, 10, 5, 7, 9, 13, 6, 8, 11, 15, 7, 10, 14, 18, 6, 7, 10, 13, 7, 9, 12, 15, 8, 10, 14, 18, 9, 12, 16, 21, 8, 10, 13, 16, 9, 11, 15, 19, 10, 13, 17, 21, 12, 15, 19, 24, 10, 13, 16, 20, 12, 15, 18, 23, 13, 16, 20, 25, 15, 18, 23, 28, 14, 17, 21, 25, 15, 19, 23, 28, 17, 20, 25, 30, 18, 22, 27, 32, 18, 22, 27, 33, 20, 24, 29, 35, 22, 26, 32, 38, 23, 28, 34, 41, 23, 27, 31, 35, 26, 30, 34, 39, 29, 34, 38, 44, 33, 37, 43, 48, 29, 32, 35, 38, 34, 37, 40, 44, 39, 42, 46, 50, 44, 48, 52, 56, 36, 38, 40, 41, 43, 45, 47, 49, 50, 52, 54, 56, 58, 60, 62, 65, 2, 3, 4, 5, 2, 3, 4, 6, 2, 3, 5, 7, 3, 4, 6, 8, 3, 4, 5, 7, 3, 4, 6, 8, 4, 5, 7, 9, 4, 6, 8, 10, 4, 6, 8, 10, 5, 6, 9, 11, 5, 7, 9, 12, 6, 8, 11, 14, 7, 8, 11, 14, 7, 9, 12, 15, 8, 10, 13, 17, 9, 11, 14, 18, 10, 12, 16, 20, 11, 13, 17, 21, 11, 14, 18, 22, 12, 15, 19, 24, 15, 18, 22, 27, 16, 19, 23, 28, 16, 20, 24, 30, 17, 21, 26, 31, 26, 29, 33, 37, 27, 30, 34, 38, 28, 31, 35, 39, 29, 32, 36, 41, 34, 37, 41, 44, 35, 39, 42, 46, 36, 40, 43, 47, 37, 41, 45, 48, 44, 47, 50, 53, 45, 48, 51, 54, 47, 49, 52, 55, 48, 51, 54, 57, 56, 58, 60, 62, 57, 59, 61, 63, 58, 60, 62, 64, 60, 61, 63, 65, 5, 7, 9, 13, 6, 8, 11, 15, 6, 9, 12, 17, 7, 10, 14, 19, 7, 9, 12, 16, 8, 10, 14, 18, 9, 12, 15, 21, 10, 13, 17, 23, 9, 12, 16, 21, 10, 13, 18, 23, 11, 15, 19, 25, 13, 17, 22, 28, 13, 16, 21, 26, 14, 18, 23, 28, 15, 19, 24, 31, 16, 21, 26, 33, 17, 22, 27, 33, 18, 23, 29, 35, 20, 25, 30, 37, 21, 26, 32, 39, 23, 28, 34, 41, 24, 30, 36, 42, 26, 31, 37, 44, 27, 33, 39, 46, 34, 39, 43, 48, 36, 40, 44, 49, 37, 41, 46, 51, 38, 43, 47, 52, 42, 46, 49, 53, 43, 47, 51, 55, 44, 48, 52, 56, 46, 49, 53, 58, 50, 53, 56, 59, 51, 54, 57, 60, 53, 56, 59, 62, 54, 57, 60, 63, 59, 61, 63, 65, 60, 62, 64, 66, 61, 63, 65, 67, 63, 65, 66, 68, 3, 4, 5, 7, 4, 5, 6, 9, 4, 6, 8, 11, 5, 7, 10, 13, 4, 5, 7, 9, 5, 6, 8, 11, 6, 8, 10, 13, 7, 9, 12, 16, 6, 7, 10, 12, 7, 9, 11, 14, 8, 10, 13, 16, 9, 12, 15, 19, 8, 10, 13, 16, 9, 11, 14, 18, 10, 13, 16, 20, 12, 15, 18, 23, 11, 14, 17, 20, 12, 15, 19, 23, 14, 17, 20, 25, 15, 18, 22, 27, 15, 18, 22, 26, 17, 20, 24, 28, 18, 21, 26, 30, 19, 23, 27, 32, 25, 28, 32, 35, 26, 30, 33, 37, 28, 31, 35, 39, 29, 33, 36, 40, 31, 34, 37, 40, 33, 36, 39, 42, 36, 39, 42, 45, 38, 41, 44, 48, 38, 40, 42, 44, 41, 43, 46, 48, 45, 47, 49, 52, 48, 51, 53, 56, 46, 47, 48, 49, 50, 52, 53, 54, 55, 56, 58, 59, 60, 61, 63, 64, 6, 8, 11, 14, 7, 10, 13, 17, 9, 12, 16, 20, 11, 14, 19, 24, 8, 10, 13, 17, 9, 12, 16, 20, 11, 14, 18, 24, 13, 17, 22, 28, 10, 13, 17, 21, 12, 15, 19, 24, 14, 17, 22, 28, 16, 20, 25, 31, 13, 17, 21, 25, 15, 19, 23, 28, 17, 21, 26, 32, 19, 24, 29, 35, 17, 21, 25, 31, 19, 23, 28, 33, 21, 25, 31, 36, 23, 28, 33, 40, 22, 26, 31, 36, 24, 28, 33, 39, 26, 30, 36, 42, 28, 33, 38, 44, 31, 35, 39, 43, 33, 36, 41, 45, 34, 38, 42, 47, 36, 40, 44, 49, 36, 39, 42, 45, 38, 41, 44, 48, 41, 44, 47, 51, 43, 47, 50, 54, 40, 43, 45, 47, 44, 46, 49, 51, 48, 50, 52, 55, 51, 54, 56, 59, 46, 47, 48, 49, 50, 52, 53, 54, 55, 56, 58, 59, 60, 61, 63, 64 };
+            diem = _diem;
+            string[] _PLnguyco = { "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C" };
+            PLnguyco = _PLnguyco;
+        }
+        private void checkgioitinh(string _gioitinh)
+        {
+            if (_gioitinh.ToLower() == "nam")
+                nhomgioitinh = 1;
+            else
+                nhomgioitinh = 0;
+        }
+        private void checktuoi(double _tuoi)
+        {
+            //Nhom tuoi
+            if (_tuoi < 45)
+                nhomtuoi = 0;
+            else if (_tuoi < 50)
+                nhomtuoi = 1;
+            else if (_tuoi < 55)
+                nhomtuoi = 2;
+            else if (_tuoi < 60)
+                nhomtuoi = 3;
+            else if (_tuoi < 65)
+                nhomtuoi = 4;
+            else if (_tuoi < 70)
+                nhomtuoi = 5;
+            else if (_tuoi < 75)
+                nhomtuoi = 6;
+            else if (_tuoi < 80)
+                nhomtuoi = 7;
+            else if (_tuoi < 85)
+                nhomtuoi = 8;
+            else
+                nhomtuoi = 9;
+        }
+        private void checkSmoking(bool _smoking)
+        {
+            //Smoking
+            if (_smoking)
+                nhomSmoking = 1;
+            else
+                nhomSmoking = 0;
+        }
+        private void checkHATT(double _HATT)
+        {
+            //HATT
+            if (_HATT < 120)
+                nhomHATT = 0;
+            else if (_HATT < 140)
+                nhomHATT = 1;
+            else if (_HATT < 160)
+                nhomHATT = 2;
+            else
+                nhomHATT = 3;
+        }
+        private void checkNonHDL(double _HDL, double _TotalCholesterol)
+        {
+            //HDL
+            if (_TotalCholesterol - _HDL < 4)
+                nhomNonHDL = 0;
+            else if (_TotalCholesterol - _HDL < 5)
+                nhomNonHDL = 1;
+            else if (_TotalCholesterol - _HDL < 6)
+                nhomNonHDL = 2;
+            else
+                nhomNonHDL = 3;
+        }
+        private void checkvungnguyco(string _vungnguyco)
+        {
+            //Vùng nguy cơ
+            if (_vungnguyco == "Thấp")
+                nhomvungnguyco = 0;
+            else if (_vungnguyco == "Trung bình")
+                nhomvungnguyco = 1;
+            else if (_vungnguyco == "Cao")
+                nhomvungnguyco = 2;
+            else
+                nhomvungnguyco = 3;
+        }
+        public int kqSCORE2()
+        {
+            //Mỗi biến có 1 trọng số: theo dữ liệu ở init_SCORE2_DM();
+            diem_start_index = 640 * nhomvungnguyco + 320 * nhomgioitinh + 160 * nhomSmoking +
+                16 * nhomtuoi + 4 * nhomNonHDL + nhomHATT;
+            int kq = diem[diem_start_index];
+            return kq;
+        }
+        public string kqPLNguycoSCORE2()
+        {
+            diem_start_index = 640 * nhomvungnguyco + 320 * nhomgioitinh + 160 * nhomSmoking +
+                16 * nhomtuoi + 4 * nhomNonHDL + nhomHATT;
+            string kq = PLnguyco[diem_start_index];
+            if (kq == "T")
+                kq = "Thấp";
+            else if (kq == "TB")
+                kq = "Trung bình";
+            else if (kq == "C")
+                kq = "Cao";
+            else
+                kq = "Rất cao";
+            return kq;
+        }
+    }
+    public class SCORE2_DM : Thangdiem //T_C27
     {
         public string gioitinh { get; set; }
         public double tuoi { get; set; }
@@ -8436,8 +8760,8 @@ namespace Chisoyhoc_API
             checkHDL(XN.HDL);
             checkEGFR(NB.gioitinh, XN.creatininSerum, NB.tinhtuoi_nam());
         }
-        public SCORE2_DM(string _gioitinh, double _tuoi, double _DM_Age, bool _smoking, double _HATT, double _TotalCholesterol,
-            double _HDL, double _HbA1C, double _creatininSerum, string _vungnguyco)
+        public SCORE2_DM(double _tuoi, string _gioitinh, double _DM_Age, bool _smoking, double _TotalCholesterol,
+            double _HDL, double _HATT, double _HbA1C, double _creatininSerum, string _vungnguyco)
         {
             init_SCORE2_DM();
             gioitinh = _gioitinh.ToLower();
@@ -8672,166 +8996,36 @@ namespace Chisoyhoc_API
             return kq;
         }
     }
-    public class SCORE2 : Thangdiem
+    public class SCORED : Thangdiem //T_C28
     {
-        public string gioitinh { get; set; }
-        public int nhomgioitinh { get; set; }
-        public double tuoi { get; set; }
-        public int nhomtuoi { get; set; }
-        public bool smoking { get; set; }
-        public int nhomSmoking { get; set; }
-        public double HATT { get; set; }
-        public int nhomHATT { get; set; }
-        public double TotalCholesterol { get; set; }
-        public double HDL { get; set; }
-        public int nhomNonHDL { get; set; }
-        public string vungnguyco { get; set; }
-        public int nhomvungnguyco { get; set; }
-        public int[] diem { get; set; }
-        public string[] PLnguyco { get; set; }
-        public int diem_start_index { get; set; }
-        public SCORE2()
-        {
-            init_SCORE2();
-        }
-        public SCORE2(Nguoibenh NB, Xetnghiem XN)
-        {
-            init_SCORE2();
-            tuoi = NB.tinhtuoi_nam();
-            gioitinh = NB.gioitinh;
-            smoking = NB.hutthuoc;
-            HATT = NB.HATThu;
-            HDL = XN.HDL;
-            TotalCholesterol = XN.totalCholesterol;
+        public double SCORED_SCORE { get; set; }
 
-            checkgioitinh(NB.gioitinh);
-            checktuoi(NB.tinhtuoi_nam());
-            checkSmoking(NB.hutthuoc);
-            checkHATT(NB.HATThu);
-            checkNonHDL(XN.HDL, XN.totalCholesterol);
-        }
-        public SCORE2(string _gioitinh, double _tuoi, bool _smoking, double _HATT, double _TotalCholesterol,
-            double _HDL, string _vungnguyco)
+        public SCORED()
         {
-            init_SCORE2();
-            gioitinh = _gioitinh.ToLower();
-            checkgioitinh(_gioitinh.ToLower());
-            tuoi = _tuoi;
-            checktuoi(_tuoi);
-            smoking = _smoking;
-            checkSmoking(_smoking);
-            HATT = _HATT;
-            checkHATT(_HATT);
-            TotalCholesterol = _TotalCholesterol;
-            HDL = _HDL;
-            checkNonHDL(_HDL,_TotalCholesterol);
-            vungnguyco = _vungnguyco;
-            checkvungnguyco(_vungnguyco);
+
         }
-        private void init_SCORE2()
+        public SCORED(string _input)
         {
-            //Vùng nguy cơ: 640; Giới tính: 320; Hút thuốc: 160; Tuổi: 16; NonHDL: 4; HATT: 1
-            int[] _diem = {1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 3, 1, 1, 2, 2, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 4, 2, 2, 3, 4, 2, 3, 3, 4, 2, 3, 3, 4, 2, 3, 4, 5, 3, 3, 4, 5, 3, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 6, 4, 4, 5, 7, 4, 5, 6, 7, 5, 5, 7, 8, 5, 6, 7, 8, 5, 6, 7, 9, 5, 6, 7, 9, 6, 7, 9, 10, 6, 7, 9, 11, 6, 8, 10, 12, 7, 8, 10, 12, 9, 11, 13, 15, 10, 11, 13, 15, 10, 12, 14, 16, 11, 13, 15, 17, 15, 16, 18, 20, 15, 17, 19, 21, 16, 18, 20, 22, 17, 19, 21, 23, 23, 24, 26, 28, 24, 25, 27, 29, 25, 26, 28, 30, 26, 27, 29, 31, 2, 2, 3, 4, 2, 3, 3, 4, 2, 3, 4, 5, 2, 3, 4, 6, 2, 3, 4, 5, 2, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 7, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 7, 4, 5, 6, 8, 4, 5, 6, 8, 4, 5, 7, 8, 5, 6, 7, 9, 5, 6, 8, 10, 5, 6, 8, 10, 6, 7, 8, 10, 6, 7, 9, 11, 6, 8, 9, 11, 7, 8, 10, 12, 7, 9, 10, 12, 7, 9, 11, 13, 8, 9, 11, 13, 9, 11, 14, 17, 10, 12, 15, 18, 10, 13, 15, 19, 11, 14, 16, 20, 13, 15, 18, 21, 14, 16, 19, 22, 15, 17, 20, 23, 15, 18, 21, 24, 18, 20, 23, 25, 19, 21, 24, 26, 20, 22, 25, 28, 21, 23, 26, 29, 25, 27, 29, 31, 26, 28, 30, 32, 27, 29, 31, 33, 28, 30, 32, 34, 1, 2, 2, 3, 2, 2, 3, 4, 2, 3, 3, 5, 2, 3, 4, 5, 2, 2, 3, 4, 2, 3, 4, 5, 3, 3, 4, 6, 3, 4, 5, 6, 3, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 8, 4, 4, 5, 7, 4, 5, 6, 7, 4, 5, 7, 8, 5, 6, 8, 9, 5, 6, 7, 8, 5, 6, 8, 9, 6, 7, 8, 10, 6, 8, 9, 11, 6, 8, 9, 11, 7, 8, 10, 12, 7, 9, 11, 12, 8, 10, 11, 13, 8, 10, 12, 15, 8, 11, 13, 16, 9, 12, 14, 18, 10, 13, 16, 19, 12, 14, 16, 19, 13, 15, 18, 21, 15, 18, 21, 24, 17, 20, 23, 27, 17, 19, 21, 23, 20, 22, 25, 27, 24, 26, 29, 32, 28, 31, 34, 37, 25, 26, 28, 29, 30, 32, 33, 35, 36, 38, 40, 42, 43, 45, 47, 49, 3, 3, 5, 6, 3, 4, 5, 7, 4, 5, 6, 8, 5, 6, 8, 10, 3, 4, 6, 7, 4, 5, 7, 8, 5, 6, 8, 10, 5, 7, 9, 11, 4, 6, 7, 9, 5, 6, 8, 10, 6, 7, 9, 11, 7, 8, 10, 13, 6, 7, 9, 10, 6, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 15, 7, 9, 10, 13, 8, 10, 11, 14, 9, 10, 13, 15, 10, 11, 14, 17, 9, 11, 13, 15, 10, 12, 14, 16, 11, 13, 15, 17, 11, 13, 16, 19, 12, 14, 18, 22, 13, 16, 19, 24, 14, 17, 21, 26, 15, 19, 23, 28, 15, 18, 21, 24, 17, 20, 23, 27, 19, 23, 26, 31, 22, 26, 30, 34, 19, 22, 24, 26, 23, 25, 28, 31, 27, 30, 33, 36, 31, 34, 38, 41, 25, 26, 27, 29, 30, 32, 33, 35, 36, 38, 40, 42, 43, 45, 47, 49, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 2, 3, 1, 2, 3, 3, 2, 2, 3, 4, 2, 2, 3, 4, 2, 2, 3, 4, 2, 3, 4, 5, 2, 3, 4, 5, 3, 3, 4, 5, 3, 3, 4, 6, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 7, 4, 5, 6, 8, 4, 5, 7, 8, 5, 6, 7, 9, 5, 7, 8, 10, 6, 7, 9, 10, 6, 7, 9, 11, 6, 8, 9, 12, 7, 9, 11, 13, 7, 9, 11, 14, 8, 10, 12, 15, 8, 11, 13, 16, 12, 14, 16, 19, 12, 15, 17, 20, 13, 15, 18, 21, 14, 16, 19, 23, 19, 21, 24, 27, 20, 22, 25, 28, 21, 24, 27, 30, 22, 25, 28, 31, 30, 32, 35, 37, 32, 34, 36, 39, 33, 35, 38, 40, 34, 37, 39, 42, 2, 3, 3, 5, 2, 3, 4, 5, 2, 3, 5, 6, 3, 4, 5, 7, 3, 3, 5, 6, 3, 4, 5, 7, 3, 4, 6, 8, 4, 5, 6, 9, 3, 5, 6, 8, 4, 5, 6, 8, 4, 6, 7, 9, 5, 6, 8, 10, 5, 6, 8, 10, 5, 7, 8, 11, 6, 7, 9, 11, 6, 8, 10, 12, 6, 8, 10, 12, 7, 8, 11, 13, 7, 9, 11, 14, 8, 10, 12, 15, 9, 10, 13, 15, 9, 11, 13, 16, 9, 12, 14, 17, 10, 12, 15, 18, 12, 15, 18, 22, 13, 16, 19, 23, 13, 17, 20, 25, 14, 18, 22, 26, 17, 20, 24, 27, 18, 21, 25, 29, 19, 22, 26, 30, 20, 24, 28, 32, 24, 27, 30, 34, 25, 28, 32, 35, 27, 30, 33, 37, 28, 31, 35, 39, 34, 36, 39, 41, 35, 38, 40, 43, 37, 39, 42, 44, 38, 41, 43, 46, 2, 2, 3, 4, 2, 3, 4, 5, 2, 3, 4, 6, 3, 4, 5, 7, 2, 3, 4, 5, 3, 4, 5, 6, 3, 4, 5, 7, 4, 5, 6, 8, 3, 4, 5, 7, 4, 5, 6, 8, 4, 5, 7, 9, 5, 6, 8, 10, 4, 5, 7, 9, 5, 6, 8, 10, 6, 7, 9, 11, 6, 8, 10, 12, 6, 7, 9, 11, 7, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 15, 8, 10, 12, 14, 9, 11, 13, 15, 10, 12, 14, 17, 10, 13, 15, 18, 10, 12, 15, 19, 11, 13, 17, 21, 12, 15, 18, 23, 13, 16, 20, 25, 15, 17, 21, 24, 17, 20, 23, 27, 19, 23, 27, 31, 22, 26, 30, 35, 22, 25, 27, 30, 26, 29, 32, 35, 31, 34, 37, 41, 36, 40, 43, 47, 32, 34, 36, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 62, 3, 4, 6, 8, 4, 5, 7, 9, 5, 6, 8, 11, 6, 8, 10, 13, 4, 5, 7, 9, 5, 7, 8, 11, 6, 8, 10, 13, 7, 9, 12, 15, 5, 7, 9, 11, 6, 8, 10, 13, 7, 9, 12, 15, 8, 11, 14, 17, 7, 9, 11, 14, 8, 10, 13, 16, 9, 11, 14, 17, 10, 13, 16, 20, 9, 11, 14, 17, 10, 13, 15, 18, 11, 14, 17, 20, 12, 15, 18, 22, 12, 14, 17, 20, 13, 15, 18, 22, 14, 17, 20, 23, 15, 18, 21, 25, 15, 19, 23, 28, 16, 20, 25, 31, 18, 22, 28, 34, 20, 24, 30, 36, 19, 23, 27, 31, 22, 26, 30, 35, 25, 29, 34, 39, 29, 33, 38, 44, 25, 28, 31, 34, 30, 33, 36, 40, 35, 38, 42, 46, 40, 44, 48, 53, 32, 34, 35, 37, 39, 41, 43, 45, 46, 48, 51, 53, 55, 57, 59, 61, 1, 1, 1, 2, 1, 1, 2, 3, 1, 1, 2, 3, 1, 2, 2, 4, 1, 2, 2, 3, 1, 2, 3, 4, 2, 2, 3, 4, 2, 2, 4, 5, 2, 3, 3, 5, 2, 3, 4, 5, 2, 3, 4, 6, 3, 4, 5, 7, 3, 4, 5, 7, 3, 4, 6, 8, 4, 5, 7, 9, 4, 5, 7, 10, 5, 6, 8, 11, 5, 7, 9, 11, 6, 7, 9, 12, 6, 8, 10, 13, 8, 10, 12, 15, 8, 10, 13, 16, 8, 11, 14, 17, 9, 11, 14, 18, 11, 14, 17, 21, 12, 15, 18, 22, 13, 16, 19, 24, 14, 17, 20, 25, 18, 22, 25, 29, 19, 23, 27, 31, 20, 24, 28, 32, 22, 25, 29, 34, 29, 32, 36, 40, 31, 34, 38, 42, 32, 36, 39, 44, 34, 37, 41, 45, 44, 47, 50, 53, 46, 49, 52, 55, 48, 51, 54, 57, 50, 52, 55, 58, 2, 3, 4, 6, 2, 4, 5, 7, 3, 4, 6, 9, 3, 5, 7, 10, 3, 4, 6, 8, 3, 5, 7, 10, 4, 6, 8, 11, 5, 6, 9, 13, 4, 6, 8, 11, 5, 7, 9, 13, 6, 8, 10, 14, 6, 9, 12, 16, 6, 8, 11, 15, 7, 9, 12, 16, 8, 10, 14, 18, 8, 11, 15, 20, 9, 12, 15, 20, 10, 13, 16, 21, 11, 14, 18, 23, 11, 15, 19, 25, 13, 16, 21, 26, 14, 17, 22, 27, 14, 18, 23, 29, 15, 19, 24, 30, 19, 23, 28, 33, 20, 24, 29, 35, 21, 26, 31, 37, 22, 27, 33, 39, 26, 31, 35, 41, 28, 32, 37, 43, 29, 34, 39, 45, 31, 36, 41, 47, 36, 40, 44, 49, 38, 42, 46, 51, 40, 44, 48, 53, 41, 46, 50, 55, 49, 52, 55, 58, 51, 53, 56, 59, 52, 55, 58, 61, 54, 57, 60, 63, 1, 2, 3, 4, 2, 2, 3, 5, 2, 3, 4, 6, 3, 4, 5, 7, 2, 3, 4, 5, 2, 3, 5, 6, 3, 4, 6, 8, 4, 5, 7, 9, 3, 4, 5, 7, 3, 5, 6, 8, 4, 5, 7, 10, 5, 6, 9, 11, 4, 6, 7, 9, 5, 6, 8, 11, 6, 7, 10, 12, 7, 9, 11, 14, 6, 8, 10, 13, 7, 9, 11, 14, 8, 10, 13, 16, 9, 11, 14, 18, 9, 11, 14, 17, 10, 12, 15, 18, 11, 13, 16, 20, 12, 15, 18, 22, 12, 15, 19, 23, 14, 17, 20, 25, 15, 18, 22, 27, 16, 20, 24, 29, 18, 21, 24, 28, 20, 24, 27, 32, 23, 27, 31, 35, 26, 30, 34, 39, 26, 29, 31, 34, 30, 33, 36, 40, 35, 38, 42, 45, 40, 44, 47, 51, 36, 38, 40, 42, 43, 45, 47, 49, 51, 53, 55, 57, 58, 61, 63, 65, 3, 4, 6, 8, 4, 5, 7, 10, 5, 7, 9, 13, 6, 8, 11, 16, 4, 6, 8, 10, 5, 7, 9, 13, 6, 8, 11, 15, 7, 10, 14, 18, 6, 7, 10, 13, 7, 9, 12, 15, 8, 10, 14, 18, 9, 12, 16, 21, 8, 10, 13, 16, 9, 11, 15, 19, 10, 13, 17, 21, 12, 15, 19, 24, 10, 13, 16, 20, 12, 15, 18, 23, 13, 16, 20, 25, 15, 18, 23, 28, 14, 17, 21, 25, 15, 19, 23, 28, 17, 20, 25, 30, 18, 22, 27, 32, 18, 22, 27, 33, 20, 24, 29, 35, 22, 26, 32, 38, 23, 28, 34, 41, 23, 27, 31, 35, 26, 30, 34, 39, 29, 34, 38, 44, 33, 37, 43, 48, 29, 32, 35, 38, 34, 37, 40, 44, 39, 42, 46, 50, 44, 48, 52, 56, 36, 38, 40, 41, 43, 45, 47, 49, 50, 52, 54, 56, 58, 60, 62, 65, 2, 3, 4, 5, 2, 3, 4, 6, 2, 3, 5, 7, 3, 4, 6, 8, 3, 4, 5, 7, 3, 4, 6, 8, 4, 5, 7, 9, 4, 6, 8, 10, 4, 6, 8, 10, 5, 6, 9, 11, 5, 7, 9, 12, 6, 8, 11, 14, 7, 8, 11, 14, 7, 9, 12, 15, 8, 10, 13, 17, 9, 11, 14, 18, 10, 12, 16, 20, 11, 13, 17, 21, 11, 14, 18, 22, 12, 15, 19, 24, 15, 18, 22, 27, 16, 19, 23, 28, 16, 20, 24, 30, 17, 21, 26, 31, 26, 29, 33, 37, 27, 30, 34, 38, 28, 31, 35, 39, 29, 32, 36, 41, 34, 37, 41, 44, 35, 39, 42, 46, 36, 40, 43, 47, 37, 41, 45, 48, 44, 47, 50, 53, 45, 48, 51, 54, 47, 49, 52, 55, 48, 51, 54, 57, 56, 58, 60, 62, 57, 59, 61, 63, 58, 60, 62, 64, 60, 61, 63, 65, 5, 7, 9, 13, 6, 8, 11, 15, 6, 9, 12, 17, 7, 10, 14, 19, 7, 9, 12, 16, 8, 10, 14, 18, 9, 12, 15, 21, 10, 13, 17, 23, 9, 12, 16, 21, 10, 13, 18, 23, 11, 15, 19, 25, 13, 17, 22, 28, 13, 16, 21, 26, 14, 18, 23, 28, 15, 19, 24, 31, 16, 21, 26, 33, 17, 22, 27, 33, 18, 23, 29, 35, 20, 25, 30, 37, 21, 26, 32, 39, 23, 28, 34, 41, 24, 30, 36, 42, 26, 31, 37, 44, 27, 33, 39, 46, 34, 39, 43, 48, 36, 40, 44, 49, 37, 41, 46, 51, 38, 43, 47, 52, 42, 46, 49, 53, 43, 47, 51, 55, 44, 48, 52, 56, 46, 49, 53, 58, 50, 53, 56, 59, 51, 54, 57, 60, 53, 56, 59, 62, 54, 57, 60, 63, 59, 61, 63, 65, 60, 62, 64, 66, 61, 63, 65, 67, 63, 65, 66, 68, 3, 4, 5, 7, 4, 5, 6, 9, 4, 6, 8, 11, 5, 7, 10, 13, 4, 5, 7, 9, 5, 6, 8, 11, 6, 8, 10, 13, 7, 9, 12, 16, 6, 7, 10, 12, 7, 9, 11, 14, 8, 10, 13, 16, 9, 12, 15, 19, 8, 10, 13, 16, 9, 11, 14, 18, 10, 13, 16, 20, 12, 15, 18, 23, 11, 14, 17, 20, 12, 15, 19, 23, 14, 17, 20, 25, 15, 18, 22, 27, 15, 18, 22, 26, 17, 20, 24, 28, 18, 21, 26, 30, 19, 23, 27, 32, 25, 28, 32, 35, 26, 30, 33, 37, 28, 31, 35, 39, 29, 33, 36, 40, 31, 34, 37, 40, 33, 36, 39, 42, 36, 39, 42, 45, 38, 41, 44, 48, 38, 40, 42, 44, 41, 43, 46, 48, 45, 47, 49, 52, 48, 51, 53, 56, 46, 47, 48, 49, 50, 52, 53, 54, 55, 56, 58, 59, 60, 61, 63, 64, 6, 8, 11, 14, 7, 10, 13, 17, 9, 12, 16, 20, 11, 14, 19, 24, 8, 10, 13, 17, 9, 12, 16, 20, 11, 14, 18, 24, 13, 17, 22, 28, 10, 13, 17, 21, 12, 15, 19, 24, 14, 17, 22, 28, 16, 20, 25, 31, 13, 17, 21, 25, 15, 19, 23, 28, 17, 21, 26, 32, 19, 24, 29, 35, 17, 21, 25, 31, 19, 23, 28, 33, 21, 25, 31, 36, 23, 28, 33, 40, 22, 26, 31, 36, 24, 28, 33, 39, 26, 30, 36, 42, 28, 33, 38, 44, 31, 35, 39, 43, 33, 36, 41, 45, 34, 38, 42, 47, 36, 40, 44, 49, 36, 39, 42, 45, 38, 41, 44, 48, 41, 44, 47, 51, 43, 47, 50, 54, 40, 43, 45, 47, 44, 46, 49, 51, 48, 50, 52, 55, 51, 54, 56, 59, 46, 47, 48, 49, 50, 52, 53, 54, 55, 56, 58, 59, 60, 61, 63, 64};
-            diem = _diem;
-            string[] _PLnguyco = {"T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "T", "T", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "T", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "T", "TB", "TB", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "T", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "T", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "T", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "TB", "TB", "TB", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "TB", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "TB", "C", "C", "TB", "TB", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "TB", "C", "C", "C", "TB", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C"};
-            PLnguyco = _PLnguyco;
+            initchiso("T_C28");
+            initTongdiem(_input);
+            tinhTongdiem();
         }
-        private void checkgioitinh(string _gioitinh)
+
+        public double kqSCORED()
         {
-            if (_gioitinh.ToLower() == "nam")
-                nhomgioitinh = 1;
-            else
-                nhomgioitinh = 0;
+            SCORED_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                SCORED_SCORE += i.diemketqua;
+            }
+
+            return SCORED_SCORE;
         }
-        private void checktuoi(double _tuoi)
+
+        public List<string> kqSCORED_diengiai()
         {
-            //Nhom tuoi
-            if (_tuoi < 45)
-                nhomtuoi = 0;
-            else if (_tuoi < 50)
-                nhomtuoi = 1;
-            else if (_tuoi < 55)
-                nhomtuoi = 2;
-            else if (_tuoi < 60)
-                nhomtuoi = 3;
-            else if (_tuoi < 65)
-                nhomtuoi = 4;
-            else if (_tuoi < 70)
-                nhomtuoi = 5;
-            else if (_tuoi < 75)
-                nhomtuoi = 6;
-            else if (_tuoi < 80)
-                nhomtuoi = 7;
-            else if (_tuoi < 85)
-                nhomtuoi = 8;
-            else
-                nhomtuoi = 9;
-        }
-        private void checkSmoking(bool _smoking)
-        {
-            //Smoking
-            if (_smoking)
-                nhomSmoking = 1;
-            else
-                nhomSmoking = 0;
-        }
-        private void checkHATT(double _HATT)
-        {
-            //HATT
-            if (_HATT < 120)
-                nhomHATT = 0;
-            else if (_HATT < 140)
-                nhomHATT = 1;
-            else if (_HATT < 160)
-                nhomHATT = 2;
-            else
-                nhomHATT = 3;
-        }
-        private void checkNonHDL(double _HDL, double _TotalCholesterol)
-        {
-            //HDL
-            if (_TotalCholesterol - _HDL < 4)
-                nhomNonHDL = 0;
-            else if (_TotalCholesterol - _HDL < 5)
-                nhomNonHDL = 1;
-            else if (_TotalCholesterol - _HDL < 6)
-                nhomNonHDL = 2;
-            else
-                nhomNonHDL = 3;
-        }
-        private void checkvungnguyco(string _vungnguyco)
-        {
-            //Vùng nguy cơ
-            if (_vungnguyco == "Thấp")
-                nhomvungnguyco = 0;
-            else if (_vungnguyco == "Trung bình")
-                nhomvungnguyco = 1;
-            else if (_vungnguyco == "Cao")
-                nhomvungnguyco = 2;
-            else
-                nhomvungnguyco = 3;
-        }
-        public int kqSCORE2()
-        {
-            //Mỗi biến có 1 trọng số: theo dữ liệu ở init_SCORE2_DM();
-            diem_start_index = 640 * nhomvungnguyco + 320 * nhomgioitinh + 160 * nhomSmoking +
-                16 * nhomtuoi + 4 * nhomNonHDL + nhomHATT;
-            int kq = diem[diem_start_index];
-            return kq;
-        }
-        public string kqPLNguycoSCORE2()
-        {
-            diem_start_index = 640 * nhomvungnguyco + 320 * nhomgioitinh + 160 * nhomSmoking +
-                16 * nhomtuoi + 4 * nhomNonHDL + nhomHATT;
-            string kq = PLnguyco[diem_start_index];
-            if (kq == "T")
-                kq = "Thấp";
-            else if (kq == "TB")
-                kq = "Trung bình";
-            else if (kq == "C")
-                kq = "Cao";
-            else
-                kq = "Rất cao";
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, SCORED_SCORE);
             return kq;
         }
     }
