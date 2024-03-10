@@ -13,6 +13,7 @@
       <Column Name="tltk" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="thongdung" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Association Name="chisoyhoc_r_chiso_bien" Member="r_chiso_biens" ThisKey="machiso" OtherKey="machiso" Type="r_chiso_bien" />
+      <Association Name="chisoyhoc_chiso_DSBienKQ" Member="chiso_DSBienKQs" ThisKey="machiso" OtherKey="machiso" Type="chiso_DSBienKQ" />
     </Type>
   </Table>
   <Table Name="dbo.chiso_phanloaibien" Member="chiso_phanloaibiens">
@@ -69,13 +70,34 @@
   </Table>
   <Table Name="dbo.chiso_DSbienDT" Member="chiso_DSbienDTs">
     <Type Name="chiso_DSbienDT">
-      <Column Name="IDBienDT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDBienDT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="IDBien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="thutu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="giatri" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="diem" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="limit" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="xuly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="chiso_DSbien_chiso_DSbienDT" Member="chiso_DSbien" ThisKey="IDBien" OtherKey="IDbien" Type="chiso_DSbien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_GTBienKQ" Member="chiso_GTBienKQs">
+    <Type Name="chiso_GTBienKQ">
+      <Column Name="IDGTBienKQ" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDBienKQ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DiemLL" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DiemUL" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Diengiai" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSBienKQ_chiso_GTBienKQ" Member="chiso_DSBienKQ" ThisKey="IDBienKQ" OtherKey="IDBienKQ" Type="chiso_DSBienKQ" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_DSBienKQ" Member="chiso_DSBienKQs">
+    <Type Name="chiso_DSBienKQ">
+      <Column Name="IDBienKQ" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenbienKQ" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TendayduKQ" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSBienKQ_chiso_GTBienKQ" Member="chiso_GTBienKQs" ThisKey="IDBienKQ" OtherKey="IDBienKQ" Type="chiso_GTBienKQ" />
+      <Association Name="chisoyhoc_chiso_DSBienKQ" Member="chisoyhoc" ThisKey="machiso" OtherKey="machiso" Type="chisoyhoc" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -42,8 +42,27 @@ namespace Chisoyhoc_API.Controllers
             //Thay - thanh . (5-0 to 5.0)
             input = input.Replace("-", ".");
 
-            db.Xulycongthuc(machiso, input);
+            kq.AddRange(db.Xulycongthuc(machiso, input));
             
+            return kq;
+        }
+
+        [HttpGet]
+        [Route("api/chisoyhoc/thangdiem/{machiso}/{input}")]
+        public List<string> thangdiem(string machiso, string input)
+        {
+            KetnoiDB db = new KetnoiDB();
+
+            List<string> kq = new List<string>();
+
+            kq.Add(machiso);
+            kq.Add(db.GetTenchiso(machiso));
+
+            //Thay - thanh . (5-0 to 5.0)
+            input = input.Replace("-", ".");
+
+            kq.AddRange(db.Xulycongthuc(machiso, input));
+
             return kq;
         }
         [HttpGet]
@@ -66,12 +85,16 @@ namespace Chisoyhoc_API.Controllers
         {
             KetnoiDB db = new KetnoiDB();
             List<Bien> DSbien = db.GetDSbien(machiso);
-            List<DSBienCSYH> kq = new List<DSBienCSYH>();
-            foreach (Bien i in DSbien)
-            {
-                kq.Add(new DSBienCSYH(i.idbien, i.tenbien, i.tendaydu, i.idloaibien, i.idbiengoc));
-            }
-
+            List<DSBienCSYH> kq = db.GetDSbienCSYH(DSbien);
+            return kq;
+        }
+        [HttpGet]
+        [Route("api/chisoyhoc/NCKH/DSbienGop/{input}")]
+        public List<DSBienCSYH> DSbienGop(string input)
+        {
+            KetnoiDB db = new KetnoiDB();
+            List<Bien> DSbien = db.GetDSBienGop(input);
+            List<DSBienCSYH> kq = db.GetDSbienCSYH(DSbien);
             return kq;
         }
         [HttpGet]
@@ -97,7 +120,32 @@ namespace Chisoyhoc_API.Controllers
         public List<GiatribienDT> DSbienDT(int idbien)
         {
             KetnoiDB db = new KetnoiDB();
-            List<GiatribienDT> kq = db.GetGTbienDT(idbien);
+            List<GiatribienDT> kq = db.GetGiatribienDT(idbien);
+            return kq;
+        }
+        [HttpGet]
+        [Route("api/chisoyhoc/CSYHtheoBien/{input}")]
+        public List<string> DSbienDT(string input)
+        {
+            KetnoiDB db = new KetnoiDB();
+            List<string> kq = db.GetDSCSYHtheoIDBien(input);
+            return kq;
+        }
+        [HttpGet]
+        [Route("api/chisoyhoc/soluongbien/{machiso}")]
+        public int soluongbien(string machiso)
+        {
+            KetnoiDB db = new KetnoiDB();
+            int kq = db.GetDSbien(machiso).Count();
+            return kq;
+        }
+        [HttpGet]
+        [Route("api/chisoyhoc/soluonggiatri/{machiso}")]
+        public List<int> soluongGTbienDT(string machiso)
+        {
+            KetnoiDB db = new KetnoiDB();
+            List<int> kq = db.GetDSsoluongGT(machiso);
+
             return kq;
         }
     }

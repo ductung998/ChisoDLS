@@ -13,15 +13,15 @@ namespace Chisoyhoc_API
         {
             initDB();
         }
-        public CSDL_PMChisoyhocDataContext connectDB;
+        public CSDL_PMChisoyhocDataContext db;
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
-            connectDB = new CSDL_PMChisoyhocDataContext();
+            db = new CSDL_PMChisoyhocDataContext();
         }
         public List<DSchisoyhoc> GetDSchisoyhoc()
         {
-            DSchiso = (from data in connectDB.chisoyhocs
+            DSchiso = (from data in db.chisoyhocs
                        select data).ToList();
 
             List<DSchisoyhoc> DSchisoyhoc = new List<DSchisoyhoc>();
@@ -32,19 +32,36 @@ namespace Chisoyhoc_API
             }
             return DSchisoyhoc;
         }
+        public Chisoyhoc GetCSYHtheoIDchiso(string _machiso)
+        {
+            Chisoyhoc kq = new Chisoyhoc();
+
+            chisoyhoc i = (from data in db.chisoyhocs
+                             where data.machiso == _machiso
+                             select data).FirstOrDefault();
+            kq.SetChisoyhoc(_machiso, i.tenchiso, i.mucdich, i.ungdung, i.phuongphap, i.diengiaiketqua, i.ghichu, i.tltk);
+            return kq;
+        }
         public string GetTenchiso(string _machiso)
         {
-            string tenchiso = (from data in connectDB.chisoyhocs
+            string tenchiso = (from data in db.chisoyhocs
                                where data.machiso == _machiso
                                select data.tenchiso).FirstOrDefault();
             return tenchiso;
         }
         public string GetMachiso(string _tenchiso)
         {
-            string machiso = (from data in connectDB.chisoyhocs
+            string machiso = (from data in db.chisoyhocs
                               where data.tenchiso == _tenchiso
                               select data.machiso).FirstOrDefault();
             return machiso;
+        }
+        public List<int> GetDSIDbien(string _machiso)
+        {
+            List<int> DSIDbien = (from data in db.r_chiso_biens
+                                  where data.machiso == _machiso
+                                  select data.IDBien).ToList();
+            return DSIDbien;
         }
         public List<Bien> GetDSbien(string _IDchiso)
         {
@@ -54,23 +71,45 @@ namespace Chisoyhoc_API
 
             foreach (int i in DSIDbien)
             {
-                chiso_DSbien j = (from data in connectDB.chiso_DSbiens
+                chiso_DSbien j = (from data in db.chiso_DSbiens
                                   where data.IDbien == i
                                   select data).FirstOrDefault();
                 kq.Add(new Bien(j.IDbien, j.tenbien, j.tendaydu, j.IDPhanloaibien, j.IDbiengoc));
             }
             return kq;
         }
-        public List<int> GetDSIDbien(string _machiso)
+
+        public List<int> GetDSsoluongGT(string _IDchiso)
         {
-            List<int> DSIDbien = (from data in connectDB.r_chiso_biens
-                                  where data.machiso == _machiso
-                                  select data.IDBien).ToList();
-            return DSIDbien;
+            List<int> kq = new List<int>();
+
+            List<Bien> DSbien = GetDSbien(_IDchiso);
+
+            foreach (Bien i in DSbien)
+            {
+                try
+                {
+                    kq.Add(GetGiatribienDT(i.idbien).Count());
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return kq;
+        }
+        public List<DSBienCSYH> GetDSbienCSYH(List<Bien> input)
+        {
+            List<DSBienCSYH> kq = new List<DSBienCSYH>();
+            foreach (Bien i in input)
+            {
+                kq.Add(new DSBienCSYH(i.idbien, i.tenbien, i.tendaydu, i.idloaibien, i.idbiengoc));
+            }
+            return kq;
         }
         public Bien Getbien(int _idbien)
         {
-            chiso_DSbien checkbiengoc = (from data in connectDB.chiso_DSbiens
+            chiso_DSbien checkbiengoc = (from data in db.chiso_DSbiens
                                   where data.IDbien == _idbien
                                   select data).FirstOrDefault();
             chiso_DSbien biengoc;
@@ -80,7 +119,7 @@ namespace Chisoyhoc_API
             }
             else
             {
-                biengoc = (from data in connectDB.chiso_DSbiens
+                biengoc = (from data in db.chiso_DSbiens
                            where data.IDbien == checkbiengoc.IDbiengoc
                            select data).FirstOrDefault();
             }
@@ -89,7 +128,7 @@ namespace Chisoyhoc_API
         }
         public BienLT GetbienLT(int _idbien)
         {
-            chiso_DSbienLT bienLTgoc = (from data in connectDB.chiso_DSbienLTs
+            chiso_DSbienLT bienLTgoc = (from data in db.chiso_DSbienLTs
                                  where data.ID_Bien == _idbien
                                  select data).FirstOrDefault();
             BienLT kq = new BienLT(Getbien(_idbien), bienLTgoc.donvichuan, bienLTgoc.IDphanloaidonvi);
@@ -97,18 +136,19 @@ namespace Chisoyhoc_API
         }
         public BienDT GetbienDT(int _idbien)
         {
-            List<chiso_DSbienDT> bienDTgoc = (from data in connectDB.chiso_DSbienDTs
+            chiso_DSbienDT bienDTgoc = (from data in db.chiso_DSbienDTs
                                               where data.IDBien == _idbien
-                                              select data).ToList();
-            List<GiatribienDT> DSgiatri = GetGTbienDT(_idbien);
+                                              select data).FirstOrDefault();
+            List<GiatribienDT> DSgiatri = GetGiatribienDT(_idbien);
 
-            BienDT kq = new BienDT(Getbien(_idbien), DSgiatri.Count());
+            BienDT kq = new BienDT(Getbien(_idbien), DSgiatri.Count(), bienDTgoc.xuly);
+            kq.initBienDT();
 
             return kq;
         }
-        public List<GiatribienDT> GetGTbienDT(int _idbien)
+        public List<GiatribienDT> GetGiatribienDT(int _idbien)
         {
-            List<chiso_DSbienDT> bienDTgoc = (from data in connectDB.chiso_DSbienDTs
+            List<chiso_DSbienDT> bienDTgoc = (from data in db.chiso_DSbienDTs
                                               where data.IDBien == _idbien
                                               select data).ToList();
             List<GiatribienDT> kq = new List<GiatribienDT>();
@@ -124,9 +164,31 @@ namespace Chisoyhoc_API
 
                 return kq;
         }
+        public string GetCSYHtheoIDBien(string _idbien)
+        {
+            string kq = "";
+            List<string> them = (from data in db.r_chiso_biens
+                                 where data.IDBien == int.Parse(_idbien)
+                                 select data.machiso).ToList();
+            foreach (string i in them)
+                kq = kq + i + "_";
+            return kq;
+        }
+        public List<string> GetDSCSYHtheoIDBien(string _input)
+        {
+            List<string> kq = new List<string>();
+
+            List<string> input = _input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            foreach (string idbien in input)
+            {
+                kq.Add(GetCSYHtheoIDBien(idbien));
+            }
+            return kq;
+        }
         public List<string> GetDatabienDT(int _idbien)
         {
-            List<chiso_DSbienDT> bienDTgoc = (from data in connectDB.chiso_DSbienDTs
+            List<chiso_DSbienDT> bienDTgoc = (from data in db.chiso_DSbienDTs
                                               where data.IDBien == _idbien
                                               select data).ToList();
             List<string> kq = new List<string>();
@@ -137,6 +199,41 @@ namespace Chisoyhoc_API
             }
             return kq;
         }
+        public List<Bien> GetDSBiengoc(List<Bien> input)
+        {
+            List<int> idbiencheck = new List<int>();
+            List<Bien> kq = new List<Bien>();
+            foreach (Bien i in input)
+            {
+                if (idbiencheck.Contains(i.idbien) || idbiencheck.Contains(i.idbiengoc))
+                {
+                    continue;
+                }
+                else
+                {
+                    idbiencheck.Add(i.idbien);
+                    kq.Add(Getbien(i.idbien));
+                }
+            }
+            kq = kq.OrderBy(x => x.idbien).ToList();
+            return kq;
+        }
+        #region NCKH
+        public List<Bien> GetDSBienGop(string _input)
+        {
+            List<Bien> listdem = new List<Bien>();
+            List<string> input = _input.Split(new[] { "-" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (string chiso in input)
+            {
+                listdem.AddRange(GetDSbien(chiso));
+            }
+
+            List<Bien> kq = GetDSBiengoc(listdem);
+            return kq;
+        }
+
+
+        #endregion
         public List<string> Xulycongthuc(string machiso, string input)
         {
             // truyền vào machiso và input, trả về kết quả dạng List<string>
@@ -194,7 +291,7 @@ namespace Chisoyhoc_API
                                 kq.Add(Math.Round(BudichbongCal.kqtocdotruyen16h(), 2).ToString());
                                 break;
                             }
-                        case "C_A06":
+                        case "C_A06": //BMI
                             {
                                 BMI BMICal = new BMI(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
@@ -738,7 +835,7 @@ namespace Chisoyhoc_API
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(PVRCal.kqPVR(), 2).ToString());
 
-                                PVR PVRICal = new PVR(double.Parse(inputs[0]),
+                                PVRI PVRICal = new PVRI(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]),
@@ -837,24 +934,747 @@ namespace Chisoyhoc_API
                 #region T_A
                 if (machiso.Substring(0, 3) == "T_A")
                 {
-
+                    switch (machiso)
+                    {
+                        case "T_A01": //GRACE 9 var: 7 7 7 7 2 2 2 2 2
+                            {
+                                GRACE GRACECal = new GRACE(input);
+                                kq.Add(GRACECal.kqGRACE().ToString());
+                                kq.AddRange(GRACECal.kqGRACE_diengiai());
+                                break;
+                            }
+                        case "T_A02": //COWS 11 var: 4 5 4 4 4 4 5 4 4 4 3
+                            {
+                                COWS COWSCal = new COWS(input);
+                                kq.Add(COWSCal.kqCOWS().ToString());
+                                kq.AddRange(COWSCal.kqCOWS_diengiai());
+                                break;
+                            }
+                        case "T_A03": //qSOFA 3:var: 2 2 2
+                            {
+                                qSOFA qSOFACal = new qSOFA(input);
+                                kq.Add(qSOFACal.kqqSOFA().ToString());
+                                kq.AddRange(qSOFACal.kqqSOFA_diengiai());
+                                break;
+                            }
+                        case "T_A04": //VNTM 8 var: 3,5,2,2,2,7,5,2
+                            {
+                                VNTM VNTMCal = new VNTM(input);
+                                kq.Add(VNTMCal.kqVNTM_Chinh().ToString()); //tieu chuan chinh
+                                kq.Add(VNTMCal.kqVNTM_Phu().ToString()); //tieu chuan phu
+                                kq.AddRange(VNTMCal.kqVNTM_diengiai());
+                                break;
+                            }
+                        case "T_A05": //MalHyperthermia 10 var: 3,7,7,3,3,2,2,2,2,2
+                            {
+                                MalHyperthermia MalHyperthermiaCal = new MalHyperthermia(input);
+                                kq.Add(MalHyperthermiaCal.kqMalHyperthermia().ToString());
+                                kq.AddRange(MalHyperthermiaCal.kqMalHyperthermia_diengiai());
+                                break;
+                            }
+                        case "T_A06": //PSI 21 var: 2,0 (tuoi),2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
+                            {
+                                PSI PSICal = new PSI(input);
+                                kq.Add(PSICal.kqPSI().ToString());
+                                kq.AddRange(PSICal.kqPSI_diengiai());
+                                break;
+                            }
+                        case "T_A07": //VCSS 10 var: 4,4,4,4,4,4,4,4,4,4
+                            {
+                                VCSS VCSSCal = new VCSS(input);
+                                kq.Add(VCSSCal.kqVCSS().ToString());
+                                kq.AddRange(VCSSCal.kqVCSS_diengiai());
+                                break;
+                            }
+                        case "T_A08": //BISAP 10 var: 2,2,2,2,2,2,2,2,2,2
+                            {
+                                BISAP BISAPCal = new BISAP(input);
+                                kq.Add(BISAPCal.kqBISAP().ToString());
+                                kq.AddRange(BISAPCal.kqBISAP_diengiai());
+                                break;
+                            }
+                        case "T_A09": //Blatchford 8 var: 5,6,4,2,2,2,2,2
+                            {
+                                Blatchford BlatchfordCal = new Blatchford(input);
+                                kq.Add(BlatchfordCal.kqBlatchford().ToString());
+                                kq.AddRange(BlatchfordCal.kqBlatchford_diengiai());
+                                break;
+                            }
+                        case "T_A10": //Rockall 7 var: 3,2,2,3,3,3,2
+                            {
+                                Rockall RockallCal = new Rockall(input);
+                                kq.Add(RockallCal.kqRockall().ToString());
+                                kq.AddRange(RockallCal.kqRockall_diengiai());
+                                break;
+                            }
+                        case "T_A11": //ChildPugh 5 var: 5,3,3,3,3
+                            {
+                                ChildPugh ChildPughCal = new ChildPugh(input);
+                                kq.Add(ChildPughCal.kqChildPugh().ToString());
+                                kq.AddRange(ChildPughCal.kqChildPugh_diengiai());
+                                break;
+                            }
+                        case "T_A12": //CLIF-SOFA 10 var: 0,0,0,5,5,5,2,3,5,5
+                            {
+                                CLIFSOFA CLIFSOFACal = new CLIFSOFA(input);
+                                kq.Add(CLIFSOFACal.kqCLIFSOFA().ToString());
+                                kq.AddRange(CLIFSOFACal.kqCLIFSOFA_diengiai());
+                                break;
+                            }
+                        case "T_A13": //HBCrohn	12 var: 5,4,0,4,2,2,2,2,2,2,2,2
+                            {
+                                HBCrohn HBCrohnCal = new HBCrohn(input);
+                                kq.Add(HBCrohnCal.kqHBCrohn().ToString());
+                                kq.AddRange(HBCrohnCal.kqHBCrohn_diengiai());
+                                break;
+                            }
+                        case "T_A14": //GlasgowComa 3 var: 4,5,6
+                            {
+                                GlasgowComa GCSCal = new GlasgowComa(input);
+                                kq.Add(GCSCal.kqGlasgowComa().ToString());
+                                kq.Add(GCSCal.kqGlasgowComa_diengiai());
+                                break;
+                            }
+                        case "T_A15": //Ranson 11 var: 2,2,2,2,2,2,2,2,2,2,2
+                            {
+                                Ranson RansonCal = new Ranson(input);
+                                kq.Add(RansonCal.kqRanson().ToString());
+                                kq.AddRange(RansonCal.kqRanson_diengiai());
+                                break;
+                            }
+                        case "T_A16": //IVPO 6 var: 2,2,2,2,2,2
+                            {
+                                IVPO IVPOCal = new IVPO(input);
+                                kq.Add(IVPOCal.kqIVPO().ToString());
+                                kq.AddRange(IVPOCal.kqIVPO_diengiai());
+                                break;
+                            }
+                        case "T_A17": //PUMayoClinic 4 var: 4,4,4,4
+                            {
+                                PUMayoClinic PUMayoClinicCal = new PUMayoClinic(input);
+                                kq.Add(PUMayoClinicCal.kqPUMayoClinic().ToString());
+                                kq.AddRange(PUMayoClinicCal.kqPUMayoClinic_diengiai());
+                                break;
+                            }
+                        case "T_A18": //CDAICrohn 15 var: 0,0,0,0,0,2,4,5,2,2,2,2,2,2,3
+                            {
+                                CDAICrohn CDAICrohnCal = new CDAICrohn(input);
+                                kq.Add(CDAICrohnCal.kqCDAICrohn().ToString());
+                                kq.AddRange(CDAICrohnCal.kqCDAICrohn_diengiai());
+                                break;
+                            }
+                    }
                 }
                 #endregion
                 #region T_B
                 else if (machiso.Substring(0, 3) == "T_B")
                 {
+                    switch (machiso)
+                    {
+                        case "T_B01": //APACHE2 22 var: 5,4,4,4,2,4,4,2,5,5,5,5,4,4,4,0,5,2,3,2,35,22
+                            {
+                                APACHE2 APACHE2Cal = new APACHE2(input);
+                                kq.Add(APACHE2Cal.kqAPACHE2().ToString());
+                                kq.AddRange(APACHE2Cal.kqAPACHE2_diengiai());
+                                break;
+                            }
+                        case "T_B02": //BODECOPD 4 var: 4,4,4,2
+                            {
+                                BODECOPD BODECOPDCal = new BODECOPD(input);
+                                kq.Add(BODECOPDCal.kqBODECOPD().ToString());
+                                kq.AddRange(BODECOPDCal.kqBODECOPD_diengiai());
+                                break;
+                            }
+                        case "T_B03": //CURB-65 7 var: 2,2,2,2,2,2,2
+                            {
+                                CURB65 CURB65Cal = new CURB65(input);
+                                kq.Add(CURB65Cal.kqCURB65().ToString());
+                                kq.AddRange(CURB65Cal.kqCURB65_diengiai());
+                                break;
+                            }
+                        case "T_B04": //Light 8 var: 0,0,0,0,0,2,2,2
+                            {
+                                Light LightCal = new Light(input);
+                                kq.Add(LightCal.kqLight().ToString());
+                                kq.AddRange(LightCal.kqLight_diengiai());
+                                break;
+                            }
+                        case "T_B05": //GenevaDVT 19 var: 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
+                            {
+                                GenevaDVT GenevaDVTCal = new GenevaDVT(input);
+                                kq.Add(GenevaDVTCal.kqGenevaDVT().ToString());
+                                kq.AddRange(GenevaDVTCal.kqGenevaDVT_diengiai());
+                                break;
+                            }
+                        case "T_B06": //GenevaPE 9 var: 2,2,2,2,2,2,2,3,2
+                            {
+                                GenevaPE GenevaPECal = new GenevaPE(input);
+                                kq.Add(GenevaPECal.kqGenevaPE().ToString());
+                                kq.AddRange(GenevaPECal.kqGenevaPE_diengiai());
+                                break;
+                            }
+                        case "T_B07": //WellsDVT 11 var: 2,2,2,2,2,2,2,2,2,2,2
+                            {
+                                WellsDVT WellsDVTCal = new WellsDVT(input);
+                                kq.Add(WellsDVTCal.kqWellsDVT().ToString());
+                                kq.AddRange(WellsDVTCal.kqWellsDVT_diengiai());
+                                break;
+                            }
+                        case "T_B08": //NEWS2 10 var: 4,0,2,2,4,4,2,4,4,4
+                            {
+                                NEWS2 NEWS2Cal = new NEWS2(input);
+                                kq.Add(NEWS2Cal.kqNEWS2().ToString());
+                                kq.AddRange(NEWS2Cal.kqNEWS2_diengiai());
+                                break;
+                            }
+                        case "T_B09": //PaduaVTE 14 var: 2,2,2,2,2,2,2,2,2,2,2,2,2,2
+                            {
+                                PaduaVTE PaduaVTECal = new PaduaVTE(input);
+                                kq.Add(PaduaVTECal.kqPaduaVTE().ToString());
+                                kq.AddRange(PaduaVTECal.kqPaduaVTE_diengiai());
+                                break;
+                            }
+                        case "T_B10": //WellsPE 7 var: 2,2,2,2,2,2,2
+                            {
+                                WellsPE WellsPECal = new WellsPE(input);
+                                kq.Add(WellsPECal.kqWellsPE().ToString());
+                                kq.AddRange(WellsPECal.kqWellsPE_diengiai());
+                                break;
+                            }
+                        case "T_B11": //SOFA 10 var: 0,0,2,5,5,5,2,3,5,5
+                            {
+                                SOFA SOFACal = new SOFA(input);
+                                kq.Add(SOFACal.kqSOFA().ToString());
+                                kq.AddRange(SOFACal.kqSOFA_diengiai());
+                                break;
+                            }
 
+                        case "T_B12": //VTE-BLEED 6 var: 2,2,2,2,3,2
+                            {
+                                VTEBLEED VTEBLEEDCal = new VTEBLEED(input);
+                                kq.Add(VTEBLEEDCal.kqVTEBLEED().ToString());
+                                kq.AddRange(VTEBLEEDCal.kqVTEBLEED_diengiai());
+                                break;
+                            }
+
+                        case "T_B13": //HIT 8 var: 3,3,0,0,3,3,3,3
+                            {
+                                HeparinIT HeparinITCal = new HeparinIT(input);
+                                kq.Add(HeparinITCal.kqHeparinIT().ToString());
+                                kq.AddRange(HeparinITCal.kqHeparinIT_diengiai());
+                                break;
+                            }
+
+                        case "T_B14": //HAS-BLED 8 var: 2,2,2,2,2,2,2,2
+                            {
+                                HASBLED HASBLEDCal = new HASBLED(input);
+                                kq.Add(HASBLEDCal.kqHASBLED().ToString());
+                                kq.AddRange(HASBLEDCal.kqHASBLED_diengiai());
+                                break;
+                            }
+
+                        case "T_B15": //DIPSS-PlusPMS 10 var: 2,2,2,2,2,2,2,2,2,2
+                            {
+                                DIPSSPlusPMS DIPSSPlusPMSCal = new DIPSSPlusPMS(input);
+                                kq.Add(DIPSSPlusPMSCal.kqDIPSS().ToString());
+                                kq.AddRange(DIPSSPlusPMSCal.kqDIPSS_diengiai());
+                                kq.Add(DIPSSPlusPMSCal.kqDIPSSPlus().ToString());
+                                kq.AddRange(DIPSSPlusPMSCal.kqDIPSSPlus_diengiai());
+                                break;
+                            }
+                        case "T_B16": //IPSHodgkin 7 var: 2,2,2,4,2,2,2
+                            {
+                                IPSHodgkin IPSHodgkinCal = new IPSHodgkin(input);
+                                kq.Add(IPSHodgkinCal.kqIPSHodgkin().ToString());
+                                kq.AddRange(IPSHodgkinCal.kqIPSHodgkin_diengiai());
+                                break;
+                            }
+
+                        case "T_B17": //GIPSSXotuy 5 var: 3,2,2,2,2
+                            {
+                                GIPSSXotuy GIPSSXotuyCal = new GIPSSXotuy(input);
+                                kq.Add(GIPSSXotuyCal.kqGIPSSXotuy().ToString());
+                                kq.AddRange(GIPSSXotuyCal.kqGIPSSXotuy_diengiai());
+                                break;
+                            }
+
+                        case "T_B18": //IPSNonHodgkin 5 var: 2,2,4,2,2
+                            {
+                                IPSNonHodgkin IPSNonHodgkinCal = new IPSNonHodgkin(input);
+                                kq.Add(IPSNonHodgkinCal.kqIPSNonHodgkin().ToString());
+                                kq.AddRange(IPSNonHodgkinCal.kqIPSNonHodgkin_diengiai());
+                                break;
+                            }
+
+                        case "T_B19": //Khorana 6 var: 3,2,2,2,2,2
+                            {
+                                Khorana KhoranaCal = new Khorana(input);
+                                kq.Add(KhoranaCal.kqKhorana().ToString());
+                                kq.AddRange(KhoranaCal.kqKhorana_diengiai());
+                                break;
+                            }
+
+                        case "T_B20": //MDACC 8 var: 3,2,2,4,2,2,3,2
+                            {
+                                MDACC MDACCCal = new MDACC(input);
+                                kq.Add(MDACCCal.kqMDACC().ToString());
+                                kq.AddRange(MDACCCal.kqMDACC_diengiai());
+                                break;
+                            }
+
+                        case "T_B21": //MDSRLsinhtuy 6 var: 4,3,2,2,2,2
+                            {
+                                MDSRLsinhtuy MDSRLsinhtuyCal = new MDSRLsinhtuy(input);
+                                kq.Add(MDSRLsinhtuyCal.kqMDSRLsinhtuy().ToString());
+                                kq.AddRange(MDSRLsinhtuyCal.kqMDSRLsinhtuy_diengiai());
+                                break;
+                            }
+
+                        case "T_B22": //Sokal 4 var: 0,0,0,0
+                            {
+                                Sokal SokalCal = new Sokal(input);
+                                kq.Add(SokalCal.kqSokal().ToString());
+                                kq.AddRange(SokalCal.kqSokal_diengiai());
+                                break;
+                            }
+
+                        case "T_B23": //APGAR 5 var: 3,3,3,3,3
+                            {
+                                APGAR APGARCal = new APGAR(input);
+                                kq.Add(APGARCal.kqAPGAR().ToString());
+                                kq.AddRange(APGARCal.kqAPGAR_diengiai());
+                                break;
+                            }
+
+                        case "T_B24": //PUCAI 6 var: 3,4,3,4,2,3
+                            {
+                                PUCAI PUCAICal = new PUCAI(input);
+                                kq.Add(PUCAICal.kqPUCAI().ToString());
+                                kq.AddRange(PUCAICal.kqPUCAI_diengiai());
+                                break;
+                            }
+                        case "T_B25": //WestleyCroup 5 var: 2,3,3,3,4
+                            {
+                                WestleyCroup WestleyCroupCal = new WestleyCroup(input);
+                                kq.Add(WestleyCroupCal.kqWestleyCroup().ToString());
+                                kq.AddRange(WestleyCroupCal.kqWestleyCroup_diengiai());
+                                break;
+                            }
+
+                        case "T_B26": //CMMLMayoClinic 6 var: 0,0,2,2,2,2
+                            {
+                                CMMLMayoClinic CMMLMayoClinicCal = new CMMLMayoClinic(input);
+                                kq.Add(CMMLMayoClinicCal.kqCMMLMayoClinic().ToString());
+                                kq.AddRange(CMMLMayoClinicCal.kqCMMLMayoClinic_diengiai());
+                                break;
+                            }
+
+                        case "T_B27": //EUTOS 4 var: 0,0,0,0
+                            {
+                                EUTOS EUTOSCal = new EUTOS(input);
+                                kq.Add(EUTOSCal.kqEUTOS().ToString());
+                                kq.AddRange(EUTOSCal.kqEUTOS_diengiai());
+                                break;
+                            }
+
+                        case "T_B28": //PASRuotthua 8 var: 2,2,2,2,2,2,2,2
+                            {
+                                PASRuotthua PASRuotthuaCal = new PASRuotthua(input);
+                                kq.Add(PASRuotthuaCal.kqPASRuotthua().ToString());
+                                kq.AddRange(PASRuotthuaCal.kqPASRuotthua_diengiai());
+                                break;
+                            }
+
+                        case "T_B29": //GlasgowNhiB2 3 var: 4,5,6
+                            {
+                                GlasgowNhiB2 GlasgowNhiB2Cal = new GlasgowNhiB2(input);
+                                kq.Add(GlasgowNhiB2Cal.kqGlasgowNhiB2().ToString());
+                                kq.AddRange(GlasgowNhiB2Cal.kqGlasgowNhiB2_diengiai());
+                                break;
+                            }
+
+                        case "T_B32": //GlasgowNhiO2 3 var: 4,5,6
+                            {
+                                GlasgowNhiO2 GlasgowNhiO2Cal = new GlasgowNhiO2(input);
+                                kq.Add(GlasgowNhiO2Cal.kqGlasgowNhiO2().ToString());
+                                kq.AddRange(GlasgowNhiO2Cal.kqGlasgowNhiO2_diengiai());
+                                break;
+                            }
+
+                        case "T_B30": //STOP-BangS 8 var: 2,2,2,2,2,2,2,2
+                            {
+                                STOPBangS STOPBangSCal = new STOPBangS(input);
+                                kq.Add(STOPBangSCal.kqSTOP().ToString());
+                                kq.Add(STOPBangSCal.kqBang().ToString());
+                                kq.AddRange(STOPBangSCal.kqSTOPBangS_diengiai());
+                                break;
+                            }
+
+                        case "T_B31": //IPSS-RLoansantuy 5 var: 5,4,3,3,2
+                            {
+                                IPSSRLoansantuy IPSSRLoansantuyCal = new IPSSRLoansantuy(input);
+                                kq.Add(IPSSRLoansantuyCal.kqIPSSRLoansantuy().ToString());
+                                kq.AddRange(IPSSRLoansantuyCal.kqIPSSRLoansantuy_diengiai());
+                                break;
+                            }
+                    }
                 }
                 #endregion
                 #region T_C
                 else
                 {
+                    switch (machiso)
+                    {
+                        case "T_C01": //FraminghamE 8 var: 2,0,0,0,0,2,2,2
+                            {
+                                FraminghamE FraminghamECal = new FraminghamE(input);
+                                kq.Add(FraminghamECal.kqFraminghamE().ToString());
+                                kq.AddRange(FraminghamECal.kqFraminghamE_diengiai());
+                                break;
+                            }
 
+                        case "T_C02": //ACCAHA 9 var: 5,2,0,0,0,0,2,2,2
+                            {
+                                ACCAHA ACCAHACal = new ACCAHA(input);
+                                kq.Add(ACCAHACal.kqACCAHA().ToString());
+                                kq.AddRange(ACCAHACal.kqACCAHA_diengiai());
+                                break;
+                            }
+
+                        case "T_C03": //CHA2DS2-VASc 7 var: 2,3,2,2,2,2,2
+                            {
+                                CHA2DS2VASc CHA2DS2VAScCal = new CHA2DS2VASc(input);
+                                kq.Add(CHA2DS2VAScCal.kqCHA2DS2VASc().ToString());
+                                kq.AddRange(CHA2DS2VAScCal.kqCHA2DS2VASc_diengiai());
+                                break;
+                            }
+
+                        case "T_C04": //TIMINonST 12 var: 2,2,2,2,2,2,2,2,2,2,2,2
+                            {
+                                TIMINonST TIMINonSTCal = new TIMINonST(input);
+                                kq.Add(TIMINonSTCal.kqTIMINonST().ToString());
+                                kq.AddRange(TIMINonSTCal.kqTIMINonST_diengiai());
+                                break;
+                            }
+
+                        case "T_C29": //TIMIST 11 var: 3,2,2,2,2,2,4,2,2,2,2
+                            {
+                                TIMIST TIMISTCal = new TIMIST(input);
+                                kq.Add(TIMISTCal.kqTIMIST().ToString());
+                                kq.AddRange(TIMISTCal.kqTIMIST_diengiai());
+                                break;
+                            }
+
+                        case "T_C05": //ARISCAT 8 var: 3,3,2,2,2,2,2,3
+                            {
+                                ARISCAT ARISCATCal = new ARISCAT(input);
+                                kq.Add(ARISCATCal.kqARISCAT().ToString());
+                                kq.AddRange(ARISCATCal.kqARISCAT_diengiai());
+                                break;
+                            }
+
+                        case "T_C06": //IPSSTienliet 7 var: 6,6,6,6,6,6,6
+                            {
+                                IPSSTienliet IPSSTienlietCal = new IPSSTienliet(input);
+                                kq.Add(IPSSTienlietCal.kqIPSSTienliet().ToString());
+                                kq.AddRange(IPSSTienlietCal.kqIPSSTienliet_diengiai());
+                                break;
+                            }
+
+                        case "T_C07": //ABCD2 6 var: 2,2,2,3,3,2
+                            {
+                                ABCD2 ABCD2Cal = new ABCD2(input);
+                                kq.Add(ABCD2Cal.kqABCD2().ToString());
+                                kq.AddRange(ABCD2Cal.kqABCD2_diengiai());
+                                break;
+                            }
+
+                        case "T_C08": //ESS 8 var: 4,4,4,4,4,4,4,4
+                            {
+                                ESS ESSCal = new ESS(input);
+                                kq.Add(ESSCal.kqESS().ToString());
+                                kq.AddRange(ESSCal.kqESS_diengiai());
+                                break;
+                            }
+
+                        case "T_C09": //NIH 15 var: 4,3,3,3,4,4,6,6,6,6,4,3,4,4,3
+                            {
+                                NIH NIHCal = new NIH(input);
+                                kq.Add(NIHCal.kqNIH().ToString());
+                                kq.AddRange(NIHCal.kqNIH_diengiai());
+                                break;
+                            }
+
+                        case "T_C10": //RoPE 6 var: 2,2,2,2,2,6
+                            {
+                                RoPE RoPECal = new RoPE(input);
+                                kq.Add(RoPECal.kqRoPE().ToString());
+                                kq.AddRange(RoPECal.kqRoPE_diengiai());
+                                break;
+                            }
+                        case "T_C11": //FraminghamS 10 var: 0,0,2,2,2,2,2,2,2,3
+                            {
+                                FraminghamS FraminghamSCal = new FraminghamS(input);
+                                kq.Add(FraminghamSCal.kqFraminghamS().ToString());
+                                kq.AddRange(FraminghamSCal.kqFraminghamS_diengiai());
+                                break;
+                            }
+
+                        case "T_C12": //GAD7 7 var: 4,4,4,4,4,4,4
+                            {
+                                GAD7 GAD7Cal = new GAD7(input);
+                                kq.Add(GAD7Cal.kqGAD7().ToString());
+                                kq.AddRange(GAD7Cal.kqGAD7_diengiai());
+                                break;
+                            }
+
+                        case "T_C13": //PHQ9 9 var: 4,4,4,4,4,4,4,4,4
+                            {
+                                PHQ9 PHQ9Cal = new PHQ9(input);
+                                kq.Add(PHQ9Cal.kqPHQ9().ToString());
+                                kq.AddRange(PHQ9Cal.kqPHQ9_diengiai());
+                                break;
+                            }
+
+                        case "T_C14": //Caprini 34 var: 4,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0
+                            {
+                                Caprini CapriniCal = new Caprini(input);
+                                kq.Add(CapriniCal.kqCaprini().ToString());
+                                kq.AddRange(CapriniCal.kqCaprini_diengiai());
+                                break;
+                            }
+
+                        case "T_C15": //Eckardt 4 var: 4,4,4,4
+                            {
+                                Eckardt EckardtCal = new Eckardt(input);
+                                kq.Add(EckardtCal.kqEckardt().ToString());
+                                kq.AddRange(EckardtCal.kqEckardt_diengiai());
+                                break;
+                            }
+
+                        case "T_C16": //LAR 5 var: 3,2,4,3,3
+                            {
+                                LAR LARCal = new LAR(input);
+                                kq.Add(LARCal.kqLAR().ToString());
+                                kq.AddRange(LARCal.kqLAR_diengiai());
+                                break;
+                            }
+
+                        case "T_C17": //MESS 4 var: 3,4,6,3
+                            {
+                                MESS MESSCal = new MESS(input);
+                                kq.Add(MESSCal.kqMESS().ToString());
+                                kq.AddRange(MESSCal.kqMESS_diengiai());
+                                break;
+                            }
+
+                        case "T_C18": //Braden 6 var: 4,4,4,4,4,3
+                            {
+                                Braden BradenCal = new Braden(input);
+                                kq.Add(BradenCal.kqBraden().ToString());
+                                kq.AddRange(BradenCal.kqBraden_diengiai());
+                                break;
+                            }
+
+                        case "T_C19": //VSD_Obs 8 var: 2,2,2,2,2,2,2,2
+                            {
+                                VSD_Obs VSD_ObsCal = new VSD_Obs(input);
+                                kq.Add(VSD_ObsCal.kqVSD_Obs().ToString());
+                                kq.AddRange(VSD_ObsCal.kqVSD_Obs_diengiai());
+                                break;
+                            }
+
+                        case "T_C30": //VSD-Ref 9 var: 2,2,2,2,2,2,2,2,2
+                            {
+                                VSD_Ref VSD_RefCal = new VSD_Ref(input);
+                                kq.Add(VSD_RefCal.kqVSD_Ref().ToString());
+                                kq.AddRange(VSD_RefCal.kqVSD_Ref_diengiai());
+                                break;
+                            }
+                        case "T_C20": //Villalta	12 var: 4,4,4,4,4,4,4,4,4,4,4,2
+                            {
+                                Villalta VillaltaCal = new Villalta(input);
+                                kq.Add(VillaltaCal.kqVillalta().ToString());
+                                kq.AddRange(VillaltaCal.kqVillalta_diengiai());
+                                break;
+                            }
+
+                        case "T_C21": //RA-CDAI 60 var: 0, 0, 56 var, 0, 0
+                            {
+                                RA_CDAI RA_CDAICal = new RA_CDAI(input);
+                                kq.Add(RA_CDAICal.kqRA_CDAI().ToString());
+                                kq.AddRange(RA_CDAICal.kqRA_CDAI_diengiai());
+                                break;
+                            }
+
+                        case "T_C22": //RA-SDAI 61 var: 0, 0, 56 var, 0, 0, 0
+                            {
+                                RA_SDAI RA_SDAICal = new RA_SDAI(input);
+                                kq.Add(RA_SDAICal.kqRA_SDAI().ToString());
+                                kq.AddRange(RA_SDAICal.kqRA_SDAI_diengiai());
+                                break;
+                            }
+
+                        case "T_C23": //DAS28CRP 60 var: 0, 56 var, 0, 0, 0
+                            {
+                                DAS28CRP DAS28CRPCal = new DAS28CRP(input);
+                                kq.Add(DAS28CRPCal.kqDAS28CRP().ToString());
+                                kq.AddRange(DAS28CRPCal.kqDAS28CRP_diengiai());
+                                break;
+                            }
+
+                        case "T_C24": //DAS28ESR 60 var: 0, 56 var, 0, 0, 0
+                            {
+                                DAS28ESR DAS28ESRCal = new DAS28ESR(input);
+                                kq.Add(DAS28ESRCal.kqDAS28ESR().ToString());
+                                kq.AddRange(DAS28ESRCal.kqDAS28ESR_diengiai());
+                                break;
+                            }
+
+                        case "T_C25": //ISI	7 var: 5,5,5,5,5,5,5
+                            {
+                                ISI ISICal = new ISI(input);
+                                kq.Add(ISICal.kqISI().ToString());
+                                kq.AddRange(ISICal.kqISI_diengiai());
+                                break;
+                            }
+                    }
                 }
                 #endregion
             }
+            return kq;
+        }
+        public double GetDiembienDT(int _idbien, int _thutu)
+        {
+            double kq = (from data in db.chiso_DSbienDTs
+                         where data.IDBien == _idbien && data.thutu == _thutu
+                         select data.diem).FirstOrDefault();
+            return kq;
+        }
+        public chiso_DSBienKQ GetBienKQ(string _machiso)
+        {
+            chiso_DSBienKQ kq = (from data in db.chiso_DSBienKQs
+                                     where data.machiso == _machiso
+                                     select data).FirstOrDefault();
+            return kq;
+        }
+        public List<chiso_GTBienKQ> GetGTBienKQ(int idbienkq)
+        {
+            List<chiso_GTBienKQ> kq = (from data in db.chiso_GTBienKQs
+                                       where data.IDBienKQ == idbienkq
+                                       select data).ToList();
+            return kq;
+        }
+        public List<string> GetDiengiaiKQ(string _machiso, double _diem)
+        {
+            List<string> kq = new List<string>();
+
+            chiso_DSBienKQ Bienkq = GetBienKQ(_machiso);
+            List<chiso_GTBienKQ> DSGiatribienkq = GetGTBienKQ(Bienkq.IDBienKQ);
+
+            kq.Add(Bienkq.TendayduKQ);
+
+            foreach (chiso_GTBienKQ i in DSGiatribienkq)
+            {
+                if (_diem >= i.DiemLL && _diem <= i.DiemUL)
+                    kq.Add(i.Diengiai);
+            }
 
             return kq;
+        }
+        public List<string> GetDiengiaiKQ_2(string _machiso, double _diem, int _idbienkq)
+        {
+            //Dùng khi BienKQ có 2 idbien riêng (vd DIPSSPLus)
+            List<string> kq = new List<string>();
+
+            chiso_DSBienKQ Bienkq = GetBienKQ(_machiso);
+            List<chiso_GTBienKQ> DSGiatribienkq = GetGTBienKQ(_idbienkq);
+
+            kq.Add(Bienkq.TendayduKQ);
+
+            foreach (chiso_GTBienKQ i in DSGiatribienkq)
+            {
+                if (_diem >= i.DiemLL && _diem <= i.DiemUL)
+                    kq.Add(i.Diengiai);
+            }
+
+            return kq;
+        }
+        public int phannhomDTDL(int _idbien, double _giatri)
+        {
+            List<GiatribienDT> dataDT = GetGiatribienDT(_idbien);
+            int thutu = 0;
+            foreach (GiatribienDT i in dataDT)
+            {
+                if (GetkqinputGioihan(i.limit, _giatri))
+                    thutu = i.thutu;
+            }
+            return thutu;
+        }
+        public static bool GetkqinputGioihan(string _gioihan, double _input)
+        {
+            bool kq = false;
+            if (_gioihan.Contains('U'))
+            {
+                List<Gioihan> dscheck = GetListGioihan(_gioihan);
+                foreach (Gioihan check in dscheck)
+                {
+                    kq = kq || checkinputGioihan(check, _input);
+                }
+            }
+            else
+            {
+                Gioihan check = Getgioihan(_gioihan);
+                kq = checkinputGioihan(check, _input);
+            }
+            return kq;
+        }
+        public static bool checkinputGioihan(Gioihan _gioihan, double _input)
+        {
+            bool kq;
+
+            if (_gioihan.equalLL && _gioihan.equalUL)
+                kq = _input >= _gioihan.LL && _input <= _gioihan.UL;
+            else if (_gioihan.equalLL)
+                kq = _input >= _gioihan.LL && _input < _gioihan.UL;
+            else if (_gioihan.equalUL)
+                kq = _input > _gioihan.LL && _input <= _gioihan.UL;
+            else
+                kq = _input > _gioihan.LL && _input < _gioihan.UL;
+
+            return kq;
+        }
+        private static List<Gioihan> GetListGioihan(string _gioihan)
+        {
+            string[] tachGioihan = _gioihan.Split('U');
+
+            List<Gioihan> kq = new List<Gioihan>();
+
+            foreach (string i in tachGioihan)
+            {
+                kq.Add(Getgioihan(i));
+            }
+
+            return kq;
+        }
+        private static Gioihan Getgioihan(string _gioihan)
+        {
+            string[] parts = _gioihan.Trim(new char[] { '(', '[', ')', ']' }).Split(':');
+
+            if (parts.Length == 2)
+            {
+                double lowerLimit = double.Parse(parts[0]);
+                double upperLimit = double.Parse(parts[1]);
+
+                bool equalLL = _gioihan[0] == '[';
+                bool equalUL = _gioihan[_gioihan.Length - 1] == ']';
+
+                return new Gioihan(lowerLimit, upperLimit, equalLL, equalUL);
+            }
+            else
+            {
+                throw new ArgumentException("Lỗi khoảng giới hạn: " + _gioihan);
+            }
         }
         public static bool str_to_bool(string input)
         {
@@ -864,6 +1684,22 @@ namespace Chisoyhoc_API
                 return false;
             else
                 throw new ArgumentException("Invalid boolean input: " + input);
+        }
+        public static string datetimetonumber(DateTime input)
+        {
+            string kq;
+            DateTime referenceDate = new DateTime(0001, 1, 1);
+
+            kq = (input - referenceDate).TotalDays.ToString();
+            return kq;
+        }
+        public static DateTime numbertodatetime(string input)
+        {
+            DateTime kq;
+            DateTime referenceDate = new DateTime(0001, 1, 1);
+
+            kq = referenceDate.AddDays(double.Parse(input));
+            return kq;
         }
     }
     #endregion
@@ -935,8 +1771,8 @@ namespace Chisoyhoc_API
         public int idbiengoc { get; set; }
         public string donvichuan { get; set; } //LT
         public int IDloaidonvi { get; set; } //LT
+        public bool bienxuly { get; set; } //DT
         public List<GiatribienDT> giatribien { get; set; } //DT
-
         public KetnoiDB db;
 
         public Bien()
@@ -990,11 +1826,16 @@ namespace Chisoyhoc_API
     public class BienDT : Bien
     {
         public int sogiatri { get; set; }
-        public BienDT(Bien _bien, int _sogiatri)
+        public BienDT(Bien _bien, int _sogiatri, bool _bienxuly)
         {
             initDB();
             setBien(_bien.idbien, _bien.tenbien, _bien.tendaydu, _bien.idloaibien, _bien.idbiengoc);
             sogiatri = _sogiatri;
+            bienxuly = _bienxuly;
+        }
+        public void initBienDT()
+        {
+            giatribien = db.GetGiatribienDT(idbien);
         }
     }
     public class GiatribienDT
@@ -1013,6 +1854,21 @@ namespace Chisoyhoc_API
             giatri = _giatri;
             diem = _diem;
             limit = _limit;
+        }
+    }
+    public class Gioihan
+    {
+        public double LL { get; set; }
+        public bool equalLL { get; set; }
+        public double UL { get; set; }
+        public bool equalUL { get; set; }
+
+        public Gioihan(double _LL, double _UL, bool _equalLL, bool _equalUL)
+        {
+            LL = _LL;
+            equalLL = _equalLL;
+            UL = _UL;
+            equalUL = _equalUL;
         }
     }
     #endregion
@@ -1269,7 +2125,7 @@ namespace Chisoyhoc_API
     #region Chỉ số y học parent
     public class Chisoyhoc
     {
-        public CSDL_PMChisoyhocDataContext connectDB;
+        protected KetnoiDB db;
         public string IDChiso { get; set; }
         public string Tenchiso { get; set; }
         public string mucdich { get; set; }
@@ -1294,12 +2150,39 @@ namespace Chisoyhoc_API
             diengiai = _Diengiai;
             ghichu = _Ghichu;
             TLTK = _TLTK;
-
-            initDB();
         }
-        public void initDB()
+        public void SetChisoyhoc(string _IDChiso, string _Tenchiso, string _Mucdich, string _Ungdung, string _Phuongphap,
+    string _Diengiai, string _Ghichu, string _TLTK)
         {
-            connectDB = new CSDL_PMChisoyhocDataContext();
+            IDChiso = _IDChiso;
+            Tenchiso = _Tenchiso;
+            mucdich = _Mucdich;
+            ungdung = _Ungdung;
+            phuongphap = _Phuongphap;
+            diengiai = _Diengiai;
+            ghichu = _Ghichu;
+            TLTK = _TLTK;
+        }
+        public void SetCSYH_CSYH(Chisoyhoc _input)
+        {
+            IDChiso = _input.IDChiso;
+            Tenchiso = _input.Tenchiso;
+            mucdich = _input.mucdich;
+            ungdung = _input.ungdung;
+            phuongphap = _input.phuongphap;
+            diengiai = _input.diengiai;
+            ghichu = _input.ghichu;
+            TLTK = _input.TLTK;
+        }
+        protected void initDB()
+        {
+            db = new KetnoiDB();
+        }
+        protected void initchiso(string machiso)
+        {
+            initDB();
+            //SetCSYH_CSYH(db.GetCSYHtheoIDchiso(machiso));
+            IDChiso = machiso;
         }
         public double z_score(double X, double L, double M, double S)
         {
@@ -1318,9 +2201,96 @@ namespace Chisoyhoc_API
     }
     public class Thangdiem : Chisoyhoc
     {
+        protected List<GiatribienDT> listGiatribienDT;
+        protected List<BiendiemCSYH> DStinhdiem;
         public Thangdiem()
         {
+            initDB();
+        }
+        protected void initTongdiem(string _input)
+        {
+            initDB();
+            DStinhdiem = new List<BiendiemCSYH>();
+            List<Bien> laydsbien = db.GetDSbien(IDChiso);
+            List<DSBienCSYH> laydsbien2 = db.GetDSbienCSYH(laydsbien);
 
+            foreach (DSBienCSYH i in laydsbien2)
+            {
+                DStinhdiem.Add(new BiendiemCSYH(i.idbien, i.idloaibien));
+            }
+
+/*            List<string> inputRieng = _input.Split(new[] { "__" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (string i in inputRieng)
+            {
+                List<string> input = i.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                for (int j = 0; j < DStinhdiem.Count(); j++)
+                {
+                    if (DStinhdiem[j].idbien == int.Parse(input[0]))
+                    {
+                        if (DStinhdiem[j].idloaibien == 1)
+                            DStinhdiem[j].giatri = int.Parse(input[1]);
+                        else
+                            DStinhdiem[j].thutunhap = int.Parse(input[1]);
+                    }
+                }
+            }*/
+            List<string> input = _input.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            for (int i = 0; i < DStinhdiem.Count(); i++)
+            {
+                if (DStinhdiem[i].idloaibien == 1)
+                    DStinhdiem[i].giatri = int.Parse(input[i]);
+                else
+                    DStinhdiem[i].thutunhap = int.Parse(input[i]);
+            }
+
+        }
+        public List<tachInput> tachInputbienDT()
+        {
+            List<tachInput> kq = new List<tachInput>();
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                kq.Add(new tachInput(i.idbien, i.thutunhap));
+            }
+            return kq;
+        }
+        protected void tinhTongdiem()
+        {
+            foreach (BiendiemCSYH biendiem in DStinhdiem)
+            {
+                if (biendiem.idloaibien == 1)
+                    biendiem.diemketqua = 0;
+                else if (biendiem.thutunhap == 0)
+                    biendiem.diemketqua = 0;
+                else
+                    biendiem.diemketqua = db.GetDiembienDT(biendiem.idbien, biendiem.thutunhap);
+            }
+        }
+        protected class BiendiemCSYH
+        {
+            public int idbien { get; set; }
+            public int idloaibien { get; set; }
+            public int thutunhap { get; set; }
+            public double diemketqua { get; set; }
+            public double giatri { get; set; }
+            public BiendiemCSYH(int _idbien, int _idloaibien)
+            {
+                idbien = _idbien;
+                idloaibien = _idloaibien;
+                thutunhap = 0;
+                diemketqua = 0;
+                giatri = 0;
+            }
+        }
+        public class tachInput
+        {
+            public int idbien { get; set; }
+            public int thutunhap { get; set; }
+            public tachInput(int _idbien, int _thutunhap)
+            {
+                idbien = _idbien;
+                thutunhap = _thutunhap;
+            }
         }
     }
     #endregion
@@ -1332,12 +2302,13 @@ namespace Chisoyhoc_API
         public double chieucao { get; set; }
         public IBW()
         {
-
+            //init("C_A01");
         }
         public IBW(string _gioitinh, double _chieucao)
         {
             gioitinh = _gioitinh.ToLower();
             chieucao = _chieucao;
+            //init("C_A01");
         }
         public IBW(Nguoibenh NB)
         {
@@ -1365,13 +2336,14 @@ namespace Chisoyhoc_API
         public double cannang { get; set; }
         public AdjBW()
         {
-
+            //init("C_A02");
         }
         public AdjBW(string _gioitinh, double _chieucao, double _cannang)
         {
             gioitinh = _gioitinh.ToLower();
             chieucao = _chieucao;
             cannang = _cannang;
+            //init("C_A02");
         }
         public AdjBW(Nguoibenh NB)
         {
@@ -1396,19 +2368,21 @@ namespace Chisoyhoc_API
 
         public LBW()
         {
-
+            //init("C_A03");
         }
         public LBW(Nguoibenh nb)
         {
             gioitinh = nb.gioitinh;
             cannang = nb.cannang;
             chieucao = nb.chieucao;
+            //init("C_A03");
         }
         public LBW(string _gioitinh, double _chieucao, double _cannang)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             cannang = _cannang;
             chieucao = _chieucao;
+            //init("C_A03");
         }
 
         public double KqLBW()
@@ -1427,11 +2401,12 @@ namespace Chisoyhoc_API
         public double AlcoholConcentration { get; set; }
         public AlcoholSerum()
         {
-
+            //init("C_A04");
         }
         public AlcoholSerum(Nguoibenh nb)
         {
             cannang = nb.cannang;
+            //init("C_A04");
         }
         public AlcoholSerum(double _cannang, double _AlcoholVolume, double _AlcoholConcentration)
         {
@@ -1453,10 +2428,11 @@ namespace Chisoyhoc_API
 
         public Budichbong()
         {
-            // Empty constructor
+            //init("C_A05");
         }
         public Budichbong(Nguoibenh nb)
         {
+            //init("C_A05");
             cannang = nb.cannang;
         }
         public Budichbong(double _cannang, double _Tylebong)
@@ -1491,19 +2467,21 @@ namespace Chisoyhoc_API
         public double cannang { get; set; }
         public BMI()
         {
-
+            //init("C_A06");
         }
 
         public BMI(double _chieucao, double _cannang)
         {
             chieucao = _chieucao;
             cannang = _cannang;
+            //init("C_A06");
         }
 
         public BMI(Nguoibenh NB)
         {
             chieucao = NB.chieucao;
             cannang = NB.cannang;
+            //init("C_A06");
         }
 
         public double kqBMI()
@@ -1523,7 +2501,7 @@ namespace Chisoyhoc_API
         public double Hesohohap { get; set; }
         public AaG()
         {
-
+            //init("C_A07");
         }
         public AaG(Nguoibenh NB, Xetnghiem XN)
         {
@@ -1533,7 +2511,8 @@ namespace Chisoyhoc_API
             docaouoctinh = 0;
             pCO2 = XN.PCO2;
             Hesohohap = 0;
-            PaO2 = XN.PaO2; 
+            PaO2 = XN.PaO2;
+            //init("C_A07");
         }
 
         public AaG(double _tuoi, double _thannhiet, double _FiO2, double _pCO2, double _PaO2, double _docaouoctinh, double _Hesohohap)
@@ -1545,6 +2524,7 @@ namespace Chisoyhoc_API
             Hesohohap = _Hesohohap;
             tuoi = _tuoi;
             PaO2 = _PaO2;
+            //init("C_A07");
         }
 
         public double kqAaG()
@@ -1569,13 +2549,14 @@ namespace Chisoyhoc_API
 
         public CalciSerum_Adj()
         {
-
+            //init("C_A08");
         }
         public CalciSerum_Adj(Xetnghiem XN)
         {
             calciSerum = XN.calciSerum;
             albuminSerumNorm = 4;
             albuminSerum = 0;
+            //init("C_A08");
         }
 
         public CalciSerum_Adj(double _calciSerum, double _normAlbumin, double _albuminSerum)
@@ -1583,6 +2564,7 @@ namespace Chisoyhoc_API
             albuminSerumNorm = _normAlbumin;
             albuminSerum = _albuminSerum;
             calciSerum = _calciSerum;
+            //init("C_A08");
         }
 
         public double kqCalciSerum_Adj()
@@ -1597,18 +2579,20 @@ namespace Chisoyhoc_API
 
         public BSA()
         {
-
+            //init("C_A09");
         }
         public BSA(Nguoibenh NB)
         {
             chieucao = NB.chieucao;
             cannang = NB.cannang;
+            //init("C_A09");
         }
 
         public BSA(double _chieucao, double _cannang)
         {
             chieucao = _chieucao;
             cannang = _cannang;
+            //init("C_A09");
         }
 
         public double kqBSA_Mos()
@@ -1629,6 +2613,7 @@ namespace Chisoyhoc_API
 
         public SAG()
         {
+            //init("C_A10");
 
         }
         public SAG(Xetnghiem XN)
@@ -1637,6 +2622,7 @@ namespace Chisoyhoc_API
             KaliSerum = XN.kaliSerum;
             CloSerum = XN.cloSerum;
             HCO3Serum = XN.HCO3Serum;
+            //init("C_A10");
         }
         public SAG(double _NatriSerum, double _KaliSerum, double _CloSerum, double _HCO3Serum)
         {
@@ -1644,6 +2630,7 @@ namespace Chisoyhoc_API
             KaliSerum = _KaliSerum;
             CloSerum = _CloSerum;
             HCO3Serum = _HCO3Serum;
+            //init("C_A10");
         }
 
         public double kqSAG()
@@ -1661,13 +2648,14 @@ namespace Chisoyhoc_API
 
         public SOG()
         {
-
+            //init("C_A11");
         }
         public SOG(Xetnghiem XN)
         {
             NatriSerum = XN.natriSerum;
             BUN = XN.BUN;
             GlucoseSerum = XN.glucoseSerum;
+            //init("C_A11");
         }
         public SOG(double _NatriSerum, double _BUN, double _GlucoseSerum, double _OsmSerum)
         {
@@ -1675,6 +2663,7 @@ namespace Chisoyhoc_API
             NatriSerum = _NatriSerum;
             BUN = _BUN;
             GlucoseSerum = _GlucoseSerum;
+            //init("C_A11");
         }
 
         public double kqSOG()
@@ -1691,6 +2680,7 @@ namespace Chisoyhoc_API
 
         public StOG()
         {
+            //init("C_A12");
 
         }
         public StOG(double _OsmStool, double _NatriStool, double _KaliStool)
@@ -1698,6 +2688,7 @@ namespace Chisoyhoc_API
             OsmStool = _OsmStool;
             NatriStool = _NatriStool;
             KaliStool = _KaliStool;
+            //init("C_A12");
         }
 
         public double kqStOG()
@@ -1711,22 +2702,23 @@ namespace Chisoyhoc_API
         public double NatriUrine { get; set; }
         public double CloUrine { get; set; }
         public double KaliUrine { get; set; }
-
         public UAG()
         {
-
+            //init("C_A13");
         }
         public UAG(Xetnghiem XN)
         {
             NatriUrine = XN.natriUrine;
             KaliUrine = XN.kaliUrine;
             CloUrine = XN.cloUrine;
+            //init("C_A13");
         }
         public UAG(double _NatriUrine, double _CloUrine, double _KaliUrine)
         {
             NatriUrine = _NatriUrine;
             KaliUrine = _KaliUrine;
             CloUrine = _CloUrine;
+            //init("C_A13");
         }
 
         public double kqUAG()
@@ -1745,7 +2737,7 @@ namespace Chisoyhoc_API
 
         public UOG()
         {
-            
+            //init("C_A14");
         }
         public UOG(Xetnghiem XN)
         {
@@ -1753,6 +2745,7 @@ namespace Chisoyhoc_API
             KaliUrine = XN.kaliUrine;
             UreUrine = XN.ureUrine;
             GlucoseUrine = XN.glucoseUrine;
+            //init("C_A14");
         }
         public UOG(double _NatriUrine, double _KaliUrine, double _UreUrine, double _GlucoseUrine,double _OsmUrine)
         {
@@ -1761,6 +2754,7 @@ namespace Chisoyhoc_API
             KaliUrine = _KaliUrine;
             UreUrine = _UreUrine;
             GlucoseUrine = _GlucoseUrine;
+            //init("C_A14");
         }
 
         public double kqUOG()
@@ -1781,7 +2775,7 @@ namespace Chisoyhoc_API
 
         public eGFR_CKD()
         {
-
+            //init("C_A15");
         }
         public eGFR_CKD(Nguoibenh NB, Xetnghiem XN)
         {
@@ -1789,14 +2783,17 @@ namespace Chisoyhoc_API
             CreatininSerum = XN.creatininSerum;
             tuoi = NB.tinhtuoi_nam();
             SetCoefficients();
+            //init("C_A15");
         }
 
-        public eGFR_CKD(double _tuoi, double _cannang, string _gioitinh, double _CreatininSerum, string _chungtoc)
+        public eGFR_CKD(double _tuoi, double _cannang, string _gioitinh, double _CreatininSerum,
+            string _chungtoc)
         {
             gioitinh = _gioitinh.ToLower();
             CreatininSerum = _CreatininSerum;
             tuoi = _tuoi;
             SetCoefficients();
+            //init("C_A15");
         }
 
         private void SetCoefficients()
@@ -1825,7 +2822,7 @@ namespace Chisoyhoc_API
 
         public eGFR_MDRD()
         {
-
+            //init("C_A15");
         }
         public eGFR_MDRD(Nguoibenh NB, Xetnghiem XN)
         {
@@ -1833,14 +2830,17 @@ namespace Chisoyhoc_API
             tuoi = NB.tinhtuoi_nam();
             gioitinh = NB.gioitinh;
             chungtoc = "người châu á";
+            //init("C_A15");
         }
 
-        public eGFR_MDRD(double _tuoi, double _cannang, string _gioitinh, double _CreatininSerum, string _chungtoc)
+        public eGFR_MDRD(double _tuoi, double _cannang, string _gioitinh, double _CreatininSerum,
+            string _chungtoc)
         {
             CreatininSerum = _CreatininSerum;
             tuoi = _tuoi;
             chungtoc = _chungtoc.ToLower();
             gioitinh = _gioitinh.ToLower();
+            //init("C_A15");
         }
 
         public double kqeGFR_MDRD()
@@ -1861,7 +2861,7 @@ namespace Chisoyhoc_API
 
         public eCrCl()
         {
-
+            //init("C_A16");
         }
         public eCrCl(Nguoibenh NB, Xetnghiem XN)
         {
@@ -1869,6 +2869,7 @@ namespace Chisoyhoc_API
             cannang = NB.cannang;
             CreatininSerum = XN.creatininSerum;
             gioitinh = NB.gioitinh;
+            //init("C_A16");
         }
 
         public eCrCl(string _gioitinh, double _cannang, double _tuoi, double _CreatininSerum)
@@ -1877,6 +2878,7 @@ namespace Chisoyhoc_API
             cannang = _cannang;
             CreatininSerum = _CreatininSerum;
             gioitinh = _gioitinh.ToLower();
+            //init("C_A16");
         }
 
         public double kqeCrCl()
@@ -1895,12 +2897,13 @@ namespace Chisoyhoc_API
 
         public FEMg()
         {
-
+            //init("C_A17");
         }
         public FEMg(Xetnghiem XN)
         {
             CreatininSerum = XN.creatininSerum;
             CreatininUrine = XN.creatininUrine;
+            //init("C_A17");
         }
         public FEMg(double _CreatininSerum, double _CreatininUrine, double _MagieUrine,double _MagieSerum)
         {
@@ -1908,6 +2911,7 @@ namespace Chisoyhoc_API
             CreatininSerum = _CreatininSerum;
             MagieSerum = _MagieSerum;
             CreatininUrine = _CreatininUrine;
+            //init("C_A17");
         }
 
         public double kqFEMg()
@@ -1925,7 +2929,7 @@ namespace Chisoyhoc_API
 
         public FENa()
         {
-
+            //init("C_A18");
         }
         public FENa(Xetnghiem XN)
         {
@@ -1933,6 +2937,7 @@ namespace Chisoyhoc_API
             CreatininSerum = XN.creatininSerum;
             NatriSerum = XN.natriSerum;
             CreatininUrine = XN.creatininUrine;
+            //init("C_A18");
         }
         public FENa(double _NatriSerum, double _NatriUrine, double _CreatininSerum, double _CreatininUrine)
         {
@@ -1940,6 +2945,7 @@ namespace Chisoyhoc_API
             CreatininSerum = _CreatininSerum;
             NatriSerum = _NatriSerum;
             CreatininUrine = _CreatininUrine;
+            //init("C_A18");
         }
 
         public double kqFENa()
@@ -1958,7 +2964,7 @@ namespace Chisoyhoc_API
 
         public KtVDaugirdas()
         {
-
+            //init("C_A19");
         }
 
         public KtVDaugirdas(double _BUNtruocloc, double _BUNsauloc, double _tglocmau, double _Vlocmau, double _cannangsaulocmau)
@@ -1968,6 +2974,7 @@ namespace Chisoyhoc_API
             tglocmau = _tglocmau;
             Vlocmau = _Vlocmau;
             cannangsaulocmau = _cannangsaulocmau;
+            //init("C_A19");
         }
 
         public double kqKtVDaugirdas()
@@ -1988,7 +2995,7 @@ namespace Chisoyhoc_API
 
         public RRF_Kru()
         {
-
+            //init("C_A20");
         }
 
         public RRF_Kru(double _UreUrine, double _VUrineRRF, double _IntervalRRF, double _BUN1RRF, double _BUN2RRF)
@@ -1998,6 +3005,7 @@ namespace Chisoyhoc_API
             IntervalRRF = _IntervalRRF;
             BUN1RRF = _BUN1RRF;
             BUN2RRF = _BUN2RRF;
+            //init("C_A20");
         }
 
         public double kqRRF_Kru()
@@ -2013,16 +3021,18 @@ namespace Chisoyhoc_API
 
         public ACR()
         {
-
+            //init("C_A21");
         }
         public ACR(Xetnghiem XN)
         {
             CreatininUrine = XN.creatininUrine;
+            //init("C_A21");
         }
         public ACR(double _CreatininUrine, double _AlbuminUrine)
         {
             AlbuminUrine = _AlbuminUrine;
             CreatininUrine = _CreatininUrine;
+            //init("C_A21");
         }
 
         public double kqACR()
@@ -2038,16 +3048,18 @@ namespace Chisoyhoc_API
 
         public PCR()
         {
-
+            //init("C_A22");
         }
         public PCR(Xetnghiem XN)
         {
             CreatininUrine = XN.creatininUrine;
+            //init("C_A22");
         }
         public PCR(double _ProteinUrine, double _CreatininUrine)
         {
             ProteinUrine = _ProteinUrine;
             CreatininUrine = _CreatininUrine;
+            //init("C_A22");
         }
 
         public double kqPCR()
@@ -2067,7 +3079,7 @@ namespace Chisoyhoc_API
 
         public eAER()
         {
-
+            //init("C_A23");
         }
         public eAER(Nguoibenh NB, Xetnghiem XN)
         {
@@ -2076,14 +3088,17 @@ namespace Chisoyhoc_API
             gioitinh = NB.gioitinh;
             chungtoc = "người châu á";
             tuoi = NB.tinhtuoi_nam();
+            //init("C_A23");
         }
-        public eAER(string _gioitinh, double _tuoi, double _CreatininUrine, string _chungtoc, double _AlbuminUrine)
+        public eAER(string _gioitinh, double _tuoi, double _CreatininUrine,
+            string _chungtoc, double _AlbuminUrine)
         {
             AlbuminUrine = _AlbuminUrine;
             CreatininUrine = _CreatininUrine;
             gioitinh = _gioitinh.ToLower();
-            chungtoc = _chungtoc.ToLower().ToLower();
+            chungtoc = _chungtoc.ToLower();
             tuoi = _tuoi;
+            //init("C_A23");
         }
 
         public double kqeAER()
@@ -2127,16 +3142,24 @@ namespace Chisoyhoc_API
 
         public ePER()
         {
-
+            //init("C_A24");
         }
-
-        public ePER(string _gioitinh, double _tuoi, double _creatininUrine, string _chungtoc, double _proteinUrine)
+        public ePER(Nguoibenh nb, Xetnghiem xn)
         {
-            gioitinh = _gioitinh;
+            gioitinh = nb.gioitinh;
+            tuoi = nb.tinhtuoi_nam();
+            creatininUrine = xn.creatininUrine;
+            //init("C_A24");
+        }
+        public ePER(string _gioitinh, double _tuoi, double _creatininUrine,
+            string _chungtoc, double _proteinUrine)
+        {
+            gioitinh = _gioitinh.ToLower();
             tuoi = _tuoi;
             creatininUrine = _creatininUrine;
-            chungtoc = _chungtoc;
+            chungtoc = _chungtoc.ToLower();
             proteinUrine = _proteinUrine;
+            //init("C_A24");
         }
 
         public double kqePER()
@@ -2159,6 +3182,7 @@ namespace Chisoyhoc_API
 
         public TocDoTruyen()
         {
+            //init("C_A25");
 
         }
 
@@ -2167,6 +3191,7 @@ namespace Chisoyhoc_API
             VdichTruyen = _VdichTruyen;
             HesoGiot = _HesoGiot;
             ThoiGianTruyen = _ThoiGianTruyen;
+            //init("C_A25");
         }
 
         public double kqTocDoTruyen()
@@ -2183,18 +3208,21 @@ namespace Chisoyhoc_API
 
         public CrCl24h()
         {
+            //init("C_A26");
 
         }
         public CrCl24h(Xetnghiem XN)
         {
             CreatininUrine = XN.creatininUrine;
             CreatininSerum = XN.creatininSerum;
+            //init("C_A26");
         }
         public CrCl24h(double _CreatininSerum, double _CreatininUrine, double _VUrine24h)
         {
             CreatininUrine = _CreatininUrine;
             VUrine24h = _VUrine24h;
             CreatininSerum = _CreatininSerum;
+            //init("C_A26");
         }
 
         public double kqCrCl24h()
@@ -2216,6 +3244,7 @@ namespace Chisoyhoc_API
 
         public eGFR_Schwartz()
         {
+            //init("C_A27");
 
         }
         public eGFR_Schwartz(Nguoibenh NB, Xetnghiem XN)
@@ -2227,6 +3256,7 @@ namespace Chisoyhoc_API
             gioitinh = NB.gioitinh;
             chieucao = NB.chieucao;
             CreatininSerum = XN.creatininSerum;
+            //init("C_A27");
         }
         public eGFR_Schwartz(string _gioitinh, double _chieucao, double _tuoi, double _CreatininSerum, bool _sinhnon, string _loaiXNcreatinin, bool _benhthanman)
         {
@@ -2237,6 +3267,7 @@ namespace Chisoyhoc_API
             sinhnon = _sinhnon;
             loaiXNcreatinin = _loaiXNcreatinin.ToLower();
             benhthanman = _benhthanman;
+            //init("C_A27");
         }
 
         public double kqeGFR_Schwartz()
@@ -2267,6 +3298,23 @@ namespace Chisoyhoc_API
     public class MPM0 : Congthuc
     {
         public int tuoi { get; set; }
+        public int nhiptim { get; set; }
+        public int sbp { get; set; }
+        public bool strokenao { get; set; }
+        public bool suythanman { get; set; }
+        public bool honme { get; set; }
+        public int glasgowcoma { get; set; }
+        public bool xogan { get; set; }
+        public bool ungthu { get; set; }
+        public bool suythancap { get; set; }
+        public bool loannhip { get; set; }
+        public bool xhth { get; set; }
+        public bool khoinoiso { get; set; }
+        public bool hoisuctim { get; set; }
+        public bool thongkhicohoc { get; set; }
+        public bool yeucauphauthuat { get; set; }
+        public bool capcuutimphoi { get; set; }
+        public bool fullcode { get; set; }
         public double nhiptimF { get; set; }
         public double sbpF { get; set; }
         public double strokenaoF { get; set; }
@@ -2285,34 +3333,68 @@ namespace Chisoyhoc_API
         public double capcuutimphoiF { get; set; }
         public double fullcodeF { get; set; }
 
-        public MPM0(int _tuoi, int _nhiptim, int _sbp, bool _strokebrain, bool _suythanman, bool _honme,
-                int _glasgowcoma, bool _xogan, bool _ungthudican, bool _suythancap, bool _loannhip,
-                bool _xuathuyettieuhoa, bool _khoinoiso, bool _hoisuctim, bool _thongkhicohoc,
-                bool _yeucauphauthuat, bool _capcuutimphoi)
+        public MPM0()
+        {
+            //init("C_A28");
+        }
+        public MPM0(int _tuoi, int _nhiptim, int _sbp, bool _strokenao, bool _suythanman, bool _honme,
+                int _glasgowcoma, bool _xogan, bool _ungthu, bool _suythancap, bool _loannhip,
+                bool _xhth, bool _khoinoiso, bool _hoisuctim, bool _thongkhicohoc,
+                bool _yeucauphauthuat, bool _fullcode)
         {
             tuoi = _tuoi;
-            honmeF = (_honme || _glasgowcoma < 5) ? 2.050514 : 0;
-            nhiptimF = (_nhiptim >= 150) ? 0.433188 : 0;
-            sbpF = (_sbp <= 90) ? 1.451005 : 0;
-            suythanmanF = (_suythanman) ? 0.5395209 : 0;
-            xoganF = (_xogan) ? 2.070695 : 0;
-            ungthuF = (_ungthudican) ? 3.204902 : 0;
-            suythancapF = (_suythancap) ? 0.8412274 : 0;
-            loannhipF = (_loannhip) ? 0.8219612 : 0;
-            strokenaoF = (_strokebrain) ? 0.4107686 : 0;
-            xhthF = (_xuathuyettieuhoa) ? -0.165253 : 0;
-            khoinoisoF = (_khoinoiso) ? 1.855276 : 0;
-            hoisuctimF = (_hoisuctim) ? 1.497258 : 0;
-            thongkhicohocF = (_thongkhicohoc) ? 0.821648 : 0;
-            yeucauphauthuatF = (_yeucauphauthuat) ? 0.9097936 : 0;
+            honme = _honme;
+            glasgowcoma = _glasgowcoma;
+            nhiptim = _nhiptim;
+            sbp = _sbp;
+            suythanman = _suythanman;
+            xogan = _xogan;
+            ungthu = _ungthu;
+            suythancap = _suythancap;
+            loannhip = _loannhip;
+            strokenao = _strokenao;
+            xhth = _xhth;
+            khoinoiso = _khoinoiso;
+            hoisuctim = _hoisuctim;
+            thongkhicohoc = _thongkhicohoc;
+            yeucauphauthuat = _yeucauphauthuat;
+            fullcode = _fullcode;
+
+            checkMPM0();
+            //init("C_A28");
+        }
+        public void checkMPM0()
+        {
+            tuoi = tuoi;
+            honmeF = (honme || glasgowcoma < 5) ? 2.050514 : 0;
+            nhiptimF = (nhiptim >= 150) ? 0.433188 : 0;
+            sbpF = (sbp <= 90) ? 1.451005 : 0;
+            suythanmanF = (suythanman) ? 0.5395209 : 0;
+            xoganF = (xogan) ? 2.070695 : 0;
+            ungthuF = (ungthu) ? 3.204902 : 0;
+            suythancapF = (suythancap) ? 0.8412274 : 0;
+            loannhipF = (loannhip) ? 0.8219612 : 0;
+            strokenaoF = (strokenao) ? 0.4107686 : 0;
+            xhthF = (xhth) ? -0.165253 : 0;
+            khoinoisoF = (khoinoiso) ? 1.855276 : 0;
+            hoisuctimF = (hoisuctim) ? 1.497258 : 0;
+            thongkhicohocF = (thongkhicohoc) ? 0.821648 : 0;
+            yeucauphauthuatF = (yeucauphauthuat) ? 0.9097936 : 0;
 
             if (honmeF + nhiptimF + sbpF + suythanmanF + xoganF + ungthuF + suythancapF + loannhipF +
                              strokenaoF + xhthF + khoinoisoF + hoisuctimF + thongkhicohocF + yeucauphauthuatF == 0)
             {
-                fullcodeF = (_capcuutimphoi) ? -0.7969783 : 0;
+                fullcodeF = (capcuutimphoi) ? -0.7969783 : 0;
             }
         }
-
+        public List<double> getFactor()
+        {
+            List<double> kq = new List<double>();
+            kq.AddRange(new List<double>() {nhiptimF, sbpF, strokenaoF, suythanmanF, honmeF,
+        glasgowcomaF, xoganF, ungthuF, suythancapF, loannhipF, xhthF,
+        khoinoisoF, hoisuctimF, thongkhicohocF, yeucauphauthuatF, capcuutimphoiF, fullcodeF});
+            return kq;
+        }
         public double kqMPM0()
         {
             double MPM0_F1 = 0;
@@ -2343,6 +3425,7 @@ namespace Chisoyhoc_API
             Hb = xn.Hb;
             tuoi = nb.tinhtuoi_nam();
             gioitinh = nb.gioitinh;
+            //init("C_B01");
         }
 
         public DLCO_Adj(string _gioitinh, double _tuoi, double _Hb,  double _DLCOPredicted)
@@ -2350,7 +3433,8 @@ namespace Chisoyhoc_API
             DLCOPredicted = _DLCOPredicted;
             Hb = _Hb;
             tuoi = _tuoi;
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
+            //init("C_B01");
         }
 
         public double kqDLCO_Adj()
@@ -2367,12 +3451,14 @@ namespace Chisoyhoc_API
         {
             SBP = NB.HATThu;
             DBP = NB.HATTruong;
+            //init("C_B02");
         }
 
         public MAP(double _SBP, double _DBP)
         {
             SBP = _SBP;
             DBP = _DBP;
+            //init("C_B02");
         }
         public double kqMAP()
         {
@@ -2390,7 +3476,7 @@ namespace Chisoyhoc_API
 
         public PostFEV1()
         {
-
+            //init("C_B03");
         }
 
         public PostFEV1(double _preFEV1, double _phanthuyCNcatbo, double _tongphanthuyCN, double _phansuattuoimau, bool _phuongphapgiaiphau)
@@ -2400,6 +3486,7 @@ namespace Chisoyhoc_API
             phanthuyCNcatbo = _phanthuyCNcatbo;
             tongphanthuyCN = _tongphanthuyCN;
             phansuattuoimau = _phansuattuoimau;
+            //init("C_B03");
         }
         public double PostFEV1_Dich()
         {
@@ -2427,20 +3514,22 @@ namespace Chisoyhoc_API
 
         public PEF()
         {
-
+            //init("C_B22");
         }
         public PEF(Nguoibenh nb)
         {
             chieucao = nb.chieucao;
             tuoi = nb.tinhtuoi_nam();
             gioitinh = nb.gioitinh;
+            //init("C_B22");
         }
 
         public PEF(double _chieucao, double _tuoi, string _gioitinh)
         {
             chieucao = _chieucao;
             tuoi = _tuoi;
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
+            //init("C_B22");
         }
 
         public double kqPEF()
@@ -2485,7 +3574,7 @@ namespace Chisoyhoc_API
 
         public AEC()
         {
-
+            //init("C_B04");
         }
         public AEC(Xetnghiem XN)
         {
@@ -2493,11 +3582,13 @@ namespace Chisoyhoc_API
                 WBC = XN.WBC;
             if (XN.WBC_EOS_tyle != 0)
                 WBC_Eos_tyle = XN.WBC_EOS_tyle;
+            //init("C_B04");
         }
         public AEC(double _WBC, double _WBC_Eos_tyle)
         {
             WBC = _WBC;
             WBC_Eos_tyle = _WBC_Eos_tyle;
+            //init("C_B04");
         }
 
         public double kqAEC()
@@ -2510,20 +3601,21 @@ namespace Chisoyhoc_API
     {
         public double WBC { get; set; }
         public double WBC_Neu_tyle { get; set; }
-
         public ANC()
         {
-
+            //init("C_B05");
         }
         public ANC(Xetnghiem XN)
         {
             WBC = XN.WBC;
             WBC_Neu_tyle = XN.WBC_NEU_tyle;
+            //init("C_B05");
         }
         public ANC(double _WBC, double _WBC_Neu_tyle)
         {
             WBC = _WBC;
             WBC_Neu_tyle = _WBC_Neu_tyle;
+            //init("C_B05");
         }
 
         public double kqANC()
@@ -2542,12 +3634,13 @@ namespace Chisoyhoc_API
 
         public MIPI()
         {
-
+            //init("C_B06");
         }
         public MIPI(Nguoibenh nb, Xetnghiem xn)
         {
             tuoi = nb.tinhtuoi_nam();
             WBC = xn.WBC;
+            //init("C_B06");
         }
         public MIPI(double _tuoi, double _WBC, double _LDHSerum, double _LDHSerum_ULN, int _ECOG)
         {
@@ -2556,6 +3649,7 @@ namespace Chisoyhoc_API
             LDHSerum = _LDHSerum;
             LDHSerum_ULN = _LDHSerum_ULN;
             WBC = _WBC;
+            //init("C_B06");
         }
 
         public double kqMIPI()
@@ -2589,16 +3683,18 @@ namespace Chisoyhoc_API
         public double Rec { get; set; }
         public RPI()
         {
-            
+            //init("C_B07");            
         }
         public RPI(Xetnghiem xn)
         {
             Hct = xn.Hct;
+            //init("C_B07");
         }
         public RPI(double _Hct, double _Rec)
         {
             Hct = _Hct;
             Rec = _Rec;
+            //init("C_B07");
         }
         public double kqRPI()
         {
@@ -2630,12 +3726,13 @@ namespace Chisoyhoc_API
 
         public sTfR()
         {
-
+            //init("C_B08");
         }
         public sTfR(double _sTfRdoduoc, double _Ferritin)
         {
             sTfRdoduoc = _sTfRdoduoc;
             Ferritin = _Ferritin;
+            //init("C_B08");
         }
 
         public double kqsTfR()
@@ -2652,7 +3749,7 @@ namespace Chisoyhoc_API
 
         public BMR()
         {
-
+            //init("C_B09");
         }
         public BMR(Nguoibenh nb)
         {
@@ -2660,6 +3757,7 @@ namespace Chisoyhoc_API
             cannang = nb.cannang;
             chieucao = nb.chieucao;
             tuoi = nb.tinhtuoi_nam();
+            //init("C_B09");
         }
         public BMR(string _gioitinh, double _chieucao, double _cannang, double _tuoi)
         {
@@ -2667,6 +3765,7 @@ namespace Chisoyhoc_API
             cannang = _cannang;
             chieucao = _chieucao;
             tuoi = _tuoi;
+            //init("C_B09");
         }
 
         public double kqBMR_HB()
@@ -2702,19 +3801,21 @@ namespace Chisoyhoc_API
         public double[] dataLMS_Nu { get; set; }
         public CDC_chieucao()
         {
-
+            //init("C_B10");
         }
         public CDC_chieucao(string _gioitinh, double _tuoi, double _chieucao)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             tuoi = _tuoi;
             chieucao = _chieucao;
+            //init("C_B10");
         }
         public CDC_chieucao(Nguoibenh nb)
         {
             gioitinh = nb.gioitinh;
             tuoi = nb.tinhtuoi_thang();
             chieucao = nb.chieucao;
+            //init("C_B10");
         }
         private void initCDC_chieucao()
         {
@@ -2802,19 +3903,21 @@ namespace Chisoyhoc_API
         public double[] dataLMS_Nu { get; set; }
         public CDC_cannang()
         {
-
+            //init("C_B11");
         }
         public CDC_cannang(string _gioitinh, double _tuoi, double _cannang)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             tuoi = _tuoi;
             cannang = _cannang;
+            //init("C_B11");
         }
         public CDC_cannang(Nguoibenh nb)
         {
             gioitinh = nb.gioitinh;
             tuoi = nb.tinhtuoi_thang();
             cannang = nb.cannang;
+            //init("C_B11");
         }
         private void initCDC_cannang()
         {
@@ -2901,18 +4004,20 @@ namespace Chisoyhoc_API
         public double[] dataLMS { get; set; }
         public CDC_chuvi()
         {
-
+            //init("C_B12");
         }
         public CDC_chuvi(string _gioitinh, double _tuoi, double _chuvivongdau)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             tuoi = _tuoi;
             chuvivongdau = _chuvivongdau;
+            //init("C_B12");
         }
         public CDC_chuvi(Nguoibenh nb)
         {
             gioitinh = nb.gioitinh;
             tuoi = nb.tinhtuoi_thang();
+            //init("C_B12");
         }
         private void initCDC_chuvi()
         {
@@ -2990,15 +4095,17 @@ namespace Chisoyhoc_API
         public double cannang { get; set; }
         public Vbudich()
         {
-
+            //init("C_B13");
         }
         public Vbudich(Nguoibenh nb)
         {
             cannang = nb.cannang;
+            //init("C_B13");
         }
         public Vbudich(double _cannang)
         {
             cannang = _cannang;
+            //init("C_B13");
         }
         public double kqVdich24h()
         {
@@ -3030,7 +4137,7 @@ namespace Chisoyhoc_API
 
         public PELD_Old()
         {
-
+            //init("C_B14");
         }
         public PELD_Old(Nguoibenh nb, Xetnghiem xn)
         {
@@ -3039,10 +4146,11 @@ namespace Chisoyhoc_API
             cannang = nb.cannang;
             chieucao = nb.chieucao;
             BilirubinSerum = xn.bilirubin;
+            //init("C_B14");
         }
         public PELD_Old(string _gioitinh, double _chieucao, double _cannang, double _tuoi, double _BilirubinSerum, double _INR, double _AlbuminSerum, bool _macbenhduoi1t)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             chieucao = _chieucao;
             cannang = _cannang;
             tuoi = _tuoi;
@@ -3050,6 +4158,7 @@ namespace Chisoyhoc_API
             INR = _INR;
             AlbuminSerum = _AlbuminSerum;
             macbenhduoi1t = _macbenhduoi1t;
+            //init("C_B14");
         }
         public double kqPELD_Old()
         {
@@ -3080,9 +4189,19 @@ namespace Chisoyhoc_API
 
         public PELD_New()
         {
-            
+            //init("C_B23");            
         }
-
+        public PELD_New(Nguoibenh nb, Xetnghiem xn)
+        {
+            ngaysinh = nb.ngaysinh;
+            chieucao = nb.chieucao;
+            cannang = nb.cannang;
+            albuminSerum = xn.albumin;
+            bilirubinSerum = xn.bilirubin;
+            INR = xn.INR;
+            creatininSerum = xn.creatininSerum;
+            //init("C_B23");
+        }
         public PELD_New(string _gioitinh, double _chieucao, double _cannang, double _Creatinin_HC,
             double _Bilirubin_HC, double _INR_HC, double _Albumin_HC, DateTime _NgayXetNghiem,
             DateTime _NgaySinh, bool _LocMau)
@@ -3096,6 +4215,7 @@ namespace Chisoyhoc_API
             INR = _INR_HC;
             checklocmau = _LocMau;
             creatininSerum = _Creatinin_HC;
+            //init("C_B23");
         }
         public double kqPELD_New()
         {
@@ -3144,14 +4264,15 @@ namespace Chisoyhoc_API
         public double[] dataLMS_W { get; set; }
         public WHO_suyDD()
         {
-
+            //init("C_B15");
         }
         public WHO_suyDD(string _gioitinh, double _chieucao, double _cannang,double _tuoi)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             tuoi = _tuoi;
             chieucao = _chieucao;
             cannang = _cannang;
+            //init("C_B15");
         }
         public WHO_suyDD(Nguoibenh nb)
         {
@@ -3159,6 +4280,7 @@ namespace Chisoyhoc_API
             tuoi = nb.tinhtuoi_thang();
             chieucao = nb.chieucao;
             cannang = nb.cannang;
+            //init("C_B15");
         }
         private void initWHO_suyDD()
         {
@@ -3232,16 +4354,18 @@ namespace Chisoyhoc_API
 
         public ePER_PNCT()
         {
-
+            //init("C_B16");
         }
         public ePER_PNCT(Xetnghiem xn)
         {
             creatininUrine = xn.creatininUrine;
+            //init("C_B16");
         }
         public ePER_PNCT(double _CreatininUrine, double _ProteinUrine)
         {
             proteinUrine = _ProteinUrine;
             creatininUrine = _CreatininUrine;
+            //init("C_B16");
         }
 
         public double kqePER_PNCT()
@@ -3260,13 +4384,14 @@ namespace Chisoyhoc_API
 
         public OxyIndex()
         {
-
+            //init("C_B17");
         }
         public OxyIndex(Nguoibenh nb, Xetnghiem xn)
         {
             nhiptho = nb.nhiptho;
             FIO2 = xn.FiO2;
             PaO2 = xn.PaO2;
+            //init("C_B17");
         }
         public OxyIndex(double _FIO2, double _PaO2, double _tg_hitvao, double _nhiptho, double _PIP, double _PEEP)
         {
@@ -3276,6 +4401,7 @@ namespace Chisoyhoc_API
             PEEP = _PEEP;
             FIO2 = _FIO2;
             PaO2 = _PaO2;
+            //init("C_B17");
         }
 
         public double kqOxyIndex()
@@ -3315,7 +4441,7 @@ namespace Chisoyhoc_API
 
         public EED()
         {
-
+            //init("C_B18");
         }
         public EED(DateTime _ngayKNcuoi, DateTime _ngaysieuam, int _tuoithaisieuam, bool _sieuam)
         {
@@ -3323,6 +4449,7 @@ namespace Chisoyhoc_API
             ngayKNcuoi = _ngayKNcuoi;
             ngaysieuam = _ngaysieuam;
             tuoithaisieuam = _tuoithaisieuam;
+            //init("C_B18");
         }
 
         public DateTime EED_ngayKNcuoi()
@@ -3357,7 +4484,7 @@ namespace Chisoyhoc_API
 
         public EER()
         {
-
+            //init("C_B19");
         }
         public EER(Nguoibenh nb)
         {
@@ -3365,14 +4492,16 @@ namespace Chisoyhoc_API
             gioitinh = nb.gioitinh;
             chieucao = nb.chieucao;
             cannang = nb.cannang;
+            //init("C_B19");
         }
         public EER(string _gioitinh, double _chieucao, double _cannang, double _tuoi, string _hesohoatdong)
         {
             tuoi = _tuoi;
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             chieucao = _chieucao;
             cannang = _cannang;
-            hesohoatdong = _hesohoatdong;
+            hesohoatdong = _hesohoatdong.ToLower();
+            //init("C_B19");
         }
 
         public double kqEER()
@@ -3380,7 +4509,7 @@ namespace Chisoyhoc_API
             double ECG = (tuoi < 0.25) ? 200 : (tuoi < 0.5) ? 50 : (tuoi < 4) ? 20 : (tuoi < 9) ? 15 : (tuoi < 14) ? 25 : 20;
             double EER;
 
-            if (gioitinh == "Nam")
+            if (gioitinh == "nam")
             {
                 if (tuoi < 3)
                 {
@@ -3388,15 +4517,15 @@ namespace Chisoyhoc_API
                 }
                 else
                 {
-                    if (hesohoatdong == "Không vận động")
+                    if (hesohoatdong == "không vận động")
                     {
                         EER = -447.51 + (3.68 * tuoi) + (13.01 * chieucao) + (13.15 * cannang) + ECG;
                     }
-                    else if (hesohoatdong == "Ít vận động")
+                    else if (hesohoatdong == "ít vận động")
                     {
                         EER = 19.12 + (3.68 * tuoi) + (8.62 * chieucao) + (20.28 * cannang) + ECG;
                     }
-                    else if (hesohoatdong == "Vận động trung bình")
+                    else if (hesohoatdong == "vận động trung bình")
                     {
                         EER = -388.19 + (3.68 * tuoi) + (12.66 * chieucao) + (20.46 * cannang) + ECG;
                     }
@@ -3414,15 +4543,15 @@ namespace Chisoyhoc_API
                 }
                 else
                 {
-                    if (hesohoatdong == "Không vận động")
+                    if (hesohoatdong == "không vận động")
                     {
                         EER = 55.59 - (22.25 * tuoi) + (8.43 * chieucao) + (17.07 * cannang) + ECG;
                     }
-                    else if (hesohoatdong == "Ít vận động")
+                    else if (hesohoatdong == "ít vận động")
                     {
                         EER = -297.54 - (22.25 * tuoi) + (12.77 * chieucao) + (14.73 * cannang) + ECG;
                     }
-                    else if (hesohoatdong == "Vận động trung bình")
+                    else if (hesohoatdong == "vận động trung bình")
                     {
                         EER = -189.55 - (22.25 * tuoi) + (11.74 * chieucao) + (18.34 * cannang) + ECG;
                     }
@@ -3447,25 +4576,28 @@ namespace Chisoyhoc_API
         public double[] data_Nu { get; set; }
         public CDC_BMI()
         {
-
+            //init("C_B20");
         }
         public CDC_BMI(string _gioitinh, double _thangtuoi, double _BMI)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             thangtuoi = _thangtuoi;
             BMI = _BMI;
+            //init("C_B20");
         }
         public CDC_BMI(string _gioitinh, double _thangtuoi, double _chieucao, double _cannang)
         {
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             thangtuoi = _thangtuoi;
             BMI = _chieucao * _chieucao / _cannang;
+            //init("C_B20");
         }
         public CDC_BMI(Nguoibenh nb)
         {
             gioitinh = nb.gioitinh;
             thangtuoi = nb.tinhtuoi_thang();
             BMI = nb.chieucao * nb.chieucao / nb.cannang;
+            //init("C_B20");
         }
         private void initCDC_BMI()
         {
@@ -3534,13 +4666,14 @@ namespace Chisoyhoc_API
 
         public Noikhiquan()
         {
-
+            //init("C_B21");
         }
 
         public Noikhiquan(bool _bongchen, double _tuoi)
         {
             bongchen = _bongchen;
             tuoi = _tuoi;
+            //init("C_B21");
         }
 
         public double kqNoikhiquan()
@@ -3556,18 +4689,20 @@ namespace Chisoyhoc_API
 
         public NatriSerum_Adj()
         {
-
+            //init("C_C01");
         }
         public NatriSerum_Adj(Xetnghiem XN)
         {
             NatriSerum = XN.natriSerum;
             GlucoseSerum = 0;
+            //init("C_C01");
         }
 
         public NatriSerum_Adj(double _NatriSerum, double _GlucoseSerum)
         {
             NatriSerum = _NatriSerum;
             GlucoseSerum = _GlucoseSerum;
+            //init("C_C01");
         }
 
         public double kqNatriSerum_Adj()
@@ -3587,7 +4722,7 @@ namespace Chisoyhoc_API
 
         public CardiacOutput()
         {
-
+            //init("C_C02");
         }
         public CardiacOutput(Xetnghiem XN)
         {
@@ -3597,6 +4732,7 @@ namespace Chisoyhoc_API
             PaO2 = 0;
             O2vSat = 0;
             PvO2 = 0;
+            //init("C_C02");
         }
 
         public CardiacOutput(double _Hb, double _PaO2, double _PvO2, double _oxytieuthu, double _O2Sat, double _O2vSat)
@@ -3607,6 +4743,7 @@ namespace Chisoyhoc_API
             PaO2 = _PaO2;
             O2vSat = _O2vSat;
             PvO2 = _PvO2;
+            //init("C_C02");
         }
 
         public double kqCardiacOutput()
@@ -3624,12 +4761,15 @@ namespace Chisoyhoc_API
 
         public FEPO4()
         {
-
+            //init("C_C03");
         }
         public FEPO4(Xetnghiem XN)
         {
+            phosphatUrine = 0;
+            phosphatSerum = 0;
             creatininUrine = XN.creatininUrine;
             creatininSerum = XN.creatininSerum;
+            //init("C_C03");
         }
         public FEPO4(double _phosphatUrine, double _phosphatSerum, double _creatininUrine, double _creatininSerum)
         {
@@ -3637,6 +4777,7 @@ namespace Chisoyhoc_API
             phosphatSerum = _phosphatSerum;
             creatininUrine = _creatininUrine;
             creatininSerum = _creatininSerum;
+            //init("C_C03");
         }
 
         public double kqFEPO4()
@@ -3653,13 +4794,14 @@ namespace Chisoyhoc_API
 
         public LDL()
         {
-
+            //init("C_C04");
         }
         public LDL(Xetnghiem XN)
         {
             TotalCholesterol = XN.totalCholesterol;
             Triglycerid = XN.triglyceride;
             HDL = XN.HDL;
+            //init("C_C04");
         }
 
         public LDL(double _TotalCholesterol, double _HDL, double _Triglycerid)
@@ -3667,6 +4809,7 @@ namespace Chisoyhoc_API
             TotalCholesterol = _TotalCholesterol;
             Triglycerid = _Triglycerid;
             HDL = _HDL;
+            //init("C_C04");
         }
 
         public double kqLDL()
@@ -3684,7 +4827,7 @@ namespace Chisoyhoc_API
 
         public FIB4()
         {
-
+            //init("C_C05");
         }
         public FIB4(Nguoibenh NB, Xetnghiem XN)
         {
@@ -3692,6 +4835,7 @@ namespace Chisoyhoc_API
             AST = XN.AST;
             tieucau = XN.platelet;
             ALT = XN.ALT;
+            //init("C_C05");
         }
         public FIB4(double _tuoi, double _AST, double _tieucau, double _ALT)
         {
@@ -3699,6 +4843,7 @@ namespace Chisoyhoc_API
             AST = _AST;
             tieucau = _tieucau;
             ALT = _ALT;
+            //init("C_C05");
         }
 
         public double kqFIB4()
@@ -3709,19 +4854,19 @@ namespace Chisoyhoc_API
     }
     public class TSAT : Congthuc
     {
-        //TransferrinSaturation
         public double FeSerum { get; set; }
         public double TIBC { get; set; }
 
         public TSAT()
         {
-
+            //init("C_C06");
         }
 
         public TSAT(double _FeSerum, double _TIBC)
         {
             FeSerum = _FeSerum;
             TIBC = _TIBC;
+            //init("C_C06");
         }
 
         public double kqTSAT()
@@ -3738,19 +4883,21 @@ namespace Chisoyhoc_API
 
         public APRI()
         {
-
+            //init("C_C07");
         }
         public APRI(Xetnghiem XN)
         {
             AST = XN.AST;
             ASTNormUL = 0;
             tieucau = XN.platelet;
+            //init("C_C07");
         }
         public APRI(double _AST, double _ASTNormUL, double _tieucau)
         {
             AST = _AST;
             ASTNormUL = _ASTNormUL;
             tieucau = _tieucau;
+            //init("C_C07");
         }
 
         public double kqAPRI()
@@ -3768,7 +4915,7 @@ namespace Chisoyhoc_API
 
         public MELD()
         {
-
+            //init("C_C08");
         }
         public MELD(Xetnghiem XN)
         {
@@ -3777,6 +4924,7 @@ namespace Chisoyhoc_API
             CreatininSerum = XN.creatininSerum;
             BilirubinSerum = XN.bilirubin;
             INR = XN.INR;
+            //init("C_C08");
         }
         public MELD(double _CreatininSerum, double _BilirubinSerum, double _INR)
         {
@@ -3785,6 +4933,7 @@ namespace Chisoyhoc_API
             CreatininSerum = _CreatininSerum;
             BilirubinSerum = _BilirubinSerum;
             INR = _INR;
+            //init("C_C08");
         }
         public MELD(double _CreatininSerum, double _BilirubinSerum, double _INR, double _tansuatlocmau1tuan, double _thoigianlocmau1tuan)
         {
@@ -3793,6 +4942,7 @@ namespace Chisoyhoc_API
             CreatininSerum = _CreatininSerum;
             BilirubinSerum = _BilirubinSerum;
             INR = _INR;
+            //init("C_C08");
         }
 
         public double kqMELD()
@@ -3814,7 +4964,7 @@ namespace Chisoyhoc_API
 
         public MELDNa()
         {
-
+            //init("C_C09");
         }
         public MELDNa(Xetnghiem XN)
         {
@@ -3824,6 +4974,7 @@ namespace Chisoyhoc_API
             BilirubinSerum = XN.bilirubin;
             INR = XN.INR;
             NatriSerum = XN.natriSerum;
+            //init("C_C09");
         }
         public MELDNa( double _NatriSerum, double _CreatininSerum, double _BilirubinSerum, double _INR, double _tansuatlocmau1tuan, double _thoigianlocmau1tuan)
         {
@@ -3833,6 +4984,7 @@ namespace Chisoyhoc_API
             BilirubinSerum = _BilirubinSerum;
             INR = _INR;
             NatriSerum = _NatriSerum;
+            //init("C_C09");
         }
 
         public double kqMELDNa()
@@ -3846,26 +4998,23 @@ namespace Chisoyhoc_API
     }
     public class PVR : Congthuc
     {
-        public double chieucao { get; set; }
-        public double cannang { get; set; }
         public double HATThu { get; set; } // Systolic Blood Pressure (SBP)
         public double HATTruong { get; set; } // Diastolic Blood Pressure (DBP)
         public double aplucnhitrai { get; set; }
         public double luuluongmau { get; set; }
-
         public double PVR_calculated { get; private set; }
-        public double PVRI { get; private set; }
 
         public PVR()
         {
-
+            //init("C_C10");
         }
         public PVR(Nguoibenh nb)
         {
             HATThu = nb.HATThu;
             HATTruong = nb.HATTruong;
-            chieucao = nb.chieucao;
-            cannang = nb.cannang;
+            aplucnhitrai = 0;
+            luuluongmau = 0;
+            //init("C_C10");
         }
         public PVR(double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau)
         {
@@ -3873,15 +5022,7 @@ namespace Chisoyhoc_API
             HATTruong = _HATTruong;
             aplucnhitrai = _aplucnhitrai;
             luuluongmau = _luuluongmau;
-        }
-        public PVR(double _chieucao, double _cannang, double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau)
-        {
-            HATThu = _HATThu;
-            HATTruong = _HATTruong;
-            aplucnhitrai = _aplucnhitrai;
-            luuluongmau = _luuluongmau;
-            chieucao = _chieucao;
-            cannang = _cannang;
+            //init("C_C10");
         }
 
         public double kqPVR()
@@ -3890,12 +5031,46 @@ namespace Chisoyhoc_API
             PVR_calculated = 80 * (MAP.kqMAP() - aplucnhitrai) / luuluongmau;
             return PVR_calculated;
         }
+    }
+    public class PVRI : Congthuc
+    {
+        public double chieucao { get; set; }
+        public double cannang { get; set; }
+        public double HATThu { get; set; }
+        public double HATTruong { get; set; }
+        public double aplucnhitrai { get; set; }
+        public double luuluongmau { get; set; }
+        public double PVR_calculated { get; set; }
+        public double PVRI_calculated { get; set; }
 
+        public PVRI()
+        {
+            //init("C_C11");
+        }
+        public PVRI(Nguoibenh nb)
+        {
+            HATThu = nb.HATThu;
+            HATTruong = nb.HATTruong;
+            chieucao = nb.chieucao;
+            cannang = nb.cannang;
+            //init("C_C11");
+        }
+        public PVRI(double _chieucao, double _cannang, double _HATThu, double _HATTruong, double _aplucnhitrai, double _luuluongmau)
+        {
+            HATThu = _HATThu;
+            HATTruong = _HATTruong;
+            aplucnhitrai = _aplucnhitrai;
+            luuluongmau = _luuluongmau;
+            chieucao = _chieucao;
+            cannang = _cannang;
+            //init("C_C11");
+        }
         public double kqPVRI()
         {
+            PVR thamso = new PVR(HATThu, HATTruong, aplucnhitrai, luuluongmau);
             double BSA = Math.Sqrt(chieucao * cannang / 3600);
-            PVRI = BSA * kqPVR();
-            return PVRI;
+            PVRI_calculated = BSA * thamso.kqPVR();
+            return PVRI_calculated;
         }
     }
     public class AdjECG : Congthuc
@@ -3906,13 +5081,14 @@ namespace Chisoyhoc_API
 
         public AdjECG()
         {
-
+            //init("C_C12");
         }
         public AdjECG(Nguoibenh NB)
         {
             QT_ECG = 0;
             RR_ECG = 0;
             nhiptim = NB.nhiptim;
+            //init("C_C12");
         }
 
         public AdjECG(double _nhiptim, double _QT_ECG, double _RR_ECG)
@@ -3920,6 +5096,7 @@ namespace Chisoyhoc_API
             QT_ECG = _QT_ECG;
             RR_ECG = _RR_ECG;
             nhiptim = _nhiptim;
+            //init("C_C12");
         }
 
         public double kqAdjQT_Bazett()
@@ -3951,12 +5128,13 @@ namespace Chisoyhoc_API
 
         public SVR()
         {
-
+            //init("C_C13");
         }
         public SVR(Nguoibenh nb)
         {
             HATThu = nb.HATThu;
             HATTruong = nb.HATTruong;
+            //init("C_C13");
         }
         public SVR(double _HATThu, double _HATTruong, double _aplucnhiphai, double _luuluongmau)
         {
@@ -3964,6 +5142,7 @@ namespace Chisoyhoc_API
             HATTruong = _HATTruong;
             luuluongmau = _luuluongmau;
             aplucnhiphai = _aplucnhiphai;
+            //init("C_C13");
         }
 
         public double kqSVR()
@@ -3982,7 +5161,7 @@ namespace Chisoyhoc_API
 
         public WBCCFS_Adj()
         {
-
+            //init("C_C14");
         }
         public WBCCFS_Adj(Xetnghiem XN)
         {
@@ -3990,6 +5169,7 @@ namespace Chisoyhoc_API
             RBC_CFS = 0;
             WBC = XN.WBC;
             RBC = XN.RBC;
+            //init("C_C14");
         }
         public WBCCFS_Adj(double _WBC, double _RBC, double _RBC_CFS, double _WBC_CFS)
         {
@@ -3997,6 +5177,7 @@ namespace Chisoyhoc_API
             RBC_CFS = _RBC_CFS;
             WBC = _WBC;
             RBC = _RBC;
+            //init("C_C14");
         }
         public double kqWBCCFS_Adj()
         {
@@ -4014,14 +5195,16 @@ namespace Chisoyhoc_API
 
         public Hauphauxogan()
         {
-
+            //init("C_C15");
         }
         public Hauphauxogan(Nguoibenh nb, Xetnghiem xn)
         {
             tuoi = nb.tinhtuoi_nam();
+            ASA = 0;
             CreatininSerum = xn.creatininSerum;
             BilirubinSerum = xn.bilirubin;
             INR = xn.INR;
+            //init("C_C15");
         }
         public Hauphauxogan(double _tuoi, double _CreatininSerum, double _BilirubinSerum, double _INR, double _ASA)
         {
@@ -4030,6 +5213,7 @@ namespace Chisoyhoc_API
             CreatininSerum = _CreatininSerum;
             BilirubinSerum = _BilirubinSerum;
             INR = _INR;
+            //init("C_C15");
         }
 
         public double kqHauphauxogan()
@@ -4084,7 +5268,7 @@ namespace Chisoyhoc_API
 
         public MESA_SCORE()
         {
-
+            //init("C_C16");
         }
         public MESA_SCORE(Nguoibenh nb, Xetnghiem xn)
         {
@@ -4097,14 +5281,15 @@ namespace Chisoyhoc_API
             SBP = nb.HATThu;
             dieutriTHA = nb.THA;
             lichsuNMCTGD = nb.dotquytim || nb.thieumaunao || nb.NMCT;
+            //init("C_C16");
         }
         public MESA_SCORE(double _tuoi, string _gioitinh, double _SBP, double _TotalCholesterol, double _HDL,
                       bool _dieutriTHA, bool _DTD, bool _hutthuoc, string _chungtoc,
                       bool _dieutriRLLH, bool _lichsuNMCTGD)
         {
             tuoi = _tuoi;
-            gioitinh = _gioitinh;
-            chungtoc = _chungtoc;
+            gioitinh = _gioitinh.ToLower();
+            chungtoc = _chungtoc.ToLower();
             DTD = _DTD;
             hutthuoc = _hutthuoc;
             TotalCholesterol = _TotalCholesterol;
@@ -4113,14 +5298,15 @@ namespace Chisoyhoc_API
             SBP = _SBP;
             dieutriTHA = _dieutriTHA;
             lichsuNMCTGD = _lichsuNMCTGD;
+            //init("C_C16");
         }
         public MESA_SCORE(double _tuoi, string _gioitinh, double _SBP, double _TotalCholesterol, double _HDL,
                       bool _dieutriTHA, bool _DTD, bool _hutthuoc, string _chungtoc,
                       bool _dieutriRLLH, bool _lichsuNMCTGD, double _CAC)
         {
             tuoi = _tuoi;
-            gioitinh = _gioitinh;
-            chungtoc = _chungtoc;
+            gioitinh = _gioitinh.ToLower();
+            chungtoc = _chungtoc.ToLower();
             DTD = _DTD;
             hutthuoc = _hutthuoc;
             TotalCholesterol = _TotalCholesterol;
@@ -4130,6 +5316,7 @@ namespace Chisoyhoc_API
             dieutriTHA = _dieutriTHA;
             lichsuNMCTGD = _lichsuNMCTGD;
             CAC = _CAC;
+            //init("C_C16");
         }
         public int CheckHesogioitinh(string input)
         {
@@ -4139,27 +5326,28 @@ namespace Chisoyhoc_API
         {
             switch (input)
             {
-                case "Người da trắng":
+                case "người da trắng":
                     return 0;
-                case "Người da đen":
+                case "người da đen":
                     return -0.2111;
-                case "Người châu Á":
+                case "người châu á":
                     return -0.5055;
-                case "Người gốc Latinh & Tây Ban Nha":
+                case "người gốc latinh & tây ban nha":
                     return -0.19;
-                case "Khác":
+                case "khác":
                     return 0;
                 default:
                     return 0;
             }
         }
-        public void init()
+        public void initMESA()
         {
             hesogioitinhCAC = CheckHesogioitinh(gioitinh);
             hesochungtocCAC = CheckHesochungtocCAC(chungtoc);
         }
         public double kqMESA_SCORE_nonCAC()
         {
+            initMESA();
             double hesoNonCAC = (tuoi * 0.0455) + (hesogioitinhCAC * 0.7496) + hesochungtocCAC +
                                 (DTD ? 0.5168 : 0) + (hutthuoc ? 0.4732 : 0) + (TotalCholesterol * 0.0053) -
                                 (HDL * 0.0140) + (dieutriRLLH ? 0.2473 : 0) + (SBP * 0.0085) +
@@ -4172,6 +5360,7 @@ namespace Chisoyhoc_API
 
         public double kqMESA_SCORE_CAC()
         {
+            initMESA();
             double hesoCAC = (tuoi * 0.0172) + (hesogioitinhCAC * 0.4079) + hesochungtocCAC +
                              (DTD ? 0.3892 : 0) + (hutthuoc ? 0.3717 : 0) + (TotalCholesterol * 0.0043) -
                              (HDL * 0.0114) + (dieutriRLLH ? 0.1206 : 0) + (SBP * 0.0066) +
@@ -4184,53 +5373,3019 @@ namespace Chisoyhoc_API
     }
     #endregion
     #region Chỉ số y học chi tiết - Thang điểm
-    public class APACHEII : Thangdiem
+    #region T_A
+    public class GRACE : Thangdiem //T_A01
     {
+        public double GRACE_SCORE { get; set; }
 
-    }
-    public class GlasgowComa : Thangdiem
-    {
-        //T_A14
-        public int GSC_01 { get; set; }
-        public int GSC_02 { get; set; }
-        public int GSC_03 { get; set; }
-        private string machiso = "T_A14";
-        public GlasgowComa()
-        {
-            initDB();
-        }
-        public GlasgowComa(int _mat, int _loinoi, int _vandong)
-        {
-            initDB();
-        }
-        public void checkMat(int _idbien, int _mat)
-        {
-            string kq = (from data in connectDB.chiso_DSbienDTs
-                     where data.thutu == _mat && data.IDBien == _idbien
-                     select data.diem).ToString();
-            GSC_01 = int.Parse(kq);
-        }
-        public void checkLoinoi(int _idbien, int _loinoi)
+        public GRACE()
         {
 
         }
-        public void checkVandong(int _idbien, int _vandong)
-        {
 
-        }
-        public int kqGlasgowComa()
+        public GRACE(string _input)
         {
-            return GSC_01 + GSC_02 + GSC_03;
+            initchiso("T_A01");
+            initTongdiem(_input);
+            tinhTongdiem();
         }
-        public class GSC_Data
+
+        public double kqGRACE()
         {
-            public GSC_Data()
+            GRACE_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
             {
+                GRACE_SCORE += i.diemketqua;
+            }
 
+            return GRACE_SCORE;
+        }
+
+        public List<string> kqGRACE_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GRACE_SCORE);
+            return kq;
+        }
+    }
+    public class COWS : Thangdiem //T_A02
+    {
+        public double COWS_SCORE { get; set; }
+
+        public COWS()
+        {
+
+        }
+
+        public COWS(string _input)
+        {
+            initchiso("T_A02");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqCOWS()
+        {
+            COWS_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                COWS_SCORE += i.diemketqua;
+            }
+
+            return COWS_SCORE;
+        }
+
+        public List<string> kqCOWS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, COWS_SCORE);
+            return kq;
+        }
+    }
+    public class qSOFA : Thangdiem //T_A03
+    {
+        public double qSOFA_SCORE { get; set; }
+
+        public qSOFA()
+        {
+
+        }
+
+        public qSOFA(string _input)
+        {
+            initchiso("T_A03");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqqSOFA()
+        {
+            qSOFA_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                qSOFA_SCORE += i.diemketqua;
+            }
+
+            return qSOFA_SCORE;
+        }
+
+        public List<string> kqqSOFA_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, qSOFA_SCORE);
+            return kq;
+        }
+    }
+    public class VNTM : Thangdiem //T_A04
+    {
+        public double tieuchichinh { get; set; }
+        public double tieuchiphu { get; set; }
+        public double VNTM_SCORE { get; set; }
+
+        public VNTM()
+        {
+
+        }
+
+        public VNTM(string _input)
+        {
+            initchiso("T_A04");
+            initTongdiem(_input);
+            tinhTongdiem();
+            //Có danh sách nhập & thứ tự & điểm
+            tieuchichinh = DStinhdiem[0].diemketqua + DStinhdiem[1].diemketqua + DStinhdiem[2].diemketqua;
+            tieuchiphu = DStinhdiem[3].diemketqua + DStinhdiem[4].diemketqua +
+                DStinhdiem[5].diemketqua + DStinhdiem[6].diemketqua;
+        }
+
+        public double kqVNTM_Chinh()
+        {
+            return tieuchichinh;
+        }
+        public double kqVNTM_Phu()
+        {
+            return tieuchiphu;
+        }
+
+        public List<string> kqVNTM_diengiai()
+        {
+            List<string> kq = new List<string>();
+            kq.Add("Kết quả đánh giá khả năng viêm nội tâm mạc theo tiêu chuẩn DUKE");
+            string cdxd = "Chẩn đoán xác định viêm nội tâm mạc";
+            string ncc = "Nguy cơ cao viêm nội tâm mạc nhiễm khuẩn";
+            string loaitru = "Chẩn đoán loại trừ (ít khả năng viêm nội tâm mạc)";
+
+            if (tieuchichinh >= 2)
+                kq.Add(cdxd);
+            else if (tieuchichinh == 1)
+            {
+                if (tieuchiphu >= 3)
+                    kq.Add(cdxd);
+                else if (tieuchiphu >= 1)
+                    kq.Add(ncc);
+                else
+                    kq.Add(loaitru);
+            }
+            else
+            {
+                if (tieuchiphu >= 5)
+                    kq.Add(cdxd);
+                else if (tieuchiphu >= 3)
+                    kq.Add(ncc);
+                else
+                    kq.Add(loaitru);
+            }
+            return kq;
+        }
+    }
+    public class MalHyperthermia : Thangdiem //T_A05
+    {
+        public double MalHyperthermia_SCORE { get; set; }
+
+        public MalHyperthermia()
+        {
+
+        }
+
+        public MalHyperthermia(string _input)
+        {
+            initchiso("T_A05");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqMalHyperthermia()
+        {
+            MalHyperthermia_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                MalHyperthermia_SCORE += i.diemketqua;
+            }
+
+            return MalHyperthermia_SCORE;
+        }
+
+        public List<string> kqMalHyperthermia_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, MalHyperthermia_SCORE);
+            return kq;
+        }
+    }
+    public class PSI : Thangdiem //T_A06
+    {
+        public double PSI_SCORE { get; set; }
+
+        public PSI()
+        {
+
+        }
+
+        public PSI(string _input)
+        {
+            initchiso("T_A06");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqPSI()
+        {
+            PSI_SCORE = 0;
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                if (i.idloaibien == 1)
+                    PSI_SCORE += i.giatri; //Bien DL tuoi
+                else
+                    PSI_SCORE += i.diemketqua; //Bien DT
+            }
+            
+            return PSI_SCORE;
+        }
+
+        public List<string> kqPSI_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, PSI_SCORE);
+            return kq;
+        }
+    }
+    public class VCSS : Thangdiem //T_A07
+    {
+        public double VCSS_SCORE { get; set; }
+
+        public VCSS()
+        {
+
+        }
+
+        public VCSS(string _input)
+        {
+            initchiso("T_A07");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqVCSS()
+        {
+            VCSS_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                VCSS_SCORE += i.diemketqua;
+            }
+
+            return VCSS_SCORE;
+        }
+
+        public List<string> kqVCSS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, VCSS_SCORE);
+            return kq;
+        }
+    }
+    public class BISAP : Thangdiem //T_A08
+    {
+        public double BISAP_SCORE { get; set; }
+
+        public BISAP()
+        {
+
+        }
+
+        public BISAP(string _input)
+        {
+            initchiso("T_A08");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqBISAP()
+        {
+            BISAP_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                BISAP_SCORE += i.diemketqua;
+            }
+
+            return BISAP_SCORE;
+        }
+
+        public List<string> kqBISAP_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, BISAP_SCORE);
+            return kq;
+        }
+    }
+    public class Blatchford : Thangdiem //T_A09
+    {
+        public double Blatchford_SCORE { get; set; }
+
+        public Blatchford()
+        {
+
+        }
+
+        public Blatchford(string _input)
+        {
+            initchiso("T_A09");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqBlatchford()
+        {
+            Blatchford_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Blatchford_SCORE += i.diemketqua;
+            }
+
+            return Blatchford_SCORE;
+        }
+
+        public List<string> kqBlatchford_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Blatchford_SCORE);
+            return kq;
+        }
+    }
+    public class Rockall : Thangdiem //T_A10
+    {
+        public double Rockall_SCORE { get; set; }
+
+        public Rockall()
+        {
+
+        }
+
+        public Rockall(string _input)
+        {
+            initchiso("T_A10");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqRockall()
+        {
+            Rockall_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Rockall_SCORE += i.diemketqua;
+            }
+
+            return Rockall_SCORE;
+        }
+
+        public List<string> kqRockall_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Rockall_SCORE);
+            return kq;
+        }
+    }
+    public class ChildPugh : Thangdiem //T_A11
+    {
+        public double ChildPugh_SCORE { get; set; }
+
+        public ChildPugh()
+        {
+
+        }
+
+        public ChildPugh(string _input)
+        {
+            initchiso("T_A11");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqChildPugh()
+        {
+            ChildPugh_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                ChildPugh_SCORE += i.diemketqua;
+            }
+
+            return ChildPugh_SCORE;
+        }
+
+        public List<string> kqChildPugh_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, ChildPugh_SCORE);
+            return kq;
+        }
+    }
+    public class CLIFSOFA : Thangdiem //T_A12
+    {
+        public double CLIFSOFA_SCORE { get; set; }
+
+        public CLIFSOFA()
+        {
+
+        }
+
+        public CLIFSOFA(string _input)
+        {
+            initchiso("T_A12");
+            initTongdiem(_input);
+        }
+        protected void xulybien()
+        {
+
+            //Xu ly bien
+            if (DStinhdiem[1].giatri != 0)
+            {
+                double PaO2 = DStinhdiem[0].giatri; //PaO2
+                double FiO2 = DStinhdiem[1].giatri; //FiO2
+                double SpO2 = DStinhdiem[2].giatri; //SpO2
+                bool dungthuocvanmach = DStinhdiem[7].thutunhap != 4;
+                double phoi = 0;
+
+                if (PaO2 != 0)
+                {
+                    phoi = PaO2 / FiO2;
+                    if (phoi > 400)
+                        DStinhdiem[3].thutunhap = 1;
+                    else if (phoi > 300)
+                        DStinhdiem[3].thutunhap = 2;
+                    else if (phoi > 200)
+                        DStinhdiem[3].thutunhap = 3;
+                    else if (phoi > 100)
+                        DStinhdiem[3].thutunhap = 4;
+                    else
+                        DStinhdiem[3].thutunhap = 5;
+                }
+                else if (SpO2 != 0)
+                {
+                    phoi = SpO2 / FiO2;
+                    if (phoi > 512)
+                        DStinhdiem[3].thutunhap = 1;
+                    else if (phoi >= 358)
+                        DStinhdiem[3].thutunhap = 2;
+                    else if (phoi >= 215)
+                        DStinhdiem[3].thutunhap = 3;
+                    else if (phoi >= 90)
+                        DStinhdiem[3].thutunhap = 4;
+                    else
+                        DStinhdiem[3].thutunhap = 5;
+                }
+
+                if (dungthuocvanmach)
+                    DStinhdiem[6].thutunhap = 0;
             }
         }
+        public double kqCLIFSOFA()
+        {
+            xulybien();
+            tinhTongdiem();
+            CLIFSOFA_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                CLIFSOFA_SCORE += i.diemketqua;
+            }
+
+            return CLIFSOFA_SCORE;
+        }
+
+        public List<string> kqCLIFSOFA_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, CLIFSOFA_SCORE);
+            return kq;
+        }
     }
-    public class SCORE2_DM : Thangdiem
+    public class HBCrohn : Thangdiem //T_A13
+    {
+        public double HBCrohn_SCORE { get; set; }
+
+        public HBCrohn()
+        {
+
+        }
+
+        public HBCrohn(string _input)
+        {
+            initchiso("T_A13");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+        public double kqHBCrohn()
+        {
+            HBCrohn_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                if (i.idloaibien == 1)
+                    HBCrohn_SCORE += i.giatri; //Bien DL so lan di phan long
+                else
+                    HBCrohn_SCORE += i.diemketqua; //Bien DT
+            }
+
+            return HBCrohn_SCORE;
+        }
+
+        public List<string> kqHBCrohn_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, HBCrohn_SCORE);
+            return kq;
+        }
+    }
+    public class Ranson : Thangdiem //T_A15
+    {
+        public double Ranson_SCORE { get; set; }
+
+        public Ranson()
+        {
+
+        }
+
+        public Ranson(string _input)
+        {
+            initchiso("T_A15");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqRanson()
+        {
+            Ranson_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Ranson_SCORE += i.diemketqua;
+            }
+
+            return Ranson_SCORE;
+        }
+
+        public List<string> kqRanson_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Ranson_SCORE);
+            return kq;
+        }
+    }
+    public class IVPO : Thangdiem //T_A16
+    {
+        public double IVPO_SCORE { get; set; }
+
+        public IVPO()
+        {
+
+        }
+
+        public IVPO(string _input)
+        {
+            initchiso("T_A16");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqIVPO()
+        {
+            IVPO_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                IVPO_SCORE += i.diemketqua;
+            }
+
+            return IVPO_SCORE;
+        }
+
+        public List<string> kqIVPO_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, IVPO_SCORE);
+            return kq;
+        }
+    }
+    public class PUMayoClinic : Thangdiem //T_A17
+    {
+        public double PUMayoClinic_SCORE { get; set; }
+
+        public PUMayoClinic()
+        {
+
+        }
+
+        public PUMayoClinic(string _input)
+        {
+            initchiso("T_A17");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqPUMayoClinic()
+        {
+            PUMayoClinic_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                PUMayoClinic_SCORE += i.diemketqua;
+            }
+
+            return PUMayoClinic_SCORE;
+        }
+
+        public List<string> kqPUMayoClinic_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, PUMayoClinic_SCORE);
+            return kq;
+        }
+    }
+    public class CDAICrohn : Thangdiem //T_A18
+    {
+        public double CDAICrohn_SCORE { get; set; }
+        public double diemHct { get; set; }
+        public double diemCannang { get; set; }
+        public CDAICrohn()
+        {
+
+        }
+
+        public CDAICrohn(string _input)
+        {
+            initchiso("T_A18");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+        public void xulybien()
+        {
+            string gioitinh = (DStinhdiem[0].thutunhap == 1) ? "nam" : "nữ";
+            double chieucao = DStinhdiem[1].giatri;
+            double cannang = DStinhdiem[2].giatri;
+            double Hct = DStinhdiem[3].giatri;
+            double diphanlong = DStinhdiem[4].giatri;
+
+            if (gioitinh == "nam")
+            {
+                diemHct = 6 * (47 - Hct);
+                diemCannang = 100 * (1 - cannang / (chieucao * chieucao * 22.1));
+            }
+            else
+            {
+                diemHct = 6 * (42 - Hct);
+                diemCannang = 100 * (1 - cannang / (chieucao * chieucao * 20.8));
+            }
+            DStinhdiem[4].diemketqua = diphanlong * 14;
+        }
+        public double kqCDAICrohn()
+        {
+            xulybien();
+
+            CDAICrohn_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                CDAICrohn_SCORE += i.diemketqua;
+            }
+            CDAICrohn_SCORE += diemCannang;
+            CDAICrohn_SCORE += diemHct;
+
+            return CDAICrohn_SCORE;
+        }
+
+        public List<string> kqCDAICrohn_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, CDAICrohn_SCORE);
+            return kq;
+        }
+    }
+    public class GlasgowComa : Thangdiem //T_A14
+    {
+        public double GlasgowComa_SCORE { get; set; }
+        //idbien và thứ tự lựa chọn tìm từ DStinhdiem
+        public GlasgowComa()
+        {
+
+        }
+        public GlasgowComa(string _input)
+        {
+            initchiso("T_A14");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+        public double kqGlasgowComa()
+        {
+            GlasgowComa_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GlasgowComa_SCORE = GlasgowComa_SCORE + i.diemketqua;
+            }
+
+            return GlasgowComa_SCORE;
+        }
+        public string kqGlasgowComa_diengiai()
+        {
+            string kq = "";
+
+            return kq;
+        }
+    }
+    #endregion
+    #region T_B
+    public class APACHE2 : Thangdiem //T_B01
+    {
+        public double APACHE2_SCORE { get; set; }
+
+        public APACHE2()
+        {
+
+        }
+
+        public APACHE2(string _input)
+        {
+            initchiso("T_B01");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqAPACHE2()
+        {
+            APACHE2_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                APACHE2_SCORE += i.diemketqua;
+            }
+
+            return APACHE2_SCORE;
+        }
+
+        public List<string> kqAPACHE2_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, APACHE2_SCORE);
+            return kq;
+        }
+    }
+    public class BODECOPD : Thangdiem //T_B02
+    {
+        public double BODECOPD_SCORE { get; set; }
+
+        public BODECOPD()
+        {
+
+        }
+
+        public BODECOPD(string _input)
+        {
+            initchiso("T_B02");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqBODECOPD()
+        {
+            BODECOPD_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                BODECOPD_SCORE += i.diemketqua;
+            }
+
+            return BODECOPD_SCORE;
+        }
+
+        public List<string> kqBODECOPD_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, BODECOPD_SCORE);
+            return kq;
+        }
+    }
+    public class CURB65 : Thangdiem //T_B03
+    {
+        public double CURB65_SCORE { get; set; }
+
+        public CURB65()
+        {
+
+        }
+
+        public CURB65(string _input)
+        {
+            initchiso("T_B03");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqCURB65()
+        {
+            CURB65_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                CURB65_SCORE += i.diemketqua;
+            }
+
+            return CURB65_SCORE;
+        }
+
+        public List<string> kqCURB65_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, CURB65_SCORE);
+            return kq;
+        }
+    }
+    public class Light : Thangdiem //T_B04
+    {
+        public double Light_SCORE { get; set; }
+
+        public Light()
+        {
+
+        }
+
+        public Light(string _input)
+        {
+            initchiso("T_B04");
+            initTongdiem(_input);
+        }
+        public void xulydiem()
+        {
+            double protein_dichmangphoi = DStinhdiem[0].giatri;
+            double ProteinSerum= DStinhdiem[1].giatri;
+            double LDH_dichmangphoi = DStinhdiem[2].giatri;
+            double LDHSerum = DStinhdiem[3].giatri;
+            double LDHSerum_UL = DStinhdiem[4].giatri;
+
+            DStinhdiem[5].diemketqua = (protein_dichmangphoi / ProteinSerum > 0.5) ? 1 : 0;
+            DStinhdiem[6].diemketqua = (LDH_dichmangphoi / LDHSerum > 0.6) ? 1 : 0;
+            DStinhdiem[7].diemketqua = (LDH_dichmangphoi / LDHSerum_UL > 0.66) ? 1 : 0;
+        }
+        public double kqLight()
+        {
+            Light_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Light_SCORE += i.diemketqua;
+            }
+
+            return Light_SCORE;
+        }
+
+        public List<string> kqLight_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Light_SCORE);
+            return kq;
+        }
+    }
+    public class GenevaDVT : Thangdiem //T_B05
+    {
+        public double GenevaDVT_SCORE { get; set; }
+
+        public GenevaDVT()
+        {
+
+        }
+
+        public GenevaDVT(string _input)
+        {
+            initchiso("T_B05");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqGenevaDVT()
+        {
+            GenevaDVT_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GenevaDVT_SCORE += i.diemketqua;
+            }
+
+            return GenevaDVT_SCORE;
+        }
+
+        public List<string> kqGenevaDVT_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GenevaDVT_SCORE);
+            return kq;
+        }
+    }
+    public class GenevaPE : Thangdiem //T_B06
+    {
+        public double GenevaPE_SCORE { get; set; }
+
+        public GenevaPE()
+        {
+
+        }
+
+        public GenevaPE(string _input)
+        {
+            initchiso("T_B06");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+        public double kqGenevaPE()
+        {
+            GenevaPE_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GenevaPE_SCORE += i.diemketqua;
+            }
+
+            return GenevaPE_SCORE;
+        }
+
+        public List<string> kqGenevaPE_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GenevaPE_SCORE);
+            return kq;
+        }
+    }
+    public class WellsDVT : Thangdiem //T_B07
+    {
+        public double WellsDVT_SCORE { get; set; }
+
+        public WellsDVT()
+        {
+
+        }
+
+        public WellsDVT(string _input)
+        {
+            initchiso("T_B07");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqWellsDVT()
+        {
+            WellsDVT_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                WellsDVT_SCORE += i.diemketqua;
+            }
+
+            return WellsDVT_SCORE;
+        }
+
+        public List<string> kqWellsDVT_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, WellsDVT_SCORE);
+            return kq;
+        }
+    }
+    public class NEWS2 : Thangdiem //T_B08
+    {
+        public double NEWS2_SCORE { get; set; }
+        public bool check3diem { get; set; }
+        public NEWS2()
+        {
+
+        }
+
+        public NEWS2(string _input)
+        {
+            initchiso("T_B08");
+            initTongdiem(_input);
+        }
+
+        public void xulybien()
+        {
+            double SpO2 = DStinhdiem[1].giatri;
+            bool suyhohap = DStinhdiem[2].thutunhap == 1;
+            bool thokhiphong = DStinhdiem[3].thutunhap == 1;
+
+            if (suyhohap)
+            {
+                DStinhdiem[8].thutunhap = 0;
+
+                if (SpO2 <= 83 || (SpO2 >= 97 && !thokhiphong))
+                    DStinhdiem[9].thutunhap = 4;
+                else if (SpO2 <= 85 || (SpO2 >= 95 && !thokhiphong))
+                    DStinhdiem[9].thutunhap = 3;
+                else if (SpO2 <= 88 || (SpO2 >= 93 && !thokhiphong))
+                    DStinhdiem[9].thutunhap = 2;
+                else
+                    DStinhdiem[9].thutunhap = 1;
+            }
+            else
+            {
+                DStinhdiem[9].thutunhap = 0;
+                if (SpO2 >= 96)
+                    DStinhdiem[8].thutunhap = 1;
+                else if (SpO2 >=94)
+                    DStinhdiem[8].thutunhap = 2;
+                else if (SpO2 >= 92)
+                    DStinhdiem[8].thutunhap = 3;
+                else
+                    DStinhdiem[8].thutunhap = 4;
+            }
+        }
+        public double kqNEWS2()
+        {
+            xulybien();
+            tinhTongdiem();
+
+            NEWS2_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                NEWS2_SCORE += i.diemketqua;
+                if (i.diemketqua == 3)
+                    check3diem = true;
+            }
+
+            return NEWS2_SCORE;
+        }
+
+        public List<string> kqNEWS2_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, NEWS2_SCORE);
+            if (check3diem && NEWS2_SCORE <=4)
+            {
+                kq.Clear();
+                kq.Add("Nguy cơ trung bình thấp, đánh giá lại, theo dõi mỗi 1h");
+            }
+            else if (NEWS2_SCORE <=4)
+            {
+                kq.Clear();
+                kq.Add("Nguy cơ thấp, tiếp tục theo dõi NEWS2");
+            }
+            return kq;
+        }
+    }
+    public class PaduaVTE : Thangdiem //T_B09
+    {
+        public double PaduaVTE_SCORE { get; set; }
+
+        public PaduaVTE()
+        {
+
+        }
+
+        public PaduaVTE(string _input)
+        {
+            initchiso("T_B09");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqPaduaVTE()
+        {
+            PaduaVTE_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                PaduaVTE_SCORE += i.diemketqua;
+            }
+
+            return PaduaVTE_SCORE;
+        }
+
+        public List<string> kqPaduaVTE_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, PaduaVTE_SCORE);
+            return kq;
+        }
+    }
+    public class WellsPE : Thangdiem //T_B10
+    {
+        public double WellsPE_SCORE { get; set; }
+
+        public WellsPE()
+        {
+
+        }
+
+        public WellsPE(string _input)
+        {
+            initchiso("T_B10");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqWellsPE()
+        {
+            WellsPE_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                WellsPE_SCORE += i.diemketqua;
+            }
+
+            return WellsPE_SCORE;
+        }
+
+        public List<string> kqWellsPE_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, WellsPE_SCORE);
+            return kq;
+        }
+    }
+    public class SOFA : Thangdiem //T_B11
+    {
+        public double SOFA_SCORE { get; set; }
+
+        public SOFA()
+        {
+
+        }
+
+        public SOFA(string _input)
+        {
+            initchiso("T_B11");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            double PaO2 = DStinhdiem[0].giatri;
+            double FiO2 = DStinhdiem[1].giatri;
+            bool hotrohohap = DStinhdiem[2].thutunhap == 1;
+            bool dungthuocvanmach = DStinhdiem[7].thutunhap != 4;
+
+            if (PaO2 / FiO2 > 400)
+                DStinhdiem[3].thutunhap = 1;
+            else if (PaO2 / FiO2 > 300)
+                DStinhdiem[3].thutunhap = 2;
+            else if (PaO2 / FiO2 > 200)
+                DStinhdiem[3].thutunhap = 3;
+            else if (hotrohohap == false)
+                DStinhdiem[3].thutunhap = 3;
+            else if (PaO2 / FiO2 > 100)
+                DStinhdiem[3].thutunhap = 4;
+            else
+                DStinhdiem[3].thutunhap = 5;
+
+            if (dungthuocvanmach)
+                DStinhdiem[6].thutunhap = 0;
+        }
+        public double kqSOFA()
+        {
+            xulybien();
+            tinhTongdiem();
+            SOFA_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                SOFA_SCORE += i.diemketqua;
+            }
+
+            return SOFA_SCORE;
+        }
+
+        public List<string> kqSOFA_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, SOFA_SCORE);
+            return kq;
+        }
+    }
+    public class VTEBLEED : Thangdiem //T_B12
+    {
+        public double VTEBLEED_SCORE { get; set; }
+
+        public VTEBLEED()
+        {
+
+        }
+
+        public VTEBLEED(string _input)
+        {
+            initchiso("T_B12");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqVTEBLEED()
+        {
+            VTEBLEED_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                VTEBLEED_SCORE += i.diemketqua;
+            }
+
+            return VTEBLEED_SCORE;
+        }
+
+        public List<string> kqVTEBLEED_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, VTEBLEED_SCORE);
+            return kq;
+        }
+    }
+    public class HeparinIT : Thangdiem //T_B13
+    {
+        public double HeparinIT_SCORE { get; set; }
+
+        public HeparinIT()
+        {
+
+        }
+
+        public HeparinIT(string _input)
+        {
+            initchiso("T_B13");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            int tylegiamPLT = DStinhdiem[0].thutunhap; // 1.Trên 50%\2. 30-50%\3. Dưới 30%
+            int muctieucau = DStinhdiem[1].thutunhap; // 1.≥20.000/microL\2. 10.000 đến 19.000/microL\3. <10.000/microL
+            double khoiphatgiamPLT = DStinhdiem[2].giatri;
+            double ngaydungheparin = (DateTime.Today - KetnoiDB.numbertodatetime(DStinhdiem[3].giatri.ToString())).TotalDays;
+
+            //Giam tieu cau: bien [7]
+            if (tylegiamPLT == 1 && muctieucau == 1)
+                DStinhdiem[7].thutunhap = 1;
+            else if (tylegiamPLT == 2 || muctieucau == 2)
+                DStinhdiem[7].thutunhap = 2;
+            else
+                DStinhdiem[7].thutunhap = 3;
+
+            //Danh gia giam tieu cau va tg xai heparin: bien [6]
+            if (khoiphatgiamPLT < 4 && ngaydungheparin > 100)
+                DStinhdiem[6].thutunhap = 3;
+            else if (khoiphatgiamPLT <=1 && ngaydungheparin >30)
+                DStinhdiem[6].thutunhap = 2;
+            else if (khoiphatgiamPLT <= 1 && ngaydungheparin <= 30)
+                DStinhdiem[6].thutunhap = 1;
+            else if (khoiphatgiamPLT >10)
+                DStinhdiem[6].thutunhap = 2;
+            else
+                DStinhdiem[6].thutunhap = 1;
+        }
+        public double kqHeparinIT()
+        {
+            xulybien();
+            tinhTongdiem();
+            HeparinIT_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                HeparinIT_SCORE += i.diemketqua;
+            }
+
+            return HeparinIT_SCORE;
+        }
+
+        public List<string> kqHeparinIT_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, HeparinIT_SCORE);
+            return kq;
+        }
+    }
+    public class HASBLED : Thangdiem //T_B14
+    {
+        public double HASBLED_SCORE { get; set; }
+
+        public HASBLED()
+        {
+
+        }
+
+        public HASBLED(string _input)
+        {
+            initchiso("T_B14");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqHASBLED()
+        {
+            HASBLED_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                HASBLED_SCORE += i.diemketqua;
+            }
+
+            return HASBLED_SCORE;
+        }
+
+        public List<string> kqHASBLED_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, HASBLED_SCORE);
+            return kq;
+        }
+    }
+    public class DIPSSPlusPMS : Thangdiem //T_B15
+    {
+        public double DIPSS_SCORE { get; set; }
+        public double DIPSSPlus_SCORE { get; set; }
+
+        public DIPSSPlusPMS()
+        {
+
+        }
+
+        public DIPSSPlusPMS(string _input)
+        {
+            initchiso("T_B15");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+        public double kqDIPSS()
+        {
+            DIPSS_SCORE = DStinhdiem[0].diemketqua + DStinhdiem[1].diemketqua +
+                2 * DStinhdiem[2].diemketqua + DStinhdiem[3].diemketqua +
+                Math.Min(DStinhdiem[7].diemketqua + DStinhdiem[8].diemketqua + DStinhdiem[9].diemketqua, 1);
+
+            return DIPSS_SCORE;
+        }
+
+        public List<string> kqDIPSS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ_2(IDChiso, DIPSS_SCORE, 81); // id của DIPSS
+            return kq;
+        }
+        public double kqDIPSSPlus()
+        {
+            double diembosung;
+            if (DIPSS_SCORE == 0)
+                diembosung = 0;
+            else if (DIPSS_SCORE <= 2)
+                diembosung = 1;
+            else if (DIPSS_SCORE <= 4)
+                diembosung = 2;
+            else
+                diembosung = 3;
+
+            DIPSSPlus_SCORE = DStinhdiem[4].diemketqua + DStinhdiem[5].diemketqua +
+                DStinhdiem[6].diemketqua + diembosung;
+
+            return DIPSSPlus_SCORE;
+        }
+
+        public List<string> kqDIPSSPlus_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ_2(IDChiso, DIPSSPlus_SCORE, 37);
+            return kq;
+        }
+    }
+    public class IPSHodgkin : Thangdiem //T_B16
+    {
+        public double IPSHodgkin_SCORE { get; set; }
+
+        public IPSHodgkin()
+        {
+
+        }
+
+        public IPSHodgkin(string _input)
+        {
+            initchiso("T_B16");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqIPSHodgkin()
+        {
+            IPSHodgkin_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                IPSHodgkin_SCORE += i.diemketqua;
+            }
+
+            return IPSHodgkin_SCORE;
+        }
+
+        public List<string> kqIPSHodgkin_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, IPSHodgkin_SCORE);
+            return kq;
+        }
+    }
+    public class GIPSSXotuy : Thangdiem //T_B17
+    {
+        public double GIPSSXotuy_SCORE { get; set; }
+
+        public GIPSSXotuy()
+        {
+
+        }
+
+        public GIPSSXotuy(string _input)
+        {
+            initchiso("T_B17");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqGIPSSXotuy()
+        {
+            GIPSSXotuy_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GIPSSXotuy_SCORE += i.diemketqua;
+            }
+
+            return GIPSSXotuy_SCORE;
+        }
+
+        public List<string> kqGIPSSXotuy_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GIPSSXotuy_SCORE);
+            return kq;
+        }
+    }
+    public class IPSNonHodgkin : Thangdiem //T_B18
+    {
+        public double IPSNonHodgkin_SCORE { get; set; }
+
+        public IPSNonHodgkin()
+        {
+
+        }
+
+        public IPSNonHodgkin(string _input)
+        {
+            initchiso("T_B18");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqIPSNonHodgkin()
+        {
+            IPSNonHodgkin_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                IPSNonHodgkin_SCORE += i.diemketqua;
+            }
+
+            return IPSNonHodgkin_SCORE;
+        }
+
+        public List<string> kqIPSNonHodgkin_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, IPSNonHodgkin_SCORE);
+            return kq;
+        }
+    }
+    public class Khorana : Thangdiem //T_B19
+    {
+        public double Khorana_SCORE { get; set; }
+
+        public Khorana()
+        {
+
+        }
+
+        public Khorana(string _input)
+        {
+            initchiso("T_B19");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqKhorana()
+        {
+            Khorana_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Khorana_SCORE += i.diemketqua;
+            }
+
+            return Khorana_SCORE;
+        }
+
+        public List<string> kqKhorana_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Khorana_SCORE);
+            return kq;
+        }
+    }
+    public class MDACC : Thangdiem //T_B20
+    {
+        public double MDACC_SCORE { get; set; }
+
+        public MDACC()
+        {
+
+        }
+
+        public MDACC(string _input)
+        {
+            initchiso("T_B20");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqMDACC()
+        {
+            MDACC_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                MDACC_SCORE += i.diemketqua;
+            }
+
+            return MDACC_SCORE;
+        }
+
+        public List<string> kqMDACC_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, MDACC_SCORE);
+            return kq;
+        }
+    }
+    public class MDSRLsinhtuy : Thangdiem //T_B21
+    {
+        public double MDSRLsinhtuy_SCORE { get; set; }
+
+        public MDSRLsinhtuy()
+        {
+
+        }
+
+        public MDSRLsinhtuy(string _input)
+        {
+            initchiso("T_B21");
+            initTongdiem(_input);
+        }
+        public void xulydiem()
+        {
+            int giamHb = (DStinhdiem[2].thutunhap == 1) ? 1 : 0;
+            int giamnNeu = (DStinhdiem[3].thutunhap == 1) ? 1 : 0;
+            int giamPLT = (DStinhdiem[4].thutunhap == 1) ? 1 : 0;
+
+            if (giamHb + giamnNeu + giamPLT >= 2)
+                DStinhdiem[5].thutunhap = 2;
+            else
+                DStinhdiem[5].thutunhap = 1;
+        }
+        public double kqMDSRLsinhtuy()
+        {
+            xulydiem();
+
+            tinhTongdiem();
+            MDSRLsinhtuy_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                MDSRLsinhtuy_SCORE += i.diemketqua;
+            }
+
+            return MDSRLsinhtuy_SCORE;
+        }
+
+        public List<string> kqMDSRLsinhtuy_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, MDSRLsinhtuy_SCORE);
+            return kq;
+        }
+    }
+    public class Sokal : Thangdiem //T_B22
+    {
+        public double Sokal_SCORE { get; set; }
+
+        public Sokal()
+        {
+
+        }
+
+        public Sokal(string _input)
+        {
+            initchiso("T_B22");
+            initTongdiem(_input);
+        }
+
+        public double kqSokal()
+        {
+            double tuoi = DStinhdiem[0].giatri;
+            double kichthuoclach = DStinhdiem[1].giatri;
+            double PLT = DStinhdiem[2].giatri;
+            double blastSerum_tyle = DStinhdiem[3].giatri;
+
+            Sokal_SCORE = Math.Exp(0.0116 * (tuoi - 43.4) + 0.0345 * (kichthuoclach - 7.51) +
+                0.188 * (PLT / 700 - 0.563) + 0.0887 * (blastSerum_tyle - 2.1)); ;
+
+            return Sokal_SCORE;
+        }
+
+        public List<string> kqSokal_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Sokal_SCORE);
+            return kq;
+        }
+    }
+    public class APGAR : Thangdiem //T_B23
+    {
+        public double APGAR_SCORE { get; set; }
+
+        public APGAR()
+        {
+
+        }
+
+        public APGAR(string _input)
+        {
+            initchiso("T_B23");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqAPGAR()
+        {
+            APGAR_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                APGAR_SCORE += i.diemketqua;
+            }
+
+            return APGAR_SCORE;
+        }
+
+        public List<string> kqAPGAR_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, APGAR_SCORE);
+            return kq;
+        }
+    }
+    public class PUCAI : Thangdiem //T_B24
+    {
+        public double PUCAI_SCORE { get; set; }
+
+        public PUCAI()
+        {
+
+        }
+
+        public PUCAI(string _input)
+        {
+            initchiso("T_B24");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqPUCAI()
+        {
+            PUCAI_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                PUCAI_SCORE += i.diemketqua;
+            }
+
+            return PUCAI_SCORE;
+        }
+
+        public List<string> kqPUCAI_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, PUCAI_SCORE);
+            return kq;
+        }
+    }
+    public class WestleyCroup : Thangdiem //T_B25
+    {
+        public double WestleyCroup_SCORE { get; set; }
+
+        public WestleyCroup()
+        {
+
+        }
+
+        public WestleyCroup(string _input)
+        {
+            initchiso("T_B25");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqWestleyCroup()
+        {
+            WestleyCroup_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                WestleyCroup_SCORE += i.diemketqua;
+            }
+
+            return WestleyCroup_SCORE;
+        }
+
+        public List<string> kqWestleyCroup_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, WestleyCroup_SCORE);
+            return kq;
+        }
+    }
+    public class CMMLMayoClinic : Thangdiem //T_B26
+    {
+        public double CMMLMayoClinic_SCORE { get; set; }
+
+        public CMMLMayoClinic()
+        {
+
+        }
+
+        public CMMLMayoClinic(string _input)
+        {
+            initchiso("T_B26");
+            initTongdiem(_input);
+        }
+        public void xulibien()
+        {
+            double WBC = DStinhdiem[0].giatri;
+            double tyleMONO = DStinhdiem[1].giatri;
+
+            double slMONO = WBC * tyleMONO / 100;
+            if (slMONO > 10000)
+                DStinhdiem[5].thutunhap = 1;
+            else
+                DStinhdiem[5].thutunhap = 0;
+        }
+
+        public double kqCMMLMayoClinic()
+        {
+            xulibien();
+            tinhTongdiem();
+
+            CMMLMayoClinic_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                CMMLMayoClinic_SCORE += i.diemketqua;
+            }
+
+            return CMMLMayoClinic_SCORE;
+        }
+
+        public List<string> kqCMMLMayoClinic_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, CMMLMayoClinic_SCORE);
+            return kq;
+        }
+    }
+    public class EUTOS : Thangdiem //T_B27
+    {
+        public double EUTOS_SCORE { get; set; }
+
+        public EUTOS()
+        {
+
+        }
+
+        public EUTOS(string _input)
+        {
+            initchiso("T_B27");
+            initTongdiem(_input);
+        }
+
+        public double kqEUTOS()
+        {
+            double tuoi = DStinhdiem[0].giatri;
+            double kichthuoclach = DStinhdiem[1].giatri;
+            double tyleblast = DStinhdiem[2].giatri;
+            double plt = DStinhdiem[3].giatri;
+
+            EUTOS_SCORE = 0.0025 * Math.Pow((tuoi / 10), 3) + (0.0615 * kichthuoclach) +
+                (0.1052 * tyleblast) + (0.4104 * Math.Pow((plt / 1000), -0.5));
+
+            return EUTOS_SCORE;
+        }
+
+        public List<string> kqEUTOS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, EUTOS_SCORE);
+            return kq;
+        }
+    }
+    public class PASRuotthua : Thangdiem //T_B28
+    {
+        public double PASRuotthua_SCORE { get; set; }
+
+        public PASRuotthua()
+        {
+
+        }
+
+        public PASRuotthua(string _input)
+        {
+            initchiso("T_B28");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqPASRuotthua()
+        {
+            PASRuotthua_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                PASRuotthua_SCORE += i.diemketqua;
+            }
+
+            return PASRuotthua_SCORE;
+        }
+
+        public List<string> kqPASRuotthua_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, PASRuotthua_SCORE);
+            return kq;
+        }
+    }
+    public class GlasgowNhiB2 : Thangdiem //T_B29
+    {
+        public double GlasgowNhiB2_SCORE { get; set; }
+
+        public GlasgowNhiB2()
+        {
+
+        }
+
+        public GlasgowNhiB2(string _input)
+        {
+            initchiso("T_B29");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqGlasgowNhiB2()
+        {
+            GlasgowNhiB2_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GlasgowNhiB2_SCORE += i.diemketqua;
+            }
+
+            return GlasgowNhiB2_SCORE;
+        }
+
+        public List<string> kqGlasgowNhiB2_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GlasgowNhiB2_SCORE);
+            return kq;
+        }
+    }
+    public class GlasgowNhiO2 : Thangdiem //T_B32 (tach tu T_B29)
+    {
+        public double GlasgowNhiO2_SCORE { get; set; }
+
+        public GlasgowNhiO2()
+        {
+
+        }
+
+        public GlasgowNhiO2(string _input)
+        {
+            initchiso("T_B32");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqGlasgowNhiO2()
+        {
+            GlasgowNhiO2_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GlasgowNhiO2_SCORE += i.diemketqua;
+            }
+
+            return GlasgowNhiO2_SCORE;
+        }
+
+        public List<string> kqGlasgowNhiO2_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GlasgowNhiO2_SCORE);
+            return kq;
+        }
+    }
+    public class STOPBangS : Thangdiem //T_B30
+    {
+        public double STOP_SCORE { get; set; }
+        public double BANG_SCORE { get; set; }
+        public double Total_SCORE { get; set; }
+        public STOPBangS()
+        {
+
+        }
+
+        public STOPBangS(string _input)
+        {
+            initchiso("T_B30");
+            initTongdiem(_input);
+            tinhTongdiem();
+
+            STOP_SCORE = DStinhdiem[0].diemketqua + DStinhdiem[1].diemketqua +
+                DStinhdiem[2].diemketqua + DStinhdiem[3].diemketqua;
+
+            BANG_SCORE = DStinhdiem[4].diemketqua + DStinhdiem[5].diemketqua +
+                DStinhdiem[6].diemketqua + DStinhdiem[7].diemketqua;
+            Total_SCORE = STOP_SCORE + BANG_SCORE;
+        }
+
+        public double kqSTOP()
+        {
+            return STOP_SCORE;
+        }
+        public double kqBang()
+        {
+            return BANG_SCORE;
+        }
+        public List<string> kqSTOPBangS_diengiai()
+        {
+            List<string> kq = new List<string>();
+            if (STOP_SCORE >= 2)
+            {
+                if (BANG_SCORE - DStinhdiem[6].diemketqua > 0)
+                    kq = db.GetDiengiaiKQ(IDChiso, 8);
+                else
+                    kq = db.GetDiengiaiKQ(IDChiso, Total_SCORE);
+            }
+            else
+                kq = db.GetDiengiaiKQ(IDChiso, Total_SCORE);
+
+            return kq;
+        }
+    }
+    public class IPSSRLoansantuy : Thangdiem //T_B31
+    {
+        public double IPSSRLoansantuy_SCORE { get; set; }
+
+        public IPSSRLoansantuy()
+        {
+
+        }
+
+        public IPSSRLoansantuy(string _input)
+        {
+            initchiso("T_B31");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqIPSSRLoansantuy()
+        {
+            IPSSRLoansantuy_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                IPSSRLoansantuy_SCORE += i.diemketqua;
+            }
+
+            return IPSSRLoansantuy_SCORE;
+        }
+
+        public List<string> kqIPSSRLoansantuy_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, IPSSRLoansantuy_SCORE);
+            return kq;
+        }
+    }
+    #endregion
+    #region T_C
+    public class FraminghamE : Thangdiem //T_C01
+    {
+        public double FraminghamE_SCORE { get; set; }
+
+        public FraminghamE()
+        {
+
+        }
+
+        public FraminghamE(string _input)
+        {
+            initchiso("T_C01");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            string gioitinh = (DStinhdiem[0].thutunhap == 1) ? "nam" : "nữ";
+            double tuoi = DStinhdiem[1].giatri;
+            double totalCholesterol = DStinhdiem[2].giatri;
+            double HDL = DStinhdiem[3].giatri;
+            double HATThu = DStinhdiem[4].giatri;
+            bool THA_dieutri = DStinhdiem[5].thutunhap == 1;
+            bool DTD_dieutri = DStinhdiem[6].thutunhap == 1;
+            bool hutthuoc = DStinhdiem[7].thutunhap == 1;
+
+            double hesoTHA;
+
+            if (gioitinh == "nam")
+            {
+                hesoTHA = THA_dieutri ? 1.99881 : 1.93303;
+                FraminghamE_SCORE = Math.Log(tuoi) * 3.06117 +
+                               Math.Log(totalCholesterol) * 1.12370 -
+                               Math.Log(HDL) * 0.93263 +
+                               Math.Log(HATThu) * hesoTHA +
+                               (hutthuoc ? 0.65451 : 0) +
+                               (DTD_dieutri ? 0.57367 : 0) -
+                               23.9802;
+            }
+            else
+            {
+                hesoTHA = THA_dieutri ? 2.82263 : 2.76157;
+                FraminghamE_SCORE = Math.Log(tuoi) * 2.32888 +
+                    Math.Log(totalCholesterol) * 1.20904 -
+                    Math.Log(HDL) * 0.70833 +
+                    Math.Log(HATThu) * hesoTHA +
+                    (hutthuoc ? 0.52873 : 0) +
+                    (DTD_dieutri ? 0.69154 : 0) -
+                    26.1931;
+            }
+        }
+        public double kqFraminghamE()
+        {
+            xulybien();
+
+            return FraminghamE_SCORE;
+        }
+
+        public List<string> kqFraminghamE_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, FraminghamE_SCORE);
+            return kq;
+        }
+    }
+    public class ACCAHA : Thangdiem //T_C02
+    {
+        public double hesonguyco { get; set; }
+        public double ACCAHA_SCORE { get; set; }
+        public List<double> data;
+
+        public ACCAHA()
+        {
+
+        }
+
+        public ACCAHA(string _input)
+        {
+            initchiso("T_C02");
+            initTongdiem(_input);
+
+            data = new List<double>() { 12.344, 0, 11.853, -2.664, -7.99, 1.769, 1.797, 0, 1.764, 0, 7.837, -1.795, 0.658, 0.9144, 61.18, 2.469, 0, 0.302, 0, -0.307, 0, 1.916, 0, 1.809, 0, 0.549, 0, 0.645, 0.8954, 19.54, -29.799, 4.884, 13.54, -3.114, -13.578, 3.149, 2.019, 0, 1.957, 0, 7.574, -1.665, 0.661, 0.9665, -29.18, 17.114, 0, 0.94, 0, -18.92, 4.475, 29.291, -6.432, 27.82, -6.087, 0.691, 0, 0.874, 0.9533, 86.61 };
+
+        }
+        public void xulybien()
+        {
+            bool chungtocdaden = DStinhdiem[0].thutunhap == 2;
+            string gioitinh = (DStinhdiem[1].thutunhap == 1) ? "nam" : "nữ";
+            double tuoi = DStinhdiem[2].giatri;
+            double totalCholesterol = DStinhdiem[3].giatri;
+            double HDL = DStinhdiem[4].giatri;
+            double HATThu = DStinhdiem[5].giatri;
+            bool THA_dieutri = DStinhdiem[6].thutunhap == 1;
+            bool DTD_dieutri = DStinhdiem[7].thutunhap == 1;
+            bool hutthuoc = DStinhdiem[8].thutunhap == 1;
+
+            int startindex = 0;
+            if (gioitinh != "nam")
+                startindex += 30;
+            if (chungtocdaden)
+                startindex += 15;
+
+            List<double> datasudung = data.GetRange(startindex, 15);
+
+            double hesoTHA = THA_dieutri ? datasudung[6] * Math.Log(HATThu) + datasudung[7] * Math.Log(HATThu) * Math.Log(tuoi) :
+                datasudung[8] * Math.Log(HATThu) + datasudung[9] * Math.Log(HATThu) * Math.Log(tuoi);
+            double hesohutthuoc = hutthuoc ? (datasudung[10] + datasudung[11] * Math.Log(tuoi)) : 0;
+            double hesoDTD = DTD_dieutri ? (datasudung[12]):0;
+
+            hesonguyco = datasudung[0] * Math.Log(tuoi) + datasudung[1] * Math.Log(tuoi) * Math.Log(tuoi) +
+                datasudung[2] * Math.Log(totalCholesterol) + datasudung[3] * Math.Log(totalCholesterol) * Math.Log(tuoi) +
+                datasudung[4] * Math.Log(HDL) + datasudung[5] * Math.Log(HDL) * Math.Log(tuoi) +
+                hesoTHA + hesohutthuoc + hesoDTD;
+
+            ACCAHA_SCORE = 100 * (1 - Math.Pow(datasudung[13], Math.Exp(hesonguyco - datasudung[14])));
+        }
+        public double kqACCAHA()
+        {
+            return ACCAHA_SCORE;
+        }
+
+        public List<string> kqACCAHA_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, ACCAHA_SCORE);
+            return kq;
+        }
+    }
+    public class CHA2DS2VASc : Thangdiem //T_C03
+    {
+        public double CHA2DS2VASc_SCORE { get; set; }
+
+        public CHA2DS2VASc()
+        {
+
+        }
+
+        public CHA2DS2VASc(string _input)
+        {
+            initchiso("T_C03");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqCHA2DS2VASc()
+        {
+            CHA2DS2VASc_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                CHA2DS2VASc_SCORE += i.diemketqua;
+            }
+
+            return CHA2DS2VASc_SCORE;
+        }
+
+        public List<string> kqCHA2DS2VASc_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, CHA2DS2VASc_SCORE);
+            return kq;
+        }
+    }
+    public class TIMINonST : Thangdiem //T_C04
+    {
+        public double TIMINonST_SCORE { get; set; }
+
+        public TIMINonST()
+        {
+
+        }
+
+        public TIMINonST(string _input)
+        {
+            initchiso("T_C04");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            int benhmachvanh = 0;
+            for (int i = 1; i < 6; i++)
+            {
+                benhmachvanh += (DStinhdiem[i].thutunhap == 1) ? 1 : 0;
+            }
+            if (benhmachvanh >= 3)
+                DStinhdiem[6].thutunhap = 1;
+            else
+                DStinhdiem[6].thutunhap = 2;
+        }
+        public double kqTIMINonST()
+        {
+            xulybien();
+            tinhTongdiem();
+            TIMINonST_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                TIMINonST_SCORE += i.diemketqua;
+            }
+
+            return TIMINonST_SCORE;
+        }
+
+        public List<string> kqTIMINonST_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, TIMINonST_SCORE);
+            return kq;
+        }
+    }
+    public class TIMIST : Thangdiem //T_C29 (tach tu T_C04)
+    {
+        public double TIMIST_SCORE { get; set; }
+
+        public TIMIST()
+        {
+
+        }
+
+        public TIMIST(string _input)
+        {
+            initchiso("T_C29");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            bool benhkem = (DStinhdiem[1].thutunhap == 1) ||
+                (DStinhdiem[2].thutunhap == 1) ||
+                (DStinhdiem[3].thutunhap == 1);
+            if (benhkem)
+                DStinhdiem[8].thutunhap = 1;
+            else
+                DStinhdiem[8].thutunhap = 2;
+        }
+        public double kqTIMIST()
+        {
+            xulybien();
+            tinhTongdiem();
+            TIMIST_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                TIMIST_SCORE += i.diemketqua;
+            }
+
+            return TIMIST_SCORE;
+        }
+
+        public List<string> kqTIMIST_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, TIMIST_SCORE);
+            return kq;
+        }
+    }
+    public class ARISCAT : Thangdiem //T_C05
+    {
+        public double ARISCAT_SCORE { get; set; }
+
+        public ARISCAT()
+        {
+
+        }
+
+        public ARISCAT(string _input)
+        {
+            initchiso("T_C05");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqARISCAT()
+        {
+            ARISCAT_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                ARISCAT_SCORE += i.diemketqua;
+            }
+
+            return ARISCAT_SCORE;
+        }
+
+        public List<string> kqARISCAT_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, ARISCAT_SCORE);
+            return kq;
+        }
+    }
+    public class IPSSTienliet : Thangdiem //T_C06
+    {
+        public double IPSSTienliet_SCORE { get; set; }
+
+        public IPSSTienliet()
+        {
+
+        }
+
+        public IPSSTienliet(string _input)
+        {
+            initchiso("T_C06");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqIPSSTienliet()
+        {
+            IPSSTienliet_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                IPSSTienliet_SCORE += i.diemketqua;
+            }
+
+            return IPSSTienliet_SCORE;
+        }
+
+        public List<string> kqIPSSTienliet_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, IPSSTienliet_SCORE);
+            return kq;
+        }
+    }
+    public class ABCD2 : Thangdiem //T_C07
+    {
+        public double ABCD2_SCORE { get; set; }
+
+        public ABCD2()
+        {
+
+        }
+
+        public ABCD2(string _input)
+        {
+            initchiso("T_C07");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqABCD2()
+        {
+            ABCD2_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                ABCD2_SCORE += i.diemketqua;
+            }
+
+            return ABCD2_SCORE;
+        }
+
+        public List<string> kqABCD2_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, ABCD2_SCORE);
+            return kq;
+        }
+    }
+    public class ESS : Thangdiem //T_C08
+    {
+        public double ESS_SCORE { get; set; }
+
+        public ESS()
+        {
+
+        }
+
+        public ESS(string _input)
+        {
+            initchiso("T_C08");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqESS()
+        {
+            ESS_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                ESS_SCORE += i.diemketqua;
+            }
+
+            return ESS_SCORE;
+        }
+
+        public List<string> kqESS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, ESS_SCORE);
+            return kq;
+        }
+    }
+    public class NIH : Thangdiem //T_C09
+    {
+        public double NIH_SCORE { get; set; }
+
+        public NIH()
+        {
+
+        }
+
+        public NIH(string _input)
+        {
+            initchiso("T_C09");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqNIH()
+        {
+            NIH_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                NIH_SCORE += i.diemketqua;
+            }
+
+            return NIH_SCORE;
+        }
+
+        public List<string> kqNIH_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, NIH_SCORE);
+            return kq;
+        }
+    }
+    public class RoPE : Thangdiem //T_C10
+    {
+        public double RoPE_SCORE { get; set; }
+
+        public RoPE()
+        {
+
+        }
+
+        public RoPE(string _input)
+        {
+            initchiso("T_C10");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqRoPE()
+        {
+            RoPE_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                RoPE_SCORE += i.diemketqua;
+            }
+
+            return RoPE_SCORE;
+        }
+
+        public List<string> kqRoPE_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, RoPE_SCORE);
+            return kq;
+        }
+    }
+    public class FraminghamS : Thangdiem //T_C11
+    {
+        public double FraminghamS_SCORE { get; set; }
+
+        public FraminghamS()
+        {
+
+        }
+
+        public FraminghamS(string _input)
+        {
+            initchiso("T_C11");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            double tuoi = DStinhdiem[0].giatri;
+            double HATThu =  DStinhdiem[1].giatri;
+            bool THA_dieutri = DStinhdiem[2].thutunhap == 1;
+            bool DTD_dieutri= DStinhdiem[3].thutunhap == 1;
+            bool hutthuoc =  DStinhdiem[4].thutunhap == 1;
+            bool benhtimmach = DStinhdiem[5].thutunhap == 1;
+            bool rungnhi = DStinhdiem[6].thutunhap == 1;
+            bool phidaithattrai = DStinhdiem[7].thutunhap == 1;
+            string gioitinh = (DStinhdiem[8].thutunhap == 1) ? "nam":"nữ";
+            int thoigiandanhgia = (DStinhdiem[9].thutunhap == 1) ? 1 : (DStinhdiem[9].thutunhap == 5) ? 5 : 10;
+
+            double tuoiF, HATThuF, THA_F, DTD_F, hutthuocF, benhtimmachF, rungnhiF, phidaithattraiF, thoigiandanhgiaF;
+
+            if (gioitinh == "nam")
+            {
+                tuoiF = tuoi * 0.0505;
+                HATThuF = HATThu * 0.014;
+                THA_F = 0.3263;
+                DTD_F = 0.3384;
+                hutthuocF = 0.5147;
+                benhtimmachF = 0.5195;
+                rungnhiF = 0.6061;
+                phidaithattraiF = 0.8415;
+                if (thoigiandanhgia == 1)
+                    thoigiandanhgiaF = 0.9948;
+                else if (thoigiandanhgia == 5)
+                    thoigiandanhgiaF = 0.9642;
+                else
+                    thoigiandanhgiaF = 0.9044;
+            }
+            else
+            {
+                tuoiF = tuoi * 0.0657;
+                HATThuF = HATThu * 0.0197;
+                THA_F = 2.5432 - HATThu * 0.0134;
+                DTD_F = 0.5442;
+                hutthuocF = 0.5294;
+                benhtimmachF = 0.4326;
+                rungnhiF = 1.1497;
+                phidaithattraiF = 0.8488;
+                if (thoigiandanhgia == 1)
+                    thoigiandanhgiaF = 0.9977;
+                else if (thoigiandanhgia == 5)
+                    thoigiandanhgiaF = 0.9741;
+                else
+                    thoigiandanhgiaF = 0.9353;
+            }
+
+            double total = tuoiF + HATThuF + THA_F + DTD_F + hutthuocF + benhtimmachF + rungnhiF + phidaithattraiF;
+            
+            FraminghamS_SCORE = (gioitinh == "nam") ? 100 * (1 - Math.Pow(thoigiandanhgiaF, Math.Exp(total - 5.677))) :
+                 (1 - Math.Pow(thoigiandanhgiaF, Math.Exp(total - 7.5766)));
+        }
+        public double kqFraminghamS()
+        {
+            return FraminghamS_SCORE;
+        }
+
+        public List<string> kqFraminghamS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, FraminghamS_SCORE);
+            return kq;
+        }
+    }
+    public class GAD7 : Thangdiem //T_C12
+    {
+        public double GAD7_SCORE { get; set; }
+
+        public GAD7()
+        {
+
+        }
+
+        public GAD7(string _input)
+        {
+            initchiso("T_C12");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqGAD7()
+        {
+            GAD7_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                GAD7_SCORE += i.diemketqua;
+            }
+
+            return GAD7_SCORE;
+        }
+
+        public List<string> kqGAD7_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, GAD7_SCORE);
+            return kq;
+        }
+    }
+    public class PHQ9 : Thangdiem //T_C13
+    {
+        public double PHQ9_SCORE { get; set; }
+
+        public PHQ9()
+        {
+
+        }
+
+        public PHQ9(string _input)
+        {
+            initchiso("T_C13");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqPHQ9()
+        {
+            PHQ9_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                PHQ9_SCORE += i.diemketqua;
+            }
+
+            return PHQ9_SCORE;
+        }
+
+        public List<string> kqPHQ9_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, PHQ9_SCORE);
+            return kq;
+        }
+    }
+    public class Caprini : Thangdiem //T_C14
+    {
+        public double Caprini_SCORE { get; set; }
+
+        public Caprini()
+        {
+
+        }
+
+        public Caprini(string _input)
+        {
+            initchiso("T_C14");
+            initTongdiem(_input);
+        }
+        public void xulybien()
+        {
+            if (DStinhdiem[2].thutunhap == 1)
+            {
+                DStinhdiem[17].thutunhap = 2;
+                DStinhdiem[18].thutunhap = 2;
+                DStinhdiem[19].thutunhap = 2;
+            }
+
+        }
+        public double kqCaprini()
+        {
+            xulybien();
+            tinhTongdiem();
+            Caprini_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Caprini_SCORE += i.diemketqua;
+            }
+
+            double sobenhphoiF = DStinhdiem[29].giatri * 1;
+            double sobenhhiemngheoF = DStinhdiem[30].giatri * 2;
+            double sodotdongmauF = DStinhdiem[31].giatri * 3;
+            double xetnghiemdongmaugdF = DStinhdiem[32].giatri * 3;
+            double sokhopthaytheF = DStinhdiem[33].giatri * 5;
+
+            Caprini_SCORE = Caprini_SCORE + sobenhphoiF + sobenhhiemngheoF + sodotdongmauF + xetnghiemdongmaugdF + sokhopthaytheF;
+
+            return Caprini_SCORE;
+        }
+
+        public List<string> kqCaprini_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Caprini_SCORE);
+            return kq;
+        }
+    }
+    public class Eckardt : Thangdiem //T_C15
+    {
+        public double Eckardt_SCORE { get; set; }
+
+        public Eckardt()
+        {
+
+        }
+
+        public Eckardt(string _input)
+        {
+            initchiso("T_C15");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqEckardt()
+        {
+            Eckardt_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Eckardt_SCORE += i.diemketqua;
+            }
+
+            return Eckardt_SCORE;
+        }
+
+        public List<string> kqEckardt_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Eckardt_SCORE);
+            return kq;
+        }
+    }
+    public class LAR : Thangdiem //T_C16
+    {
+        public double LAR_SCORE { get; set; }
+
+        public LAR()
+        {
+
+        }
+
+        public LAR(string _input)
+        {
+            initchiso("T_C16");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqLAR()
+        {
+            LAR_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                LAR_SCORE += i.diemketqua;
+            }
+
+            return LAR_SCORE;
+        }
+
+        public List<string> kqLAR_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, LAR_SCORE);
+            return kq;
+        }
+    }
+    public class MESS : Thangdiem //T_C17
+    {
+        public double MESS_SCORE { get; set; }
+
+        public MESS()
+        {
+
+        }
+
+        public MESS(string _input)
+        {
+            initchiso("T_C17");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqMESS()
+        {
+            MESS_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                MESS_SCORE += i.diemketqua;
+            }
+
+            return MESS_SCORE;
+        }
+
+        public List<string> kqMESS_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, MESS_SCORE);
+            return kq;
+        }
+    }
+    public class Braden : Thangdiem //T_C18
+    {
+        public double Braden_SCORE { get; set; }
+
+        public Braden()
+        {
+
+        }
+
+        public Braden(string _input)
+        {
+            initchiso("T_C18");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqBraden()
+        {
+            Braden_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Braden_SCORE += i.diemketqua;
+            }
+
+            return Braden_SCORE;
+        }
+
+        public List<string> kqBraden_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Braden_SCORE);
+            return kq;
+        }
+    }
+    public class VSD_Obs : Thangdiem //T_C19
+    {
+        public double VSD_Obs_SCORE { get; set; }
+
+        public VSD_Obs()
+        {
+
+        }
+
+        public VSD_Obs(string _input)
+        {
+            initchiso("T_C19");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqVSD_Obs()
+        {
+            VSD_Obs_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                VSD_Obs_SCORE += i.diemketqua;
+            }
+
+            return VSD_Obs_SCORE;
+        }
+
+        public List<string> kqVSD_Obs_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, VSD_Obs_SCORE);
+            return kq;
+        }
+    }
+    public class VSD_Ref : Thangdiem //T_C30 tach tu T_C19
+    {
+        public double VSD_Ref_SCORE { get; set; }
+
+        public VSD_Ref()
+        {
+
+        }
+
+        public VSD_Ref(string _input)
+        {
+            initchiso("T_C30");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqVSD_Ref()
+        {
+            VSD_Ref_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                VSD_Ref_SCORE += i.diemketqua;
+            }
+
+            return VSD_Ref_SCORE;
+        }
+
+        public List<string> kqVSD_Ref_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, VSD_Ref_SCORE);
+            return kq;
+        }
+    }
+    public class Villalta : Thangdiem //T_C20
+    {
+        public double Villalta_SCORE { get; set; }
+
+        public Villalta()
+        {
+
+        }
+
+        public Villalta(string _input)
+        {
+            initchiso("T_C20");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqVillalta()
+        {
+            Villalta_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                Villalta_SCORE += i.diemketqua;
+            }
+
+            return Villalta_SCORE;
+        }
+
+        public List<string> kqVillalta_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, Villalta_SCORE);
+            return kq;
+        }
+    }
+    public class RA_CDAI : Thangdiem //T_C21
+    {
+        public double RA_CDAI_SCORE { get; set; }
+
+        public RA_CDAI()
+        {
+
+        }
+
+        public RA_CDAI(string _input)
+        {
+            initchiso("T_C21");
+            initTongdiem(_input);
+        }
+        public double kqRA_CDAI()
+        {
+            RA_CDAI_SCORE = DStinhdiem[0].giatri + DStinhdiem[1].giatri +
+                DStinhdiem[58].giatri + DStinhdiem[59].giatri;
+
+            return RA_CDAI_SCORE;
+        }
+
+        public List<string> kqRA_CDAI_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, RA_CDAI_SCORE);
+            return kq;
+        }
+    }
+    public class RA_SDAI : Thangdiem //T_C22
+    {
+        public double RA_SDAI_SCORE { get; set; }
+
+        public RA_SDAI()
+        {
+
+        }
+
+        public RA_SDAI(string _input)
+        {
+            initchiso("T_C22");
+            initTongdiem(_input);
+        }
+
+        public double kqRA_SDAI()
+        {
+            RA_SDAI_SCORE =  DStinhdiem[0].giatri + DStinhdiem[1].giatri +
+                Math.Min(DStinhdiem[58].giatri, 10) +
+                DStinhdiem[59].giatri + DStinhdiem[60].giatri;
+
+            return RA_SDAI_SCORE;
+        }
+
+        public List<string> kqRA_SDAI_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, RA_SDAI_SCORE);
+            return kq;
+        }
+    }
+    public class DAS28CRP : Thangdiem //T_C23
+    {
+        public double DAS28CRP_SCORE { get; set; }
+
+        public DAS28CRP()
+        {
+
+        }
+
+        public DAS28CRP(string _input)
+        {
+            initchiso("T_C23");
+            initTongdiem(_input);
+        }
+
+        public double kqDAS28CRP()
+        {
+            DAS28CRP_SCORE = DStinhdiem[0].giatri +
+                Math.Min(DStinhdiem[57].giatri, 10) +
+                DStinhdiem[58].giatri + DStinhdiem[59].giatri;
+
+            return DAS28CRP_SCORE;
+        }
+
+        public List<string> kqDAS28CRP_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, DAS28CRP_SCORE);
+            return kq;
+        }
+    }
+    public class DAS28ESR : Thangdiem //T_C24
+    {
+        public double DAS28ESR_SCORE { get; set; }
+
+        public DAS28ESR()
+        {
+
+        }
+
+        public DAS28ESR(string _input)
+        {
+            initchiso("T_C24");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqDAS28ESR()
+        {
+            DAS28ESR_SCORE = DStinhdiem[0].giatri +
+                Math.Min(DStinhdiem[57].giatri, 10) +
+                DStinhdiem[58].giatri + DStinhdiem[59].giatri;
+
+            return DAS28ESR_SCORE;
+        }
+
+        public List<string> kqDAS28ESR_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, DAS28ESR_SCORE);
+            return kq;
+        }
+    }
+    public class ISI : Thangdiem //T_C25
+    {
+        public double ISI_SCORE { get; set; }
+
+        public ISI()
+        {
+
+        }
+
+        public ISI(string _input)
+        {
+            initchiso("T_C25");
+            initTongdiem(_input);
+            tinhTongdiem();
+        }
+
+        public double kqISI()
+        {
+            ISI_SCORE = 0;
+
+            foreach (BiendiemCSYH i in DStinhdiem)
+            {
+                ISI_SCORE += i.diemketqua;
+            }
+
+            return ISI_SCORE;
+        }
+
+        public List<string> kqISI_diengiai()
+        {
+            List<string> kq = db.GetDiengiaiKQ(IDChiso, ISI_SCORE);
+            return kq;
+        }
+    }
+    public class SCORE2_DM : Thangdiem //T_C26
     {
         public string gioitinh { get; set; }
         public double tuoi { get; set; }
@@ -4285,7 +8440,7 @@ namespace Chisoyhoc_API
             double _HDL, double _HbA1C, double _creatininSerum, string _vungnguyco)
         {
             init_SCORE2_DM();
-            gioitinh = _gioitinh;
+            gioitinh = _gioitinh.ToLower();
             tuoi = _tuoi;
             DM_age = _DM_Age;
             smoking = _smoking;
@@ -4303,7 +8458,7 @@ namespace Chisoyhoc_API
             checkTotalCholesterol(_TotalCholesterol);
             checkHDL(_HDL);
             checkHbA1C(_HbA1C);
-            checkEGFR(_gioitinh, _creatininSerum, _tuoi);
+            checkEGFR(_gioitinh.ToLower(), _creatininSerum, _tuoi);
             checkvungnguyco(_vungnguyco);
         }
         private void init_SCORE2_DM()
@@ -4422,7 +8577,7 @@ namespace Chisoyhoc_API
         private void checkEGFR(string _gioitinh, double _creatininSerum, double _tuoi)
         {
             //eGFR CKD khong can can nang & chung toc
-            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_tuoi,0,_gioitinh,_creatininSerum,"");
+            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_tuoi,0,_gioitinh.ToLower(),_creatininSerum,"");
             double kqeGFR = eGFR_CKD_temp.kqeGFR_CKD();
             if (kqeGFR < 45)
                 nhomEGFR = 0;
@@ -4452,7 +8607,7 @@ namespace Chisoyhoc_API
             //Dữ liệu ở init_SCORE2_DM();
             diem_start_index = 31 * nhomtuoi;
             int kq;
-            if (gioitinh == "Nam")
+            if (gioitinh == "nam")
             {
                 kq = diemNam[diem_start_index + nhomDM_Age] +
                     diemNam[diem_start_index + 8 + nhomSmoking] +
@@ -4479,7 +8634,7 @@ namespace Chisoyhoc_API
             int diem = kqSCORE2_DM();
             int kq;
 
-            if (gioitinh == "Nam")
+            if (gioitinh == "nam")
             {
                 nguyco_start_index = 49 * nhomvungnguyco;
                 kq = nguycoNam[nguyco_start_index + diem + 15];
@@ -4496,7 +8651,7 @@ namespace Chisoyhoc_API
             int diem = kqSCORE2_DM();
             string kq;
 
-            if (gioitinh == "Nam")
+            if (gioitinh == "nam")
             {
                 nguyco_start_index = 49 * nhomvungnguyco;
                 kq = PLnguycoNam[nguyco_start_index + diem + 15];
@@ -4559,8 +8714,8 @@ namespace Chisoyhoc_API
             double _HDL, string _vungnguyco)
         {
             init_SCORE2();
-            gioitinh = _gioitinh;
-            checkgioitinh(_gioitinh);
+            gioitinh = _gioitinh.ToLower();
+            checkgioitinh(_gioitinh.ToLower());
             tuoi = _tuoi;
             checktuoi(_tuoi);
             smoking = _smoking;
@@ -4583,7 +8738,7 @@ namespace Chisoyhoc_API
         }
         private void checkgioitinh(string _gioitinh)
         {
-            if (_gioitinh == "Nam")
+            if (_gioitinh.ToLower() == "nam")
                 nhomgioitinh = 1;
             else
                 nhomgioitinh = 0;
@@ -4680,5 +8835,6 @@ namespace Chisoyhoc_API
             return kq;
         }
     }
+    #endregion
     #endregion
 }
