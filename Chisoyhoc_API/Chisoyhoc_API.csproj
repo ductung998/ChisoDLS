@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -140,14 +141,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CSDL_PMChisoyhoc.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CSDL_PMChisoyhoc.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,11 +163,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Models\CSDL_PMChisoyhoc.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>CSDL_PMChisoyhoc.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -209,9 +197,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\CSDL_PMChisoyhoc.dbml.layout">
-      <DependentUpon>CSDL_PMChisoyhoc.dbml</DependentUpon>
-    </None>
+    <ProjectReference Include="..\ClassLibrary1\ClassChung.csproj">
+      <Project>{7c93a164-074a-4379-bbdd-55a839b2cf97}</Project>
+      <Name>ClassChung</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

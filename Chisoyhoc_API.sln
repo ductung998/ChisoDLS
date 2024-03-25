@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chisoyhoc_API", "Chisoyhoc_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chisoyhoc_Form", "Chisoyhoc_Form\Chisoyhoc_Form.csproj", "{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chisoyhoc_MVC", "Chisoyhoc_MVC\Chisoyhoc_MVC.csproj", "{0BBC3D99-2066-4C72-B488-2E706CBD714F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassChung", "ClassLibrary1\ClassChung.csproj", "{7C93A164-074A-4379-BBDD-55A839B2CF97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C37A6E3F-D1B4-42C1-9828-2D06FCD48048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBC3D99-2066-4C72-B488-2E706CBD714F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBC3D99-2066-4C72-B488-2E706CBD714F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBC3D99-2066-4C72-B488-2E706CBD714F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBC3D99-2066-4C72-B488-2E706CBD714F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C93A164-074A-4379-BBDD-55A839B2CF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C93A164-074A-4379-BBDD-55A839B2CF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C93A164-074A-4379-BBDD-55A839B2CF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C93A164-074A-4379-BBDD-55A839B2CF97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
