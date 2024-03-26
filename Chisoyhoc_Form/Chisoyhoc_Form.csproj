@@ -74,6 +74,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnitOf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnitOf.1.0.0\lib\UnitOf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GiaodienMau\FormAPACHEII.cs">
@@ -259,6 +263,7 @@
       <DependentUpon>TestChiso91_100.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Chisoyhoc_Form_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

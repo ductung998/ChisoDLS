@@ -403,12 +403,7 @@ namespace ClassChung
                                 eGFR_CKD eGFR_CKDCal = new eGFR_CKD(double.Parse(inputs[0]),
                                     inputs[1],
                                     double.Parse(inputs[2]));
-                                eGFR_MDRD eGFR_MDRDCal = new eGFR_MDRD(double.Parse(inputs[0]),
-                                    inputs[1],
-                                    double.Parse(inputs[2]),
-                                    inputs[3]);
                                 kq.Add(Math.Round(eGFR_CKDCal.kqeGFR_CKD(), 2).ToString());
-                                kq.Add(Math.Round(eGFR_MDRDCal.kqeGFR_MDRD(), 2).ToString());
                                 break;
                             }
                         case "C_A16": //4
@@ -540,6 +535,15 @@ namespace ClassChung
                                     KetnoiDB.str_to_bool(inputs[15]),
                                     KetnoiDB.str_to_bool(inputs[16]));
                                 kq.Add(Math.Round(MPM0Cal.kqMPM0(), 2).ToString());
+                                break;
+                            }
+                        case "C_A29"://5 MDRD
+                            {
+                                eGFR_MDRD eGFR_MDRDCal = new eGFR_MDRD(double.Parse(inputs[0]),
+                                    inputs[1],
+                                    double.Parse(inputs[2]),
+                                    inputs[3]);
+                                kq.Add(Math.Round(eGFR_MDRDCal.kqeGFR_MDRD(), 2).ToString());
                                 break;
                             }
                     }
@@ -1316,15 +1320,6 @@ namespace ClassChung
                                 kq.AddRange(GlasgowNhiB2Cal.kqGlasgowNhiB2_diengiai());
                                 break;
                             }
-
-                        case "T_B32": //GlasgowNhiO2 3 var: 4,5,6
-                            {
-                                GlasgowNhiO2 GlasgowNhiO2Cal = new GlasgowNhiO2(input);
-                                kq.Add(GlasgowNhiO2Cal.kqGlasgowNhiO2().ToString());
-                                kq.AddRange(GlasgowNhiO2Cal.kqGlasgowNhiO2_diengiai());
-                                break;
-                            }
-
                         case "T_B30": //STOP-BangS 8 var: 2,2,2,2,2,2,2,2
                             {
                                 STOPBangS STOPBangSCal = new STOPBangS(input);
@@ -1339,6 +1334,13 @@ namespace ClassChung
                                 IPSSRLoansantuy IPSSRLoansantuyCal = new IPSSRLoansantuy(input);
                                 kq.Add(IPSSRLoansantuyCal.kqIPSSRLoansantuy().ToString());
                                 kq.AddRange(IPSSRLoansantuyCal.kqIPSSRLoansantuy_diengiai());
+                                break;
+                            }
+                        case "T_B32": //GlasgowNhiO2 3 var: 4,5,6
+                            {
+                                GlasgowNhiO2 GlasgowNhiO2Cal = new GlasgowNhiO2(input);
+                                kq.Add(GlasgowNhiO2Cal.kqGlasgowNhiO2().ToString());
+                                kq.AddRange(GlasgowNhiO2Cal.kqGlasgowNhiO2_diengiai());
                                 break;
                             }
                     }
@@ -8028,6 +8030,7 @@ namespace ClassChung
         }
         public double kqFraminghamS()
         {
+            xulybien();
             return FraminghamS_SCORE;
         }
 

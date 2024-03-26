@@ -9,6 +9,8 @@ namespace Chisoyhoc_MVC.Controllers
 {
     public class TestController : Controller
     {
+        double unit = new UnitOf.Length().FromMeters(1).ToMillimeters();        
+        
         //
         // GET: /Test/
         public ActionResult Index()
