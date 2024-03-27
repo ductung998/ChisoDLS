@@ -298,7 +298,7 @@ namespace ClassChung
                                 LBW LBWCal = new LBW(inputs[0],
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
-                                kq.Add(Math.Round(LBWCal.KqLBW(), 2).ToString());
+                                kq.Add(Math.Round(LBWCal.kqLBW(), 2).ToString());
                                 break;
                             }
                         case "C_A04": //3 AlcoholSerum
@@ -400,8 +400,8 @@ namespace ClassChung
                             }
                         case "C_A15"://5 CKD 5 MDRD
                             {
-                                eGFR_CKD eGFR_CKDCal = new eGFR_CKD(double.Parse(inputs[0]),
-                                    inputs[1],
+                                eGFR_CKD eGFR_CKDCal = new eGFR_CKD(inputs[0],
+                                    double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(eGFR_CKDCal.kqeGFR_CKD(), 2).ToString());
                                 break;
@@ -539,8 +539,8 @@ namespace ClassChung
                             }
                         case "C_A29"://5 MDRD
                             {
-                                eGFR_MDRD eGFR_MDRDCal = new eGFR_MDRD(double.Parse(inputs[0]),
-                                    inputs[1],
+                                eGFR_MDRD eGFR_MDRDCal = new eGFR_MDRD(inputs[0],
+                                    double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
                                     inputs[3]);
                                 kq.Add(Math.Round(eGFR_MDRDCal.kqeGFR_MDRD(), 2).ToString());
@@ -602,7 +602,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     int.Parse(inputs[4]));
                                 kq.Add(Math.Round(MIPICal.kqMIPI(), 2).ToString());
-                                kq.Add(MIPICal.kqMIPI_danhgia());
+                                kq.Add(MIPICal.kqMIPI_diengiai());
                                 break;
                             }
                         case "C_B07": //2
@@ -610,6 +610,7 @@ namespace ClassChung
                                 RPI RPICal = new RPI(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(RPICal.kqRPI(), 2).ToString());
+                                kq.Add(RPICal.kqRPI_diengiai());
                                 break;
                             }
                         case "C_B08": //2
@@ -634,7 +635,7 @@ namespace ClassChung
                                 CDC_chieucao CDC_chieucaoCal = new CDC_chieucao(inputs[0],
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
-                                kq.Add(CDC_chieucaoCal.kqCDC_chieucao_danhgia());
+                                kq.Add(CDC_chieucaoCal.kqCDC_chieucao_diengiai());
                                 kq.Add(Math.Round(CDC_chieucaoCal.kqCDC_chieucao_zscore(), 2).ToString());
                                 break;
                             }
@@ -643,7 +644,7 @@ namespace ClassChung
                                 CDC_cannang CDC_cannangCal = new CDC_cannang(inputs[0],
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
-                                kq.Add(CDC_cannangCal.kqCDC_cannang_danhgia());
+                                kq.Add(CDC_cannangCal.kqCDC_cannang_diengiai());
                                 kq.Add(Math.Round(CDC_cannangCal.kqCDC_cannang_zscore(), 2).ToString());
                                 break;
                             }
@@ -652,7 +653,7 @@ namespace ClassChung
                                 CDC_chuvi CDC_chuviCal = new CDC_chuvi(inputs[0],
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
-                                kq.Add(CDC_chuviCal.kqCDC_chuvi_danhgia());
+                                kq.Add(CDC_chuviCal.kqCDC_chuvi_diengiai());
                                 kq.Add(Math.Round(CDC_chuviCal.kqCDC_chuvi_zscore(), 2).ToString());
                                 break;
                             }
@@ -683,7 +684,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
-                                kq.Add(WHO_suyDDCal.kqWHO_suyDD());
+                                kq.Add(WHO_suyDDCal.kqWHO_suyDD_diengiai());
                                 kq.Add(Math.Round(WHO_suyDDCal.kqWHO_chieucao_zscore(), 2).ToString());
                                 kq.Add(Math.Round(WHO_suyDDCal.kqWHO_cannang_zscore(), 2).ToString());
                                 break;
@@ -704,13 +705,13 @@ namespace ClassChung
                                     double.Parse(inputs[4]),
                                     double.Parse(inputs[5]));
                                 kq.Add(Math.Round(OxyIndexCal.kqOxyIndex(), 2).ToString());
-                                kq.Add(OxyIndexCal.kqOxyIndex_danhgia());
+                                kq.Add(OxyIndexCal.kqOxyIndex_diengiai());
                                 break;
                             }
                         case "C_B18": //4
                             {
                                 EED EEDCal = new EED(DateTime.Parse(inputs[0]),
-                                    DateTime.Parse(inputs[1]),
+                                    numbertodatetime(inputs[1]),
                                     int.Parse(inputs[2]),
                                     KetnoiDB.str_to_bool(inputs[3]));
                                 kq.Add(EEDCal.kqEED().ToString());
@@ -732,7 +733,7 @@ namespace ClassChung
                                 CDC_BMI CDC_BMICal = new CDC_BMI(inputs[0],
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
-                                kq.Add(CDC_BMICal.kqCDC_BMI());
+                                kq.Add(CDC_BMICal.kqCDC_BMI_diengiai());
                                 break;
                             }
                         case "C_B21": //2
@@ -748,7 +749,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     inputs[2]);
                                 kq.Add(Math.Round(PEFCal.kqPEF(), 2).ToString());
-                                kq.Add(PEFCal.kqPEF_danhgia());
+                                kq.Add(PEFCal.kqPEF_diengiai());
                                 break;
                             }
                         case "C_B23": //10
@@ -760,8 +761,8 @@ namespace ClassChung
                                     double.Parse(inputs[4]),
                                     double.Parse(inputs[5]),
                                     double.Parse(inputs[6]),
-                                    DateTime.Parse(inputs[7]),
-                                    DateTime.Parse(inputs[8]),
+                                    numbertodatetime(inputs[7]),
+                                    numbertodatetime(inputs[8]),
                                     KetnoiDB.str_to_bool(inputs[9]));
                                 kq.Add(Math.Round(PELD_NewCal.kqPELD_New(), 2).ToString());
                                 break;
@@ -1575,7 +1576,7 @@ namespace ClassChung
                                     inputs[7]);
 
                                 kq.Add(SCORE2Cal.kqSCORE2().ToString());
-                                kq.Add(SCORE2Cal.kqPLNguycoSCORE2());
+                                kq.Add(SCORE2Cal.kqSCORE2_diengiai());
                                 break;
                             }
                         case "T_C27": //SCORE2_DM 10 var
@@ -2413,6 +2414,10 @@ namespace ClassChung
             }
             return ibwkq;
         }
+        public string kqIBW_diengiai()
+        {
+            return "";
+        }
     }
     public class AdjBW : Congthuc
     {
@@ -2444,6 +2449,10 @@ namespace ClassChung
             kqAdjBW = IBW + 0.4 * (cannang - IBW);
             return kqAdjBW;
         }
+        public string kqAdjBW_diengiai()
+        {
+            return "";
+        }
     }
     public class LBW : Congthuc
     {
@@ -2470,13 +2479,17 @@ namespace ClassChung
             //init("C_A03");
         }
 
-        public double KqLBW()
+        public double kqLBW()
         {
             double lbw = (gioitinh == "nam")
                 ? (0.32810 * cannang) + (0.33929 * chieucao) - 29.5336
                 : (0.29569 * cannang) + (0.41813 * chieucao) - 43.2933;
 
             return lbw;
+        }
+        public string kqLBW_diengiai()
+        {
+            return "";
         }
     }
     public class AlcoholSerum : Congthuc
@@ -2505,6 +2518,10 @@ namespace ClassChung
             double kq = ((AlcoholVolume * AlcoholConcentration) * 0.8) / (cannang * 0.6);
             return kq;
         }
+        public string kqAlcoholSerum_diengiai()
+        {
+            return "";
+        }
     }
     public class Budichbong : Congthuc
     {
@@ -2531,19 +2548,21 @@ namespace ClassChung
             double kq = 4 * cannang * Tylebong;
             return kq;
         }
-
         public double kqtocdotruyen8h()
         {
             double Vdich24h = kqVdich24h();
             double kq = Vdich24h / 16;
             return kq;
         }
-
         public double kqtocdotruyen16h()
         {
             double Vdich24h = kqVdich24h();
             double kq = Vdich24h / 32;
             return kq;
+        }
+        public string kqVdich24h_diengiai()
+        {
+            return "";
         }
     }
     public class BMI : Congthuc
@@ -2573,6 +2592,18 @@ namespace ClassChung
         {
             double kqBMI = cannang / (chieucao * chieucao / 10000);
             return kqBMI;
+        }
+        public string kqBMI_diengiai()
+        {
+            double BMI = kqBMI();
+            if (BMI < 18.5)
+                return "BMI < 18,5: Thiếu cân";
+            else if (BMI < 25)
+                return "BMI trong khoảng 18,5 - 25: Cân nặng bình thường";
+            else if (BMI < 30)
+                return "BMI trong khoảng 25 - 30: Thừa cân";
+            else
+                return "BMI > 30: Béo phì";
         }
     }
     public class AaG : Congthuc
@@ -2625,6 +2656,10 @@ namespace ClassChung
             double AaGnormal = 2.5 + (0.21 * tuoi);
             return AaGnormal;
         }
+        public string kqAaG_diengiai()
+        {
+            return "";
+        }
     }
     public class CalciSerum_Adj : Congthuc
     {
@@ -2655,6 +2690,14 @@ namespace ClassChung
         public double kqCalciSerum_Adj()
         {
             return 0.8 * (albuminSerumNorm - albuminSerum) + calciSerum;
+        }
+        public string kqCalciSerum_Adj_diengiai()
+        {
+            double ketqua = kqCalciSerum_Adj();
+            if (ketqua > 4 && ketqua < 4.4)
+                return "Nồng độ calci nằm trong khoảng bình thường (4 - 4,4g/dL)";
+            else
+                return "Nồng độ calci nằm ngoài khoảng bình thường (4 - 4,4g/dL)";
         }
     }
     public class BSA : Congthuc
@@ -2688,8 +2731,12 @@ namespace ClassChung
         {
             return 0.007184 * Math.Pow(chieucao, 0.725) * Math.Pow(cannang, 0.425);
         }
+        public string kqBSA_diengiai()
+        {
+            return "";
+        }
     }
-    public class SAG : Congthuc
+    public class SAG : Congthuc //C_A10
     {
         public double NatriSerum { get; set; }
         public double KaliSerum { get; set; }
@@ -2723,8 +2770,12 @@ namespace ClassChung
             double kq = NatriSerum + KaliSerum - CloSerum - HCO3Serum;
             return kq;
         }
+        public string kqSAG_diengiai()
+        {
+            return "";
+        }
     }
-    public class SOG : Congthuc
+    public class SOG : Congthuc //C_A11
     {
         public double NatriSerum { get; set; }
         public double BUN { get; set; }
@@ -2753,11 +2804,15 @@ namespace ClassChung
 
         public double kqSOG()
         {
-            double kq = OsmSerum - (2 * NatriSerum + BUN + GlucoseSerum);
+            double kq = OsmSerum - (2 * NatriSerum + BUN / 2.5 + GlucoseSerum / 18);
             return kq;
         }
+        public string kqSOG_diengiai()
+        {
+            return "";
+        }
     }
-    public class StOG : Congthuc
+    public class StOG : Congthuc //C_A12
     {
         public double OsmStool { get; set; }
         public double NatriStool { get; set; }
@@ -2780,6 +2835,14 @@ namespace ClassChung
         {
             double kq = OsmStool - 2 * (NatriStool + KaliStool);
             return kq;
+        }
+        public string kqStOG_diengiai()
+        {
+            double ketqua = kqStOG();
+            if (ketqua > 50 && ketqua < 100)
+                return "Khoảng trống Osmol phânnằm trong khoảng bình thường (50 - 100 mOsm/kg)";
+            else
+                return "Khoảng trống Osmol phânnằm ngoài khoảng bình thường (50 - 100 mOsm/kg)";
         }
     }
     public class UAG : Congthuc
@@ -2805,11 +2868,14 @@ namespace ClassChung
             CloUrine = _CloUrine;
             //init("C_A13");
         }
-
         public double kqUAG()
         {
             double kq = NatriUrine + KaliUrine - CloUrine;
             return kq;
+        }
+        public string kqUAG_diengiai()
+        {
+            return "";
         }
     }
     public class UOG : Congthuc
@@ -2844,8 +2910,13 @@ namespace ClassChung
 
         public double kqUOG()
         {
-            double kq = OsmUrine - (2 * NatriUrine + 2 * KaliUrine + UreUrine + GlucoseUrine);
+            double kq = OsmUrine - (2 * NatriUrine + 2 * KaliUrine + UreUrine / 2.8 + GlucoseUrine / 18);
             return kq;
+        }
+        public string kqUOG_diengiai()
+        {
+            return "";
+
         }
     }
     public class eGFR_CKD : Congthuc
@@ -2871,7 +2942,7 @@ namespace ClassChung
             //init("C_A15");
         }
 
-        public eGFR_CKD(double _tuoi, string _gioitinh, double _CreatininSerum)
+        public eGFR_CKD(string _gioitinh, double _tuoi, double _CreatininSerum)
         {
             gioitinh = _gioitinh.ToLower();
             CreatininSerum = _CreatininSerum;
@@ -2879,7 +2950,6 @@ namespace ClassChung
             SetCoefficients();
             //init("C_A15");
         }
-
         private void SetCoefficients()
         {
             hesogioitinh_CKD = (gioitinh == "nam") ? 1.0 : 1.012;
@@ -2895,13 +2965,28 @@ namespace ClassChung
             eGFR = 142 * Math.Pow(minTerm, alpha_CKD) * Math.Pow(maxTerm, -1.2) * Math.Pow(0.9938, tuoi) * hesogioitinh_CKD;
             return eGFR;
         }
+        public string kqeGFR_CKD_diengiai()
+        {
+            if (eGFR >= 90)
+                return "Giai đoạn 1: eGFR bình thường hoặc cao (eGFR > 90 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 60)
+                return "Giai đoạn 2: Bệnh thận mạn nhẹ (eGFR = 60-89 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 450)
+                return "Giai đoạn 3A: Bệnh thận mạn trung bình (eGFR = 45-59 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 30)
+                return "Giai đoạn 3B: Bệnh thận mạn trung bình (eGFR = 30-44 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 15)
+                return "Giai đoạn 4: Bệnh thận mạn nặng (eGFR = 15-29 mL/phút)(KDIGO 2012)";
+            else
+                return "Giai đoạn 5: Bệnh thận mạn giai đoạn cuối (GFR <15 mL/phút) (KDIGO 2012)";
+        }
     }
-    public class eGFR_MDRD : Congthuc
+    public class eGFR_MDRD : Congthuc //C_A29
     {
-        public double CreatininSerum { get; set; }
-        public double tuoi { get; set; }
-        public string chungtoc { get; set; }
         public string gioitinh { get; set; }
+        public double tuoi { get; set; }
+        public double CreatininSerum { get; set; }
+        public string chungtoc { get; set; }
         public double eGFR { get; set; }
 
         public eGFR_MDRD()
@@ -2917,7 +3002,7 @@ namespace ClassChung
             //init("C_A15");
         }
 
-        public eGFR_MDRD(double _tuoi, string _gioitinh, double _CreatininSerum, string _chungtoc)
+        public eGFR_MDRD(string _gioitinh, double _tuoi, double _CreatininSerum, string _chungtoc)
         {
             CreatininSerum = _CreatininSerum;
             tuoi = _tuoi;
@@ -2925,7 +3010,6 @@ namespace ClassChung
             gioitinh = _gioitinh.ToLower();
             //init("C_A15");
         }
-
         public double kqeGFR_MDRD()
         {
             double chungtocCoefficient = (chungtoc == "người da đen") ? 1.212 : 1.0;
@@ -2933,6 +3017,21 @@ namespace ClassChung
 
             eGFR = 175 * Math.Pow(CreatininSerum, -1.154) * Math.Pow(tuoi, -0.203) * chungtocCoefficient * gioitinhCoefficient;
             return eGFR;
+        }
+        public string kqeGFR_MDRD_diengiai()
+        {
+            if (eGFR >= 90)
+                return "Giai đoạn 1: eGFR bình thường hoặc cao (eGFR > 90 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 60)
+                return "Giai đoạn 2: Bệnh thận mạn nhẹ (eGFR = 60-89 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 45)
+                return "Giai đoạn 3A: Bệnh thận mạn trung bình (eGFR = 45-59 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 30)
+                return "Giai đoạn 3B: Bệnh thận mạn trung bình (eGFR = 30-44 mL/phút) (KDIGO 2012)";
+            else if (eGFR >= 15)
+                return "Giai đoạn 4: Bệnh thận mạn nặng (eGFR = 15-29 mL/phút)(KDIGO 2012)";
+            else
+                return "Giai đoạn 5: Bệnh thận mạn giai đoạn cuối (GFR <15 mL/phút) (KDIGO 2012)";
         }
     }
     public class eCrCl : Congthuc
@@ -2970,6 +3069,10 @@ namespace ClassChung
             double kq = (140 - tuoi) * cannang / (72 * CreatininSerum) * gioitinhCoefficient;
             return kq;
         }
+        public string kqeCrCl_diengiai()
+        {
+            return "";
+        }
     }
     public class FEMg : Congthuc
     {
@@ -2996,11 +3099,14 @@ namespace ClassChung
             CreatininUrine = _CreatininUrine;
             //init("C_A17");
         }
-
         public double kqFEMg()
         {
             double kq = (MagieUrine * CreatininSerum) / (MagieSerum * CreatininUrine);
             return kq;
+        }
+        public string kqFEMg_diengiai()
+        {
+            return "";
         }
     }
     public class FENa : Congthuc
@@ -3030,11 +3136,14 @@ namespace ClassChung
             CreatininUrine = _CreatininUrine;
             //init("C_A18");
         }
-
         public double kqFENa()
         {
             double kq = (NatriUrine * CreatininSerum) / (NatriSerum * CreatininUrine);
             return kq;
+        }
+        public string kqFENa_diengiai()
+        {
+            return "";
         }
     }
     public class KtVDaugirdas : Congthuc
@@ -3066,6 +3175,10 @@ namespace ClassChung
                 ((4 - (3.5 * BUNsauloc / BUNtruocloc)) * Vlocmau / cannangsaulocmau);
             return kq;
         }
+        public string kqKtVDaugirdas_diengiai()
+        {
+            return "";
+        }
     }
     public class RRF_Kru : Congthuc
     {
@@ -3096,6 +3209,10 @@ namespace ClassChung
             RRF_KruResult = VUrineRRF * UreUrine / IntervalRRF / ((BUN1RRF + BUN2RRF) / 2);
             return RRF_KruResult;
         }
+        public string kqRRF_Kru_diengiai()
+        {
+            return "";
+        }
     }
     public class ACR : Congthuc
     {
@@ -3123,6 +3240,16 @@ namespace ClassChung
             double kq = AlbuminUrine / CreatininUrine;
             return kq;
         }
+        public string kqACR_diengiai()
+        {
+            double ketqua = kqACR();
+            if (ketqua < 30)
+                return "Tỷ lệ albumin/creatinine trong nước tiểu bình thường: <30 mg/g";
+            else if (ketqua <300)
+                return "Tăng albumin niệu trung bình hay microalbumin niệu: từ 30 - 300 mg/g";
+            else
+                return "Tăng albumin niệu nghiêm trọng hay macroalbumin niệu: >300 mg/g";
+        }
     }
     public class PCR : Congthuc
     {
@@ -3144,11 +3271,20 @@ namespace ClassChung
             CreatininUrine = _CreatininUrine;
             //init("C_A22");
         }
-
         public double kqPCR()
         {
             double kq = ProteinUrine / CreatininUrine;
             return kq;
+        }
+        public string kqPCR_diengiai()
+        {
+            double ketqua = kqPCR();
+            if (ketqua < 0.2)
+                return "PCR trong nước tiểu bình thường: < 0,2 mg/mg";
+            else if (ketqua < 3.5)
+                return "PCR trong nước tiểu bất thường: 0,2 - 3,5 mg/mg";
+            else
+                return "Biểu hiện thận hư: > 3,5 mg/mg";
         }
     }
     public class eAER : Congthuc
@@ -3159,7 +3295,6 @@ namespace ClassChung
         public string chungtoc { get; set; }
         public double tuoi { get; set; }
         public double eAERResult { get; set; }
-
         public eAER()
         {
             //init("C_A23");
@@ -3214,8 +3349,18 @@ namespace ClassChung
             eAERResult = AlbuminUrine / CreatininUrine * baseValue;
             return eAERResult;
         }
+        public string kqeAER_diengiai()
+        {
+
+            if (eAERResult < 30)
+                return "Albumin niệu ở mức bình thường: < 30 mg/ngày";
+            else if (eAERResult < 300)
+                return "Tăng albumin niệu nhẹ: 30 - 300 mg/ngày";
+            else
+                return "Tăng albumin niệu nghiêm trọng: > 300mg/ngày";
+        }
     }
-    public class ePER : Congthuc
+    public class ePER : Congthuc //C_A24
     {
         public string gioitinh { get; set; }
         public double tuoi { get; set; }
@@ -3244,7 +3389,6 @@ namespace ClassChung
             proteinUrine = _proteinUrine;
             //init("C_A24");
         }
-
         public double kqePER()
         {
             double ePER = proteinUrine / creatininUrine * ((gioitinh == "nam") ?
@@ -3255,6 +3399,16 @@ namespace ClassChung
                          1148.6 + (15.6 * tuoi) - (0.3 * tuoi * tuoi) :
                          1051.3 + (5.3 * tuoi) - (0.1 * tuoi * tuoi)));
             return ePER;
+        }
+        public string keqPER_diengiai()
+        {
+            double ePER = kqePER();
+            if (ePER < 150)
+                return "ePER < 150 mg/ngày: Bình thường";
+            else if (ePER < 3500)
+                return "ePER từ 150 - 3.500mg/ngày: Tăng protein niệu";
+            else
+                return "ePER > 3.500 mg/ngày:Thận hư & tăng protein niệu";
         }
     }
     public class TocDoTruyen : Congthuc
@@ -3268,7 +3422,6 @@ namespace ClassChung
             //init("C_A25");
 
         }
-
         public TocDoTruyen(double _VdichTruyen, double _HesoGiot, double _ThoiGianTruyen)
         {
             VdichTruyen = _VdichTruyen;
@@ -3276,11 +3429,14 @@ namespace ClassChung
             ThoiGianTruyen = _ThoiGianTruyen;
             //init("C_A25");
         }
-
         public double kqTocDoTruyen()
         {
             double kq = VdichTruyen * HesoGiot / ThoiGianTruyen;
             return kq;
+        }
+        public string kqTocDoTruyen_diengiai()
+        {
+            return "";
         }
     }
     public class CrCl24h : Congthuc
@@ -3307,11 +3463,14 @@ namespace ClassChung
             CreatininSerum = _CreatininSerum;
             //init("C_A26");
         }
-
         public double kqCrCl24h()
         {
             double kq = CreatininUrine * VUrine24h / CreatininSerum / 1440;
             return kq;
+        }
+        public string kqCrCl24h_diengiai()
+        {
+            return "";
         }
     }
     public class eGFR_Schwartz : Congthuc
@@ -3328,7 +3487,6 @@ namespace ClassChung
         public eGFR_Schwartz()
         {
             //init("C_A27");
-
         }
         public eGFR_Schwartz(Nguoibenh NB, Xetnghiem XN)
         {
@@ -3352,7 +3510,6 @@ namespace ClassChung
             benhthanman = _benhthanman;
             //init("C_A27");
         }
-
         public double kqeGFR_Schwartz()
         {
             double factor;
@@ -3376,6 +3533,10 @@ namespace ClassChung
 
             eGFR_SchwartzResult = factor * chieucao / CreatininSerum;
             return eGFR_SchwartzResult;
+        }
+        public string kqeGFR_Schwartz_diengiai()
+        {
+            return "";
         }
     }
     public class MPM0 : Congthuc
@@ -3415,7 +3576,6 @@ namespace ClassChung
         public double yeucauphauthuatF { get; set; }
         public double capcuutimphoiF { get; set; }
         public double fullcodeF { get; set; }
-
         public MPM0()
         {
             //init("C_A28");
@@ -3496,6 +3656,10 @@ namespace ClassChung
 
             return mortality_MPM0;
         }
+        public string kqMPM0_diengiai()
+        {
+            return "";
+        }
     }
     public class DLCO_Adj : Congthuc
     {
@@ -3519,11 +3683,14 @@ namespace ClassChung
             gioitinh = _gioitinh.ToLower();
             //init("C_B01");
         }
-
         public double kqDLCO_Adj()
         {
             double DLCO_Adj = DLCOPredicted * 0.3348 * (1.7 * Hb / ((gioitinh == "nam" && tuoi > 15) ? 10.22 : 9.38));
             return DLCO_Adj;
+        }
+        public string kqDLCO_Adj_diengiai()
+        {
+            return "";
         }
     }
     public class MAP : Congthuc
@@ -3547,6 +3714,10 @@ namespace ClassChung
         {
             double MAP = (1.0 / 3) * SBP + (2.0 / 3) * DBP;
             return MAP;
+        }
+        public string kqMAP_diengiai()
+        {
+            return "";
         }
     }
     public class PostFEV1 : Congthuc
@@ -3587,6 +3758,10 @@ namespace ClassChung
                 return PostFEV1_GP();
             else
                 return PostFEV1_Dich();
+        }
+        public string kqPostFEV1_diengiai()
+        {
+            return "";
         }
     }
     public class PEF : Congthuc
@@ -3637,17 +3812,15 @@ namespace ClassChung
                 return 0.0;
             }
         }
-        public string kqPEF_danhgia()
+        public string kqPEF_diengiai()
         {
-            string kq = "";
             double PEF_kq = kqPEF();
             if (PEF_kq > 0.8)
-                kq = "Chức năng phổi tốt";
+                return "Chức năng phổi tốt";
             else if (PEF_kq > 0.5)
-                kq = "Chức năng phổi suy giảm";
+                return "Chức năng phổi suy giảm";
             else
-                kq = "Chức năng phổi suy giảm nhiều";
-            return kq;
+                return "Chức năng phổi suy giảm nhiều";
         }
     }
     public class AEC : Congthuc
@@ -3673,11 +3846,22 @@ namespace ClassChung
             WBC_Eos_tyle = _WBC_Eos_tyle;
             //init("C_B04");
         }
-
         public double kqAEC()
         {
             double AEC = WBC * WBC_Eos_tyle;
             return AEC;
+        }
+        public string kqAEC_diengiai()
+        {
+            double ketqua = kqAEC();
+            if (ketqua < 40)
+                return "Giảm bạch cầu ái toan (<40 tế bào/microL)";
+            else if (ketqua < 450)
+                return "Bạch cầu ái toan ở mức bình thường (40-450 tế bào/microL)";
+            else if (ketqua < 1500)
+                return "Tăng nhẹ bạch cầu ái toan (450 - 1.500 tế bào/microL)";
+            else
+                return "Tăng bạch cầu ái toan (>1.500 tế bào/microL)";
         }
     }
     public class ANC : Congthuc
@@ -3700,11 +3884,24 @@ namespace ClassChung
             WBC_Neu_tyle = _WBC_Neu_tyle;
             //init("C_B05");
         }
-
         public double kqANC()
         {
             double ANC = WBC * WBC_Neu_tyle;
             return ANC;
+        }
+        public string kqANC_diengiai()
+        {
+            double ketqua = kqANC();
+            if (ketqua < 500)
+                return "Giảm bạch cầu trung tính nặng (<500 tế bào/microL)";
+            else if (ketqua < 1000)
+                return "Giảm bạch cầu trung tính trung bình (500 - 1.000 tế bào/microL)";
+            else if (ketqua < 1500)
+                return "Giảm bạch cầu trung tính nhẹ (1.000 - 1.500 tế bào/microL)";
+            else if (ketqua < 8000)
+                return "Bạch cầu trung tính trong khoảng bình thường (1.500 - 8.000 tế bào/microL)";
+            else
+                return "Tăng bạch cầu trung tính (>8.000 tế bào/microL)";
         }
     }
     public class MIPI : Congthuc
@@ -3742,7 +3939,7 @@ namespace ClassChung
 
             return (0.03535 * tuoi) + (ECOG > 1 ? 0.6978 : 0) + (1.367 * LDHLog + 0.9393 * WBCLog);
         }
-        public string kqMIPI_danhgia()
+        public string kqMIPI_diengiai()
         {
             double mipiScore = kqMIPI();
 
@@ -3760,7 +3957,7 @@ namespace ClassChung
             }
         }
     }
-    public class RPI : Congthuc
+    public class RPI : Congthuc //C_B07
     {
         public double Hct { get; set; }
         public double Rec { get; set; }
@@ -3784,7 +3981,7 @@ namespace ClassChung
             return (Hct / 45) * Rec / (Hct >= 0.4 ? 1 : (Hct >= 0.3 ? 1.5 : (Hct >= 0.2 ? 2 : 2.5)));
         }
 
-        public string kqRPI_danhgia()
+        public string kqRPI_diengiai()
         {
             double rpi = kqRPI();
 
@@ -3822,6 +4019,10 @@ namespace ClassChung
         {
             return sTfRdoduoc / Math.Log10(Ferritin);
         }
+        public string kqsTfR_diengiai()
+        {
+            return "";
+        }
     }
     public class BMR : Congthuc
     {
@@ -3857,7 +4058,6 @@ namespace ClassChung
                 ? (66 + (13.7 * cannang) + (5 * chieucao) - (6.8 * tuoi))
                 : (655 + (9.6 * cannang) + (1.8 * chieucao) - (4.7 * tuoi));
         }
-
         public double kqBMR_Scho()
         {
             if (gioitinh == "nam")
@@ -3872,6 +4072,10 @@ namespace ClassChung
                     ? ((20.315 * cannang) + 485.9)
                     : ((13.384 * cannang) + 692.6);
             }
+        }
+        public string kqBMR_diengiai()
+        {
+            return "";
         }
     }
     public class CDC_chieucao : Congthuc
@@ -3937,7 +4141,7 @@ namespace ClassChung
                 return 3;
             }
         }
-        public string kqCDC_chieucao_danhgia()
+        public string kqCDC_chieucao_diengiai()
         {
             if (kqCDC_chieucao() == 1)
             {
@@ -4039,7 +4243,7 @@ namespace ClassChung
                 return 3;
             }
         }
-        public string kqCDC_cannang_danhgia()
+        public string kqCDC_cannang_diengiai()
         {
             if (kqCDC_cannang() == 1)
             {
@@ -4137,7 +4341,7 @@ namespace ClassChung
                 return 3;
             }
         }
-        public string kqCDC_chuvi_danhgia()
+        public string kqCDC_chuvi_diengiai()
         {
             if (kqCDC_chuvi() == 1)
             {
@@ -4206,6 +4410,10 @@ namespace ClassChung
             //Max 100ml/h
             return Math.Min(result, 100);
         }
+        public string kqVdich24h_diengiai()
+        {
+            return "";
+        }
     }
     public class PELD_Old : Congthuc
     {
@@ -4254,6 +4462,10 @@ namespace ClassChung
 
             return 10 * (0.480 * Math.Log(BilirubinSerum) + 1.857 * Math.Log(INR) - (0.687 * Math.Log(AlbuminSerum))
                 + hesotuoi_PELD + hesotangtruong_PELD);
+        }
+        public string kqPELD_Old_diengiai()
+        {
+            return "";
         }
     }
     public class PELD_New : Congthuc
@@ -4336,6 +4548,10 @@ namespace ClassChung
 
             return Math.Max(6, Math.Round(PELD_New));
         }
+        public string kqPELD_New_diengiai()
+        {
+            return "";
+        }
     }
     public class WHO_suyDD : Congthuc
     {
@@ -4372,7 +4588,7 @@ namespace ClassChung
             double[] _dataLMS_W = { 0.3487, 0.2297, 0.197, 0.1738, 0.1553, 0.1395, 0.1257, 0.1134, 0.1021, 0.0917, 0.082, 0.073, 0.0644, 0.0563, 0.0487, 0.0413, 0.0343, 0.0275, 0.0211, 0.0148, 0.0087, 0.0029, -0.0028, -0.0083, -0.0137, -0.0189, -0.024, -0.0289, -0.0337, -0.0385, -0.0431, -0.0476, -0.052, -0.0564, -0.0606, -0.0648, -0.0689, -0.0729, -0.0769, -0.0808, -0.0846, -0.0883, -0.092, -0.0957, -0.0993, -0.1028, -0.1063, -0.1097, -0.1131, -0.1165, -0.1198, -0.123, -0.1262, -0.1294, -0.1325, -0.1356, -0.1387, -0.1417, -0.1447, -0.1477, -0.1506, 3.3464, 4.4709, 5.5675, 6.3762, 7.0023, 7.5105, 7.934, 8.297, 8.6151, 8.9014, 9.1649, 9.4122, 9.6479, 9.8749, 10.0953, 10.3108, 10.5228, 10.7319, 10.9385, 11.143, 11.3462, 11.5486, 11.7504, 11.9514, 12.1515, 12.3502, 12.5466, 12.7401, 12.9303, 13.1169, 13.3, 13.4798, 13.6567, 13.8309, 14.0031, 14.1736, 14.3429, 14.5113, 14.6791, 14.8466, 15.014, 15.1813, 15.3486, 15.5158, 15.6828, 15.8497, 16.0163, 16.1827, 16.3489, 16.515, 16.6811, 16.8471, 17.0132, 17.1792, 17.3452, 17.5111, 17.6768, 17.8422, 18.0073, 18.1722, 18.3366, 0.14602, 0.13395, 0.12385, 0.11727, 0.11316, 0.1108, 0.10958, 0.10902, 0.10882, 0.10881, 0.10891, 0.10906, 0.10925, 0.10949, 0.10976, 0.11007, 0.11041, 0.11079, 0.11119, 0.11164, 0.11211, 0.11261, 0.11314, 0.11369, 0.11426, 0.11485, 0.11544, 0.11604, 0.11664, 0.11723, 0.11781, 0.11839, 0.11896, 0.11953, 0.12008, 0.12062, 0.12116, 0.12168, 0.1222, 0.12271, 0.12322, 0.12373, 0.12425, 0.12478, 0.12531, 0.12586, 0.12643, 0.127, 0.12759, 0.12819, 0.1288, 0.12943, 0.13005, 0.13069, 0.13133, 0.13197, 0.13261, 0.13325, 0.13389, 0.13453, 0.13517, 0.3809, 0.1714, 0.0962, 0.0402, -0.005, -0.043, -0.0756, -0.1039, -0.1288, -0.1507, -0.17, -0.1872, -0.2024, -0.2158, -0.2278, -0.2384, -0.2478, -0.2562, -0.2637, -0.2703, -0.2762, -0.2815, -0.2862, -0.2903, -0.2941, -0.2975, -0.3005, -0.3032, -0.3057, -0.308, -0.3101, -0.312, -0.3138, -0.3155, -0.3171, -0.3186, -0.3201, -0.3216, -0.323, -0.3243, -0.3257, -0.327, -0.3283, -0.3296, -0.3309, -0.3322, -0.3335, -0.3348, -0.3361, -0.3374, -0.3387, -0.34, -0.3414, -0.3427, -0.344, -0.3453, -0.3466, -0.3479, -0.3492, -0.3505, -0.3518, 3.2322, 4.1873, 5.1282, 5.8458, 6.4237, 6.8985, 7.297, 7.6422, 7.9487, 8.2254, 8.48, 8.7192, 8.9481, 9.1699, 9.387, 9.6008, 9.8124, 10.0226, 10.2315, 10.4393, 10.6464, 10.8534, 11.0608, 11.2688, 11.4775, 11.6864, 11.8947, 12.1015, 12.3059, 12.5073, 12.7055, 12.9006, 13.093, 13.2837, 13.4731, 13.6618, 13.8503, 14.0385, 14.2265, 14.414, 14.601, 14.7873, 14.9727, 15.1573, 15.341, 15.524, 15.7064, 15.8882, 16.0697, 16.2511, 16.4322, 16.6133, 16.7942, 16.9748, 17.1551, 17.3347, 17.5136, 17.6916, 17.8686, 18.0445, 18.2193, 0.14171, 0.13724, 0.13, 0.12619, 0.12402, 0.12274, 0.12204, 0.12178, 0.12181, 0.12199, 0.12223, 0.12247, 0.12268, 0.12283, 0.12294, 0.12299, 0.12303, 0.12306, 0.12309, 0.12315, 0.12323, 0.12335, 0.1235, 0.12369, 0.1239, 0.12414, 0.12441, 0.12472, 0.12506, 0.12545, 0.12587, 0.12633, 0.12683, 0.12737, 0.12794, 0.12855, 0.12919, 0.12988, 0.13059, 0.13135, 0.13213, 0.13293, 0.13376, 0.1346, 0.13545, 0.1363, 0.13716, 0.138, 0.13884, 0.13968, 0.14051, 0.14132, 0.14213, 0.14293, 0.14371, 0.14448, 0.14525, 0.146, 0.14675, 0.14748, 0.14821 };
             dataLMS_W = _dataLMS_W;
         }
-        public string kqWHO_suyDD()
+        public string kqWHO_suyDD_diengiai()
         {
             string kq = "Trẻ thuộc nhóm ";
             double phanphoichieucao = kqWHO_chieucao_zscore();
@@ -4450,10 +4666,13 @@ namespace ClassChung
             creatininUrine = _CreatininUrine;
             //init("C_B16");
         }
-
         public double kqePER_PNCT()
         {
             return (proteinUrine / creatininUrine) * 1373.5 - 60.508;
+        }
+        public string kqePER_PNCT_diengiai()
+        {
+            return "";
         }
     }
     public class OxyIndex : Congthuc
@@ -4492,7 +4711,7 @@ namespace ClassChung
             double aplucduongthoTB = (tg_hitvao * nhiptho / 60) * (PIP - PEEP) + PEEP;
             return FIO2 * aplucduongthoTB / PaO2;
         }
-        public string kqOxyIndex_danhgia()
+        public string kqOxyIndex_diengiai()
         {
             double OI = kqOxyIndex();
 
@@ -4554,6 +4773,10 @@ namespace ClassChung
         {
             TimeSpan tuoithai = DateTime.Now - EED_calculated;
             return tuoithai.Days;
+        }
+        public string kqEED_diengiai()
+        {
+            return "";
         }
     }
     public class EER : Congthuc
@@ -4644,8 +4867,11 @@ namespace ClassChung
                     }
                 }
             }
-
             return EER;
+        }
+        public string kqEER_diengiai()
+        {
+            return "";
         }
     }
     public class CDC_BMI : Congthuc
@@ -4710,7 +4936,7 @@ namespace ClassChung
             }
             return new double[] { phanphoi5, phanphoi85, phanphoi95 };
         }
-        public string kqCDC_BMI()
+        public string kqCDC_BMI_diengiai()
         {
             //P5, P85, P95
             double[] kqphanphoi = phanphoiCDC_BMI();
@@ -4764,8 +4990,12 @@ namespace ClassChung
             ongnoikhiquan = (bongchen) ? (3.5 + (tuoi / 4)) : (4 + (tuoi / 4));
             return ongnoikhiquan;
         }
+        public string kqNoikhiquan_diengiai()
+        {
+            return "";
+        }
     }
-    public class NatriSerum_Adj : Congthuc
+    public class NatriSerum_Adj : Congthuc //C_C01
     {
         public double NatriSerum { get; set; }
         public double GlucoseSerum { get; set; }
@@ -4792,6 +5022,17 @@ namespace ClassChung
         {
             double kq = NatriSerum + (2 * (GlucoseSerum - 100) / 100);
             return kq;
+        }
+
+        public string kqNatriSerum_Adj_diengiai()
+        {
+            double ketqua = kqNatriSerum_Adj();
+            if (ketqua > 135 && ketqua < 145)
+                return "Natri huyết nằm trong khoảng bình thường (135-145 mEq/L)";
+            else if (ketqua < 135)
+                return "Hạ hatri huyết (<135 mEq/L)";
+            else
+                return "Tăng hatri huyết (>145 mEq/L)";
         }
     }
     public class CardiacOutput : Congthuc
@@ -4828,11 +5069,20 @@ namespace ClassChung
             PvO2 = _PvO2;
             //init("C_C02");
         }
-
         public double kqCardiacOutput()
         {
             double kq = oxytieuthu / (((Hb * 13.4 * O2Sat / 100) + (PaO2 * 0.031)) - (Hb * 13.4 * O2vSat / 100) + (PvO2 * 0.031));
             return kq;
+        }
+        public string kqCardiacOutput_diengiai()
+        {
+            double ketqua = kqCardiacOutput();
+            if (ketqua > 5 && ketqua < 6)
+                return "Cung lượng tim mức bình thường: 5-6 L/phút (khi nghỉ ngơi)";
+            else if (ketqua < 5)
+                return "Cung lượng tim mức thấp: < 5 L/phút";
+            else
+                return "Cung lượng tim mức cao: > 6 L/phút (hoặc có vận động)";
         }
     }
     public class FEPO4 : Congthuc
@@ -4862,11 +5112,20 @@ namespace ClassChung
             creatininSerum = _creatininSerum;
             //init("C_C03");
         }
-
         public double kqFEPO4()
         {
             double kq = (phosphatUrine / phosphatSerum) / (creatininUrine / creatininSerum) * 100;
             return kq;
+        }
+        public string kqFEPO4_diengiai()
+        {
+            double ketqua = kqFEPO4();
+            if (ketqua > 5 && ketqua < 20)
+                return "FEPO4 trong khoảng giá trị bình thường: 5 - 20%";
+            else if (ketqua < 5)
+                return "FEPO4 thấp hơn khoảng giá trị bình thường: < 5%";
+            else
+                return "FEPO4 cao hơn khoảng giá trị bình thường: > 20%";
         }
     }
     public class LDL : Congthuc
@@ -4894,11 +5153,18 @@ namespace ClassChung
             HDL = _HDL;
             //init("C_C04");
         }
-
         public double kqLDL()
         {
             double kq = TotalCholesterol - (Triglycerid / 5) - HDL;
             return kq;
+        }
+        public string kqLDL_diengiai()
+        {
+            double ketqua = kqLDL();
+            if (ketqua < 100)
+                return "LDL trong khoảng giá trị bình thường: <100 mg/dL";
+            else
+                return "LDL cao hơn khoảng giá trị bình thường: <100 mg/dL";
         }
     }
     public class FIB4 : Congthuc
@@ -4928,11 +5194,20 @@ namespace ClassChung
             ALT = _ALT;
             //init("C_C05");
         }
-
         public double kqFIB4()
         {
             double kq = tuoi * AST / (0.001 * tieucau * Math.Sqrt(ALT));
             return kq;
+        }
+        public string kqFIB4_diengiai()
+        {
+            double ketqua = kqFIB4();
+            if (ketqua < 1.45)
+                return "Điểm FIB-4 < 1,45: ít có khả năng xơ gan";
+            else if (ketqua < 3.25)
+                return "Điểm FIB-4 ≥ 1,45 và ≤ 3,25: khả năng xơ gan trung bình";
+            else
+                return "Điểm FIB-4 > 3,25: khả năng cao bị xơ gan";
         }
     }
     public class TSAT : Congthuc
@@ -4951,14 +5226,23 @@ namespace ClassChung
             TIBC = _TIBC;
             //init("C_C06");
         }
-
         public double kqTSAT()
         {
             double kq = (FeSerum / TIBC) * 100;
             return kq;
         }
+        public string kqTSAT_diengiai()
+        {
+            double ketqua = kqTSAT();
+            if (ketqua < 50 && ketqua >20)
+                return "TSAT trong khoảng bình thường: 20 - 50%";
+            else if (ketqua < 20)
+                return "TSAT thấp, khả năng có tình trạng thiếu sắt";
+            else
+                return "TSAT cao, khả năng quá tải sắt";
+        }
     }
-    public class APRI : Congthuc
+    public class APRI : Congthuc // C_C07
     {
         public double AST { get; set; }
         public double tieucau { get; set; }
@@ -4986,6 +5270,20 @@ namespace ClassChung
         public double kqAPRI()
         {
             return 100 * ((AST / ASTNormUL) / (tieucau / 1000)); ;
+        }
+        public string kqAPRI_diengiai()
+        {
+            double ketqua = kqAPRI();
+            if (ketqua <= 0.3)
+                return "APRI ≤ 0,3:	Ít có khả năng xơ gan hoặc có xơ hóa đáng kể";
+            else if (ketqua <= 0.5)
+                return "APRI > 0,3 và ≤ 0,5: Ít có khả năng xơ gan, có khả năng xơ hóa đáng kể";
+            else if (ketqua <= 1.5)
+                return "APRI > 0,5 và ≤ 1,5: Có khả năng xơ gan hoặc xơ hóa đáng kể";
+            else if (ketqua <= 2)
+                return "APRI > 1,5 và ≤ 2: Khả năng cao xơ gan hoặc xơ hóa đáng kể";
+            else
+                return "APRI > 2: Khả năng cao bị xơ gan";
         }
     }
     public class MELD : Congthuc
@@ -5035,6 +5333,14 @@ namespace ClassChung
             double MELDResult = 9.57 * Math.Log(creatinineTerm) + 3.78 * Math.Log(BilirubinSerum) + 11.2 * Math.Log(INR) + 6.43;
             return MELDResult;
         }
+        public string kqMELD_diengiai()
+        {
+            double ketqua = kqMELD();
+            if (ketqua >= 10)
+                return "Điểm MELD > 9, cân nhắc giới thiệu đến bác sĩ chuyên khoa gan hoặc trung tâm ghép gan";
+            else
+                return "Điểm MELD < 9, theo dõi tình trạng & chức năng gan định kỳ";
+        }
     }
     public class MELDNa : Congthuc
     {
@@ -5078,6 +5384,10 @@ namespace ClassChung
             double MELDNaResult = (meldValue <= 11) ? meldValue : meldValue + ((1.32 * (137 - NatriSerum)) - (0.033 * meldValue * (137 - NatriSerum)));
             return MELDNaResult;
         }
+        public string kqMELDNa_diengiai()
+        {
+            return "";
+        }
     }
     public class PVR : Congthuc
     {
@@ -5113,6 +5423,10 @@ namespace ClassChung
             MAP MAP = new MAP(HATThu, HATTruong);
             PVR_calculated = 80 * (MAP.kqMAP() - aplucnhitrai) / luuluongmau;
             return PVR_calculated;
+        }
+        public string kqMELDNa_diengiai()
+        {
+            return "";
         }
     }
     public class PVRI : Congthuc
@@ -5154,6 +5468,10 @@ namespace ClassChung
             double BSA = Math.Sqrt(chieucao * cannang / 3600);
             PVRI_calculated = BSA * thamso.kqPVR();
             return PVRI_calculated;
+        }
+        public string kqMELDNa_diengiai()
+        {
+            return "";
         }
     }
     public class AdjECG : Congthuc
@@ -5201,6 +5519,10 @@ namespace ClassChung
         {
             return QT_ECG + (1.75 * (nhiptim - 60));
         }
+        public string kqAdjQT_diengiai()
+        {
+            return "";
+        }
     }
     public class SVR : Congthuc
     {
@@ -5234,6 +5556,14 @@ namespace ClassChung
             double SVR_calculated = 80 * (MAP.kqMAP() - aplucnhiphai) / luuluongmau;
             return SVR_calculated;
         }
+        public string kqSVR_diengiai()
+        {
+            double ketqua = kqSVR();
+            if (ketqua > 1170 - 270 && ketqua < 1170 + 270)
+                return "SVR nằm trong khoảng bình thường: 1170 ± 270 dynes-sec-cm-5";
+            else
+                return "SVR nằm ngoài khoảng bình thường: 1170 ± 270 dynes-sec-cm-5";
+        }
     }
     public class WBCCFS_Adj : Congthuc
     {
@@ -5266,6 +5596,10 @@ namespace ClassChung
         {
             double kqWBCCFS_Adj = WBC_CFS - ((WBC * RBC_CFS) / (RBC * 1000000));
             return kqWBCCFS_Adj;
+        }
+        public string kqWBCCFS_Adj_diengiai()
+        {
+            return "";
         }
     }
     public class Hauphauxogan : Congthuc
@@ -5330,6 +5664,10 @@ namespace ClassChung
             double mortality = 100 * (1 - Math.Pow(0.89681, hesohauphauxogan));
 
             return mortality;
+        }
+        public string kqhauphau_diengiai()
+        {
+            return "";
         }
     }
     public class MESA_SCORE : Congthuc
@@ -5452,6 +5790,10 @@ namespace ClassChung
             double nguyco10namCAC = 100 * (1 - Math.Pow(0.99833, Math.Exp(hesoCAC)));
 
             return nguyco10namCAC;
+        }
+        public string kqMESA_diengiai()
+        {
+            return "";
         }
     }
     #endregion
@@ -7838,10 +8180,15 @@ namespace ClassChung
             initTongdiem(_input);
             tinhTongdiem();
         }
-
+        public void xulydiem()
+        {
+            if (DStinhdiem[1].diemketqua + DStinhdiem[2].diemketqua > 0)
+                DStinhdiem[2].diemketqua = 0;
+        }
         public double kqABCD2()
         {
             ABCD2_SCORE = 0;
+            xulydiem();
 
             foreach (BiendiemCSYH i in DStinhdiem)
             {
@@ -8681,11 +9028,12 @@ namespace ClassChung
         private void checkvungnguyco(string _vungnguyco)
         {
             //Vùng nguy cơ
-            if (_vungnguyco == "Thấp")
+
+            if (_vungnguyco.ToLower() == "thấp")
                 nhomvungnguyco = 0;
-            else if (_vungnguyco == "Trung bình")
+            else if (_vungnguyco.ToLower() == "trung bình")
                 nhomvungnguyco = 1;
-            else if (_vungnguyco == "Cao")
+            else if (_vungnguyco.ToLower() == "cao")
                 nhomvungnguyco = 2;
             else
                 nhomvungnguyco = 3;
@@ -8698,7 +9046,7 @@ namespace ClassChung
             int kq = diem[diem_start_index];
             return kq;
         }
-        public string kqPLNguycoSCORE2()
+        public string kqSCORE2_diengiai()
         {
             diem_start_index = 640 * nhomvungnguyco + 320 * nhomgioitinh + 160 * nhomSmoking +
                 16 * nhomtuoi + 4 * nhomNonHDL + nhomHATT;
@@ -8906,7 +9254,7 @@ namespace ClassChung
         private void checkEGFR(string _gioitinh, double _creatininSerum, double _tuoi)
         {
             //eGFR CKD khong can can nang & chung toc
-            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_tuoi, _gioitinh.ToLower(), _creatininSerum);
+            eGFR_CKD eGFR_CKD_temp = new eGFR_CKD(_gioitinh.ToLower(), _tuoi, _creatininSerum);
             double kqeGFR = eGFR_CKD_temp.kqeGFR_CKD();
             if (kqeGFR < 45)
                 nhomEGFR = 0;
@@ -8920,11 +9268,11 @@ namespace ClassChung
         private void checkvungnguyco(string _vungnguyco)
         {
             //Vùng nguy cơ
-            if (_vungnguyco == "Thấp")
+            if (_vungnguyco.ToLower() == "thấp")
                 nhomvungnguyco = 0;
-            else if (_vungnguyco == "Trung bình")
+            else if (_vungnguyco.ToLower() == "trung bình")
                 nhomvungnguyco = 1;
-            else if (_vungnguyco == "Cao")
+            else if (_vungnguyco.ToLower() == "cao")
                 nhomvungnguyco = 2;
             else
                 nhomvungnguyco = 3;
