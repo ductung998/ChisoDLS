@@ -1,8 +1,57 @@
-﻿
+﻿<!-- Index.cshtml -->
+@model string
+
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
 }
 
-<h2>Hello</h2>
+<h2>Upload Excel File</h2>
 
+@using (Html.BeginForm("UploadExcel", "Test", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <input type="file" name="excelFile" />
+        <button type="submit">Upload</button>
+    </div>
+}
+
+<script>
+document.getElementById("uploadForm").addEventListener("submit", function(event) {
+    // Check if ViewBag.UploadMessage contains the success message
+    var uploadMessage = "@ViewBag.UploadMessage";
+    if (uploadMessage === "File uploaded successfully.") {
+        // If the upload message is success, show the popup
+        showUploadMessage(uploadMessage);
+    }
+});
+</script>
+
+<h2>Paste Your Input</h2>
+
+@using (Html.BeginForm("ProcessInput", "Test", FormMethod.Post))
+{
+    <div>
+        <textarea name="inputData" rows="10" cols="50"></textarea>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.UploadMessage))
+{
+    <div>@ViewBag.UploadMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.InputData))
+{
+    <h3>Your Input:</h3>
+    <p>@ViewBag.InputData</p>
+}
+
+<h2>Download Excel</h2>
+<div>
+    @Html.ActionLink("Download Test Excel", "DownloadExcel", "Test", null, new { @class = "btn btn-primary" })
+</div>
+
+<script src="~/Scripts/scripts.js"></script>

@@ -250,9 +250,9 @@ namespace ClassChung
         {
             List<Bien> listdem = new List<Bien>();
             List<string> input = _input.Split(new[] { "-" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            foreach (string chiso in input)
+            foreach (string machiso in input)
             {
-                listdem.AddRange(GetDSbien(chiso));
+                listdem.AddRange(GetDSbien(machiso));
             }
 
             List<Bien> kq = GetDSBiengoc(listdem);
@@ -1847,50 +1847,197 @@ namespace ClassChung
         public double quydoidonvi(double input, string donvifrom, string donvito)
         {
             string check = donvifrom + "_" + donvito;
+            double kq;
             switch (check)
             {
                 case "g_kg":
-                    return input * 1 / 1000;
+                    kq = input * 1 / 1000;
+                    break;
+                case "kg_g":
+                    kq =  input * 1000;
+                    break;
+                case "cm_m":
+                    kq =  input * 1 / 100;
+                    break;
                 case "m_cm":
-                    return input * 100;
+                    kq =  input * 100;
+                    break;
                 case "cm^2_m^2":
-                    return input * 1 / 10000;
-                case "L_mL":
-                    return input * 1000;
+                    kq =  input * 1 / 10000;
+                    break;
+                case "m^2_cm^2":
+                    kq =  input * 10000;
+                    break;
                 case "mL_L":
-                    return input * 1 / 1000;
+                    kq =  input * 1 / 1000;
+                    break;
+                case "L_mL":
+                    kq =  input * 1000;
+                    break;
                 case "dL_L":
-                    return input * 1 / 10;
+                    kq =  input * 1 / 10;
+                    break;
                 case "L_dL":
-                    return input * 10;
-                case "dL_mL":
-                    return input * 100;
+                    kq =  input * 10;
+                    break;
                 case "mL_dL":
-                    return input * 1 / 100;
-                case "mmHg_mmH2O":
-                    return input * 13.5951;
+                    kq =  input * 1 / 100;
+                    break;
+                case "dL_mL":
+                    kq =  input * 100;
+                    break;
                 case "mmH2O_mmHg":
-                    return input * 1 / 13.5951;
+                    kq =  input * 1 / 13.5951;
+                    break;
+                case "mmHg_mmH2O":
+                    kq =  input * 13.5951;
+                    break;
                 case "mL/phút_L/phút":
-                    return input * 1 / 1000;
+                    kq =  input * 1 / 1000;
+                    break;
                 case "L/phút_mL/phút":
-                    return input * 1000;
+                    kq =  input * 1000;
+                    break;
                 case "mg/dL_g/dL":
-                    return input * 1 / 1000;
+                    kq =  input * 1 / 1000;
+                    break;
                 case "g/dL_mg/dL":
-                    return input * 1000;
+                    kq =  input * 1000;
+                    break;
                 case "mg/L_g/L":
-                    return input * 1 / 1000;
+                    kq =  input * 1 / 1000;
+                    break;
                 case "g/L_mg/L":
-                    return input * 1000;
+                    kq =  input * 1000;
+                    break;
                 case "microg/dL_mg/dL":
-                    return input * 1 / 1000;
+                    kq =  input * 1 / 1000;
+                    break;
                 case "mg/dL_microg/dL":
-                    return input * 1000;
+                    kq =  input * 1000;
+                    break;
                 default:
-                    return input;
-
+                    kq =  input;
+                    break;
             }
+            return Math.Round(kq,2);
+        }
+        public double quydoidonviXN(double input, string chat, string donvifrom, string donvito)
+        {
+            string check = chat.ToLower() + "_" + donvifrom + "_" + donvito;
+            double kq;
+            switch (check)
+            {
+                case "calci_mg/dL_mmol/L":
+                    kq = input * 0.2495;
+                    break;
+                case "calci_mmol/L_mg/dL":
+                    kq = input * 1 / 0.2495;
+                    break;
+
+                case "glucose_mg/dL_mmol/L":
+                    kq = input * 0.055;
+                    break;
+                case "glucose_mmol/L_mg/dL":
+                    kq = input * 1 / 0.055;
+                    break;
+
+                case "BUN_mg/dL_mmol/L":
+                    kq = input * 0.357;
+                    break;
+                case "BUN_mmol/L_mg/dL":
+                    kq = input * 1 / 0.357;
+                    break;
+
+                case "creatinin_mg/dL_mcmol/L":
+                    kq = input * 88.42;
+                    break;
+                case "creatinin_mcmol/L_mg/dL":
+                    kq = input * 1 / 88.42;
+                    break;
+
+                case "bilirubin_mg/dL_mcmol/L":
+                    kq = input * 17.10;
+                    break;
+                case "bilirubin_mcmol/L_mg/dL":
+                    kq = input * 1 / 17.10;
+                    break;
+
+                case "protein_mg/dL_g/L":
+                    kq = input * 10.0;
+                    break;
+                case "protein_g/L_mg/dL":
+                    kq = input * 1 / 10.0;
+                    break;
+
+                case "albumin_g/dL_g/L":
+                    kq = input * 10.0; 
+                    break;
+                case "albumin_g/L_g/dL":
+                    kq = input * 1 / 10.0; 
+                    break;
+
+                case "magie_mg/dL_mmol/L":
+                    kq = input * 0.41152;
+                    break;
+                case "magie_mmol/L_mg/dL":
+                    kq = input * 1 / 0.41152;
+                    break;
+
+                case "phosphat_mg/dL_mmol/L":
+                    kq = input * 0.323;
+                    break;
+                case "phosphat_mmol/L_mg/dL":
+                    kq = input * 1 / 0.323;
+                    break;
+
+                case "ferrous_microg/dL_mcmol/L":
+                    kq = input * 0.179; 
+                    break;
+                case "ferrous_mcmol/L_microg/dL":
+                    kq = input * 1 / 0.179;
+                    break;
+
+                case "hdl_mg/dL_mmol/L":
+                    kq = input * 1 / 38.67;
+                    break;
+                case "hdl_mmol/L_mg/dL":
+                    kq = input * 38.67;
+                    break;
+
+                case "ldl_mg/dL_mmol/L":
+                    kq = input * 1 / 38.67;
+                    break;
+                case "ldl_mmol/L_mg/dL":
+                    kq = input * 38.67;
+                    break;
+
+                case "totalcholesterol_mg/dL_mmol/L":
+                    kq = input * 1 / 38.67;
+                    break;
+                case "totalcholesterol_mmol/L_mg/dL":
+                    kq = input * 38.67;
+                    break;
+
+                case "triglyceride_mg/dL_mmol/L":
+                    kq = input * 1 / 88.57;
+                    break;
+                case "triglyceride_mmol/L_mg/dL":
+                    kq = input * 88.57;
+                    break;
+
+                case "hb_g/dL_mmol/L":
+                    kq = input * 0.6206;
+                    break;
+                case "hb_mmol/L_g/dL":
+                    kq = input * 1 / 0.6206;
+                    break;
+
+                default:
+                    kq = input;
+                    break;
+            }
+            return Math.Round(kq, 2);
         }
     }
     #endregion
