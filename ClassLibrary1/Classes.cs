@@ -283,6 +283,7 @@ namespace ClassChung
                                 IBW IBWCal = new IBW(inputs[0],
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(IBWCal.kqIBW(), 2).ToString());
+                                kq.Add(IBWCal.kqIBW_diengiai());
                                 break;
                             }
                         case "C_A02": //3 AdjBW
@@ -291,6 +292,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(AdjBWCal.kqAdjBW(), 2).ToString());
+                                kq.Add(AdjBWCal.kqAdjBW_diengiai());
                                 break;
                             }
                         case "C_A03": //3 LBW
@@ -299,6 +301,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(LBWCal.kqLBW(), 2).ToString());
+                                kq.Add(LBWCal.kqLBW_diengiai());
                                 break;
                             }
                         case "C_A04": //3 AlcoholSerum
@@ -307,6 +310,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(AlcoholSerumCal.kqAlcoholSerum(), 2).ToString());
+                                kq.Add(AlcoholSerumCal.kqAlcoholSerum_diengiai());
                                 break;
                             }
                         case "C_A05"://2 Budichbong
@@ -316,6 +320,7 @@ namespace ClassChung
                                 kq.Add(Math.Round(BudichbongCal.kqVdich24h(), 2).ToString());
                                 kq.Add(Math.Round(BudichbongCal.kqtocdotruyen8h(), 2).ToString());
                                 kq.Add(Math.Round(BudichbongCal.kqtocdotruyen16h(), 2).ToString());
+                                kq.Add(BudichbongCal.kqVdich24h_diengiai());
                                 break;
                             }
                         case "C_A06": //BMI
@@ -323,6 +328,7 @@ namespace ClassChung
                                 BMI BMICal = new BMI(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(BMICal.kqBMI(), 2).ToString());
+                                kq.Add(BMICal.kqBMI_diengiai());
                                 break;
                             }
                         case "C_A07"://7 AaG
@@ -336,6 +342,7 @@ namespace ClassChung
                                     double.Parse(inputs[6]));
                                 kq.Add(Math.Round(AaGCal.kqAaG(), 2).ToString());
                                 kq.Add(Math.Round(AaGCal.kqAaGnormal(), 2).ToString());
+                                kq.Add(AaGCal.kqAaG_diengiai());
                                 break;
                             }
                         case "C_A08":
@@ -344,6 +351,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(CalciSerum_AdjCal.kqCalciSerum_Adj(), 2).ToString());
+                                kq.Add(CalciSerum_AdjCal.kqCalciSerum_Adj_diengiai());
                                 break;
                             }
                         case "C_A09":
@@ -352,6 +360,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(BSACal.kqBSA_Dub(), 2).ToString());
                                 kq.Add(Math.Round(BSACal.kqBSA_Mos(), 2).ToString());
+                                kq.Add(BSACal.kqBSA_diengiai());
                                 break;
                             }
                         case "C_A10"://4
@@ -361,6 +370,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(SAGCal.kqSAG(), 2).ToString());
+                                kq.Add(SAGCal.kqSAG_diengiai());
                                 break;
                             }
                         case "C_A11"://4
@@ -370,6 +380,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(SOGCal.kqSOG(), 2).ToString());
+                                kq.Add(SOGCal.kqSOG_diengiai());
                                 break;
                             }
                         case "C_A12":
@@ -378,6 +389,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(StOGCal.kqStOG(), 2).ToString());
+                                kq.Add(StOGCal.kqStOG_diengiai());
                                 break;
                             }
                         case "C_A13":
@@ -386,6 +398,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(UAGCal.kqUAG(), 2).ToString());
+                                kq.Add(UAGCal.kqUAG_diengiai());
                                 break;
                             }
                         case "C_A14"://5
@@ -396,6 +409,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     double.Parse(inputs[4]));
                                 kq.Add(Math.Round(UOGCal.kqUOG(), 2).ToString());
+                                kq.Add(UOGCal.kqUOG_diengiai());
                                 break;
                             }
                         case "C_A15"://5 CKD 5 MDRD
@@ -404,6 +418,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(eGFR_CKDCal.kqeGFR_CKD(), 2).ToString());
+                                kq.Add(eGFR_CKDCal.kqeGFR_CKD_diengiai());
                                 break;
                             }
                         case "C_A16": //4
@@ -413,6 +428,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(eCrClCal.kqeCrCl(), 2).ToString());
+                                kq.Add(eCrClCal.kqeCrCl_diengiai());
                                 break;
                             }
                         case "C_A17": //4
@@ -422,6 +438,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(FEMgCal.kqFEMg(), 2).ToString());
+                                kq.Add(FEMgCal.kqFEMg_diengiai());
                                 break;
                             }
                         case "C_A18"://4
@@ -431,6 +448,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(FENaCal.kqFENa(), 2).ToString());
+                                kq.Add(FENaCal.kqFENa_diengiai());
                                 break;
                             }
                         case "C_A19": //5
@@ -441,6 +459,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     double.Parse(inputs[4]));
                                 kq.Add(Math.Round(KtVDaugirdasCal.kqKtVDaugirdas(), 2).ToString());
+                                kq.Add(KtVDaugirdasCal.kqKtVDaugirdas_diengiai());
                                 break;
                             }
                         case "C_A20"://5
@@ -451,6 +470,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     double.Parse(inputs[4]));
                                 kq.Add(Math.Round(RRF_KruCal.kqRRF_Kru(), 2).ToString());
+                                kq.Add(RRF_KruCal.kqRRF_Kru_diengiai());
                                 break;
                             }
                         case "C_A21": //2
@@ -458,6 +478,7 @@ namespace ClassChung
                                 ACR ACRCal = new ACR(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(ACRCal.kqACR(), 2).ToString());
+                                kq.Add(ACRCal.kqACR_diengiai());
                                 break;
                             }
                         case "C_A22": //2
@@ -465,6 +486,7 @@ namespace ClassChung
                                 PCR PCRCal = new PCR(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(PCRCal.kqPCR(), 2).ToString());
+                                kq.Add(PCRCal.kqPCR_diengiai());
                                 break;
                             }
                         case "C_A23": //5
@@ -475,6 +497,7 @@ namespace ClassChung
                                     inputs[3],
                                     double.Parse(inputs[4]));
                                 kq.Add(Math.Round(eAERCal.kqeAER(), 2).ToString());
+                                kq.Add(eAERCal.kqeAER_diengiai());
                                 break;
                             }
                         case "C_A24": //5
@@ -485,6 +508,7 @@ namespace ClassChung
                                     inputs[3],
                                     double.Parse(inputs[4]));
                                 kq.Add(Math.Round(ePERCal.kqePER(), 2).ToString());
+                                kq.Add(ePERCal.kqePER_diengiai());
                                 break;
                             }
                         case "C_A25": //3
@@ -493,6 +517,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(TocDoTruyenCal.kqTocDoTruyen(), 2).ToString());
+                                kq.Add(TocDoTruyenCal.kqTocDoTruyen_diengiai());
                                 break;
                             }
                         case "C_A26": //3
@@ -501,6 +526,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(CrCl24hCal.kqCrCl24h(), 2).ToString());
+                                kq.Add(CrCl24hCal.kqCrCl24h_diengiai());
                                 break;
                             }
                         case "C_A27": //7
@@ -513,6 +539,7 @@ namespace ClassChung
                                     inputs[5],
                                     KetnoiDB.str_to_bool(inputs[6]));
                                 kq.Add(Math.Round(eGFR_SchwartzCal.kqeGFR_Schwartz(), 2).ToString());
+                                kq.Add(eGFR_SchwartzCal.kqeGFR_Schwartz_diengiai());
                                 break;
                             }
                         case "C_A28": //17
@@ -535,6 +562,7 @@ namespace ClassChung
                                     KetnoiDB.str_to_bool(inputs[15]),
                                     KetnoiDB.str_to_bool(inputs[16]));
                                 kq.Add(Math.Round(MPM0Cal.kqMPM0(), 2).ToString());
+                                kq.Add(MPM0Cal.kqMPM0_diengiai());
                                 break;
                             }
                         case "C_A29"://5 MDRD
@@ -544,6 +572,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     inputs[3]);
                                 kq.Add(Math.Round(eGFR_MDRDCal.kqeGFR_MDRD(), 2).ToString());
+                                kq.Add(eGFR_MDRDCal.kqeGFR_MDRD_diengiai());
                                 break;
                             }
                     }
@@ -561,6 +590,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(DLCO_AdjCal.kqDLCO_Adj(), 2).ToString());
+                                kq.Add(DLCO_AdjCal.kqDLCO_Adj_diengiai());
                                 break;
                             }
                         case "C_B02": //2
@@ -568,6 +598,7 @@ namespace ClassChung
                                 MAP MAPCal = new MAP(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(MAPCal.kqMAP(), 2).ToString());
+                                kq.Add(MAPCal.kqMAP_diengiai());
                                 break;
                             }
                         case "C_B03": //7
@@ -578,6 +609,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     KetnoiDB.str_to_bool(inputs[4]));
                                 kq.Add(Math.Round(PostFEV1Cal.kqPostFEV1(), 2).ToString());
+                                kq.Add(PostFEV1Cal.kqPostFEV1_diengiai());
                                 break;
                             }
                         case "C_B04": //2
@@ -585,6 +617,7 @@ namespace ClassChung
                                 AEC AECCal = new AEC(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(AECCal.kqAEC(), 2).ToString());
+                                kq.Add(AECCal.kqAEC_diengiai());
                                 break;
                             }
                         case "C_B05": //2
@@ -592,6 +625,7 @@ namespace ClassChung
                                 ANC ANCCal = new ANC(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(ANCCal.kqANC(), 2).ToString());
+                                kq.Add(ANCCal.kqANC_diengiai());
                                 break;
                             }
                         case "C_B06": //5
@@ -618,6 +652,7 @@ namespace ClassChung
                                 sTfR sTfRCal = new sTfR(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(sTfRCal.kqsTfR(), 2).ToString());
+                                kq.Add(sTfRCal.kqsTfR_diengiai());
                                 break;
                             }
                         case "C_B09": //4
@@ -628,6 +663,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(BMRCal.kqBMR_HB(), 2).ToString());
                                 kq.Add(Math.Round(BMRCal.kqBMR_Scho(), 2).ToString());
+                                kq.Add(BMRCal.kqBMR_diengiai());
                                 break;
                             }
                         case "C_B10": //3
@@ -663,6 +699,7 @@ namespace ClassChung
                                 kq.Add(Math.Round(VbudichCal.kqVdich24h(), 2).ToString());
                                 kq.Add(Math.Round(VbudichCal.kqtocdotruyen24h(), 2).ToString());
                                 kq.Add(Math.Round(VbudichCal.kqVdich_theogio(), 2).ToString());
+                                kq.Add(VbudichCal.kqVdich24h_diengiai());
                                 break;
                             }
                         case "C_B14": //8
@@ -676,6 +713,7 @@ namespace ClassChung
                                     double.Parse(inputs[6]),
                                     KetnoiDB.str_to_bool(inputs[7]));
                                 kq.Add(Math.Round(PELD_OldCal.kqPELD_Old(), 2).ToString());
+                                kq.Add(PELD_OldCal.kqPELD_Old_diengiai());
                                 break;
                             }
                         case "C_B15": //4
@@ -694,6 +732,7 @@ namespace ClassChung
                                 ePER_PNCT ePER_PNCTCal = new ePER_PNCT(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(ePER_PNCTCal.kqePER_PNCT(), 2).ToString());
+                                kq.Add(ePER_PNCTCal.kqePER_PNCT_diengiai());
                                 break;
                             }
                         case "C_B17": //6
@@ -716,6 +755,7 @@ namespace ClassChung
                                     KetnoiDB.str_to_bool(inputs[3]));
                                 kq.Add(EEDCal.kqEED().ToString());
                                 kq.Add(EEDCal.kqTuoithai().ToString());
+                                kq.Add(EEDCal.kqEED_diengiai());
                                 break;
                             }
                         case "C_B19": //5
@@ -726,6 +766,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     inputs[4]);
                                 kq.Add(Math.Round(EERCal.kqEER(), 2).ToString());
+                                kq.Add(EERCal.kqEER_diengiai());
                                 break;
                             }
                         case "C_B20": //3
@@ -741,6 +782,7 @@ namespace ClassChung
                                 Noikhiquan NoikhiquanCal = new Noikhiquan(KetnoiDB.str_to_bool(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(NoikhiquanCal.kqNoikhiquan(), 2).ToString());
+                                kq.Add(NoikhiquanCal.kqNoikhiquan_diengiai());
                                 break;
                             }
                         case "C_B22": //3
@@ -765,6 +807,7 @@ namespace ClassChung
                                     numbertodatetime(inputs[8]),
                                     KetnoiDB.str_to_bool(inputs[9]));
                                 kq.Add(Math.Round(PELD_NewCal.kqPELD_New(), 2).ToString());
+                                kq.Add(PELD_NewCal.kqPELD_New_diengiai());
                                 break;
                             }
                     }
@@ -780,6 +823,7 @@ namespace ClassChung
                                 NatriSerum_Adj NatriSerum_AdjCal = new NatriSerum_Adj(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(NatriSerum_AdjCal.kqNatriSerum_Adj(), 2).ToString());
+                                kq.Add(NatriSerum_AdjCal.kqNatriSerum_Adj_diengiai());
                                 break;
                             }
                         case "C_C02": //6
@@ -792,6 +836,7 @@ namespace ClassChung
                                     double.Parse(inputs[4]),
                                     double.Parse(inputs[5]));
                                 kq.Add(Math.Round(CardiacOutputCal.kqCardiacOutput(), 2).ToString());
+                                kq.Add(CardiacOutputCal.kqCardiacOutput_diengiai());
                                 break;
                             }
                         case "C_C03": //4
@@ -801,6 +846,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(FEPO4Cal.kqFEPO4(), 2).ToString());
+                                kq.Add(FEPO4Cal.kqFEPO4_diengiai());
                                 break;
                             }
                         case "C_C04": //3
@@ -809,6 +855,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(LDLCal.kqLDL(), 2).ToString());
+                                kq.Add(LDLCal.kqLDL_diengiai());
                                 break;
                             }
                         case "C_C05": //4
@@ -818,6 +865,7 @@ namespace ClassChung
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(FIB4Cal.kqFIB4(), 2).ToString());
+                                kq.Add(FIB4Cal.kqFIB4_diengiai());
                                 break;
                             }
                         case "C_C06": //2
@@ -825,6 +873,7 @@ namespace ClassChung
                                 TSAT TSATCal = new TSAT(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]));
                                 kq.Add(Math.Round(TSATCal.kqTSAT(), 2).ToString());
+                                kq.Add(TSATCal.kqTSAT_diengiai());
                                 break;
                             }
                         case "C_C07": //3
@@ -833,6 +882,7 @@ namespace ClassChung
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]));
                                 kq.Add(Math.Round(APRICal.kqAPRI(), 2).ToString());
+                                kq.Add(APRICal.kqAPRI_diengiai());
                                 break;
                             }
                         case "C_C08": // 5 MELD
@@ -843,6 +893,7 @@ namespace ClassChung
                                     double.Parse(inputs[3]),
                                     double.Parse(inputs[4]));
                                 kq.Add(Math.Round(MELDCal.kqMELD(), 2).ToString());
+                                kq.Add(MELDCal.kqMELD_diengiai());
                                 break;
                             }
                         case "C_C09": // 6 MELDNa
@@ -854,16 +905,21 @@ namespace ClassChung
                                     double.Parse(inputs[4]),
                                     double.Parse(inputs[5]));
                                 kq.Add(Math.Round(MELDNaCal.kqMELDNa(), 2).ToString());
+                                kq.Add(MELDNaCal.kqMELDNa_diengiai());
                                 break;
                             }
-                        case "C_C10": // 3 PVR, 5 PVRI
+                        case "C_C10": // 3 PVR
                             {
                                 PVR PVRCal = new PVR(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(PVRCal.kqPVR(), 2).ToString());
-
+                                kq.Add(PVRCal.kqPVR_diengiai());
+                                break;
+                            }
+                        case "C_C11": //5 PVRI
+                            {
                                 PVRI PVRICal = new PVRI(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
@@ -871,9 +927,10 @@ namespace ClassChung
                                     double.Parse(inputs[4]),
                                     double.Parse(inputs[5]));
                                 kq.Add(Math.Round(PVRICal.kqPVRI(), 2).ToString());
+                                kq.Add(PVRICal.kqPVRI_diengiai());
                                 break;
                             }
-                        case "C_C11": //3 AdjECG
+                        case "C_C12": //3 AdjECG
                             {
                                 AdjECG AdjECGCal = new AdjECG(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
@@ -882,27 +939,30 @@ namespace ClassChung
                                 kq.Add(Math.Round(AdjECGCal.kqAdjQT_Framingham(), 2).ToString());
                                 kq.Add(Math.Round(AdjECGCal.kqAdjQT_Fridericia(), 2).ToString());
                                 kq.Add(Math.Round(AdjECGCal.kqAdjQT_Hodges(), 2).ToString());
+                                kq.Add(AdjECGCal.kqAdjQT_diengiai());
                                 break;
                             }
-                        case "C_C12": //4 SVR
+                        case "C_C13": //4 SVR
                             {
                                 SVR SVRCal = new SVR(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(SVRCal.kqSVR(), 2).ToString());
+                                kq.Add(SVRCal.kqSVR_diengiai());
                                 break;
                             }
-                        case "C_C13": //4 WBCCFS_Adj
+                        case "C_C14": //4 WBCCFS_Adj
                             {
                                 WBCCFS_Adj WBCCFS_AdjCal = new WBCCFS_Adj(double.Parse(inputs[0]),
                                     double.Parse(inputs[1]),
                                     double.Parse(inputs[2]),
                                     double.Parse(inputs[3]));
                                 kq.Add(Math.Round(WBCCFS_AdjCal.kqWBCCFS_Adj(), 2).ToString());
+                                kq.Add(WBCCFS_AdjCal.kqWBCCFS_Adj_diengiai());
                                 break;
                             }
-                        case "C_C14": //5 Hauphauxogan + tu vong 7n, 30n, 90n
+                        case "C_C15": //5 Hauphauxogan + tu vong 7n, 30n, 90n
                             {
                                 Hauphauxogan HauphauxoganCal = new Hauphauxogan(
                                     double.Parse(inputs[0]),
@@ -914,9 +974,10 @@ namespace ClassChung
                                 kq.Add(Math.Round(HauphauxoganCal.kqhauphau7n(), 2).ToString());
                                 kq.Add(Math.Round(HauphauxoganCal.kqhauphau30n(), 2).ToString());
                                 kq.Add(Math.Round(HauphauxoganCal.kqhauphau90n(), 2).ToString());
+                                kq.Add(HauphauxoganCal.kqhauphau_diengiai());
                                 break;
                             }
-                        case "C_C15": //12 MESA Score, CAC & khong CAC
+                        case "C_C16": //12 MESA Score, CAC & khong CAC
                             {
                                 if (inputs.Count() == 11)
                                 {
@@ -933,6 +994,7 @@ namespace ClassChung
                                         KetnoiDB.str_to_bool(inputs[9]),
                                         KetnoiDB.str_to_bool(inputs[10]));
                                     kq.Add(Math.Round(MESA_SCORECal.kqMESA_SCORE_nonCAC(), 2).ToString());
+                                    kq.Add(MESA_SCORECal.kqMESA_diengiai());
                                 }
                                 else
                                 {
@@ -1781,6 +1843,54 @@ namespace ClassChung
 
             kq = referenceDate.AddDays(double.Parse(input));
             return kq;
+        }
+        public double quydoidonvi(double input, string donvifrom, string donvito)
+        {
+            string check = donvifrom + "_" + donvito;
+            switch (check)
+            {
+                case "g_kg":
+                    return input * 1 / 1000;
+                case "m_cm":
+                    return input * 100;
+                case "cm^2_m^2":
+                    return input * 1 / 10000;
+                case "L_mL":
+                    return input * 1000;
+                case "mL_L":
+                    return input * 1 / 1000;
+                case "dL_L":
+                    return input * 1 / 10;
+                case "L_dL":
+                    return input * 10;
+                case "dL_mL":
+                    return input * 100;
+                case "mL_dL":
+                    return input * 1 / 100;
+                case "mmHg_mmH2O":
+                    return input * 13.5951;
+                case "mmH2O_mmHg":
+                    return input * 1 / 13.5951;
+                case "mL/phút_L/phút":
+                    return input * 1 / 1000;
+                case "L/phút_mL/phút":
+                    return input * 1000;
+                case "mg/dL_g/dL":
+                    return input * 1 / 1000;
+                case "g/dL_mg/dL":
+                    return input * 1000;
+                case "mg/L_g/L":
+                    return input * 1 / 1000;
+                case "g/L_mg/L":
+                    return input * 1000;
+                case "microg/dL_mg/dL":
+                    return input * 1 / 1000;
+                case "mg/dL_microg/dL":
+                    return input * 1000;
+                default:
+                    return input;
+
+            }
         }
     }
     #endregion
@@ -3400,7 +3510,7 @@ namespace ClassChung
                          1051.3 + (5.3 * tuoi) - (0.1 * tuoi * tuoi)));
             return ePER;
         }
-        public string keqPER_diengiai()
+        public string kqePER_diengiai()
         {
             double ePER = kqePER();
             if (ePER < 150)
@@ -5389,7 +5499,7 @@ namespace ClassChung
             return "";
         }
     }
-    public class PVR : Congthuc
+    public class PVR : Congthuc //C_C10
     {
         public double HATThu { get; set; } // Systolic Blood Pressure (SBP)
         public double HATTruong { get; set; } // Diastolic Blood Pressure (DBP)
@@ -5424,12 +5534,12 @@ namespace ClassChung
             PVR_calculated = 80 * (MAP.kqMAP() - aplucnhitrai) / luuluongmau;
             return PVR_calculated;
         }
-        public string kqMELDNa_diengiai()
+        public string kqPVR_diengiai()
         {
             return "";
         }
     }
-    public class PVRI : Congthuc
+    public class PVRI : Congthuc// C_C11
     {
         public double chieucao { get; set; }
         public double cannang { get; set; }
@@ -5469,12 +5579,12 @@ namespace ClassChung
             PVRI_calculated = BSA * thamso.kqPVR();
             return PVRI_calculated;
         }
-        public string kqMELDNa_diengiai()
+        public string kqPVRI_diengiai()
         {
             return "";
         }
     }
-    public class AdjECG : Congthuc
+    public class AdjECG : Congthuc //C_C12
     {
         public double nhiptim { get; set; }
         public double QT_ECG { get; set; }
