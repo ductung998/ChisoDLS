@@ -54,4 +54,15 @@ document.getElementById("uploadForm").addEventListener("submit", function(event)
     @Html.ActionLink("Download Test Excel", "DownloadExcel", "Test", null, new { @class = "btn btn-primary" })
 </div>
 
+<h2>Convert Excel to CSV</h2>
+
+@using (Html.BeginForm("ConvertToCsv", "Test", FormMethod.Post))
+{
+    <div>
+        <label for="excelFileName">Excel File Name:</label>
+        <input type="text" name="excelFileName" id="excelFileName" />
+        <button type="submit">Convert to CSV</button>
+    </div>
+}
+
 <script src="~/Scripts/scripts.js"></script>

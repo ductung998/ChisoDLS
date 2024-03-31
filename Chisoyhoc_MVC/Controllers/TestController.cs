@@ -10,8 +10,11 @@ namespace Chisoyhoc_MVC.Controllers
 {
     public class TestController : Controller
     {
-        double unit = new UnitOf.Length().FromMeters(1).ToMillimeters();        
-        
+        string tempFolderPath;
+        public TestController()
+        {
+
+        }
         //
         // GET: /Test/
         public ActionResult Index()
@@ -82,6 +85,29 @@ namespace Chisoyhoc_MVC.Controllers
                 ViewBag.UploadMessage = "Please select a file to upload.";
             }
             return View("Index");
+        }
+
+        public ActionResult ConvertToCsv(string excelFileName)
+        {
+            Tuongtac testing = new Tuongtac(Path.Combine(Server.MapPath("~/Temp"), excelFileName));
+            // Ensure excelFileName is provided
+            if (string.IsNullOrEmpty(excelFileName))
+            {
+                return RedirectToAction("Index");
+            }
+
+            // Construct full paths for Excel and CSV files
+            string excelFilePath = Path.Combine(Server.MapPath("~/Temp"), excelFileName);
+            string csvFilePath = Path.Combine(Server.MapPath("~/Temp"), Path.GetFileNameWithoutExtension(excelFileName) + ".csv");
+
+            // Convert Excel to CSV
+            testing.openFile(excelFilePath);
+
+            //// Return the CSV file for download
+            //byte[] fileBytes = System.IO.File.ReadAllBytes(csvFilePath);
+            //return File(fileBytes, "text/csv", Path.GetFileName(csvFilePath));
+
+            return File(csvFilePath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Test.csv");
         }
 	}
 }

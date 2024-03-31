@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Chisoyhoc_API;
+using ClassChung;
 
 namespace Chisoyhoc_Form.GiaodienMau
 {
@@ -36,7 +36,7 @@ namespace Chisoyhoc_Form.GiaodienMau
             else
                 gioitinh = "Nữ";
 
-            eGFR_CKD eGFR_CKD_Cal = new eGFR_CKD(tuoi, gioitinh, creatininSer);
+            eGFR_CKD eGFR_CKD_Cal = new eGFR_CKD(gioitinh, tuoi, creatininSer);
             label15.Text = "eGFR: " + Math.Round(eGFR_CKD_Cal.kqeGFR_CKD(),2).ToString() +" mL/phút/1,73m^2";
             SCORE2_DM SCORE2_DM_Cal = new SCORE2_DM(tuoi, gioitinh, DM_Nam, hutthuoc, HATT, TCho, HDL, HbA1C, creatininSer, vungnguyco);
 /*            label8.Text = SCORE2_DM_Cal.nhomDM_Age.ToString();
@@ -224,7 +224,7 @@ namespace Chisoyhoc_Form.GiaodienMau
 
             SCORE2 SCORE2_Cal = new SCORE2(tuoi, gioitinh, hutthuoc, HATT, TCho, HDL, vungnguyco);
             label16.Text = "Nguy cơ biến cố tim mạch 10 năm: " + SCORE2_Cal.kqSCORE2().ToString() + "%";
-            labelnguyco.Text = "Phân nhóm nguy cơ: " + SCORE2_Cal.kqPLNguycoSCORE2();
+            labelnguyco.Text = "Phân nhóm nguy cơ: " + SCORE2_Cal.kqSCORE2_diengiai();
         }
     }
 }

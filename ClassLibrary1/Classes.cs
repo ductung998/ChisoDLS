@@ -3,9 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using OfficeOpenXml;
 
 namespace ClassChung
 {
+    #region Tuong tac
+    public class Tuongtac
+    {
+        private readonly string pathtoTemp;
+        public Tuongtac(string _pathtoTemp)
+        {
+            pathtoTemp = _pathtoTemp;
+        }
+        public void openFile(string pathfile)
+        {
+            string excelpath = pathfile;
+            string csvpath = Path.GetDirectoryName(pathfile) + "\\" + Path.GetFileNameWithoutExtension(excelpath) + ".csv";
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            Microsoft.Office.Interop.Excel.Application a = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook b = a.Workbooks.Open(pathfile);
+
+            b.SaveAs(csvpath);
+            a.Quit();
+            //// Check if the Excel file exists
+            //if (File.Exists(excelpath))
+            //{
+            //    // Load the Excel file using EPPlus
+            //    using (ExcelPackage package = new ExcelPackage(new FileInfo(excelpath)))
+            //    {
+
+            //        ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // Assuming the first worksheet
+
+                    
+            //        //// Create a new CSV file and writer
+            //        //using (StreamWriter writer = new StreamWriter(csvpath))
+            //        //{
+            //        //    // Iterate over all rows in the Excel worksheet
+            //        //    for (int row = 0; row <= worksheet.Dimension.Rows; row++)
+            //        //    {
+            //        //        // Iterate over all columns in the current row
+            //        //        for (int col = 0; col <= worksheet.Dimension.Columns; col++)
+            //        //        {
+            //        //            // Write cell value to CSV file
+            //        //            writer.Write(worksheet.Cells[row, col].Value);
+
+            //        //            // Add comma if not last column
+            //        //            if (col < worksheet.Dimension.Columns)
+            //        //            {
+            //        //                writer.Write(",");
+            //        //            }
+            //        //        }
+
+            //        //        // Add newline after each row
+            //        //        writer.WriteLine();
+            //        //    }
+            //        //}
+            //    }
+            //}
+        }
+    }
+
+    #endregion
     #region Ket not CSDL
     public class KetnoiDB
     {
