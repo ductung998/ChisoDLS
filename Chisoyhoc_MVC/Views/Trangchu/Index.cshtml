@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ClassChung.chisoyhoc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tenchiso)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenchiso)
+            </td>
+            <td>
+                @Html.ActionLink("Chọn", "Trangtinh", new { id = item.machiso })
+            </td>
+        </tr>
+    }
+</table>
