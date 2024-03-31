@@ -12,31 +12,15 @@
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
-textarea {
-    max-width: 280px;
+textarea,
+button {
+    max-width: 95%;
 }
 
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-input.input-validation-error {
-    border: 1px solid #b94a48;
-}
-
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
-}
-
-.validation-summary-errors {
-    color: #b94a48;
-}
-
-.validation-summary-valid {
-    display: none;
+.tab-textarea {
+    margin-top: 10px; /* Adjust as needed */
+    padding: 10px; /* Adjust as needed */
+    border: 1px solid #ccc; /* Adjust as needed */
+    border-radius: 5px; /* Adjust as needed */
+    font-size: 14px; /* Adjust as needed */
 }
