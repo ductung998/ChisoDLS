@@ -5,95 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chỉ số y học</title>
     @Styles.Render("~/Content/css")
-<<<<<<< Updated upstream
-    @Scripts.Render("~/bundles/modernizr")
-=======
 
     @Scripts.Render("~/bundles/modernizr")
 
->>>>>>> Stashed changes
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-<<<<<<< Updated upstream
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></button>
-            <a class="navbar-brand" href="/">Application name</a>
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav mr-auto">
-                    <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="/Home/About" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="/Home/Contact" class="nav-link">Contact</a></li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right mr-auto">
-                    <li class="nav-item"><a href="/Account/Register" id="registerLink" class="nav-link">Register</a></li>
-                    <li class="nav-item"><a href="/Account/Login" id="loginLink" class="nav-link">Log in</a></li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-=======
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("Trang chủ", "Index", "Trangchu")</li>
                 </ul>
-                @*<ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Đăng ký", "Dangky", "Trangchu")</li>
-                        <li>@Html.ActionLink("Đăng nhập", "Dangnhap", "Trangchu")</li>
-                    </ul>*@
-                @*Đăng nhập*@
-                @if (Session["ID"] != null)
-                {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink(Session["ten"].ToString(), "Index", "Trangchu")</li>
-                        <li>@Html.ActionLink("Đăng xuất", "Dangxuat", "Infor")</li>
-                    </ul>
-                }
-                @*else
-                    {
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>@Html.ActionLink("Đăng ký", "Dangky", "Infor")</li>
-                            <li>@Html.ActionLink("Đăng nhập", "Dangnhap", "Infor")</li>
-                        </ul>
-                    }*@
-
                     @*Tìm kiếm*@
-                    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left" }))
+                    @using (Html.BeginForm("Index", "Trangchu", FormMethod.Post, new { @class = "navbar-form navbar-left" }))
                     {
                         <div class="form-group"><input type="text" name="strSearch" placeholder="Tìm kiếm chỉ số" class="form-control" /></div>
                         <div class=" = form-group"><button type="submit" class="btn btn-default">Tìm kiếm</button></div>
                     }
-                    @*@Html.Partial("_LoginPartial")*@
                 </div>
             </div>
         </div>
         <div class="container body-content">
             @RenderBody()
             <hr />
-            @*<footer>
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-                </footer>*@
         </div>
->>>>>>> Stashed changes
 
 
 

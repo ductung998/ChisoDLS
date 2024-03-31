@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ClassLibrary1.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ClassChung.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="PM_ChisoyhocConnectionString" Type="(Connection string)" Scope="Application">
@@ -9,6 +9,14 @@
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=DESKTOP-SP0BRKD;Initial Catalog=PM_Chisoyhoc;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="PM_ChisoyhocConnectionString1" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=DESKTOP-2I7PF6U;Initial Catalog=PM_Chisoyhoc;User ID=sa;Password=Anhyeu1em&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=DESKTOP-2I7PF6U;Initial Catalog=PM_Chisoyhoc;User ID=sa;Password=Anhyeu1em</Value>
     </Setting>
   </Settings>
 </SettingsFile>
