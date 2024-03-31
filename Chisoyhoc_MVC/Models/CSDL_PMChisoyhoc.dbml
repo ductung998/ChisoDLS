@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PM_Chisoyhoc" Class="CSDL_PMChisoyhocDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-2I7PF6U;Initial Catalog=PM_Chisoyhoc;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PM_ChisoyhocConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.chiso_DSbien" Member="chiso_DSbiens">
+    <Type Name="chiso_DSbien">
+      <Column Name="IDbien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenbien" Type="System.String" DbType="NChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="tendaydu" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="IDPhanloaibien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="biengoc" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="mota" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ghichu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="NB" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="XN" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IDbiengoc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSbien_chiso_DSbienDT" Member="chiso_DSbienDTs" ThisKey="IDbien" OtherKey="IDBien" Type="chiso_DSbienDT" />
+      <Association Name="chiso_DSbien_chiso_DSbienLT" Member="chiso_DSbienLTs" ThisKey="IDbien" OtherKey="IDBien" Type="chiso_DSbienLT" />
+      <Association Name="chiso_DSbien_r_chiso_bien" Member="r_chiso_biens" ThisKey="IDbien" OtherKey="IDBien" Type="r_chiso_bien" />
+      <Association Name="chiso_phanloaibien_chiso_DSbien" Member="chiso_phanloaibien" ThisKey="IDPhanloaibien" OtherKey="IDPhanloaibien" Type="chiso_phanloaibien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_DSBienKQ" Member="chiso_DSBienKQs">
+    <Type Name="chiso_DSBienKQ">
+      <Column Name="IDBienKQ" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenbienKQ" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TendayduKQ" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSBienKQ_chiso_GTBienKQ" Member="chiso_GTBienKQs" ThisKey="IDBienKQ" OtherKey="IDBienKQ" Type="chiso_GTBienKQ" />
+      <Association Name="chisoyhoc_chiso_DSBienKQ" Member="chisoyhoc" ThisKey="machiso" OtherKey="machiso" Type="chisoyhoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_DSbienDT" Member="chiso_DSbienDTs">
+    <Type Name="chiso_DSbienDT">
+      <Column Name="IDBienDT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDBien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="thutu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="giatri" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="diem" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="limit" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="xuly" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSbien_chiso_DSbienDT" Member="chiso_DSbien" ThisKey="IDBien" OtherKey="IDbien" Type="chiso_DSbien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_DSbienLT" Member="chiso_DSbienLTs">
+    <Type Name="chiso_DSbienLT">
+      <Column Name="IDBienLT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDBien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="donvichuan" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IDphanloaidonvi" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="tenkhac" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="chiso_DSbien_chiso_DSbienLT" Member="chiso_DSbien" ThisKey="IDBien" OtherKey="IDbien" Type="chiso_DSbien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_GTBienKQ" Member="chiso_GTBienKQs">
+    <Type Name="chiso_GTBienKQ">
+      <Column Name="IDGTBienKQ" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDBienKQ" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DiemLL" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="DiemUL" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Diengiai" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSBienKQ_chiso_GTBienKQ" Member="chiso_DSBienKQ" ThisKey="IDBienKQ" OtherKey="IDBienKQ" Type="chiso_DSBienKQ" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_phanloaibien" Member="chiso_phanloaibiens">
+    <Type Name="chiso_phanloaibien">
+      <Column Name="IDPhanloaibien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="phanloai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_phanloaibien_chiso_DSbien" Member="chiso_DSbiens" ThisKey="IDPhanloaibien" OtherKey="IDPhanloaibien" Type="chiso_DSbien" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chiso_phanloaiDT" Member="chiso_phanloaiDTs">
+    <Type Name="chiso_phanloaiDT">
+      <Column Name="IDphanloaiDT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chisoyhoc" Member="chisoyhocs">
+    <Type Name="chisoyhoc">
+      <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenchiso" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="phanloai" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="mucdich" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ungdung" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="phuongphap" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="diengiaiketqua" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ghichu" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="tltk" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="thongdung" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="chisoyhoc_chiso_DSBienKQ" Member="chiso_DSBienKQs" ThisKey="machiso" OtherKey="machiso" Type="chiso_DSBienKQ" />
+      <Association Name="chisoyhoc_r_chiso_bien" Member="r_chiso_biens" ThisKey="machiso" OtherKey="machiso" Type="r_chiso_bien" />
+    </Type>
+  </Table>
+  <Table Name="dbo.danhmuc_donvi" Member="danhmuc_donvis">
+    <Type Name="danhmuc_donvi">
+      <Column Name="IDdonvi" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="KyHieu" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="HienThi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ID_PhanloaiDonvi" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DonViRieng" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.danhmuc_phanloaidonvi" Member="danhmuc_phanloaidonvis">
+    <Type Name="danhmuc_phanloaidonvi">
+      <Column Name="IDphanloaidonvi" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="kyhieu" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="mota" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.danhmuc_phannhomchiso" Member="danhmuc_phannhomchisos">
+    <Type Name="danhmuc_phannhomchiso">
+      <Column Name="ID_phannhomchiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="phannhomchiso" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.data_nguoibenh" Member="data_nguoibenhs">
+    <Type Name="data_nguoibenh">
+      <Column Name="ID_NB" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="gioitinh" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ngaysinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="chieucao" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="cannang" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="nhiptim" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="thannhiet" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HATThu" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HATTruong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="hutthuoc" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="THA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DTD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="suytim" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ungthu" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NMCT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dotquytim" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="thieumaunao" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.data_xetnghiem" Member="data_xetnghiems">
+    <Type Name="data_xetnghiem">
+      <Column Name="ID_XN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="creatininSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="creatininUrine" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AST" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ALT" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="BUN" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="bilirubin" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="totalCholesterol" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="triglyceride" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LDL" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HDL" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="RBC" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Hb" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Hct" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="platelet" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WBC" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WBC_EOS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WBC_BAS" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WBC_NEU" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WBC_MONO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WBC_LYMPHO" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="natriSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="kaliSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="calciSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="cloSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="HCO3Serum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="pHSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.hethong_nhanvien" Member="hethong_nhanviens">
+    <Type Name="hethong_nhanvien">
+      <Column Name="ID_nhanvien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="taikhoan" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="matkhau" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tennv" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_chucvu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.hethong_chucvu" Member="hethong_chucvus">
+    <Type Name="hethong_chucvu">
+      <Column Name="ID_chucvu" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenchucvu" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.hethong_quyen" Member="hethong_quyens">
+    <Type Name="hethong_quyen">
+      <Column Name="ID_quyen" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenquyen" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.r_chiso_bien" Member="r_chiso_biens">
+    <Type Name="r_chiso_bien">
+      <Column Name="ID_Chiso_Bien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IDBien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="chiso_DSbien_r_chiso_bien" Member="chiso_DSbien" ThisKey="IDBien" OtherKey="IDbien" Type="chiso_DSbien" IsForeignKey="true" />
+      <Association Name="chisoyhoc_r_chiso_bien" Member="chisoyhoc" ThisKey="machiso" OtherKey="machiso" Type="chisoyhoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.r_hethong_phanquyen" Member="r_hethong_phanquyens">
+    <Type Name="r_hethong_phanquyen">
+      <Column Name="ID_phanquyen" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_nhanvien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_quyen" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.thangdiemyhoc" Member="thangdiemyhocs">
+    <Type Name="thangdiemyhoc">
+      <Column Name="ID_thangdiem" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
