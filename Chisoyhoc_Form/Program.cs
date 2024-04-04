@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Chisoyhoc_Form.TestChiso;
 
 namespace Chisoyhoc_Form
 {

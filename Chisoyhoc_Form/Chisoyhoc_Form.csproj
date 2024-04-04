@@ -104,98 +104,8 @@
     <Compile Include="GiaodienMau\Test2.Designer.cs">
       <DependentUpon>Test2.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestChiso\TestChiso101_110.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso101_110.Designer.cs">
-      <DependentUpon>TestChiso101_110.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso111_120.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso111_120.Designer.cs">
-      <DependentUpon>TestChiso111_120.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso11_20.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso11_20.Designer.cs">
-      <DependentUpon>TestChiso11_20.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso121_130.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso121_130.Designer.cs">
-      <DependentUpon>TestChiso121_130.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso131_140.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso131_140.Designer.cs">
-      <DependentUpon>TestChiso131_140.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso141_150.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso141_150.Designer.cs">
-      <DependentUpon>TestChiso141_150.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso1_10.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso1_10.Designer.cs">
-      <DependentUpon>TestChiso1_10.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestChiso\TestChiso21_30.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso21_30.Designer.cs">
-      <DependentUpon>TestChiso21_30.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso31_40.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso31_40.Designer.cs">
-      <DependentUpon>TestChiso31_40.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso41_50.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso41_50.Designer.cs">
-      <DependentUpon>TestChiso41_50.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso51_60.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso51_60.Designer.cs">
-      <DependentUpon>TestChiso51_60.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso61_70.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso61_70.Designer.cs">
-      <DependentUpon>TestChiso61_70.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso71_80.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso71_80.Designer.cs">
-      <DependentUpon>TestChiso71_80.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso81_90.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso81_90.Designer.cs">
-      <DependentUpon>TestChiso81_90.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso91_100.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestChiso\TestChiso91_100.Designer.cs">
-      <DependentUpon>TestChiso91_100.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="GiaodienMau\FormAPACHEII.resx">
       <DependentUpon>FormAPACHEII.cs</DependentUpon>
     </EmbeddedResource>
@@ -208,27 +118,6 @@
     <EmbeddedResource Include="GiaodienMau\Test2.resx">
       <DependentUpon>Test2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso101_110.resx">
-      <DependentUpon>TestChiso101_110.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso111_120.resx">
-      <DependentUpon>TestChiso111_120.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso11_20.resx">
-      <DependentUpon>TestChiso11_20.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso121_130.resx">
-      <DependentUpon>TestChiso121_130.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso131_140.resx">
-      <DependentUpon>TestChiso131_140.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso141_150.resx">
-      <DependentUpon>TestChiso141_150.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso1_10.resx">
-      <DependentUpon>TestChiso1_10.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -238,30 +127,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TestChiso\TestChiso21_30.resx">
-      <DependentUpon>TestChiso21_30.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso31_40.resx">
-      <DependentUpon>TestChiso31_40.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso41_50.resx">
-      <DependentUpon>TestChiso41_50.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso51_60.resx">
-      <DependentUpon>TestChiso51_60.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso61_70.resx">
-      <DependentUpon>TestChiso61_70.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso71_80.resx">
-      <DependentUpon>TestChiso71_80.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso81_90.resx">
-      <DependentUpon>TestChiso81_90.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestChiso\TestChiso91_100.resx">
-      <DependentUpon>TestChiso91_100.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Chisoyhoc_Form_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using OfficeOpenXml;
 
 namespace ClassChung
 {
@@ -21,7 +20,6 @@ namespace ClassChung
             string excelpath = pathfile;
             string csvpath = Path.GetDirectoryName(pathfile) + "\\" + Path.GetFileNameWithoutExtension(excelpath) + ".csv";
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             Microsoft.Office.Interop.Excel.Application a = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook b = a.Workbooks.Open(pathfile);
 
@@ -75,6 +73,7 @@ namespace ClassChung
             initDB();
         }
         public CSDL_PMChisoyhocDataContext db;
+        
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
@@ -86,7 +85,7 @@ namespace ClassChung
             //Lấy toàn bộ danh sách chỉ số y học
             DSchiso = (from data in db.chisoyhocs
                        select data).ToList();
-
+            
             List<DSchisoyhoc> DSchisoyhoc = new List<DSchisoyhoc>();
             foreach (chisoyhoc chiso in DSchiso)
             {
