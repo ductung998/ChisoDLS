@@ -3983,6 +3983,10 @@ namespace ClassChung
         public double tuoi { get; set; }
         public double Hb { get; set; }
         public double DLCOPredicted { get; set; }
+        public DLCO_Adj()
+        {
+
+        }
         public DLCO_Adj(Nguoibenh nb, Xetnghiem xn)
         {
             Hb = xn.Hb;
@@ -4013,6 +4017,10 @@ namespace ClassChung
     {
         public double SBP { get; set; }
         public double DBP { get; set; }
+        public MAP()
+        {
+
+        }
         public MAP(Nguoibenh NB)
         {
             SBP = NB.HATThu;

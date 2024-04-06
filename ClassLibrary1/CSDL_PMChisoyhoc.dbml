@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PM_Chisoyhoc" EntityNamespace="ClassChung" Class="CSDL_PMChisoyhocDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-SP0BRKD;Initial Catalog=PM_Chisoyhoc;Integrated Security=True" SettingsObjectName="ClassChung.Properties.Settings" SettingsPropertyName="PM_ChisoyhocConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=103.140.249.152;Initial Catalog=PM_Chisoyhoc;Persist Security Info=True;User ID=chisoyhoc" SettingsObjectName="ClassChung.Properties.Settings" SettingsPropertyName="PM_ChisoyhocConnectionString3" Provider="System.Data.SqlClient" />
   <Table Name="dbo.chisoyhoc" Member="chisoyhocs">
     <Type Name="chisoyhoc">
       <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

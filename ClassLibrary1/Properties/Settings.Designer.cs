@@ -55,5 +55,16 @@ namespace ClassChung.Properties {
                 return ((string)(this["PM_ChisoyhocConnectionString2"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=103.140.249.152;Initial Catalog=PM_Chisoyhoc;Persist Security Info=Tr" +
+            "ue;User ID=chisoyhoc;Password=Ahihi123")]
+        public string PM_ChisoyhocConnectionString3 {
+            get {
+                return ((string)(this["PM_ChisoyhocConnectionString3"]));
+            }
+        }
     }
 }
