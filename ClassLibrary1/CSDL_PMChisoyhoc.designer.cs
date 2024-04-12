@@ -60,7 +60,7 @@ namespace ClassChung
     #endregion
 		
 		public CSDL_PMChisoyhocDataContext() : 
-				base(global::ClassChung.Properties.Settings.Default.PM_ChisoyhocConnectionString3, mappingSource)
+				base(global::ClassChung.Properties.Settings.Default.PM_ChisoyhocConnectionString2, mappingSource)
 		{
 			OnCreated();
 		}

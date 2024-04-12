@@ -101,7 +101,7 @@ namespace Chisoyhoc_MVC.Controllers
             string csvFilePath = Path.Combine(Server.MapPath("~/Temp"), Path.GetFileNameWithoutExtension(excelFileName) + ".csv");
 
             // Convert Excel to CSV
-            testing.openFile(excelFilePath);
+            testing.exceltoCSV(excelFilePath);
 
             //// Return the CSV file for download
             //byte[] fileBytes = System.IO.File.ReadAllBytes(csvFilePath);

@@ -14,6 +14,7 @@ namespace Chisoyhoc_Form.GiaodienMau
 {
     public partial class Test2 : Form
     {
+        public DataTable kq2;
         public Test2()
         {
             InitializeComponent();
@@ -49,6 +50,73 @@ namespace Chisoyhoc_Form.GiaodienMau
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string filePath = "";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog.FileName;
+            }
+            Tuongtac.ReadCSV a = new Tuongtac.ReadCSV(filePath);
+            DataTable kq = a.readCSV;
+            textBox3.Text = filePath;
+
+            Tuongtac b = new Tuongtac("");
+
+            kq2 = b.tinhketqua(kq);
+            dataGridView3.DataSource = kq2;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string filePath = "";
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog.FileName;
+            }
+
+            Tuongtac a = new Tuongtac(filePath);
+            a.exceltoCSV(filePath);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string filePath = "";
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog.FileName;
+            }
+
+            Tuongtac a = new Tuongtac(filePath);
+            a.CSVtoexcel(filePath);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.InitialDirectory = "c:\\";
+
+            string filePath = "";
+
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                filePath = savefile.FileName;
+            }
+
+            Tuongtac.DatatableToCSV(kq2, filePath);
         }
 
     }
