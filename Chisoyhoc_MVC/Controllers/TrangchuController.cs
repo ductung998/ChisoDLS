@@ -12,13 +12,32 @@ namespace Chisoyhoc_MVC.Controllers
         CSDL_PMChisoyhocDataContext db = new CSDL_PMChisoyhocDataContext();
         KetnoiDB dbclass = new KetnoiDB();
         // GET: Trangchu
-        public ActionResult Index(string strSearch)
+        public ActionResult Index(string strSearch, string filterType, int? page)
         {
-            List<chisoyhoc> obj = db.chisoyhocs.ToList();
+            IQueryable<chisoyhoc> query = db.chisoyhocs;
+
+            if (filterType == "thongdung")
+            {
+                query = query.Where(x => x.thongdung == 1);
+            }
+
             if (!String.IsNullOrEmpty(strSearch))
             {
-                obj = obj.Where(x => x.tenchiso.ToUpper().Contains(strSearch.ToUpper())).ToList();
+                query = query.Where(x => x.tenchiso.ToUpper().Contains(strSearch.ToUpper()));
             }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            var obj = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            int totalCount = query.Count();
+
+            ViewBag.StrSearch = strSearch;
+            ViewBag.FilterType = filterType;
+            ViewBag.PageSize = pageSize;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.TotalCount = totalCount;
             return View(obj);
         }
 
