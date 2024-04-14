@@ -583,12 +583,14 @@ ol ol {
 .list-inline {
   padding-left: 0;
   list-style: none;
+  color: white;
 }
 
 .list-inline > li {
   display: inline-block;
   padding-right: 5px;
   padding-left: 5px;
+  color: white;
 }
 
 dl {
@@ -3786,7 +3788,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .nav {
   padding-left: 0;
-  margin-bottom: 0;
+  margin-bottom: 20;
   list-style: none;
 }
 

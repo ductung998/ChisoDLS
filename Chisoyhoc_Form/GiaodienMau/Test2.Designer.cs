@@ -44,6 +44,9 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.button8 = new System.Windows.Forms.Button();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -196,11 +199,40 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(19, 593);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(976, 230);
+            this.textBox4.TabIndex = 16;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(859, 521);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(136, 50);
+            this.button8.TabIndex = 17;
+            this.button8.Text = "Test NCKH";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(687, 524);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(166, 22);
+            this.textBox5.TabIndex = 18;
+            // 
             // Test2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 835);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.textBox4);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox3);
@@ -246,5 +278,8 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.TextBox textBox5;
     }
 }

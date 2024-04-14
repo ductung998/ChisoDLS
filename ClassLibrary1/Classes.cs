@@ -172,13 +172,15 @@ namespace ClassChung
             //Khởi tạo kết nối với CSDL
             initDB();
         }
-        public CSDL_PMChisoyhocDataContext db;
+        //public CSDL_PMChisoyhocDataContext db;
+        public CSDL_CSYH_ServerDataContext db;
         
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
             //Tạo kết nối LINQ to SQL
-            db = new CSDL_PMChisoyhocDataContext();
+            //db = new CSDL_PMChisoyhocDataContext();
+            db = new CSDL_CSYH_ServerDataContext();
         }
         public List<DSchisoyhoc> GetDSchisoyhoc()
         {
@@ -302,21 +304,20 @@ namespace ClassChung
         {
             //Trả về BienLT với IDbien tương ứng (BienLT là class con của Bien, có thêm một số thuộc tính)
             chiso_DSbienLT bienLTgoc = (from data in db.chiso_DSbienLTs
-                                        where data.ID_Bien == _idbien
+                                        where data.IDBien == _idbien
                                         select data).FirstOrDefault();
             BienLT kq = new BienLT(Getbien(_idbien), bienLTgoc.donvichuan, bienLTgoc.IDphanloaidonvi);
             return kq;
         }
         public BienDT GetbienDT(int _idbien)
         {
-            //Trả về BienLT với IDbien tương ứng (BienDT là class con của Bien, có thêm một số thuộc tính)
+            //Trả về BienDT với IDbien tương ứng (BienDT là class con của Bien, có thêm một số thuộc tính)
             chiso_DSbienDT bienDTgoc = (from data in db.chiso_DSbienDTs
                                         where data.IDBien == _idbien
                                         select data).FirstOrDefault();
             List<GiatribienDT> DSgiatri = GetGiatribienDT(_idbien);
 
-            BienDT kq = new BienDT(Getbien(_idbien), DSgiatri.Count(), bienDTgoc.xuly);
-            kq.initBienDT();
+            BienDT kq = new BienDT(Getbien(_idbien), DSgiatri, bienDTgoc.xuly);
 
             return kq;
         }
@@ -435,8 +436,49 @@ namespace ClassChung
         {
             List<NCKH> listNCKH = GetNCKH(_input);
             List<string> kq = new List<string>();
+            int demchiso = 1;
+            foreach (NCKH i in listNCKH)
+            {
+                StringBuilder chiso = new StringBuilder();
+                chiso.AppendLine(demchiso.ToString() + ". " + GetTenchiso(i.machiso) + " (" + i.machiso + ")");
+                chiso.AppendLine("Số lượng biến: " + i.dsbien.Count);
+                chiso.AppendLine("");
 
+                int biendem = 1;
+                foreach (DSBienCSYH j in i.dsbien)
+                {
+                    chiso.AppendLine(demchiso.ToString() + "." + biendem.ToString() + ". Tên biến: " + j.tenbien.Trim());
+                    chiso.AppendLine("Tên đầy đủ: " + j.tendaydu);
+                    chiso.AppendLine("Loại biến: " + ((j.idloaibien == 1)? "Liên tục" : (j.idloaibien == 3) ? "Định tính" : "Định tính định lượng"));
+                    chiso.AppendLine(XulygiatribienNCKH(j.idbien, j.idloaibien));
+                    biendem++;
+                }
+                chiso.AppendLine("---");
+
+                kq.Add(chiso.ToString());
+                demchiso++;
+            }
             return kq;
+        }
+        public string XulygiatribienNCKH(int _idbien, int _idloaibien)
+        {
+            StringBuilder kq = new StringBuilder();
+            if (_idloaibien == 1)
+            {
+                BienLT xuly = GetbienLT(_idbien);
+                kq.AppendLine("Đơn vị chuẩn: " + xuly.donvichuan);
+            }
+            else
+            {
+                BienDT xuly = GetbienDT(_idbien);
+                kq.AppendLine("Danh sách giá trị biến: (mã hóa): giá trị tương ứng");
+                foreach (GiatribienDT i in xuly.giatribien)
+                {
+                    kq.AppendLine("(" + i.thutu + "): " + i.giatri);
+                }
+            }
+            
+            return kq.ToString();
         }
         public DataTable BangDSBienGop(string _input)
         {
@@ -454,15 +496,15 @@ namespace ClassChung
         public class NCKH
         {
             public string machiso { get; set; }
-            public List<DSBienCSYH> dsidbien { get; set; }
+            public List<DSBienCSYH> dsbien { get; set; }
             public NCKH()
             {
                 
             }
-            public NCKH(string _machiso, List<DSBienCSYH> _dsidbien)
+            public NCKH(string _machiso, List<DSBienCSYH> _dsbien)
             {
                 machiso = _machiso;
-                dsidbien = _dsidbien;
+                dsbien = _dsbien;
             }
         }
         #endregion
@@ -2380,16 +2422,13 @@ namespace ClassChung
     public class BienDT : Bien
     {
         public int sogiatri { get; set; }
-        public BienDT(Bien _bien, int _sogiatri, bool _bienxuly)
+        public BienDT(Bien _bien, List<GiatribienDT> _dsgiatri, bool _bienxuly)
         {
             initDB();
             setBien(_bien.idbien, _bien.tenbien, _bien.tendaydu, _bien.idloaibien, _bien.idbiengoc);
-            sogiatri = _sogiatri;
+            sogiatri = _dsgiatri.Count;
             bienxuly = _bienxuly;
-        }
-        public void initBienDT()
-        {
-            giatribien = db.GetGiatribienDT(idbien);
+            giatribien = _dsgiatri;
         }
     }
     public class GiatribienDT
@@ -4964,6 +5003,7 @@ namespace ClassChung
         }
         public PELD_New(Nguoibenh nb, Xetnghiem xn)
         {
+            gioitinh = nb.gioitinh;
             ngaysinh = nb.ngaysinh;
             chieucao = nb.chieucao;
             cannang = nb.cannang;
@@ -4977,6 +5017,7 @@ namespace ClassChung
             double _Bilirubin_HC, double _INR_HC, double _Albumin_HC, DateTime _NgayXetNghiem,
             DateTime _NgaySinh, bool _LocMau)
         {
+            gioitinh = _gioitinh;
             ngayxetnghiem = _NgayXetNghiem;
             ngaysinh = _NgaySinh;
             chieucao = _chieucao;

@@ -23,7 +23,7 @@ namespace ClassChung
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PM_Chisoyhoc")]
-	public partial class CSDL_PMChisoyhocDataContext : System.Data.Linq.DataContext
+	public partial class CSDL_CSYH_ServerDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -89,31 +89,31 @@ namespace ClassChung
     partial void Deleter_hethong_phanquyen(r_hethong_phanquyen instance);
     #endregion
 		
-		public CSDL_PMChisoyhocDataContext() : 
-				base(global::ClassChung.Properties.Settings.Default.PM_ChisoyhocConnectionString4, mappingSource)
+		public CSDL_CSYH_ServerDataContext() : 
+				base(global::ClassChung.Properties.Settings.Default.PM_ChisoyhocConnectionString3, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public CSDL_PMChisoyhocDataContext(string connection) : 
+		public CSDL_CSYH_ServerDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public CSDL_PMChisoyhocDataContext(System.Data.IDbConnection connection) : 
+		public CSDL_CSYH_ServerDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public CSDL_PMChisoyhocDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public CSDL_CSYH_ServerDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public CSDL_PMChisoyhocDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public CSDL_CSYH_ServerDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -1857,7 +1857,7 @@ namespace ClassChung
 		
 		private string _tltk;
 		
-		private System.Nullable<bool> _thongdung;
+		private System.Nullable<double> _thongdung;
 		
 		private EntitySet<chiso_DSBienKQ> _chiso_DSBienKQs;
 		
@@ -1885,7 +1885,7 @@ namespace ClassChung
     partial void OnghichuChanged();
     partial void OntltkChanging(string value);
     partial void OntltkChanged();
-    partial void OnthongdungChanging(System.Nullable<bool> value);
+    partial void OnthongdungChanging(System.Nullable<double> value);
     partial void OnthongdungChanged();
     #endregion
 		
@@ -2076,8 +2076,8 @@ namespace ClassChung
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thongdung", DbType="Bit")]
-		public System.Nullable<bool> thongdung
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_thongdung", DbType="Float")]
+		public System.Nullable<double> thongdung
 		{
 			get
 			{

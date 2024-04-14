@@ -1,108 +1,168 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 11" name="CSDL_PMChisoyhoc">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14, 19.5" name="CSDL_PMChisoyhoc">
   <DataContextMoniker Name="/CSDL_PMChisoyhocDataContext" />
   <nestedChildShapes>
-    <classShape Id="73f3bda1-53f2-497e-975e-4e6390fa507f" absoluteBounds="3.5, 0.75, 2, 2.7324039713541666">
-      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chisoyhoc" />
-      <nestedChildShapes>
-        <elementListCompartment Id="1e3691b0-2d73-4464-905c-2213078852b5" absoluteBounds="3.515, 1.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="5769ffed-63df-4e50-adac-bb37fbe576fe" absoluteBounds="0.75, 5.5, 2, 1.1939925130208335">
-      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_phanloaibien" />
-      <nestedChildShapes>
-        <elementListCompartment Id="47b090c4-709a-476c-a474-1d772a11435c" absoluteBounds="0.765, 5.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="c68a43dc-bd90-4b7d-9bc1-b5357ebaa688" absoluteBounds="0.75, 9.375, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_phanloaiDT" />
-      <nestedChildShapes>
-        <elementListCompartment Id="4ceaa23e-e440-4ec4-9499-55f4a41fdad4" absoluteBounds="0.765, 9.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="ed9893c3-6028-49aa-a617-094045bd8e12" absoluteBounds="6.25, 3.375, 2, 1.3862939453125005">
-      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/r_chiso_bien" />
-      <nestedChildShapes>
-        <elementListCompartment Id="4c22ccfb-c555-4249-9918-4458920aa3e0" absoluteBounds="6.265, 3.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(5.40625 : 3.48240397135417); (5.40625 : 3.89745248567708); (6.25 : 3.89745248567708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chisoyhoc/chisoyhoc_r_chiso_bien" />
-      <nodes>
-        <classShapeMoniker Id="73f3bda1-53f2-497e-975e-4e6390fa507f" />
-        <classShapeMoniker Id="ed9893c3-6028-49aa-a617-094045bd8e12" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="ee27929a-5685-486d-91ea-f89bbf0b65d1" absoluteBounds="3.25, 4.375, 2, 3.1170068359375">
+    <classShape Id="6ecad93e-dc51-4f6f-973f-21f13dd56dee" absoluteBounds="3.5, 4.5, 2, 3.1170068359375005">
       <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien" />
       <nestedChildShapes>
-        <elementListCompartment Id="ac7fc9f6-1d5b-4a7b-9eec-adf73a601da2" absoluteBounds="3.265, 4.835, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="22876cf7-8496-4d29-8d28-7d9dcb13f1b5" absoluteBounds="3.515, 4.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.25 : 4.56814697265625); (6.25 : 4.56814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien/chiso_DSbien_r_chiso_bien" />
-      <nodes>
-        <classShapeMoniker Id="ee27929a-5685-486d-91ea-f89bbf0b65d1" />
-        <classShapeMoniker Id="ed9893c3-6028-49aa-a617-094045bd8e12" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.09699625651042); (3.25 : 6.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_phanloaibien/chiso_phanloaibien_chiso_DSbien" />
-      <nodes>
-        <classShapeMoniker Id="5769ffed-63df-4e50-adac-bb37fbe576fe" />
-        <classShapeMoniker Id="ee27929a-5685-486d-91ea-f89bbf0b65d1" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="9ce3fc08-a3c2-4724-b72f-aa671bcec1c2" absoluteBounds="6.5, 6, 2, 1.7708968098958331">
-      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbienLT" />
+    <classShape Id="cf777a02-44cb-4ac1-a7af-f9eae236b034" absoluteBounds="0.75, 9.25, 2, 1.0016910807291666">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/thangdiemyhoc" />
       <nestedChildShapes>
-        <elementListCompartment Id="0fc7b1a3-3d00-414f-ae6a-fd73acf5b74a" absoluteBounds="6.515, 6.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7f801127-267b-4ef4-ad78-79ad76882cc1" absoluteBounds="0.765, 9.71, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.25 : 6.74600341796875); (6.5 : 6.74600341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien/chiso_DSbien_chiso_DSbienLT" />
-      <nodes>
-        <classShapeMoniker Id="ee27929a-5685-486d-91ea-f89bbf0b65d1" />
-        <classShapeMoniker Id="9ce3fc08-a3c2-4724-b72f-aa671bcec1c2" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="189b7542-5d0c-4fa2-a1c2-3d1a581dd8c6" absoluteBounds="4.75, 8.625, 2, 2.1554996744791666">
+    <classShape Id="f4775d61-b562-43ee-808f-fc683551fb9b" absoluteBounds="6.25, 8.375, 2, 2.1554996744791666">
       <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbienDT" />
       <nestedChildShapes>
-        <elementListCompartment Id="94c32ecc-bd7d-4e1f-a622-468abef812bf" absoluteBounds="4.765, 9.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="08492123-a8db-492b-ac12-e22dbf25df3c" absoluteBounds="6.265, 8.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5 : 7.4920068359375); (5 : 8.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien/chiso_DSbien_chiso_DSbienDT" />
-      <nodes>
-        <classShapeMoniker Id="ee27929a-5685-486d-91ea-f89bbf0b65d1" />
-        <classShapeMoniker Id="189b7542-5d0c-4fa2-a1c2-3d1a581dd8c6" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="4c49b7ed-6099-4c6f-a50c-b589751373c3" absoluteBounds="9, 3, 2, 1.7708968098958327">
-      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_GTBienKQ" />
-      <nestedChildShapes>
-        <elementListCompartment Id="2f50e05e-47ab-4f81-a187-7e2932d210c6" absoluteBounds="9.015, 3.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="8be2fee5-bb7c-4f95-a33c-0db1d3a49c05" absoluteBounds="6.25, 0.75, 2, 1.5785953776041666">
+    <classShape Id="5695b87b-2a9a-41a3-ae34-f9875a272a1a" absoluteBounds="6.25, 11.5, 2, 1.5785953776041666">
       <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSBienKQ" />
       <nestedChildShapes>
-        <elementListCompartment Id="486f7785-26a3-48eb-9bb8-ca3bfff357ef" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d93c6590-fe26-45da-addd-73cf7a562b1c" absoluteBounds="6.265, 11.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.25 : 1.53929768880208); (10 : 1.53929768880208); (10 : 3)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSBienKQ/chiso_DSBienKQ_chiso_GTBienKQ" />
+    <classShape Id="1921a809-3558-400d-96bd-08cd81c6a117" absoluteBounds="6.25, 5.875, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbienLT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="02ad4c2a-61f4-4f8b-9853-cb40058813ac" absoluteBounds="6.265, 6.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="da318098-928f-47e1-8ee1-1b9dde327eac" absoluteBounds="9, 11.5, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_GTBienKQ" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1ff2f627-6e12-4490-b37c-2dca0b38476e" absoluteBounds="9.015, 11.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a2c59eed-3070-4589-80e1-77cbbda7a68f" absoluteBounds="0.75, 5.5, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_phanloaibien" />
+      <nestedChildShapes>
+        <elementListCompartment Id="592f1f74-108d-4adb-b8e4-da0747b35b5e" absoluteBounds="0.765, 5.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5b7aec6a-77af-4992-b6d2-dd8a6b2fcbb3" absoluteBounds="8.75, 2.25, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_phanloaiDT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c1c4a160-b3d2-460a-a6d3-14a77816fa84" absoluteBounds="8.765, 2.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="eb5ccc08-ecbe-4bec-ad0e-f31a7d2f6844" absoluteBounds="3.5, 0.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/chisoyhoc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5276cfd3-926e-4fcc-acf8-ad3c09423d67" absoluteBounds="3.515, 1.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="af71e9cb-080a-4910-8b65-aca14d59d7da" absoluteBounds="8.75, 4.25, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/danhmuc_donvi" />
+      <nestedChildShapes>
+        <elementListCompartment Id="62f3b99f-8457-4a3d-9f26-186591881493" absoluteBounds="8.765, 4.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="723d1f6d-bb32-4e81-b055-a0a66409248c" absoluteBounds="8.75, 7.25, 2, 1.5785953776041675">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/danhmuc_phanloaidonvi" />
+      <nestedChildShapes>
+        <elementListCompartment Id="22de9911-dd29-4193-8221-4e79a9f1342b" absoluteBounds="8.765, 7.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8e459ee2-2ef8-4093-966d-78abdc70d2d5" absoluteBounds="0.75, 11.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/danhmuc_phannhomchiso" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e1b4e057-25b1-4cfd-99ca-090cb8b0b471" absoluteBounds="0.765, 11.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="90432089-42b0-4698-bc4b-373e6655036e" absoluteBounds="11.75, 2.25, 2, 4.2708154296874987">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/data_nguoibenh" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b38c912e-4b7b-43b0-ae51-c5ba106cc93e" absoluteBounds="11.765, 2.71, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7799e08b-4949-4554-9279-a2745668f473" absoluteBounds="0.75, 13.25, 2, 6.0015283203124987">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/data_xetnghiem" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e038aec7-ff5a-4341-bbef-92ed7bd8b914" absoluteBounds="0.765, 13.71, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="66edae3d-e406-456f-ae06-590bd43a6daa" absoluteBounds="11.75, 8.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/hethong_chucvu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9b2ddfd6-899c-49ed-98de-c5c4a6d1b02f" absoluteBounds="11.765, 8.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2acd7749-1051-4b0a-9d7c-f10395d620d9" absoluteBounds="11.75, 10.25, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/hethong_nhanvien" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fa760997-7bab-48e0-8985-28151bac1ef0" absoluteBounds="11.765, 10.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dd2f94f5-c3b8-4c2e-8fb9-cc2afd8a2888" absoluteBounds="11.75, 13.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/hethong_quyen" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4e3ca5ca-e131-4d97-b72c-127c186c63d7" absoluteBounds="11.765, 13.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3dff8c76-56b3-4664-978a-0c96118cb1d9" absoluteBounds="6.25, 3.375, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/r_chiso_bien" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c6207b1c-03c6-4a11-a44b-51fc0a71d866" absoluteBounds="6.265, 3.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f29dae67-8b43-40fe-95c5-ccbd9d9f34ff" absoluteBounds="3.75, 14.25, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/CSDL_PMChisoyhocDataContext/r_hethong_phanquyen" />
+      <nestedChildShapes>
+        <elementListCompartment Id="319b4d4e-04b3-4e6c-acc8-7fa51aac8ffd" absoluteBounds="3.765, 14.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.5 : 7.6170068359375); (4.5 : 9.45274983723958); (5.79166666666667 : 9.45274983723958 : JumpStart); (5.95833333333333 : 9.45274983723958 : JumpEnd); (6.25 : 9.45274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien/chiso_DSbien_chiso_DSbienDT" />
       <nodes>
-        <classShapeMoniker Id="8be2fee5-bb7c-4f95-a33c-0db1d3a49c05" />
-        <classShapeMoniker Id="4c49b7ed-6099-4c6f-a50c-b589751373c3" />
+        <classShapeMoniker Id="6ecad93e-dc51-4f6f-973f-21f13dd56dee" />
+        <classShapeMoniker Id="f4775d61-b562-43ee-808f-fc683551fb9b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 1.53929768880208); (6.25 : 1.53929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 6.74600341796875); (5.79166666666667 : 6.74600341796875 : JumpStart); (5.95833333333333 : 6.74600341796875 : JumpEnd); (6.25 : 6.74600341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien/chiso_DSbien_chiso_DSbienLT" />
+      <nodes>
+        <classShapeMoniker Id="6ecad93e-dc51-4f6f-973f-21f13dd56dee" />
+        <classShapeMoniker Id="1921a809-3558-400d-96bd-08cd81c6a117" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 12.2892976888021); (9 : 12.2892976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSBienKQ/chiso_DSBienKQ_chiso_GTBienKQ" />
+      <nodes>
+        <classShapeMoniker Id="5695b87b-2a9a-41a3-ae34-f9875a272a1a" />
+        <classShapeMoniker Id="da318098-928f-47e1-8ee1-1b9dde327eac" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 6.09699625651042); (3.5 : 6.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_phanloaibien/chiso_phanloaibien_chiso_DSbien" />
+      <nodes>
+        <classShapeMoniker Id="a2c59eed-3070-4589-80e1-77cbbda7a68f" />
+        <classShapeMoniker Id="6ecad93e-dc51-4f6f-973f-21f13dd56dee" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 3.48086450981571); (5.875 : 3.85586450981571); (5.875 : 12.2892976888021); (6.25 : 12.2892976888021)]" fixedFrom="NotFixed" fixedTo="Algorithm">
       <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chisoyhoc/chisoyhoc_chiso_DSBienKQ" />
       <nodes>
-        <classShapeMoniker Id="73f3bda1-53f2-497e-975e-4e6390fa507f" />
-        <classShapeMoniker Id="8be2fee5-bb7c-4f95-a33c-0db1d3a49c05" />
+        <classShapeMoniker Id="eb5ccc08-ecbe-4bec-ad0e-f31a7d2f6844" />
+        <classShapeMoniker Id="5695b87b-2a9a-41a3-ae34-f9875a272a1a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 4.56153746153846); (5.81607443490112 : 4.24546302663734 : JumpStart); (5.93392556509888 : 4.12761189643958 : JumpEnd); (6.0625 : 3.99903746153846); (6.0625 : 4.9487939453125); (6.25 : 4.7612939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chiso_DSbien/chiso_DSbien_r_chiso_bien" />
+      <nodes>
+        <classShapeMoniker Id="6ecad93e-dc51-4f6f-973f-21f13dd56dee" />
+        <classShapeMoniker Id="3dff8c76-56b3-4664-978a-0c96118cb1d9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 2.0624995); (7.25 : 2.0624995); (7.25 : 3.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CSDL_PMChisoyhocDataContext/chisoyhoc/chisoyhoc_r_chiso_bien" />
+      <nodes>
+        <classShapeMoniker Id="eb5ccc08-ecbe-4bec-ad0e-f31a7d2f6844" />
+        <classShapeMoniker Id="3dff8c76-56b3-4664-978a-0c96118cb1d9" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

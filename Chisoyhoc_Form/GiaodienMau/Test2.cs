@@ -33,7 +33,7 @@ namespace Chisoyhoc_Form.GiaodienMau
             KetnoiDB db = new KetnoiDB();
 
             dataGridView1.DataSource = db.GetDSchisoyhoc(); ;
-
+            textBox5.Text = "C_A01-C_A02";
             //Chisoyhoc a = new Chisoyhoc()
         }
         public class ComboBoxItem
@@ -117,6 +117,20 @@ namespace Chisoyhoc_Form.GiaodienMau
             }
 
             Tuongtac.DatatableToCSV(kq2, filePath);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string input = textBox5.Text;
+            KetnoiDB db = new KetnoiDB();
+            List<string> show = db.GetdiengiaiNCKH(input);
+
+            StringBuilder a = new StringBuilder();
+            foreach (string i in show)
+            {
+                a.Append(i);
+            }
+            textBox4.Text = a.ToString();
         }
 
     }

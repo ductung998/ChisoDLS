@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PM_Chisoyhoc" EntityNamespace="ClassChung" Class="CSDL_PMChisoyhocDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-SP0BRKD;Initial Catalog=PM_Chisoyhoc;Integrated Security=True" SettingsObjectName="ClassChung.Properties.Settings" SettingsPropertyName="PM_ChisoyhocConnectionString4" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PM_Chisoyhoc" Class="CSDL_CSYH_ServerDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=103.140.249.152;Initial Catalog=PM_Chisoyhoc;Persist Security Info=True;User ID=chisoyhoc" SettingsObjectName="ClassChung.Properties.Settings" SettingsPropertyName="PM_ChisoyhocConnectionString3" Provider="System.Data.SqlClient" />
   <Table Name="dbo.chiso_DSbien" Member="chiso_DSbiens">
     <Type Name="chiso_DSbien">
       <Column Name="IDbien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -91,7 +91,7 @@
       <Column Name="diengiaiketqua" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ghichu" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="tltk" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="thongdung" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="thongdung" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Association Name="chisoyhoc_chiso_DSBienKQ" Member="chiso_DSBienKQs" ThisKey="machiso" OtherKey="machiso" Type="chiso_DSBienKQ" />
       <Association Name="chisoyhoc_r_chiso_bien" Member="r_chiso_biens" ThisKey="machiso" OtherKey="machiso" Type="r_chiso_bien" />
     </Type>

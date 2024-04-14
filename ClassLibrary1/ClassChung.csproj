@@ -67,10 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes.cs" />
-    <Compile Include="CSDL_PMChisoyhoc.designer.cs">
-      <DependentUpon>CSDL_PMChisoyhoc.dbml</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="CSDL_CSYH_Server.designer.cs">
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CSDL_CSYH_Server.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -81,8 +81,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="CSDL_PMChisoyhoc.dbml.layout">
-      <DependentUpon>CSDL_PMChisoyhoc.dbml</DependentUpon>
+    <None Include="CSDL_CSYH_Server.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>CSDL_CSYH_Server.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -95,14 +97,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CSDL_PMChisoyhoc.dbml">
-      <SubType>Designer</SubType>
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>CSDL_PMChisoyhoc.designer.cs</LastGenOutput>
-    </Content>
+    <Folder Include="temp\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="temp\" />
+    <None Include="CSDL_CSYH_Server.dbml.layout">
+      <DependentUpon>CSDL_CSYH_Server.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
