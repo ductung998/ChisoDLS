@@ -13,32 +13,13 @@ namespace Chisoyhoc_MVC.Controllers
         //CSDL_PMChisoyhocDataContext db = new CSDL_PMChisoyhocDataContext();
         KetnoiDB dbclass = new KetnoiDB();
         // GET: Trangchu
-        public ActionResult Index(string strSearch, string filterType, int? page)
+        public ActionResult Index(string strSearch)
         {
-            IQueryable<chisoyhoc> query = db.chisoyhocs;
-
-            if (filterType == "thongdung")
-            {
-                query = query.Where(x => x.thongdung == 1);
-            }
-
+            List<chisoyhoc> obj = db.chisoyhocs.ToList();
             if (!String.IsNullOrEmpty(strSearch))
             {
-                query = query.Where(x => x.tenchiso.ToUpper().Contains(strSearch.ToUpper()));
+                obj = obj.Where(x => x.tenchiso.ToUpper().Contains(strSearch.ToUpper())).ToList();
             }
-
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-
-            var obj = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-            int totalCount = query.Count();
-
-            ViewBag.StrSearch = strSearch;
-            ViewBag.FilterType = filterType;
-            ViewBag.PageSize = pageSize;
-            ViewBag.PageNumber = pageNumber;
-            ViewBag.TotalCount = totalCount;
             return View(obj);
         }
 
@@ -47,138 +28,12 @@ namespace Chisoyhoc_MVC.Controllers
         {
             string input = "";
             object viewModelModel = null;
-            ViewBag.Id = id;
-            ViewBag.Tenchiso = dbclass.GetTenchiso(id);
-            List<Bien> DSbien = dbclass.GetDSbien(id);
-            List<string> bienNames = new List<string>();
-            if (id == "C_B18")
+            if (id != null)
             {
-                #region C_B18
-                string dauvao = "";
-                foreach (var bien in DSbien)
-                {
-                    bienNames.Add(bien.tenbien);
-                }
-
-                for (int i = 0; i < bienNames.Count(); i++)
-                {
-                    string a = bienNames[i].Trim();
-                    dauvao += Request.Form[a] + "_";
-                }
-                dauvao = dauvao.TrimEnd('_');
-                if (dauvao.Length >= 21)
-                {
-                    int nam_1 = int.Parse(dauvao.Substring(0, 4));
-                    int thang_1 = int.Parse(dauvao.Substring(5, 2));
-                    int ngay_1 = int.Parse(dauvao.Substring(8, 2));
-                    int nam_2 = int.Parse(dauvao.Substring(11, 4));
-                    int thang_2 = int.Parse(dauvao.Substring(16, 2));
-                    int ngay_2 = int.Parse(dauvao.Substring(19, 2));
-                    DateTime ngayKNcuoi = new DateTime(nam_1, thang_1, ngay_1);
-                    DateTime ngaysieuam = new DateTime(nam_2, thang_2, ngay_2);
-                    string kncuoi = KetnoiDB.datetimetonumber(ngayKNcuoi);
-                    string sieuam = KetnoiDB.datetimetonumber(ngaysieuam);
-                    string cat = dauvao.Substring(21);
-                    input = kncuoi + "_" + sieuam + cat;
-                }
-                #endregion
-                viewModelModel = Initchiso(id);
-            }
-            else if (id == "C_B23")
-            {
-                #region C_B23
-                string dauvao = "";
-                string dauvao0 = "";
-                string dauvao1 = "";
-                string dauvao2 = "";
-                string dauvao3 = "";
-                string dauvao4 = "";
-                string dauvao5 = "";
-                string dauvao6 = "";
-                string dauvao7 = "";
-                string dauvao8 = "";
-                string dauvao9 = "";
-                foreach (var bien in DSbien)
-                {
-                    bienNames.Add(bien.tenbien);
-                }
-
-                for (int i = 0; i < bienNames.Count(); i++)
-                {
-                    string a = bienNames[i].Trim();
-                    if (i == 0)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao0 = dauvao;
-                    }
-                    else if (i == 1)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao1 = dauvao;
-                    }
-                    else if (i == 2)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao2 = dauvao;
-                    }
-                    else if (i == 3)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao3 = dauvao;
-                    }
-                    else if (i == 4)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao4 = dauvao;
-                    }
-                    else if (i == 5)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao5 = dauvao;
-                    }
-                    else if (i == 6)
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao6 = dauvao;
-                    }
-                    else if (i == 7)
-                    {
-                        dauvao = Request.Form[a];
-                        if (!string.IsNullOrEmpty(dauvao))
-                        {
-                            int nam_7 = int.Parse(dauvao.Substring(0, 4));
-                            int thang_7 = int.Parse(dauvao.Substring(5, 2));
-                            int ngay_7 = int.Parse(dauvao.Substring(8, 2));
-                            DateTime ngayxetnghiem = new DateTime(nam_7, thang_7, ngay_7);
-                            dauvao7 = KetnoiDB.datetimetonumber(ngayxetnghiem);
-                        }
-                    }
-                    else if (i == 8)
-                    {
-                        dauvao = Request.Form[a];
-                        if (!string.IsNullOrEmpty(dauvao))
-                        {
-                            int nam_8 = int.Parse(dauvao.Substring(0, 4));
-                            int thang_8 = int.Parse(dauvao.Substring(5, 2));
-                            int ngay_8 = int.Parse(dauvao.Substring(8, 2));
-                            DateTime ngayxetnghiem = new DateTime(nam_8, thang_8, ngay_8);
-                            dauvao8 = KetnoiDB.datetimetonumber(ngayxetnghiem);
-                        }
-
-                    }
-                    else
-                    {
-                        dauvao = Request.Form[a];
-                        dauvao9 = dauvao;
-                    }
-                }
-                input = dauvao0 + "_" + dauvao1 + "_" + dauvao2 + "_" + dauvao3 + "_" + dauvao4 + "_" + dauvao5 + "_" + dauvao6 + "_" + dauvao7 + "_" + dauvao8 + "_" + dauvao9;
-
-                #endregion
-                viewModelModel = Initchiso(id);
-            }
-            else if (id != null && id != "C_B18" && id != "C_B23")
-            {
+                ViewBag.Id = id;
+                ViewBag.Tenchiso = dbclass.GetTenchiso(id);
+                List<Bien> DSbien = dbclass.GetDSbien(id);
+                List<string> bienNames = new List<string>();
                 foreach (var bien in DSbien)
                 {
                     bienNames.Add(bien.tenbien);
@@ -250,48 +105,6 @@ namespace Chisoyhoc_MVC.Controllers
                         };
                         return Json(jsonResult);
                     }
-                    else if (id == "C_B10" || id == "C_B11" || id == "C_B12")
-                    {
-                        string ketqua = kq[3];
-                        string diengiai = kq[1] + ":\n" + kq[2];
-                        var jsonResult = new
-                        {
-                            Ketqua = ketqua,
-                            Diengiai = diengiai
-                        };
-                        return Json(jsonResult);
-                    }
-                    else if (id == "C_B13" || id == "C_B15")
-                    {
-                        string ketquacb13_1 = kq[2];
-                        string ketquacb13_2 = kq[3];
-                        string ketquacb13_3 = kq[4];
-                        var jsonResult = new
-                        {
-                            Ketquacb13_1 = ketquacb13_1,
-                            Ketquacb13_2 = ketquacb13_2,
-                            Ketquacb13_3 = ketquacb13_3
-                        };
-                        return Json(jsonResult);
-                    }
-                    else if (id == "C_B18")
-                    {
-                        string ketqua = kq[4];
-                        var jsonResult = new
-                        {
-                            Ketqua = ketqua
-                        };
-                        return Json(jsonResult);
-                    }
-                    else if (id == "C_B20" || id == "C_C16")
-                    {
-                        string ketqua = kq[2];
-                        var jsonResult = new
-                        {
-                            Ketqua = ketqua
-                        };
-                        return Json(jsonResult);
-                    }
                     else if (id == "C_C12")
                     {
                         string kqcc12_1 = kq[2];
@@ -304,21 +117,6 @@ namespace Chisoyhoc_MVC.Controllers
                             Kqcc12_2 = kqcc12_2,
                             Kqcc12_3 = kqcc12_3,
                             Kqcc12_4 = kqcc12_4
-                        };
-                        return Json(jsonResult);
-                    }
-                    else if (id == "C_C15")
-                    {
-                        string kqcc15_1 = kq[2];
-                        string kqcc15_2 = kq[3];
-                        string kqcc15_3 = kq[4];
-                        string kqcc15_4 = kq[5];
-                        var jsonResult = new
-                        {
-                            Kqcc15_1 = kqcc15_1,
-                            Kqcc15_2 = kqcc15_2,
-                            Kqcc15_3 = kqcc15_3,
-                            Kqcc15_4 = kqcc15_4
                         };
                         return Json(jsonResult);
                     }
@@ -350,6 +148,17 @@ namespace Chisoyhoc_MVC.Controllers
                         };
                         return Json(jsonResult);
                     }
+                    else if (id == "T_A14" || id == "T_B29" || id == "T_B32")
+                    {
+                        string ketquathieu = kq[2];
+                        string diengiaithieu = kq[3];
+                        var jsonResult = new
+                        {
+                            Ketquathieu = ketquathieu,
+                            Diengiaithieu = diengiaithieu
+                        };
+                        return Json(jsonResult);
+                    }
                     else if (id == "T_B01")
                     {
                         string ketquaapache = kq[2];
@@ -358,30 +167,6 @@ namespace Chisoyhoc_MVC.Controllers
                         {
                             Ketquaapache = ketquaapache,
                             Diengiaiapache = diengiaiapache
-                        };
-                        return Json(jsonResult);
-                    }
-                    else if (id == "T_B08")
-                    {
-                        string ketquatb08 = kq[2];
-                        string diengiaitb08 = kq[3];
-                        var jsonResult = new
-                        {
-                            Ketquatb08 = ketquatb08,
-                            Diengiaitb08 = diengiaitb08
-                        };
-                        return Json(jsonResult);
-                    }
-                    else if (id == "T_B30")
-                    {
-                        string ketquatb30_1 = kq[2];
-                        string ketquatb30_2 = kq[3];
-                        string diengiaitb30 = kq[4] + ":\n" + kq[5];
-                        var jsonResult = new
-                        {
-                            Ketquatb30_1 = ketquatb30_1,
-                            Ketquatb30_2 = ketquatb30_2,
-                            Diengiaitb30 = diengiaitb30
                         };
                         return Json(jsonResult);
                     }
@@ -648,20 +433,20 @@ namespace Chisoyhoc_MVC.Controllers
                 {
                     switch (_id)
                     {
-                        case "C_B01":
-                            {
-                                DLCO_Adj model = new DLCO_Adj();
-                                TryUpdateModel(model);
-                                viewModelModel = Tuple.Create(obj, (object)model);
-                                break;
-                            }
-                        case "C_B02":
-                            {
-                                MAP model = new MAP();
-                                TryUpdateModel(model);
-                                viewModelModel = Tuple.Create(obj, (object)model);
-                                break;
-                            }
+                        //case "C_B01":
+                        //    {
+                        //        DLCO_Adj model = new DLCO_Adj();
+                        //        TryUpdateModel(model);
+                        //        viewModelModel = Tuple.Create(obj, (object)model);
+                        //        break;
+                        //    }
+                        //case "C_B02":
+                        //    {
+                        //        MAP model = new MAP();
+                        //        TryUpdateModel(model);
+                        //        viewModelModel = Tuple.Create(obj, (object)model);
+                        //        break;
+                        //    }
                         case "C_B03":
                             {
                                 PostFEV1 model = new PostFEV1();
@@ -929,6 +714,10 @@ namespace Chisoyhoc_MVC.Controllers
                                 viewModelModel = Tuple.Create(obj, (object)model);
                                 break;
                             }
+                        //case "C_C17":
+                        //    {
+
+                        //    }
                     }
                 }
                 #endregion

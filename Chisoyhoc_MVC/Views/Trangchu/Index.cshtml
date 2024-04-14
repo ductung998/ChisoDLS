@@ -5,38 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="navbar-collapse collapse">
-    @*Tìm kiếm*@
-    @using (Html.BeginForm("Index", "Trangchu", FormMethod.Post, new { @class = "navbar-form navbar-left", id = "searchForm" }))
-    {
-        <label>Tìm kiếm&nbsp;</label>
-        //Tìm kiếm
-        <div class="form-group"><input type="text" name="strSearch" placeholder="Tìm kiếm chỉ số" class="form-control" value="@ViewBag.StrSearch" /></div>
-        <div class=" = form-group"><button type="button" class="btn btn-default" onclick="document.getElementById('searchForm').submit();">Tìm kiếm</button></div>
-        <br />
-        <br />
-        //Filter
-        <label>Bộ lọc</label>
-        <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <div class="form-group">
-            @Html.DropDownList("filterType", new SelectList(new List<SelectListItem>
-                            {
-                                new SelectListItem { Text = "Tất cả", Value = "" },
-                                new SelectListItem { Text = "Thông dụng", Value = "thongdung" }
-                            }, "Value", "Text"), new { @class = "form-control", style = "width: 200px;", onchange = "submitForm();" })
-        </div>
-    }
-</div>
-
-<script>
-    function submitForm() {
-        document.getElementById('searchForm').submit();
-    }
-</script>
-
-
-
 <table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tenchiso)
+        </th>
+    </tr>
 
     @foreach (var item in Model)
     {
@@ -50,24 +24,3 @@
         </tr>
     }
 </table>
-
-<div class="text-center">
-    @if (ViewBag.TotalCount > ViewBag.PageSize)
-    {
-        <ul class="pagination">
-            @if (ViewBag.PageNumber != 1)
-            {
-                <li><a href="@Url.Action("Index", new { page = 1, strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType })">&laquo;</a></li>
-            }
-            @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
-            {
-                <li class="@(i == ViewBag.PageNumber ? "active" : "")"><a href="@Url.Action("Index", new { page = i, strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType })">@i</a></li>
-            }
-            @if (ViewBag.PageNumber != Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize))
-            {
-                <li><a href="@Url.Action("Index", new { page = Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize), strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType })">&raquo;</a></li>
-            }
-        </ul>
-    }
-</div>
-
