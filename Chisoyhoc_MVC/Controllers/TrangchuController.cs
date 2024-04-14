@@ -9,8 +9,8 @@ namespace Chisoyhoc_MVC.Controllers
 {
     public class TrangchuController : Controller
     {
-        CSDL_CSYH_ServerDataContext db = new CSDL_CSYH_ServerDataContext();
-        //CSDL_PMChisoyhocDataContext db = new CSDL_PMChisoyhocDataContext();
+        //CSDL_CSYH_ServerDataContext db = new CSDL_CSYH_ServerDataContext();
+        CSDL_PMChisoyhocDataContext db = new CSDL_PMChisoyhocDataContext();
         KetnoiDB dbclass = new KetnoiDB();
         // GET: Trangchu
         public ActionResult Index(string strSearch)

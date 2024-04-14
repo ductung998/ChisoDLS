@@ -172,15 +172,15 @@ namespace ClassChung
             //Khởi tạo kết nối với CSDL
             initDB();
         }
-        //public CSDL_PMChisoyhocDataContext db;
-        public CSDL_CSYH_ServerDataContext db;
+        public CSDL_PMChisoyhocDataContext db;
+        //public CSDL_CSYH_ServerDataContext db;
         
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
             //Tạo kết nối LINQ to SQL
-            //db = new CSDL_PMChisoyhocDataContext();
-            db = new CSDL_CSYH_ServerDataContext();
+            db = new CSDL_PMChisoyhocDataContext();
+            //db = new CSDL_CSYH_ServerDataContext();
         }
         public List<DSchisoyhoc> GetDSchisoyhoc()
         {

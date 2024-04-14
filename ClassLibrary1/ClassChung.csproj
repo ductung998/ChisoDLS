@@ -67,10 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes.cs" />
-    <Compile Include="CSDL_CSYH_Server.designer.cs">
+    <Compile Include="CSDL_PMChisoyhoc.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CSDL_CSYH_Server.dbml</DependentUpon>
+      <DependentUpon>CSDL_PMChisoyhoc.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -81,9 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="CSDL_CSYH_Server.dbml">
+    <None Include="CSDL_PMChisoyhoc.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>CSDL_CSYH_Server.designer.cs</LastGenOutput>
+      <LastGenOutput>CSDL_PMChisoyhoc.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -100,8 +100,8 @@
     <Folder Include="temp\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CSDL_CSYH_Server.dbml.layout">
-      <DependentUpon>CSDL_CSYH_Server.dbml</DependentUpon>
+    <None Include="CSDL_PMChisoyhoc.dbml.layout">
+      <DependentUpon>CSDL_PMChisoyhoc.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
