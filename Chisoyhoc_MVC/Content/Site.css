@@ -17,17 +17,10 @@ button {
     max-width: 95%;
 }
 
-
-
 .tab-textarea {
     margin-top: 10px; /* Adjust as needed */
     padding: 10px; /* Adjust as needed */
     border: 1px solid #ccc; /* Adjust as needed */
     border-radius: 5px; /* Adjust as needed */
     font-size: 14px; /* Adjust as needed */
-    background-color: transparent; /* Make the text area transparent */
-    color: inherit; /* Set text color to white */
-    border: none; /* Remove border */
-    resize: none; /* Disable textarea resizing */
-
 }

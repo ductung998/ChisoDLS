@@ -174,7 +174,432 @@ namespace ClassChung
         }
         public CSDL_PMChisoyhocDataContext db;
         //public CSDL_CSYH_ServerDataContext db;
-        
+        #region Nhập dữ liệu
+        public bool nhapNguoibenh(Nguoibenh input)
+        {
+            //Tạo object người bệnh và gán giá trị nhập
+            try
+            {
+                data_nguoibenh nb = new data_nguoibenh();
+
+                nb.ten = input.ten;
+                nb.masoNB = input.masoNB;
+                nb.gioitinh = input.gioitinh.ToLower() == "nam";
+                nb.ngaysinh = input.ngaysinh;
+                nb.cannang = input.cannang;
+                nb.chieucao = input.chieucao;
+                nb.nhiptim = input.nhiptim;
+                nb.thannhiet = input.thannhiet;
+                nb.HATThu = input.HATThu;
+                nb.HATTruong = input.HATTruong;
+                nb.hutthuoc = input.hutthuoc;
+                nb.THA = input.THA;
+                nb.DTD = input.DTD;
+                nb.suytim = input.suytim;
+                nb.ungthu = input.ungthu;
+                nb.NMCT = input.NMCT;
+                nb.dotquytim = input.dotquytim;
+                nb.thieumaunao = input.thieumaunao;
+                //Insert vào DB và submits
+                db.data_nguoibenhs.InsertOnSubmit(nb);
+                db.SubmitChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                //Trả về false nếu không submit được
+                return false;
+            }
+        }
+        public Nguoibenh getNB(int idNB)
+        {
+            //Lấy dữ liệu Nguoibenh theo IDNB truyền vào
+            data_nguoibenh a = (from data in db.data_nguoibenhs
+                                where data.ID_NB == idNB
+                                select data).FirstOrDefault();
+            Nguoibenh kq = new Nguoibenh(idNB, a.masoNB, a.ten, a.gioitinh ? "nam" : "nữ",
+                KetnoiDB.datetimetonumber(a.ngaysinh), a.chieucao, a.cannang, a.nhiptim, a.nhiptho,
+                a.thannhiet, a.HATThu, a.HATTruong, a.hutthuoc, a.THA,
+                a.DTD, a.suytim, a.ungthu, a.NMCT, a.dotquytim, a.thieumaunao);
+            return kq;
+        }
+        public List<Nguoibenh> getDSNB()
+        {
+            List<Nguoibenh> kq = new List<Nguoibenh>();
+            List<data_nguoibenh> a = (from data in db.data_nguoibenhs
+                                      select data).ToList();
+            foreach (data_nguoibenh i in a)
+            {
+                kq.Add(getNB(i.ID_NB));
+            }
+            return kq;
+        }
+        public bool capnhatNB(Nguoibenh input)
+        {
+            //Cập nhật người bệnh ĐÃ NHẬP vào CSDL
+            try
+            {
+                data_nguoibenh nb = (from data in db.data_nguoibenhs
+                                     where data.ID_NB == input.ID_NB
+                                     select data).FirstOrDefault();
+
+                if (nb != null)
+                {
+                    //Nhập dữ liệu nếu xác định nb
+                    nb.ten = input.ten;
+                    nb.masoNB = input.masoNB;
+                    nb.gioitinh = input.gioitinh.ToLower() == "nam";
+                    nb.ngaysinh = input.ngaysinh;
+                    nb.cannang = input.cannang;
+                    nb.chieucao = input.chieucao;
+                    nb.nhiptim = input.nhiptim;
+                    nb.thannhiet = input.thannhiet;
+                    nb.HATThu = input.HATThu;
+                    nb.HATTruong = input.HATTruong;
+                    nb.hutthuoc = input.hutthuoc;
+                    nb.THA = input.THA;
+                    nb.DTD = input.DTD;
+                    nb.suytim = input.suytim;
+                    nb.ungthu = input.ungthu;
+                    nb.NMCT = input.NMCT;
+                    nb.dotquytim = input.dotquytim;
+                    nb.thieumaunao = input.thieumaunao;
+                    //Update DS XN của người bệnh
+                    updateDSXN(input);
+
+                    db.SubmitChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool xoaNB(int idnb)
+        {
+            //Xóa NB trong CSDL
+            try
+            {
+                data_nguoibenh nb = (from data in db.data_nguoibenhs
+                                     where data.ID_NB == idnb
+                                     select data).FirstOrDefault();
+                if (nb != null)
+                {
+                    //(xóa r_NB_XN và XN trước)
+                    xoaListXN(nb.ID_NB);
+                    //Xóa tiếp NB
+                    db.data_nguoibenhs.DeleteOnSubmit(nb);
+                    //Submit
+                    db.SubmitChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public int nhapXetnghiem(Xetnghiem input)
+        {
+            //Nhập XN trong CSDL
+            try
+            {
+                data_xetnghiem xn = new data_xetnghiem();
+
+                xn.albumin = input.albumin;
+                xn.ALT = input.ALT;
+                xn.AST = input.AST;
+                xn.BUN = input.BUN;
+                xn.bilirubin = input.bilirubin;
+                xn.calciSerum = input.calciSerum;
+                xn.creatininSerum = input.creatininSerum;
+                xn.creatininUrine = input.creatininUrine;
+                xn.cloSerum = input.cloSerum;
+                xn.cloUrine = input.cloUrine;
+                xn.FiO2 = input.FiO2;
+                xn.glucoseSerum = input.glucoseSerum;
+                xn.glucoseUrine = input.glucoseUrine;
+                xn.Hb = input.Hb;
+                xn.HCO3Serum = input.HCO3Serum;
+                xn.HDL = input.HDL;
+                xn.Hct = input.Hct;
+                xn.INR = input.INR;
+                xn.kaliSerum = input.kaliSerum;
+                xn.kaliUrine = input.kaliUrine;
+                xn.LDL = input.LDL;
+                xn.natriSerum = input.natriSerum;
+                xn.natriUrine = input.natriUrine;
+                xn.PaCO2 = input.PaCO2;
+                xn.PaO2 = input.PaO2;
+                xn.PCO2 = input.PCO2;
+                xn.PvCO2 = input.PvCO2;
+                xn.PvO2 = input.PvO2;
+                xn.platelet = input.platelet;
+                xn.proteinSerum = input.proteinSerum;
+                xn.RBC = input.RBC;
+                xn.SpO2 = input.SpO2;
+                xn.totalCholesterol = input.totalCholesterol;
+                xn.triglyceride = input.triglyceride;
+                xn.WBC = input.WBC;
+                xn.WBC_BAS = input.WBC_BAS;
+                xn.WBC_BAS_tyle = input.WBC_BAS_tyle;
+                xn.WBC_EOS = input.WBC_EOS;
+                xn.WBC_EOS_tyle = input.WBC_EOS_tyle;
+                xn.WBC_LYMPHO = input.WBC_LYMPHO;
+                xn.WBC_LYMPHO_tyle = input.WBC_LYMPHO_tyle;
+                xn.WBC_MONO = input.WBC_MONO;
+                xn.WBC_MONO_tyle = input.WBC_MONO_tyle;
+                xn.WBC_NEU = input.WBC_NEU;
+                xn.WBC_NEU_tyle = input.WBC_NEU_tyle;
+                xn.HCO3Serum = input.HCO3Serum;
+                xn.pHSerum = input.pHSerum;
+
+                db.data_xetnghiems.InsertOnSubmit(xn);
+                db.SubmitChanges();
+                return xn.ID_XN;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+        public int getIDXN_last()
+        {
+            int kq = (from data in db.data_xetnghiems
+                      select data).Last().ID_XN;
+            return kq;
+        }
+        public Xetnghiem getXN(int idXN)
+        {
+            //Lấy dữ liệu XN theo IDXN
+            data_xetnghiem a = (from data in db.data_xetnghiems
+                                where data.ID_XN == idXN
+                                select data).FirstOrDefault();
+            Xetnghiem kq = new Xetnghiem(idXN, a.creatininSerum, a.creatininUrine, a.AST, a.ALT, a.BUN, a.albumin,
+                a.proteinSerum, a.bilirubin, a.totalCholesterol, a.triglyceride, a.LDL, a.HDL, a.RBC, a.Hb, a.Hct,
+                a.platelet, a.WBC, a.WBC_EOS, a.WBC_BAS, a.WBC_NEU, a.WBC_MONO, a.WBC_LYMPHO, a.WBC_EOS_tyle,
+                a.WBC_BAS_tyle, a.WBC_NEU_tyle, a.WBC_MONO_tyle, a.WBC_LYMPHO_tyle, a.natriSerum, a.kaliSerum,
+                a.calciSerum, a.cloSerum, a.HCO3Serum, a.pHSerum, a.glucoseSerum, a.natriUrine, a.kaliUrine, a.cloUrine,
+                a.ureUrine, a.glucoseUrine, a.PO2, a.PaO2, a.PvO2, a.PCO2, a.PaCO2, a.PvCO2, a.FiO2, a.SpO2, a.INR);
+            return kq;
+        }
+        public bool capnhatXN(Xetnghiem input)
+        {
+            //Cập nhật dữ liệu XN theo IDXN
+            try
+            {
+                data_xetnghiem xn = (from data in db.data_xetnghiems
+                                     where data.ID_XN == input.IDXN
+                                     select data).FirstOrDefault();
+
+                if (xn != null)
+                {
+                    xn.albumin = input.albumin;
+                    xn.ALT = input.ALT;
+                    xn.AST = input.AST;
+                    xn.BUN = input.BUN;
+                    xn.bilirubin = input.bilirubin;
+                    xn.calciSerum = input.calciSerum;
+                    xn.creatininSerum = input.creatininSerum;
+                    xn.creatininUrine = input.creatininUrine;
+                    xn.cloSerum = input.cloSerum;
+                    xn.cloUrine = input.cloUrine;
+                    xn.FiO2 = input.FiO2;
+                    xn.glucoseSerum = input.glucoseSerum;
+                    xn.glucoseUrine = input.glucoseUrine;
+                    xn.Hb = input.Hb;
+                    xn.HCO3Serum = input.HCO3Serum;
+                    xn.HDL = input.HDL;
+                    xn.Hct = input.Hct;
+                    xn.INR = input.INR;
+                    xn.kaliSerum = input.kaliSerum;
+                    xn.kaliUrine = input.kaliUrine;
+                    xn.LDL = input.LDL;
+                    xn.natriSerum = input.natriSerum;
+                    xn.natriUrine = input.natriUrine;
+                    xn.PaCO2 = input.PaCO2;
+                    xn.PaO2 = input.PaO2;
+                    xn.PCO2 = input.PCO2;
+                    xn.PvCO2 = input.PvCO2;
+                    xn.PvO2 = input.PvO2;
+                    xn.platelet = input.platelet;
+                    xn.proteinSerum = input.proteinSerum;
+                    xn.RBC = input.RBC;
+                    xn.SpO2 = input.SpO2;
+                    xn.totalCholesterol = input.totalCholesterol;
+                    xn.triglyceride = input.triglyceride;
+                    xn.WBC = input.WBC;
+                    xn.WBC_BAS = input.WBC_BAS;
+                    xn.WBC_BAS_tyle = input.WBC_BAS_tyle;
+                    xn.WBC_EOS = input.WBC_EOS;
+                    xn.WBC_EOS_tyle = input.WBC_EOS_tyle;
+                    xn.WBC_LYMPHO = input.WBC_LYMPHO;
+                    xn.WBC_LYMPHO_tyle = input.WBC_LYMPHO_tyle;
+                    xn.WBC_MONO = input.WBC_MONO;
+                    xn.WBC_MONO_tyle = input.WBC_MONO_tyle;
+                    xn.WBC_NEU = input.WBC_NEU;
+                    xn.WBC_NEU_tyle = input.WBC_NEU_tyle;
+                    xn.HCO3Serum = input.HCO3Serum;
+                    xn.pHSerum = input.pHSerum;
+                    db.SubmitChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool nhapXN_NB(int ID_NB, int ID_XN)
+        {
+            //Nhập liên kết XN và NB
+            try
+            {
+                r_nguoibenh_xetnghiem input = new r_nguoibenh_xetnghiem();
+                input.ID_NB = ID_NB;
+                input.ID_XN = ID_XN;
+                input.ngayXN = DateTime.Now;
+
+                db.r_nguoibenh_xetnghiems.InsertOnSubmit(input);
+                db.SubmitChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool xoaXN(int idxn)
+        {
+            //Xóa XN theo IDXN
+            try
+            {
+                r_nguoibenh_xetnghiem nb_xn = (from data in db.r_nguoibenh_xetnghiems
+                                               where data.ID_XN == idxn
+                                               select data).FirstOrDefault();
+
+                data_xetnghiem xn = (from data in db.data_xetnghiems
+                                     where data.ID_XN == idxn
+                                     select data).FirstOrDefault();
+                if (xn != null)
+                {
+                    //xóa r_NB_XN trước
+                    db.r_nguoibenh_xetnghiems.DeleteOnSubmit(nb_xn);
+                    //xóa XN
+                    db.data_xetnghiems.DeleteOnSubmit(xn);
+                    //Submit
+                    db.SubmitChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool xoaListXN(int idNB)
+        {
+            //Xóa list XN theo ID_NB
+            try
+            {
+                List<r_nguoibenh_xetnghiem> nb_xn = (from data in db.r_nguoibenh_xetnghiems
+                                                     where data.ID_NB == idNB
+                                                     select data).ToList();
+
+                List<data_xetnghiem> xn = (from data in db.data_xetnghiems
+                                           join t1 in db.r_nguoibenh_xetnghiems on data.ID_XN equals t1.ID_XN
+                                           where t1.ID_NB == idNB
+                                           select data).ToList();
+                if (xn != null)
+                {
+                    //xóa r_NB_XN trước
+                    db.r_nguoibenh_xetnghiems.DeleteAllOnSubmit(nb_xn);
+                    //xóa XN
+                    db.data_xetnghiems.DeleteAllOnSubmit(xn);
+                    //Submit
+                    db.SubmitChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public List<Xetnghiem> getDSXN_NB(int _ID_NB)
+        {
+            //Lấy danh sách XN của 1 NB
+            List<Xetnghiem> kq = new List<Xetnghiem>();
+
+            List<int> DSidxn_nb = (from data in db.r_nguoibenh_xetnghiems
+                                 where data.ID_NB == _ID_NB
+                                 select data.ID_XN).ToList();
+            foreach (int i in DSidxn_nb)
+                kq.Add(getXN(i));
+
+            return kq;
+        }
+        public bool setDSXN(Nguoibenh nb)
+        {
+            //Set DSXN của 1 object Nguoibenh
+            try
+            {
+                nb.DSxetnghiem = getDSXN_NB(nb.ID_NB);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool updateDSXN(Nguoibenh nb)
+        {
+            //Update DSXN cho nguoibenh
+            try
+            {
+                List<Xetnghiem> dsxetnghiemgoc = getDSXN_NB(nb.ID_NB);
+                foreach (Xetnghiem i in nb.DSxetnghiem)
+                {
+                    int indexofXN = dsxetnghiemgoc.FindIndex(x => x.IDXN == i.IDXN);
+                    //Nếu khớp => bỏ qua
+                    if (indexofXN != -1 && i == dsxetnghiemgoc[indexofXN])
+                    {
+                        continue;
+                    }
+                    else if (i != dsxetnghiemgoc[indexofXN])
+                    {
+                        //Nếu lệch => cập nhật
+                        capnhatXN(i);
+                    }
+                    else
+                    {
+                        //Nếu chưa có => nhập XN
+                        nhapXetnghiem(i);
+                        //Link với NB
+                        nhapXN_NB(nb.ID_NB, i.IDXN);
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion
+        #region Method cho chỉ số
         public List<chisoyhoc> DSchiso;
         public void initDB()
         {
@@ -405,6 +830,28 @@ namespace ClassChung
             kq = kq.OrderBy(x => x.idbien).ToList();
             return kq;
         }
+
+        public List<chisoyhoc> filterCSYH(string thongdung, int chuyennganh, string phanloai)
+        {
+            List<chisoyhoc> kq = new List<chisoyhoc>();
+            if (thongdung == "2")
+            {
+                kq = (from data in db.chisoyhocs
+                      join t1 in db.r_chiso_phannhoms on data.machiso equals t1.machiso
+                      where t1.ID_phannhomchiso == chuyennganh &&
+                      data.machiso[0].ToString() == phanloai
+                      select data).ToList();
+            }
+            else
+            {
+                kq = (from data in db.chisoyhocs
+                      where data.thongdung == str_to_bool(thongdung) &&
+                      data.machiso[0].ToString() == phanloai
+                      select data).ToList();
+            }
+            return kq;
+        }
+        #endregion
         #region NCKH
         public List<Bien> GetDSBienGop(string _input)
         {
@@ -2478,8 +2925,9 @@ namespace ClassChung
     #region Nguoi benh
     public class Nguoibenh
     {
-        public string IDNB { get; set; }
-        public string hoten { get; set; }
+        public int ID_NB { get; set; }
+        public string masoNB { get; set; }
+        public string ten { get; set; }
         public string gioitinh { get; set; }
         public DateTime ngaysinh { get; set; }
         public double chieucao { get; set; }
@@ -2497,19 +2945,19 @@ namespace ClassChung
         public bool NMCT { get; set; }
         public bool dotquytim { get; set; }
         public bool thieumaunao { get; set; }
-        public List<Xetnghiem> Xetnghiem { get; set; }
+        public List<Xetnghiem> DSxetnghiem { get; set; }
         public Nguoibenh()
         {
 
         }
-        public Nguoibenh(string _idnb, string _hoten, string _gioitinh, DateTime _ngaysinh, double _chieucao, double _cannang,
+        public Nguoibenh(string _masoNB, string _ten, string _gioitinh, string _ngaysinh, double _chieucao, double _cannang,
                      int _nhiptim, int _nhiptho, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
                      bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
         {
-            IDNB = _idnb;
-            hoten = _hoten;
+            masoNB = _masoNB;
+            ten = _ten;
             gioitinh = _gioitinh.ToLower();
-            ngaysinh = _ngaysinh;
+            ngaysinh = KetnoiDB.numbertodatetime(_ngaysinh);
             tinhtuoi_nam();
             chieucao = _chieucao;
             cannang = _cannang;
@@ -2527,13 +2975,15 @@ namespace ClassChung
             dotquytim = _dotquytim;
             thieumaunao = _thieumaunao;
         }
-        public void capnhat(string _hoten, string _gioitinh, DateTime _ngaysinh, double _chieucao, double _cannang,
-             int _nhiptim, int _nhiptho, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
-             bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
+        public Nguoibenh(int _idnb, string _masoNB, string _ten, string _gioitinh, string _ngaysinh, double _chieucao, double _cannang,
+                     int _nhiptim, int _nhiptho, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
+                     bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
         {
-            hoten = _hoten;
+            ID_NB = _idnb;
+            masoNB = _masoNB;
+            ten = _ten;
             gioitinh = _gioitinh.ToLower();
-            ngaysinh = _ngaysinh;
+            ngaysinh = KetnoiDB.numbertodatetime(_ngaysinh);
             tinhtuoi_nam();
             chieucao = _chieucao;
             cannang = _cannang;
@@ -2550,6 +3000,58 @@ namespace ClassChung
             NMCT = _nmct;
             dotquytim = _dotquytim;
             thieumaunao = _thieumaunao;
+        }
+        public void capnhat(string _hoten, string _gioitinh, string _ngaysinh, double _chieucao, double _cannang,
+             int _nhiptim, int _nhiptho, double _thannhiet, int _hatThu, int _hatTruong, bool _hutthuoc, bool _tha, bool _dtd, bool _suytim,
+             bool _ungthu, bool _nmct, bool _dotquytim, bool _thieumaunao)
+        {
+            ten = _hoten;
+            gioitinh = _gioitinh.ToLower();
+            ngaysinh = KetnoiDB.numbertodatetime(_ngaysinh);
+            tinhtuoi_nam();
+            chieucao = _chieucao;
+            cannang = _cannang;
+            nhiptim = _nhiptim;
+            nhiptho = _nhiptho;
+            thannhiet = _thannhiet;
+            HATThu = _hatThu;
+            HATTruong = _hatTruong;
+            hutthuoc = _hutthuoc;
+            THA = _tha;
+            DTD = _dtd;
+            suytim = _suytim;
+            ungthu = _ungthu;
+            NMCT = _nmct;
+            dotquytim = _dotquytim;
+            thieumaunao = _thieumaunao;
+        }
+        public void themXN(Xetnghiem input)
+        {
+            if (DSxetnghiem.Contains(input))
+                return;
+            else
+                DSxetnghiem.Add(input);
+        }
+        public void xoaXN(Xetnghiem input)
+        {
+            try
+            {
+                DSxetnghiem.Remove(input);
+            }
+            catch
+            {
+
+            }
+        }
+        public void updateXN(Xetnghiem input)
+        {
+            int indexofXN = DSxetnghiem.FindIndex(x => x.IDXN == input.IDXN);
+
+            if (indexofXN != -1)
+            {
+                DSxetnghiem.RemoveAt(indexofXN);
+                DSxetnghiem.Insert(indexofXN, input);
+            }
         }
         public double tinhtuoi_nam()
         {
@@ -2581,7 +3083,7 @@ namespace ClassChung
     #region Xet nghiem
     public class Xetnghiem
     {
-        public string IDXN { get; set; }
+        public int IDXN { get; set; }
         public double creatininSerum { get; set; }
         public double creatininUrine { get; set; }
         public double AST { get; set; }
@@ -2634,7 +3136,67 @@ namespace ClassChung
         {
 
         }
-        public Xetnghiem(string _idxn, double _creatininSerum, double _creatininUrine, double _ast, double _alt,
+        public Xetnghiem(double _creatininSerum, double _creatininUrine, double _ast, double _alt,
+            double _bun, double _albumin, double _proteinSerum, double _bilirubin, double _totalCholesterol, double _triglyceride, double _ldl,
+            double _hdl, double _rbc, double _hb, double _hct, double _platelet, double _wbc,
+            double _wbcEos, double _wbcBas, double _wbcNeu, double _wbcMono, double _wbcLympho,
+            double _wbcEos_tyle, double _wbcBas_tyle, double _wbcNeu_tyle, double _wbcMono_tyle, double _wbcLympho_tyle,
+            double _natriSerum, double _kaliSerum, double _canxiSerum, double _cloSerum,
+            double _hco3Serum, double _phSerum, double _glucoseSerum, double _natriUrine,
+            double _kaliUrine, double _cloUrine, double _ureUrine, double _glucoseUrine,
+            double _PO2, double _PaO2, double _PvO2, double _PCO2, double _PaCO2, double _PvCO2,
+            double _FiO2, double _SpO2, double _INR)
+        {
+            creatininSerum = _creatininSerum;
+            creatininUrine = _creatininUrine;
+            AST = _ast;
+            ALT = _alt;
+            BUN = _bun;
+            albumin = _albumin;
+            proteinSerum = _proteinSerum;
+            bilirubin = _bilirubin;
+            totalCholesterol = _totalCholesterol;
+            triglyceride = _triglyceride;
+            LDL = _ldl;
+            HDL = _hdl;
+            RBC = _rbc;
+            Hb = _hb;
+            Hct = _hct;
+            platelet = _platelet;
+            WBC = _wbc;
+            WBC_EOS = _wbcEos;
+            WBC_BAS = _wbcBas;
+            WBC_NEU = _wbcNeu;
+            WBC_MONO = _wbcMono;
+            WBC_LYMPHO = _wbcLympho;
+            WBC_EOS_tyle = _wbcEos_tyle;
+            WBC_BAS_tyle = _wbcBas_tyle;
+            WBC_NEU_tyle = _wbcNeu_tyle;
+            WBC_MONO_tyle = _wbcMono_tyle;
+            WBC_LYMPHO_tyle = _wbcLympho_tyle;
+            natriSerum = _natriSerum;
+            kaliSerum = _kaliSerum;
+            calciSerum = _canxiSerum;
+            cloSerum = _cloSerum;
+            HCO3Serum = _hco3Serum;
+            pHSerum = _phSerum;
+            glucoseSerum = _glucoseSerum;
+            natriUrine = _natriUrine;
+            kaliUrine = _kaliUrine;
+            cloUrine = _cloUrine;
+            ureUrine = _ureUrine;
+            glucoseUrine = _glucoseUrine;
+            PO2 = _PO2;
+            PaO2 = _PaO2;
+            PvO2 = _PvO2;
+            PCO2 = _PCO2;
+            PaCO2 = _PaCO2;
+            PvCO2 = _PvCO2;
+            FiO2 = _FiO2;
+            SpO2 = _SpO2;
+            INR = _INR;
+        }
+        public Xetnghiem(int _idxn, double _creatininSerum, double _creatininUrine, double _ast, double _alt,
             double _bun, double _albumin, double _proteinSerum, double _bilirubin, double _totalCholesterol, double _triglyceride, double _ldl,
             double _hdl, double _rbc, double _hb, double _hct, double _platelet, double _wbc,
             double _wbcEos, double _wbcBas, double _wbcNeu, double _wbcMono, double _wbcLympho,

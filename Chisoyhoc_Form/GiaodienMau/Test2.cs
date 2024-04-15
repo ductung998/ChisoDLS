@@ -32,7 +32,7 @@ namespace Chisoyhoc_Form.GiaodienMau
 
             KetnoiDB db = new KetnoiDB();
 
-            dataGridView1.DataSource = db.GetDSchisoyhoc(); ;
+            dataGridView1.DataSource = db.GetDSchisoyhoc();
             textBox5.Text = "C_A01-C_A02";
             //Chisoyhoc a = new Chisoyhoc()
         }

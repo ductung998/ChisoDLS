@@ -20,11 +20,6 @@
       <Association Name="chiso_phanloaibien_chiso_DSbien" Member="chiso_phanloaibien" ThisKey="IDPhanloaibien" OtherKey="IDPhanloaibien" Type="chiso_phanloaibien" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.thangdiemyhoc" Member="thangdiemyhocs">
-    <Type Name="thangdiemyhoc">
-      <Column Name="ID_thangdiem" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.chiso_DSbienDT" Member="chiso_DSbienDTs">
     <Type Name="chiso_DSbienDT">
       <Column Name="IDBienDT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -74,12 +69,6 @@
       <Association Name="chiso_phanloaibien_chiso_DSbien" Member="chiso_DSbiens" ThisKey="IDPhanloaibien" OtherKey="IDPhanloaibien" Type="chiso_DSbien" />
     </Type>
   </Table>
-  <Table Name="dbo.chiso_phanloaiDT" Member="chiso_phanloaiDTs">
-    <Type Name="chiso_phanloaiDT">
-      <Column Name="IDphanloaiDT" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ten" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.chisoyhoc" Member="chisoyhocs">
     <Type Name="chisoyhoc">
       <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -91,9 +80,10 @@
       <Column Name="diengiaiketqua" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ghichu" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="tltk" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="thongdung" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="thongdung" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="chisoyhoc_chiso_DSBienKQ" Member="chiso_DSBienKQs" ThisKey="machiso" OtherKey="machiso" Type="chiso_DSBienKQ" />
       <Association Name="chisoyhoc_r_chiso_bien" Member="r_chiso_biens" ThisKey="machiso" OtherKey="machiso" Type="r_chiso_bien" />
+      <Association Name="chisoyhoc_r_chiso_phannhom" Member="r_chiso_phannhoms" ThisKey="machiso" OtherKey="machiso" Type="r_chiso_phannhom" />
     </Type>
   </Table>
   <Table Name="dbo.danhmuc_donvi" Member="danhmuc_donvis">
@@ -118,59 +108,86 @@
     <Type Name="danhmuc_phannhomchiso">
       <Column Name="ID_phannhomchiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="phannhomchiso" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="danhmuc_phannhomchiso_r_chiso_phannhom" Member="r_chiso_phannhoms" ThisKey="ID_phannhomchiso" OtherKey="ID_phannhomchiso" Type="r_chiso_phannhom" />
     </Type>
   </Table>
   <Table Name="dbo.data_nguoibenh" Member="data_nguoibenhs">
     <Type Name="data_nguoibenh">
       <Column Name="ID_NB" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ten" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="gioitinh" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ngaysinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="chieucao" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="cannang" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="nhiptim" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="thannhiet" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="HATThu" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="HATTruong" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="hutthuoc" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="THA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="DTD" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="suytim" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ungthu" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="NMCT" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="dotquytim" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="thieumaunao" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="masoNB" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="gioitinh" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ngaysinh" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="chieucao" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="cannang" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="nhiptim" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nhiptho" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="thannhiet" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="HATThu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HATTruong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="hutthuoc" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="THA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DTD" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="suytim" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ungthu" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NMCT" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="dotquytim" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="thieumaunao" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="data_nguoibenh_r_nguoibenh_xetnghiem" Member="r_nguoibenh_xetnghiems" ThisKey="ID_NB" OtherKey="ID_NB" Type="r_nguoibenh_xetnghiem" />
     </Type>
   </Table>
   <Table Name="dbo.data_xetnghiem" Member="data_xetnghiems">
     <Type Name="data_xetnghiem">
       <Column Name="ID_XN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="creatininSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="creatininUrine" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="AST" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="ALT" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="BUN" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="bilirubin" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="totalCholesterol" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="triglyceride" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="LDL" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="HDL" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="RBC" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Hb" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Hct" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="platelet" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="WBC" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="WBC_EOS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="WBC_BAS" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="WBC_NEU" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="WBC_MONO" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="WBC_LYMPHO" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="natriSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="kaliSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="calciSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="cloSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="HCO3Serum" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="pHSerum" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="creatininSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="creatininUrine" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AST" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ALT" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="BUN" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="albumin" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="proteinSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="bilirubin" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="totalCholesterol" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="triglyceride" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="LDL" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="HDL" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="RBC" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Hb" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Hct" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="platelet" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_EOS" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_EOS_tyle" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_BAS" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_BAS_tyle" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_NEU" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_NEU_tyle" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_MONO" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_MONO_tyle" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_LYMPHO" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="WBC_LYMPHO_tyle" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="natriSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="kaliSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="calciSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="cloSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="HCO3Serum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="pHSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="glucoseSerum" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="natriUrine" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="kaliUrine" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="cloUrine" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ureUrine" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="glucoseUrine" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PaO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PvO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PCO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PaCO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PvCO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="FiO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="SpO2" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="INR" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="data_xetnghiem_r_nguoibenh_xetnghiem" Member="r_nguoibenh_xetnghiems" ThisKey="ID_XN" OtherKey="ID_XN" Type="r_nguoibenh_xetnghiem" />
     </Type>
   </Table>
   <Table Name="dbo.hethong_chucvu" Member="hethong_chucvus">
@@ -203,11 +220,30 @@
       <Association Name="chisoyhoc_r_chiso_bien" Member="chisoyhoc" ThisKey="machiso" OtherKey="machiso" Type="chisoyhoc" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.r_chiso_phannhom" Member="r_chiso_phannhoms">
+    <Type Name="r_chiso_phannhom">
+      <Column Name="ID_chiso_phannhom" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="machiso" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_phannhomchiso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="chisoyhoc_r_chiso_phannhom" Member="chisoyhoc" ThisKey="machiso" OtherKey="machiso" Type="chisoyhoc" IsForeignKey="true" />
+      <Association Name="danhmuc_phannhomchiso_r_chiso_phannhom" Member="danhmuc_phannhomchiso" ThisKey="ID_phannhomchiso" OtherKey="ID_phannhomchiso" Type="danhmuc_phannhomchiso" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.r_hethong_phanquyen" Member="r_hethong_phanquyens">
     <Type Name="r_hethong_phanquyen">
       <Column Name="ID_phanquyen" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ID_nhanvien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ID_quyen" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.r_nguoibenh_xetnghiem" Member="r_nguoibenh_xetnghiems">
+    <Type Name="r_nguoibenh_xetnghiem">
+      <Column Name="ID_NB_XN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_NB" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_XN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ngayXN" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="data_nguoibenh_r_nguoibenh_xetnghiem" Member="data_nguoibenh" ThisKey="ID_NB" OtherKey="ID_NB" Type="data_nguoibenh" IsForeignKey="true" />
+      <Association Name="data_xetnghiem_r_nguoibenh_xetnghiem" Member="data_xetnghiem" ThisKey="ID_XN" OtherKey="ID_XN" Type="data_xetnghiem" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
