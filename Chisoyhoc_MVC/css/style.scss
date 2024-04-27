@@ -5,11 +5,8 @@ $primary1: #00bbf0;
 $primary2: #00204a;
 $textCol: #1f1f1f;
 
-// import fonts - font-family: 'Open Sans', sans-serif;
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap");
-
 @mixin main-font {
-  font-family: "Open Sans", sans-serif;
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 @mixin hero_btn($col1, $col2, $pad1, $pad2, $bRadius) {
@@ -796,3 +793,20 @@ a:focus {
 }
 
 // end footer section
+
+.sort-indicator {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    border: 4px solid transparent;
+    margin-left: 5px;
+}
+
+.sort-indicator.asc {
+    border-bottom: 4px solid;
+}
+
+.sort-indicator.desc {
+    border-top: 4px solid;
+}

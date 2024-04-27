@@ -98,6 +98,14 @@ namespace Chisoyhoc_API.Controllers
             return kq;
         }
         [HttpGet]
+        [Route("api/chisoyhoc/NCKH/DS_KQ_NCKH/{input}")]
+        public List<string> DS_KQ_NCKH(string input)
+        {
+            KetnoiDB db = new KetnoiDB();
+            List<string> kq = db.GetDSKQNCKH(input);
+            return kq;
+        }
+        [HttpGet]
         [Route("api/chisoyhoc/GetbienLT/{idbien}")]
         public BienLT_CSYH GetbienLT(int idbien)
         {

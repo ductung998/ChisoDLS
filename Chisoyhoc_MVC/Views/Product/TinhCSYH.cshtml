@@ -1,0 +1,555 @@
+﻿@model IEnumerable<Chisoyhoc_MVC.Observation>
+
+@{
+    // Get the number of columns and column names from the ViewBag
+    int socot = ViewBag.Socot;
+    string machiso = ViewBag.Machiso;
+    string tenchiso = ViewBag.Tenchiso;
+    string DStenKQ = ViewBag.DSTenKQ;
+    List<string> DStencot = ViewBag.DSTencot;
+    List<string> DSketqua = ViewBag.DSKetqua;
+}
+<!DOCTYPE html>
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="~/images/favicon.png" type="">
+
+    <title>NCKH - @ViewBag.Tenchiso</title>
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+
+    <!-- font awesome style -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/styleNCKH.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/responsive.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        .custom-label {
+            color: #0c09b3; /* Hex color */
+        }
+
+        .custom-toast {
+            color: red; /* Set text color to red */
+            font-weight: bold; /* Make text bold */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-md-10">
+                <h3 style="font-weight: bold;">@tenchiso</h3>
+            </div>
+            <div class="col-xs-2 col-md-2" style="text-align: right">
+                <a href="@Url.Action("Trangtinh", "Trangchu", new { id = ViewBag.Machiso })" target="_blank">
+                    <span class="glyphicon glyphicon-link"></span>Chi tiết CSYH
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h4 class="custom-label" style="font-weight: bold;">Bước 1. Soạn dữ liệu</h4>
+    <p>1.1. Tải file mẫu từ phần mềm bằng nút <strong>Tải file excel nhập liệu</strong> phía dưới.</p>
+    <p>1.2. Tham khảo Sheet "Thông tin" và nhập dữ liệu vào Sheet "Data" bắt đầu từ ô B3.</p>
+    <p style="color: red;">Lưu ý: hiện tại chức năng chỉ được thiết kế hoạt động khi truy cập từ máy tính để bàn, thao tác trên điện thoại hoặc máy tính bảng có thể không trả về kết quả mong muốn.</p>
+    <button id="downloadxls" onclick="window.location='@Url.Action("DownloadExcel", "Product", new { machiso = @machiso})'">
+        Tải file excel nhập liệu
+    </button>
+    <br>
+    <br>
+    <h4 class="custom-label" style="font-weight: bold;">Bước 2. Nhập dữ liệu</h4>
+    <p>
+        2.1. Sao chép phần dữ liệu từ file excel nhập liệu.
+        Dữ liệu sao chép không bao gồm STT và tên cột (bắt đầu từ ô B3).
+    </p>
+    <p>2.2. Nhấn nút <strong>Dán dữ liệu</strong> hoặc tổ hợp phím <strong>Ctrl + V</strong>.</p>
+    <p>
+        2.3. Quý đồng nghiệp có thể <strong>Điều chỉnh</strong> dữ liệu trực tiếp trên bảng,
+        thực hiện thao tác <strong>Xóa trắng</strong> bảng dữ liệu bằng nút ấn tương ứng.
+        Trường hợp nhập dữ liệu trực tiếp lên bảng, phần mềm hỗ trợ <strong>Xuất file excel đầu vào</strong> cho dữ liệu đã nhập.
+    </p>
+    <p style="color: red;">Lưu ý: trình duyệt có thể yêu cầu quý đồng nghiệp cho phép đọc dữ liệu để chức năng hoạt động đúng.</p>
+    <button id="pasteBtn">Dán dữ liệu</button>
+    <button id="clearBtn">Xóa trắng đầu vào</button>
+    <button id="exportXlsxBtn2">Xuất file excel đầu vào</button>
+    <br>
+    <br>
+    <div style="max-height: 300px; overflow-x: auto; overflow-y: auto;">
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th style="width: 30px !important;">STT</th>
+                    @foreach (string tencot in DStencot)
+                    {
+                        <th style="min-width: 100px;">@tencot</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <h4 class="custom-label" style="font-weight: bold;">Bước 3. Tính kết quả</h4>
+    <p>Sau khi hoàn tất nhập liệu, quý đồng nghiệp nhấn nút <strong>Tính kết quả</strong>. Kết quả tính toán sẽ hiển thị ở bảng kết quả.</p>
+    <p style="color: red;">
+        Lưu ý: quý đồng nghiệp vui lòng đảm bảo dữ liệu chỉ nhập vào dạng số, nhập đầy đủ và phù hợp với mã hóa
+        để chức năng hoạt động đúng.
+    </p>
+    <button id="getDataButton">Tính kết quả</button>
+    <button id="clearBtn2">Xóa trắng kết quả</button>
+    <br>
+    <br>
+    <div style="max-height: 300px; overflow-x: auto; overflow-y: auto;">
+        <table id="KQTable">
+            <thead>
+                <tr>
+                    <th style="width: 30px !important;">STT</th>
+                    @foreach (string tencot in DSketqua)
+                    {
+                        <th style="min-width: 100px;">@tencot</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your table body content goes here -->
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <h4 class="custom-label" style="font-weight: bold;">Bước 4. Trích xuất kết quả</h4>
+    <p>Dữ liệu kết quả có thể được <strong>Sao chép</strong> hoặc <strong>Xuất file</strong> dưới định dạng csv hoặc xlsx khi chọn các nút tương ứng.</p>
+    <p style="color: red;">
+        Lưu ý: định dạng csv có thể không hỗ trợ font tiếng Việt của nội dung diễn giải.
+    </p>
+    <button id="copyTableBtn">Sao chép bảng</button>
+    <button id="exportCsvBtn2">Xuất file CSV kết quả</button>
+    <button id="exportXlsxBtn">Xuất file excel kết quả</button>
+
+</body>
+</html>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addRowBtn').click(function () {
+                addEmptyRow();
+            });
+
+            //$('#productTable').on('blur', 'td.editable', function () {
+            //    var $cell = $(this);
+            //    var $row = $cell.closest('tr');
+            //    var isLastRow = $row.is(':last-child');
+
+            //    //// If the edited cell is in the last row and the cell is not empty, add a new empty row
+            //    //if (isLastRow && $cell.text().trim() !== '') {
+            //    //    addEmptyRow();
+            //    //}
+
+            //    var productId = $row.find('td:first').text();
+            //    var columnName = $cell.index() === 1 ? 'Name' : 'Price';
+            //    var updatedValue = $cell.text();
+
+            //    updateProduct(productId, columnName, updatedValue);
+            //});
+
+            document.getElementById('pasteBtn').addEventListener('click', function () {
+                pasteFromClipboard();
+                M.toast({html: '<span class="custom-toast">Dán dữ liệu đầu vào thành công</span>'});
+            });
+
+            // Add event listener for Ctrl + V keyboard shortcut
+            document.addEventListener('keydown', function (event) {
+                if (event.ctrlKey && event.key === 'v') {
+                    pasteFromClipboard();
+                }
+            });
+
+        });
+        function addEmptyRow() {
+            var lastRowId = $('#productTable tbody tr:last td:first').text();
+            var newRowId = isNaN(parseInt(lastRowId)) ? 1 : parseInt(lastRowId) + 1;
+            var newRow = '<tr><td>' + newRowId + '</td>';
+
+            // Add editable cells based on the number of columns
+            for (var i = 0; i < $('#productTable tr:first th').length - 1; i++) {
+                newRow += '<td class="editable" contenteditable="true"></td>';
+            }
+
+            newRow += '</tr>';
+            $('#productTable tbody').append(newRow);
+        }
+
+        function pasteFromClipboard() {
+            navigator.clipboard.readText()
+                .then(function (clipboardText) {
+                    var rows = clipboardText.split('\n');
+                    var numberOfColumnsInTable = $('#productTable tr:first td').length - 1; // Exclude the ID column
+                    var lastRow = rows[rows.length - 1].split('\t'); // Get the last row from clipboard data
+
+                    // Check if the table is empty
+                    var isNewTable = $('#productTable tbody').children().length === 0;
+
+                    // Initialize ID based on the maximum ID in the table or 0 if the table is empty
+                    var newRowId = isNewTable ? 0 : Math.max.apply(null, $('#productTable tbody tr').map(function () {
+                        return parseInt($(this).find('td:first').text()) || 0;
+                    }).get()) || 0;
+
+
+                    // Check if the last row is empty
+                    if (lastRow.every(function (value) { return value.trim() === ''; })) {
+                        rows.pop(); // Remove the last row if it's empty
+                    }
+
+                    rows.forEach(function (row, rowIndex) {
+                        var columns = row.split('\t'); // Assuming tab-separated values
+
+                        // Trim excess columns if needed
+                        columns = columns.slice(0, numberOfColumnsInTable + @socot);
+
+                        // Increment the ID for each row
+                        newRowId++;
+
+                        var newRow = '<tr>';
+                        newRow += '<td>' + newRowId + '</td>';
+
+                        // Append the data columns from the pasted data
+                        columns.forEach(function (column) {
+                            newRow += '<td class="editable" contenteditable="true">' + column.trim() + '</td>';
+                        });
+
+                        // Add empty cells for any remaining columns (if fewer columns pasted than expected)
+                        for (var i = columns.length; i < numberOfColumnsInTable; i++) {
+                            newRow += '<td class="editable" contenteditable="true"></td>';
+                        }
+
+                        newRow += '</tr>';
+                        $('#productTable').append(newRow);
+                    });
+                })
+                .catch(function (err) {
+                    console.error('Failed to read clipboard contents: ', err);
+                });
+        }
+
+
+        $('#clearBtn').click(function () {
+            $('#productTable tr:gt(0)').remove(); // Remove all rows except the first one (header row)
+            M.toast({html: '<span class="custom-toast">Xóa trắng thành công</span>'});
+        });
+        
+
+        $('#clearBtn2').click(function () {
+            $('#KQTable tr:gt(0)').remove(); // Remove all rows except the first one (header row)
+            M.toast({html: '<span class="custom-toast">Xóa trắng thành công</span>'});
+        });
+
+        $('#exportCsvBtn').click(function () {
+            var csvContent = 'data:text/csv;charset=utf-8,';
+            var rows = $('#productTable tr');
+
+            // Loop through each row and append its data to the CSV content
+            rows.each(function () {
+                var rowData = [];
+                $(this).find('td').each(function () {
+                    var cellData = $(this).text();
+                    // If the cell data contains a comma, enclose it in double quotes
+                    if (cellData.includes(',')) {
+                        cellData = '"' + cellData + '"';
+                    }
+                    rowData.push(cellData);
+                });
+                csvContent += rowData.join(',') + '\n';
+            });
+
+            // Create a temporary anchor element to trigger the download
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'dauvao.csv');
+            document.body.appendChild(link);
+
+            // Trigger the download
+            link.click();
+
+            // Clean up
+            document.body.removeChild(link);
+        });
+
+        $('#exportCsvBtn2').click(function () {
+            var csvContent = '';
+
+            // Split DStenKQ into an array of header names
+            var headerNames = '@ViewBag.DStenKQ'.split('-');
+
+            // Add header row data from the provided list
+            headerNames.forEach(function (cellData) {
+                if (cellData.includes(',')) {
+                    cellData = '"' + cellData + '"';
+                }
+                csvContent += cellData + ',';
+            });
+            csvContent = csvContent.slice(0, -1) + '\n'; // Remove the trailing comma and add a new line
+
+            // Add data rows from the table
+            $('#KQTable tbody tr:gt(0)').each(function () {
+                var rowData = [];
+                $(this).find('td').each(function () {
+                    var cellData = $(this).text().trim();
+                    if (cellData.includes(',')) {
+                        cellData = '"' + cellData + '"';
+                    }
+                    rowData.push(cellData);
+                });
+                csvContent += rowData.join(',') + '\n';
+            });
+
+            // Create a Blob object from the CSV content
+            var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+
+            // Create a temporary anchor element to trigger the download
+            var link = document.createElement('a');
+            link.setAttribute('href', window.URL.createObjectURL(blob));
+            link.setAttribute('download', 'ketqua.csv');
+            document.body.appendChild(link);
+
+            // Trigger the download
+            link.click();
+
+            // Clean up
+            document.body.removeChild(link);
+        });
+
+        $('#getDataButton').click(function () {
+            // Collect data from productTable
+            var data = [];
+            var isValid = true; // Flag to track if data is valid
+            var isBlank = true; // Flag to track if data is valid
+
+            $('#productTable tbody tr').each(function (index) {
+                // Skip the first row (index 0) which represents the header
+                //if (index === 0) {
+                //    return true; // Skip to the next iteration
+                //}
+
+                var row = [];
+                var rowValid = true; // Flag to track if current row is valid
+
+                $(this).find('td').each(function () {
+                    var cellValue = $(this).text().trim();
+
+                    // Check if cell is empty
+                    if (cellValue === '') {
+                        rowValid = false;
+                        isBlank = false;
+                        // Highlight the cell indicating it's invalid (you can customize this part)
+                        $(this).addClass('invalid-cell');
+                    } else {
+                        // Attempt to replace commas with periods
+                        var replacedValue = cellValue.replace(',', '.');
+
+                        // Attempt to parse the cell value as a double
+                        var doubleValue = parseFloat(replacedValue);
+
+                        // Check if the parsed value is NaN
+                        if (isNaN(doubleValue)) {
+                            rowValid = false;
+                            isValid = false;
+                            // Highlight the cell indicating it's invalid (you can customize this part)
+                            $(this).addClass('invalid-cell');
+                        }
+
+                        // Push the parsed value (whether successful or not) to the row
+                        row.push(doubleValue);
+                    }
+                });
+
+
+                // If current row is not valid, skip adding it to the data array
+                if (rowValid) {
+                    data.push(row);
+                }
+            });
+            if (!isBlank) {
+                alert('Bảng Nhập dữ liệu có dữ liệu trống, vui lòng nhập đủ dữ liệu đầu vào (giá trị mặc định cho biến định tính là 1 và biến liên tục là 0)');
+                return;
+            }
+            // If data is not valid, stop further processing
+            if (!isValid) {
+                alert('Bảng Nhập dữ liệu có dữ liệu không phải là số, vui lòng kiểm tra dữ liệu đầu vào phù hợp');
+                return;
+            }
+
+            // Construct the request data object from the model structure
+            var requestData = {
+                machiso: '@machiso', // Concatenate machiso as a string
+                data1: data  // Assign collected data directly to the model's property
+            };
+
+            // Send data to the controller
+            $.ajax({
+                url: '@Url.Action("ProcessData", "Product")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData), // Pass the constructed request data
+                success: function (response) {
+                    // Clear existing data rows from the KQTable (excluding header row)
+                    $('#KQTable tbody tr:gt(0)').remove();
+
+                    // Populate KQTable with processed data from the server
+                    $.each(response, function (index, row) {
+                        var newRow = '<tr>';
+                        $.each(row, function (index, cell) {
+                            newRow += '<td>' + cell + '</td>';
+                        });
+                        newRow += '</tr>';
+                        $('#KQTable tbody').append(newRow); // Append rows to the KQTable body
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error:", error); // Log any errors
+                }
+            });
+            M.toast({html: '<span class="custom-toast">Hoàn tất tính toán</span>'});
+        });
+
+        $('#copyTableBtn').click(function () {
+            var tableData = ''; // Variable to hold table data
+
+            var headers = [];
+            $('#KQTable thead th').each(function () {
+                headers.push($(this).text().trim());
+            });
+            // Add headers to the tableData string
+            tableData += headers.join('\t') + '\n';
+
+            // Loop through each row in the table
+            $('#KQTable tbody tr').each(function () {
+                var rowData = []; // Array to hold data for each row
+                $(this).find('td').each(function () {
+                    // Add cell data to the rowData array
+                    rowData.push($(this).text().trim());
+                });
+                // Add the rowData array joined by tab character to the tableData string
+                tableData += rowData.join('\t') + '\n';
+            });
+
+            // Create a new textarea element
+            var textarea = document.createElement('textarea');
+            textarea.value = tableData; // Set textarea value to tableData
+
+            // Append the textarea to the document body
+            document.body.appendChild(textarea);
+
+            // Select the textarea content
+            textarea.select();
+
+            try {
+                // Copy the selected content to the clipboard
+                document.execCommand('copy');
+                console.log('Table copied to clipboard successfully!');
+                M.toast({html: '<span class="custom-toast">Sao chép dữ liệu kết quả thành công</span>'});
+            } catch (error) {
+                console.error('Failed to copy table to clipboard:', error);
+            }
+
+            // Remove the textarea from the document body
+            document.body.removeChild(textarea);
+        });
+
+        $('#exportXlsxBtn').click(function () {
+            // Create a new workbook
+            var wb = XLSX.utils.book_new();
+
+            // Extract data from the table
+            var wsData = [];
+
+            // Extract headers from DStenKQ
+            var headers = '@ViewBag.DStenKQ'.split('-');
+
+            // Add headers as the first row of wsData
+            wsData.push(headers);
+
+            // Add data rows from the table
+            $('#KQTable tbody tr').each(function (index) {
+                // Skip the first row (index 0) which represents the header
+                //if (index === 0) {
+                //    return true; // Skip to the next iteration
+                //}
+                var rowData = [];
+                $(this).find('td').each(function () {
+                    rowData.push($(this).text().trim());
+                });
+                wsData.push(rowData);
+            });
+
+            // Create a new worksheet
+            var ws = XLSX.utils.aoa_to_sheet(wsData);
+
+            // Add the worksheet to the workbook
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+            // Save the workbook as an XLSX file
+            XLSX.writeFile(wb, 'ketqua.xlsx');
+        });
+
+        $('#exportXlsxBtn2').click(function () {
+            // Create a new workbook
+            var wb = XLSX.utils.book_new();
+
+            // Extract data from the table
+            var wsData = [];
+
+            // Extract headers from DStenKQ
+            var headers = '@ViewBag.DStenKQ'.split('-');
+
+            // Add headers as the first row of wsData
+            wsData.push(headers);
+
+            // Add data rows from the table
+            $('#productTable tbody tr').each(function (index) {
+                // Skip the first row (index 0) which represents the header
+                //if (index === 0) {
+                //    return true; // Skip to the next iteration
+                //}
+                var rowData = [];
+                $(this).find('td').each(function () {
+                    rowData.push($(this).text().trim());
+                });
+                wsData.push(rowData);
+            });
+
+            // Create a new worksheet
+            var ws = XLSX.utils.aoa_to_sheet(wsData);
+
+            // Add the worksheet to the workbook
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+            // Save the workbook as an XLSX file
+            XLSX.writeFile(wb, 'dauvao.xlsx');
+        });
+
+    </script>
+}

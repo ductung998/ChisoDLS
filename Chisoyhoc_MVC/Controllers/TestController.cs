@@ -21,17 +21,17 @@ namespace Chisoyhoc_MVC.Controllers
         {
             return View();
         }
+        public ActionResult NCKH()
+        {
+            return View();
+        }
         public ActionResult About()
         {
-            KetnoiDB db = new KetnoiDB();
-            ViewBag.Message = db.GetTenchiso("C_A01");
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
@@ -86,28 +86,22 @@ namespace Chisoyhoc_MVC.Controllers
             }
             return View("Index");
         }
-
-        public ActionResult ConvertToCsv(string excelFileName)
+        // Action method to retrieve column information from the database
+        public ActionResult GetColumnInformation()
         {
-            Tuongtac testing = new Tuongtac(Path.Combine(Server.MapPath("~/Temp"), excelFileName));
-            // Ensure excelFileName is provided
-            if (string.IsNullOrEmpty(excelFileName))
+            // Call the method to get column information from the database
+            int numColumns = 3;
+            List<string> columnNames = new List<string>() { "A", "B", "C" };
+
+            // Create an anonymous object to hold the column information
+            var columnInfo = new
             {
-                return RedirectToAction("Index");
-            }
+                numColumns = numColumns,
+                columnNames = columnNames
+            };
 
-            // Construct full paths for Excel and CSV files
-            string excelFilePath = Path.Combine(Server.MapPath("~/Temp"), excelFileName);
-            string csvFilePath = Path.Combine(Server.MapPath("~/Temp"), Path.GetFileNameWithoutExtension(excelFileName) + ".csv");
-
-            // Convert Excel to CSV
-            testing.exceltoCSV(excelFilePath);
-
-            //// Return the CSV file for download
-            //byte[] fileBytes = System.IO.File.ReadAllBytes(csvFilePath);
-            //return File(fileBytes, "text/csv", Path.GetFileName(csvFilePath));
-
-            return File(csvFilePath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Test.csv");
+            // Return the column information as JSON data
+            return Json(columnInfo, JsonRequestBehavior.AllowGet);
         }
 	}
 }

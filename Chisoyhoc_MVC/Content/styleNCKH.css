@@ -1,0 +1,29 @@
+﻿/* Styles for the productTable and KQTable */
+#productTable, #KQTable {
+    width: 100%; /* Set table width to 100% of its container */
+    border-collapse: collapse; /* Collapse borders for a cleaner appearance */
+}
+
+#productTable th, #productTable td,
+#KQTable th, #KQTable td {
+    padding: 8px; /* Add padding to table cells for spacing */
+    border: 1px solid #ddd; /* Add borders to table cells */
+    text-align: left; /* Align cell content to the left */
+    border-color: darkblue;
+    
+    white-space: nowrap; /* Prevent text wrapping by default */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Display ellipsis for overflow text */
+}
+
+#productTable th, #KQTable th {
+    background-color: #6193FF;
+    color: white; /* Set text color to white for better contrast */
+}
+
+/* Set column width to evenly distribute available space */
+#productTable th, #productTable td,
+#KQTable th, #KQTable td {
+    min-width: 300px; /* Set minimum width for columns */
+    max-width: 1000px; /* Set maximum width for columns */
+}

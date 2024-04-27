@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chỉ số y học</title>
     @Styles.Render("~/Content/css")
 
     @Scripts.Render("~/bundles/modernizr")
-
+    <!-- Link to your custom CSS file -->
+    <link href="~/Content/styleLO.css" rel="stylesheet">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,7 +21,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Pharsolcal", "Index", "Trangchu", null, new { style = "font-size: 20px;" })</li>
+                    <li><a class="nav-link" href="~/Home/Index"><div class="hidden-sm">PHARSOLCAL</div><span class="glyphicon glyphicon-home visible-sm"></span></a></li>
+                    <li><a class="nav-link" href="~/Home/About"><div class="hidden-sm">GIỚI THIỆU</div><span class="glyphicon glyphicon-info-sign visible-sm"></span></a></li>
+                    <li><a class="nav-link" href="~/Trangchu"><div class="hidden-sm">CHỈ SỐ Y HỌC</div><span class="glyphicon glyphicon-list-alt visible-sm"></span></a></li>
+                    <li><a class="nav-link" href="~/Product"><div class="hidden-sm">NGHIÊN CỨU KHOA HỌC</div><span class="glyphicon glyphicon-search visible-sm"></span></a></li>
+                    <li><a class="nav-link" href="~/Home/HDSD"><div class="hidden-sm">HƯỚNG DẪN SỬ DỤNG</div><span class="glyphicon glyphicon-question-sign visible-sm"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -34,10 +38,41 @@
             </footer>*@
     </div>
 
-
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        // Get current URL
+        var currentUrl = window.location.href.toLowerCase();
+        console.log('currentUrl:', currentUrl);
+
+        // Flag to check if any link is active
+        var isActiveLink = false;
+
+        // Find the nav-link elements within the navbar
+        $('.navbar-nav li a.nav-link').each(function () {
+            var href = $(this).attr('href').toLowerCase();
+            console.log('href:', href);
+
+            // Check if href matches the current URL and is not "/"
+            if (href !== "/" && currentUrl.indexOf(href) !== -1) {
+                // Add active-link class to the link
+                $(this).addClass('active-link');
+                isActiveLink = true;
+            }
+        });
+
+        console.log('isActiveLink:', isActiveLink);
+
+        // Check if any link is active and output message to console
+        if (isActiveLink) {
+            console.log("An active link was found.");
+        } else {
+            console.log("No active link found.");
+        }
+    });
+</script>

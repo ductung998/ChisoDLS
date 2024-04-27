@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "NCKH";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập dữ liệu</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/styles.css">
+</head>
+<body>
+
+    <h2>Nhập dữ liệu chỉ số</h2>
+
+    <div>
+        <label for="numColumns">Chọn chỉ số y học cần tính toán</label>
+        <input type="text" id="numColumns" name="numColumns">
+        <button id="generateTableButton">Generate Table</button>
+    </div>
+
+    <div id="tableContainer">
+        <table id="headerTable">
+            <thead id="tableHead"></thead>
+        </table>
+        <div id="detailTableContainer">
+            <table id="detailTable">
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <button id="exportCSVButton">Export CSV</button>
+    <button id="exportXLSButton">Export XLS</button>
+
+    <button id="clearButton">Clear</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+    <script src="~/Scripts/scriptNCKH.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // AJAX call to retrieve column information from the controller
+            $.ajax({
+                url: '@Url.Action("GetColumnInformation", "TestController")',
+                type: 'GET',
+                success: function (data) {
+                    // Populate the UI with column information
+                    $('#numColumns').val(data.numColumns);
+                    // Add code to populate table headers with column names
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

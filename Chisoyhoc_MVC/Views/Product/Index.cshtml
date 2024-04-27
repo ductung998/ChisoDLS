@@ -1,0 +1,204 @@
+﻿@model IEnumerable<ClassChung.chisoyhoc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <title>Nghiên cứu khoa học</title>
+    <link rel="shortcut icon" href="~/images/favicon.png" type="">
+    <!-- Custom styles for this template -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/responsive.css" rel="stylesheet" />
+</head>
+
+<body>
+    @*Tìm kiếm*@
+    <div class="container">
+        @using (Html.BeginForm("Index", "Product", FormMethod.Post, new { @class = "navbar-form navbar-left", id = "searchForm" }))
+        {
+            //Tìm kiếm
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-9 col-md-11">
+                        <div class="form-group" style="width: 100%">
+                            <input type="text" name="strSearch" placeholder="Tìm kiếm chỉ số" class="form-control" value="@ViewBag.StrSearch" />
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-md-1">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default" onclick="submitForm();">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            //Filter
+            <div class="container">
+                <i class="fa fa-filter" style="font-size:20px"></i>
+                <label>Thông dụng:</label>
+                <div class="form-group">
+                    @Html.DropDownList("filterType", new SelectList(new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Tất cả", Value = "2" },
+                                new SelectListItem { Text = "Thông dụng", Value = "1" },
+                                new SelectListItem { Text = "Chuyên biệt", Value = "0" }
+                            }, "Value", "Text"), new { @class = "form-control", style = "width: 200px;", onchange = "submitForm();" })
+                </div>
+                <label>Chuyên ngành:</label>
+                <div class="form-group">
+                    @Html.DropDownList("filterPN", new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Tất cả", Value = "0" },
+                        new SelectListItem { Text = "Bệnh truyền nhiễm", Value = "1" },
+                        new SelectListItem { Text = "Cấp cứu", Value = "2" },
+                        new SelectListItem { Text = "Chăm sóc bệnh nhân", Value = "3" },
+                        new SelectListItem { Text = "Chăm sóc giảm nhẹ", Value = "4" },
+                        new SelectListItem { Text = "Chăm sóc tại nhà", Value = "5" },
+                        new SelectListItem { Text = "Chuyển đổi đơn vị", Value = "6" },
+                        new SelectListItem { Text = "Da liễu", Value = "7" },
+                        new SelectListItem { Text = "Dị ứng & miễn dịch", Value = "8" },
+                        new SelectListItem { Text = "Điều trị nội trú & bệnh viện", Value = "9" },
+                        new SelectListItem { Text = "Điều trị tại nhà", Value = "10" },
+                        new SelectListItem { Text = "Gây mê", Value = "11" },
+                        new SelectListItem { Text = "Hệ tiêu hóa & gan", Value = "12" },
+                        new SelectListItem { Text = "Hô hấp & hồi sức tích cực", Value = "13" },
+                        new SelectListItem { Text = "Huyết học", Value = "14" },
+                        new SelectListItem { Text = "Lão khoa", Value = "15" },
+                        new SelectListItem { Text = "Nhi", Value = "16" },
+                        new SelectListItem { Text = "Nội tiết", Value = "17" },
+                        new SelectListItem { Text = "Phẫu thuật", Value = "18" },
+                        new SelectListItem { Text = "Sản", Value = "19" },
+                        new SelectListItem { Text = "Tâm thần học", Value = "20" },
+                        new SelectListItem { Text = "Thận", Value = "21" },
+                        new SelectListItem { Text = "Thần kinh học", Value = "22" },
+                        new SelectListItem { Text = "Thuốc ngủ", Value = "23" },
+                        new SelectListItem { Text = "Tim mạch", Value = "24" },
+                        new SelectListItem { Text = "Ung thư", Value = "25" },
+                        new SelectListItem { Text = "Xương khớp", Value = "26" }
+                    }, "Value", "Text"), new { @class = "form-control", style = "width: 200px;", onchange = "submitForm();" })
+                </div>
+                <label>Hệ cơ quan:</label>
+                <div class="form-group">
+                    @Html.DropDownList("filterCQ", new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Tất cả", Value = "0" },
+                        new SelectListItem { Text = "Chuyển hóa", Value = "1" },
+                        new SelectListItem { Text = "Cơ thể", Value = "2" },
+                        new SelectListItem { Text = "Điện giải", Value = "3" },
+                        new SelectListItem { Text = "Gan", Value = "4" },
+                        new SelectListItem { Text = "Hệ tiêu hóa", Value = "5" },
+                        new SelectListItem { Text = "Huyết học", Value = "6" },
+                        new SelectListItem { Text = "Khác", Value = "7" },
+                        new SelectListItem { Text = "Não", Value = "8" },
+                        new SelectListItem { Text = "Phổi", Value = "9" },
+                        new SelectListItem { Text = "Thận", Value = "10" },
+                        new SelectListItem { Text = "Tim", Value = "11" },
+                        new SelectListItem { Text = "Tĩnh mạch", Value = "12" },
+                        new SelectListItem { Text = "Tuần hoàn", Value = "13" },
+                        new SelectListItem { Text = "Tụy", Value = "14" },
+                        new SelectListItem { Text = "Ung thư", Value = "15" },
+                        new SelectListItem { Text = "Xương khớp", Value = "16" }
+                    }, "Value", "Text"), new { @class = "form-control", style = "width: 200px;", onchange = "submitForm();" })
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="container">
+
+        <h4>Chức năng: Nghiên cứu khoa học - Danh sách chỉ số y học</h4>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th style="width: 5%">
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.MachisoSortParm, strSearch = ViewBag.StrSearch,
+                            filterType = ViewBag.FilterType, filterPN = ViewBag.FilterPN, filterCQ = ViewBag.FilterCQ })">
+                            ID
+                            <span class="sort-indicator">
+                                @if (ViewBag.CurrentSort == "machiso_desc")
+                                {
+                                    <i class="fa fa-sort-desc"></i>
+                                }
+                                else if (ViewBag.CurrentSort == "machiso_asc")
+                                {
+                                    <i class="fa fa-sort-asc"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-sort"></i> <!-- Default sorting icon -->
+                                }
+                            </span>
+                        </a>
+                    </th>
+                    <th style="width: 85%">
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSortParm, strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType, filterPN = ViewBag.FilterPN, filterCQ = ViewBag.FilterCQ })">
+                            Tên chỉ số y học
+                            <span class="sort-indicator">
+                                @if (ViewBag.CurrentSort == "tenchiso_desc")
+                                {
+                                    <i class="fa fa-sort-desc"></i>
+                                }
+                                else if (ViewBag.CurrentSort == "tenchiso_asc")
+                                {
+                                    <i class="fa fa-sort-asc"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-sort"></i> <!-- Default sorting icon -->
+                                }
+                            </span>
+                        </a>
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.machiso)</td>
+                        <td>@Html.DisplayFor(modelItem => item.tenchiso)</td>
+                        <td>@Html.ActionLink("Chọn", "TinhCSYH", new { machiso = item.machiso })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            @if (ViewBag.TotalCount > ViewBag.PageSize)
+            {
+                <ul class="pagination">
+                    @if (ViewBag.PageNumber != 1)
+                    {
+                        <li><a href="@Url.Action("Index", new { page = 1, sortOrder = ViewBag.CurrentSort, strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType, filterPN = ViewBag.FilterPN, filterCQ = ViewBag.FilterCQ })">&laquo;</a></li>
+                    }
+                    @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
+                    {
+                        <li class="@(i == ViewBag.PageNumber ? "active" : "")"><a href="@Url.Action("Index", new { page = i, sortOrder = ViewBag.CurrentSort, strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType, filterPN = ViewBag.FilterPN, filterCQ = ViewBag.FilterCQ })">@i</a></li>
+                    }
+                    @if (ViewBag.PageNumber != Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize))
+                    {
+                        <li><a href="@Url.Action("Index", new { page = Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize), sortOrder = ViewBag.CurrentSort, strSearch = ViewBag.StrSearch, filterType = ViewBag.FilterType, filterPN = ViewBag.FilterPN, filterCQ = ViewBag.FilterCQ })">&raquo;</a></li>
+                    }
+
+                </ul>
+            }
+        </div>
+    </div>
+</body>
+
+<script>
+    function submitForm() {
+        document.getElementById('searchForm').submit();
+    }
+</script>
+

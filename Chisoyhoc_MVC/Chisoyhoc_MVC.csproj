@@ -165,12 +165,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TrangchuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ExcelDataModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -195,6 +197,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\styleLO.css" />
+    <Content Include="Content\styleNCKH.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\responsive.css" />
+    <Content Include="css\style.css" />
+    <Content Include="css\style.scss" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -235,6 +244,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="obj\Debug\Chisoyhoc_MVC.csprojResolveAssemblyReference.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="css\style.css.map" />
     <None Include="Properties\PublishProfiles\ChisoyhocMVC.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -247,6 +257,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\scriptNCKH.js" />
     <Content Include="Scripts\scripts.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -276,12 +287,18 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Trangchu\Index.cshtml" />
+    <Content Include="Views\Test\NCKH.cshtml" />
+    <Content Include="Views\Product\_ProductRow.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\TinhCSYH.cshtml" />
+    <Content Include="Views\Home\HDSD.cshtml" />
+    <Content Include="Views\Trangchu\Trangtinhdefault.cshtml" />
     <Content Include="Views\Trangchu\Trangtinh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Temp\" />
+    <Folder Include="Temp\Filemau\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

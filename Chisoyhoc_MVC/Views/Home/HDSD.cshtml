@@ -1,0 +1,428 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="~/images/favicon.png" type="">
+
+    <title> Pharsolcal </title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- font awesome style -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <style>
+        .image-container {
+            display: inline-block;
+            text-align: center; /* Center align the content within each <div> */
+        }
+
+            .image-container img {
+                width: 80%; /* Set the width of the image to 80% */
+                height: auto; /* Maintain aspect ratio */
+            }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="hero_area">
+
+        <div class="hero_bg_box">
+            <div class="bg_img_box">
+                <img src="~/images/hero-bg.png" alt="">
+            </div>
+        </div>
+
+        <!-- header section strats -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+                        <span>
+                            Pharsolcal
+                        </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Home/About">Giới thiệu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Trangchu">Chỉ số y học<span class="sr-only">(current)</span></a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link" href="#"> Nhập dữ liệu</a>
+                                </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Product">Nghiên cứu khoa học</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Home/HDSD">Hướng dẫn sử dụng</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- end header section -->
+        <!-- slider section -->
+        <section class="about_section layout_padding">
+            <div class="container">
+                <div class="heading_container heading_center">
+                    <h2>HƯỚNG DẪN SỬ DỤNG</h2>
+                    <h3>Phần mềm Pharsolcal - Tính toán chỉ số y học</h3>
+                    <div class="paragraph-wrapper" style="text-align: justify;">
+                        <hr>
+
+                        <h5>1. Trang chủ và thanh điều hướng</h5>
+                        <div>
+                            <p>Giao diện <a href="~/Home/Index">Trang chủ</a> chứa các thông tin chung giới thiệu về phần mềm và khả năng truy cập tới các giao diện khác thông qua thanh công cụ hoặc nút ấn.</p>
+                            <p>
+                                Thanh điều hướng tại trang chủ và phía trên mỗi trang hỗ trợ chuyển đến giao diện tương ứng, gồm:
+                                Trang chủ, Giới thiệu, Chỉ số y học, Nghiên cứu khoa học và Hướng dẫn sử dụng (Hình 1.1 và Hình 1.2).
+                            </p>
+                            <br>
+                            <div class="image-container">
+                                <img src="~/images/Trangchu.JPG" alt="Trang chủ">
+                                <p>Hình 1.1. Giao diện Trang chủ và thanh điều hướng</p>
+                            </div>
+                            <br>
+                            <div class="image-container">
+                                <img src="~/images/Thanhdieuhuong.JPG" alt="Thanh điều hướng">
+                                <p>Hình 1.2. Thanh điều hướng của giao diện mỗi trang</p>
+                            </div>
+                        </div>
+                        <br>
+
+                        <h5>2. Giao diện Chọn chỉ số y học</h5>
+                        <div>
+                            <p style="margin-bottom: 10px;">
+                                Đây là giao diện phụ khi người dùng chọn <a href="~/Trangchu">Chỉ số y học</a>
+                                hoặc <a href="~/Product">Nghiên cứu khoa học</a>. Giao diện bao gồm 02 phần chính (Hình 2.1):
+                            </p>
+                            <ul>
+                                <li style="margin-bottom: 10px;">
+                                    <strong>Tìm kiếm và bộ lọc:</strong> Hỗ trợ người dùng <strong>Tìm kiếm</strong>
+                                    chỉ số y học theo tên hoặc <strong>Lọc</strong> theo mức độ thông dụng, chuyên ngành và hệ cơ quan.
+                                </li>
+                                <li style="margin-bottom: 10px;">
+                                    <strong>Danh mục chỉ số y học:</strong> Hiện danh mục các chỉ số y học phù hợp với
+                                    bộ lọc hoặc nội dung tìm kiếm (giới hạn 10 chỉ số/trang). Người dùng nhấn nút <strong>Chọn</strong>
+                                    tương ứng để vào giao diện <strong>Tính chỉ số</strong>.
+                                </li>
+                            </ul>
+                            <div class="image-container">
+                                <img src="~/images/CSYH.JPG" alt="Giao diện chọn CSYH">
+                                <p>Hình 2.1. Giao diện chọn Chỉ số y học</p>
+                            </div>
+                        </div>
+                        <br>
+
+                        <h5>3. Giao diện Chỉ số y học</h5>
+                        <div>
+                            <p>
+                                Truy cập từ giao diện <a href="~/Trangchu">Chỉ số y học</a> khi chọn chỉ số tương ứng, giao diện được thiết kế
+                                cho người dùng tính toán đơn lẻ, đang làm quen với phần mềm hoặc dùng thử các chỉ số.
+                            </p>
+                            <p>Mục đích: tính toán chỉ số y học đơn lẻ từ dữ liệu đầu vào.</p>
+                            <p style="margin-bottom: 10px;">Giao diện Chỉ số y học bao gồm 04 phần chính:</p>
+                            <ul>
+                                <li style="margin-bottom: 10px;">
+                                    <strong>Thông tin chỉ số:</strong> Cung cấp các thông tin liên quan tới chỉ số y học tương ứng, gồm:
+                                    Tên chỉ số, Mục đích sử dụng, Ứng dụng, Phương pháp tính toán (thuật toán)
+                                    và Tài liệu tham khảo. Các thông tin hiển thị dưới dạng các thanh Tab để người dùng lựa chọn (Hình 3.1).
+                                </li>
+                                <li style="margin-bottom: 10px;"><strong>Ví dụ hoạt động:</strong> Hỗ trợ người dùng chuyển tới trang đã điền sẵn dữ liệu để tham khảo hoạt động của chỉ số nếu chưa rõ cách thao tác.</li>
+                                <li style="margin-bottom: 10px;">
+                                    <strong>Đầu vào:</strong> Cung cấp các ô nhập dữ liệu theo từng chỉ số để người dùng nhập liệu.
+                                    Dữ liệu đầu vào có thể thuộc 02 dạng:
+                                    <ul>
+                                        <li style="margin-bottom: 10px;">
+                                            <strong>Dữ liệu liên tục:</strong> Gồm những biến đầu vào thuộc loại biến liên tục (các loại số đo, kết quả xét nghiệm...).
+                                            Người dùng nhập đầu vào trong ô nhập liệu với giá trị tương ứng phù hợp với đơn vị chuẩn.
+                                        </li>
+                                        <li style="margin-bottom: 10px;">
+                                            <strong>Dữ liệu định tính:</strong> Gòm những biến đầu vào thuộc loại biến định tính (giới tính, nhóm đối tượng hoặc tình trạng người bệnh).
+                                            Người dùng lựa chọn giá trị đầu vào phù hợp với tình trạng người bệnh.
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li style="margin-bottom: 10px;"><strong>Kết quả:</strong> Sau khi nhập liệu hoàn tất, người dùng ấn nút <strong>Tính toán</strong>
+                                để phần mềm thực hiện tính toán và trả về kết quả (Hình 3.2).</li>
+                            </ul>
+                            <p>
+                                <strong>Lưu ý:</strong> đa phần các chỉ số y học yêu cầu người dùng nhập đầy đủ các biến đầu vào để hoạt động.
+                                Quý đồng nghiệp vui lòng nhập đủ trước khi tính toán, trường hợp không có dữ liệu, quý đồng nghiệp có thể nhập giá trị 0 hoặc
+                                chọn biến mặc định.
+                            </p>
+                            <div class="image-container">
+                                <img src="~/images/CSYH-Chitiet1.JPG" alt="Giao diện CSYH chi tiết 1">
+                                <p>Hình 3.1. Giao diện chọn Chỉ số y học chi tiết (thông tin và đầu vào)</p>
+                            </div>
+                            <br>
+                            <div class="image-container">
+                                <img src="~/images/CSYH-Chitiet2.JPG" alt="Giao diện CSYH chi tiết 2">
+                                <p>Hình 3.2. Giao diện chọn Chỉ số y học chi tiết (kết quả)</p>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+
+                        <h5>4. Giao diện Nghiên cứu khoa học</h5>
+                        <div>
+                            <p>
+                                Truy cập từ giao diện <a href="~/Product">Nghiên cứu khoa học</a> khi chọn chỉ số tương ứng,
+                                giao diện được thiết kế cho người dùng sử dụng thành thạo và nắm rõ về chỉ số y học với nhu cầu tính toán số lượng lớn.
+                            </p>
+                            <p>Mục đích: tính toán chỉ số y học đồng loạt cho nhiều đối tượng với đầu vào mã hóa phù hợp yêu cầu.</p>
+                            <p style="margin-bottom: 10px;">Giao diện Nghiên cứu khoa học bao gồm 04 phần chính, chia thành các bước hoạt động:</p>
+                            <ul>
+                                <li style="margin-bottom: 10px;">
+                                    <p>
+                                        <strong>Bước 1. Soạn dữ liệu:</strong>
+                                    </p>
+                                    <p style="margin-bottom: 10px;">
+                                        Hỗ trợ người dùng soạn dữ liệu phù hợp với cấu trúc đầu vào của phần mềm để tiến hành tính toán.
+                                        Phần mềm cung cấp file excel tương ứng với chỉ số kèm hướng dẫn mã hóa dữ liệu để người dùng tải về và soạn dữ liệu trên máy (Hình 4.1). Chi tiết thao tác:
+                                    </p>
+                                    <ul style="margin-bottom: 10px;">
+                                        <li style="margin-bottom: 10px;">
+                                            1.1. Tải file mẫu từ phần mềm (Hình 4.2).
+                                        </li>
+                                        <li style="margin-bottom: 10px;">
+                                            1.2. Tham khảo Sheet "Thông tin" và "Mẫu", nhập dữ liệu vào Sheet "Data" bắt đầu từ ô B3 (Hình 4.3). Sheet "Mẫu" có thể được copy để chạy thử trên phần mềm.
+                                        </li>
+                                        <li style="margin-bottom: 10px;">
+                                            1.3. Kiểm soát dữ liệu nhập: đảm bảo chỉ nhập số (giá trị thực đối với biến liên tục & giá trị mã hóa với biến định tính)
+                                            và tất cả các ô đều có dữ liệu.
+                                        </li>
+                                    </ul>
+                                    <div class="image-container">
+                                        <img src="~/images/NCKH-Buoc1.JPG" alt="Giao diện NCKH Bước 1">
+                                        <p>Hình 4.1. Giao diện Nghiên cứu khoa học chi tiết (Bước 1. Soạn dữ liệu)</p>
+                                    </div>
+                                    <br>
+                                    <div class="image-container">
+                                        <img src="~/images/NCKH-Buoc1TaiFile.JPG" alt="Giao diện NCKH Bước 1, tải file">
+                                        <p>Hình 4.2. Giao diện Nghiên cứu khoa học chi tiết (Tải file soạn dữ liệu)</p>
+                                    </div>
+                                    <br>
+                                    <div class="image-container">
+                                        <img src="~/images/NCKH-Excel.JPG" alt="Giao diện NCKH Bước 1">
+                                        <p>Hình 4.3. File excel soạn dữ liệu gồm 03 Sheet: Thông tin, Mẫu và Data</p>
+                                    </div>
+                                </li>
+                                <li style="margin-bottom: 10px;">
+                                    <p>
+                                        <strong>Bước 2. Nhập dữ liệu</strong>
+                                    </p>
+                                    <p style="margin-bottom: 10px;">
+                                        Hỗ trợ người dùng nhập dữ liệu đã soạn từ file excel vào phần mềm. Chi tiết thao tác (Hình 4.4):
+                                    </p>
+                                    <ul style="margin-bottom: 10px;">
+                                        <li style="margin-bottom: 10px;">
+                                            2.1. Sao chép dữ liệu từ file excel nhập liệu, bắt đầu từ ô B3 đến hết bảng dữ liệu.
+                                        </li>
+                                        <li style="margin-bottom: 10px;">
+                                            2.2. Nhấn nút Dán dữ liệu hoặc tổ hợp phím Ctrl + V. Trình duyệt có thể yêu cầu quý đồng nghiệp cho phép đọc dữ liệu để chức năng hoạt động đúng.
+                                        </li>
+                                        <li style="margin-bottom: 10px;">
+                                            2.3. Thao tác với bảng: người dùng có thể <strong>Điều chỉnh</strong> dữ liệu trực tiếp trên bảng,
+                                            thực hiện thao tác <strong>Thêm dòng</strong> hoặc <strong>Xóa trắng</strong> bảng dữ liệu bằng nút ấn tương ứng.
+                                            Trường hợp nhập dữ liệu trực tiếp lên bảng, phần mềm hỗ trợ xuất file excel cho dữ liệu đã nhập.
+                                        </li>
+                                    </ul>
+                                    <div class="image-container">
+                                        <img src="~/images/NCKH-Buoc2.JPG" alt="Giao diện NCKH Bước 2">
+                                        <p>Hình 4.4. Giao diện Nghiên cứu khoa học chi tiết (Bước 2. Nhập dữ liệu)</p>
+                                    </div>
+                                </li>
+                                <li style="margin-bottom: 10px;">
+                                    <p>
+                                        <strong>Bước 3: Tính kết quả:</strong>
+                                    </p>
+                                    <p>
+                                        Sau khi hoàn tất nhập liệu, người dùng nhấn nút <strong>Tính kết quả</strong>. Kết quả tính toán sẽ hiển thị ở bảng kết quả (Hình 4.5).
+                                    </p>
+                                    <div class="image-container">
+                                        <img src="~/images/NCKH-Buoc3.JPG" alt="Giao diện NCKH Bước 3">
+                                        <p>Hình 4.5. Giao diện Nghiên cứu khoa học chi tiết (Bước 3. Tính toán)</p>
+                                    </div>
+                                </li>
+                                <li style="margin-bottom: 10px;">
+                                    <p>
+                                        <strong>Bước 4: Trích xuất kết quả:</strong>
+                                    </p>
+                                    <p>
+                                        Dữ liệu kết quả có thể được <strong>Sao chép</strong> hoặc <strong>Xuất file</strong> dưới định dạng csv hoặc xlsx khi chọn các nút tương ứng (Hình 4.6).
+                                    </p>
+                                    <div class="image-container">
+                                        <img src="~/images/NCKH-Buoc4.JPG" alt="Giao diện NCKH Bước 4">
+                                        <p>Hình 4.6. Giao diện Nghiên cứu khoa học chi tiết (Bước 4. Xuất kết quả)</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                        <br>
+
+                        <h5>5. Giao diện Giới thiệu và hướng dẫn sử dụng</h5>
+                        <div>
+                            <p>
+                                Giao diện <a href="~/Home/About">Giới thiệu</a> và <a href="~/Home/HDSD">Hướng dẫn sử dụng</a> có thể được truy cập từ <a href="~/Home/Index">Trang chủ</a>,
+                                cung cấp thông tin liên quan tới phần mềm và thao tác.
+                            </p>
+                            <br>
+                        </div>
+                        <br>
+
+                        <h5>6. Thắc mắc và hỗ trợ</h5>
+                        <div>
+                            <p>Nếu quý đồng nghiệp có bất kỳ thắc mắc hay yêu cầu hỗ trợ nào liên quan tới phần mềm, vui lòng liên hệ trực tiếp hoặc qua email:</p>
+                            <p>DS. Nguyễn Đức Tùng</p>
+                            <p>SĐT: 0356.346.660</p>
+                            <p>Email: ndtung.chdldls22@ump.edu.vn</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="info_section layout_padding2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 info_col">
+                        <div class="info_contact">
+                            <h4>
+                                Thông tin liên hệ
+                            </h4>
+                            <div class="contact_link_box">
+                                <a href="">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span>
+                                        DS. Nguyễn Đức Tùng
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>
+                                        0356346660
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span>
+                                        ndtung.chdldls22@ump.edu.vn
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 info_col">
+                        <div class="info_detail">
+                            <h4>
+                                Pharsolcal
+                            </h4>
+                            <p>
+                                Hỗ trợ tính toán các chỉ số y học trên lâm sàng và trong nghiên cứu
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2 mx-auto info_col">
+                        <div class="info_link_box">
+                            <h4>
+                                Đường dẫn
+                            </h4>
+                            <div class="info_links">
+                                <a class="" href="~/Home/About">
+                                    Giới thiệu
+                                </a>
+                                <a class="active" href="~/Trangchu">
+                                    Chỉ số y học
+                                </a>
+                                <a class="" href="~/Product">
+                                    Nghiên cứu khoa học
+                                </a>
+                                <a class="" href="~/Home/HDSD">
+                                    Hướng dẫn sử dụng
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 info_col ">
+                        <h4>
+                            Đăng ký
+                        </h4>
+                        <form action="#">
+                            <input type="text" placeholder="Địa chỉ mail" />
+                            <button type="submit">
+                                Đăng ký
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- end info section -->
+        <!-- footer section -->
+        <section class="footer_section">
+            <div class="container">
+                <p>
+                    &copy; <span id="displayYear"></span> Pharsolcal v1.0
+                </p>
+            </div>
+        </section>
+    </div>
+    <!-- footer section -->
+    <!-- jQery -->
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- owl slider -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+    </script>
+    <!-- custom js -->
+    <script type="text/javascript" src="js/custom.js"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+    </script>
+    <!-- End Google Map -->
+
+</body>
+
+</html>

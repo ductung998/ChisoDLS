@@ -1,7 +1,231 @@
 ﻿@{
-    ViewBag.Title = "About";
+    Layout = null;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<!DOCTYPE html>
+<html>
 
-<p>Use this area to provide additional information.</p>
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="~/images/favicon.png" type="">
+
+    <title> Pharsolcal </title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- font awesome style -->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="~/css/responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <div class="hero_area">
+        <div class="hero_bg_box">
+            <div class="bg_img_box">
+                <img src="~/images/hero-bg.png" alt="">
+            </div>
+        </div>
+
+        <!-- header section strats -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+                        <span>
+                            Pharsolcal
+                        </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav  ">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Home/About">Giới thiệu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Trangchu">Chỉ số y học<span class="sr-only">(current)</span></a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link" href="#"> Nhập dữ liệu</a>
+                                </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Product">Nghiên cứu khoa học</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Home/HDSD">Hướng dẫn sử dụng</a>
+                            </li>
+                            <form class="form-inline">
+                                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- end header section -->
+        <!-- slider section -->
+        <section class="about_section layout_padding">
+            <div class="container  ">
+                <div class="heading_container heading_center">
+                    <h2>GIỚI THIỆU</h2>
+                    <h3>Phần mềm PharsolCal - Tính toán chỉ số y học</h3>
+                    <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+                        <p style="text-align: justify;">
+                            PharsolCal 1.0 là công cụ tính toán chỉ số y học chuyên dụng,
+                            hỗ trợ người dùng là các nhân viên y tế trong tính toán và đánh giá tình trạng sức khỏe người bệnh.
+                            Với gần 150 chỉ số y học từ thông dụng tới chuyên biệt thuộc nhiều chuyên ngành,
+                            ứng dụng này cung cấp cho người dùng một bộ công cụ thuận tiện trong sử dụng trên lâm sàng và trong nghiên cứu.
+                        </p>
+                        <p style="text-align: justify;">
+                            <strong>Tính năng của PharsolCal 1.0:</strong>
+                        </p>
+                        <ul>
+                            <li style="text-align: justify;">
+                                Tính năng tính toán từng chỉ số y học truyền thống (Chỉ số y học): người dùng tham khảo thông tin, nhập hoặc lựa chọn các thông số tương ứng
+                                để thu về kết quả mong muốn trên lâm sàng.
+                            </li>
+                            <li style="text-align: justify;">
+                                Tính năng tính toán đồng loạt chỉ số y học trên nhiều đối tượng (Nghiên cứu khoa học): nắm bắt nhu cầu tính toán chỉ số y học hàng loạt
+                                trong các nghiên cứu trên lâm sàng, Pharsolcal cung cấp tính năng tính toán đồng loạt chỉ số y học trên nhiều đối tượng, người
+                                dùng chỉ cần nhập dữ liệu phù hợp với nội dung mã hóa theo mẫu để thực hiện tính toán.
+                            </li>
+                        </ul>
+                        <p style="text-align: justify;">
+                            <strong>Đơn vị phát triển:</strong> Bộ môn Công nghệ thông tin Dược, Khoa Dược - Đại học Y Dược TP.HCM.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info_section layout_padding2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 info_col">
+                        <div class="info_contact">
+                            <h4>
+                                Thông tin liên hệ
+                            </h4>
+                            <div class="contact_link_box">
+                                <a href="">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span>
+                                        DS. Nguyễn Đức Tùng
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>
+                                        0356346660
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span>
+                                        ndtung.chdldls22@ump.edu.vn
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 info_col">
+                        <div class="info_detail">
+                            <h4>
+                                Pharsolcal
+                            </h4>
+                            <p>
+                                Hỗ trợ tính toán các chỉ số y học trên lâm sàng và trong nghiên cứu
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2 mx-auto info_col">
+                        <div class="info_link_box">
+                            <h4>
+                                Đường dẫn
+                            </h4>
+                            <div class="info_links">
+                                <a class="" href="~/Home/About">
+                                    Giới thiệu
+                                </a>
+                                <a class="active" href="~/Trangchu">
+                                    Chỉ số y học
+                                </a>
+                                <a class="" href="~/Product">
+                                    Nghiên cứu khoa học
+                                </a>
+                                <a class="" href="~/Home/HDSD">
+                                    Hướng dẫn sử dụng
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 info_col ">
+                        <h4>
+                            Đăng ký
+                        </h4>
+                        <form action="#">
+                            <input type="text" placeholder="Địa chỉ mail" />
+                            <button type="submit">
+                                Đăng ký
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- end info section -->
+    <!-- footer section -->
+    <section class="footer_section">
+        <div class="container">
+            <p>
+                &copy; <span id="displayYear"></span> Pharsolcal v1.0
+            </p>
+        </div>
+    </section>
+    <!-- footer section -->
+    <!-- jQery -->
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- owl slider -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+    </script>
+    <!-- custom js -->
+    <script type="text/javascript" src="js/custom.js"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+    </script>
+    <!-- End Google Map -->
+
+</body>
+
+</html>

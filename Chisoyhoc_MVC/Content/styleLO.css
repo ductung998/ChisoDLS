@@ -1,0 +1,54 @@
+﻿/* Custom styles for your website */
+
+/* Navbar background color */
+.navbar {
+    background-color: #0C2B6E !important; /* Change this to the desired color */
+    min-height: 50px !important;
+    max-height: 50px !important;
+}
+
+/* Navbar text color */
+.navbar-nav > li > a.nav-link {
+    color: #ffffff !important; /* White text color */
+    background-color: #0C2B6E !important; /* Change this to the desired color */
+}
+
+/* Navbar text color on hover */
+.navbar-nav > li > a.nav-link:hover {
+    color: #6193FF !important; /* Green text color on hover */
+}
+
+/* Increase the font size of navbar links */
+.navbar-nav > li > a.nav-link {
+    font-size: 20px !important; /* Font size of navbar links */
+}
+
+/* Active link color */
+.navbar-nav > li > a.nav-link.active-link {
+    color: greenyellow !important; /* Green text color for active link */
+    background-color: #0C2B6E !important; /* Change this to the desired color */
+}
+
+/* Custom styling for active links */
+.active-link {
+    /* Add your custom styles here */
+    background-color: transparent; /* Set background color to transparent */
+    color: green; /* Set text color to green */
+    /* Add any other styles as needed */
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .hidden-sm {
+    display: none !important;
+  }
+  tr.hidden-sm {
+    display: none !important;
+  }
+  th.hidden-sm,
+  td.hidden-sm {
+    display: none !important;
+  }
+  .visible-sm {
+      display: block !important;
+  }
+}

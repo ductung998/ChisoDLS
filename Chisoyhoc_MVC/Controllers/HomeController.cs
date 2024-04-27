@@ -14,11 +14,12 @@ namespace Chisoyhoc_MVC.Controllers
             return View();
 
         }
-
+        public ActionResult HDSD()
+        {
+            return View();
+        }
         public ActionResult About()
         {
-            KetnoiDB db = new KetnoiDB();
-            ViewBag.Message = db.GetTenchiso("C_A01");
             return View();
         }
 

@@ -33,7 +33,6 @@ namespace Chisoyhoc_Form.GiaodienMau
         public void refreshNB()
         {
             List<Nguoibenh> DSNB = db.getDSNB();
-
             BindingSource bindingNB = new BindingSource { DataSource = DSNB };
             dataGridView1.DataSource = bindingNB;
         }
@@ -82,6 +81,7 @@ namespace Chisoyhoc_Form.GiaodienMau
                 DataGridViewRow selectedRow = getSelectedRow(dataGridView1);
                 string cellValue = Convert.ToString(selectedRow.Cells["masoNB"].Value);
                 textBox1.Text = cellValue;
+                textBox3.Text = Convert.ToString(selectedRow.Cells["chieucao"].Value);
                 refreshXN();
             }
         }
@@ -101,6 +101,8 @@ namespace Chisoyhoc_Form.GiaodienMau
 
             Nguoibenh chinhsuaNB = db.getNB(idNB);
             chinhsuaNB.masoNB = textBox1.Text;
+            chinhsuaNB.chieucao = double.Parse(textBox3.Text);
+
             db.capnhatNB(chinhsuaNB);
             refreshNB();
         }
